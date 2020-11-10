@@ -1,18 +1,26 @@
-﻿using Rekog.Commands.Ngram;
+﻿using Rekog.Commands;
 using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
 using System.Threading.Tasks;
 
 namespace Rekog
 {
     internal static class Program
     {
-        private static async Task<int> Main(string[] args)
+        private static async Task<int> Main(string[] args) => await BuildCommandLine()
+            .UseDefaults()
+            .Build()
+            .InvokeAsync(args);
+
+        private static CommandLineBuilder BuildCommandLine()
         {
-            var rootCommand = new RootCommand
+            var root = new RootCommand
             {
-                NgramCommand.Create(),
+                new LayoutCommand(),
+                new NgramCommand(),
             };
-            return await rootCommand.InvokeAsync(args);
+            return new CommandLineBuilder(root);
         }
     }
 }
