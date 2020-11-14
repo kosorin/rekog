@@ -2,6 +2,7 @@
 using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.IO.Abstractions;
 using System.Threading.Tasks;
 
 namespace Rekog.Commands
@@ -10,14 +11,21 @@ namespace Rekog.Commands
         where TOptions : class
         where TController : ControllerBase<TOptions>
     {
-        public ControllerCommand(string name, string? description = null) : base(name, description)
+        private static readonly FileSystem FileSystem;
+
+        static ControllerCommand()
         {
-            Handler = CommandHandler.Create<TOptions, InvocationContext>(HandleAsync);
+            FileSystem = new FileSystem();
         }
 
-        private Task HandleAsync(TOptions options, InvocationContext context)
+        public ControllerCommand(string name, string? description = null) : base(name, description)
         {
-            if (Activator.CreateInstance(typeof(TController), options, context) is TController controller)
+            Handler = CommandHandler.Create<TOptions, IConsole>(HandleAsync);
+        }
+
+        private Task HandleAsync(TOptions options, IConsole console)
+        {
+            if (Activator.CreateInstance(typeof(TController), options, console, FileSystem) is TController controller)
             {
                 return controller.HandleAsync();
             }

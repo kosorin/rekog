@@ -8,7 +8,7 @@ namespace Rekog.IO
 {
     public class LayoutReader : DataReader
     {
-        public LayoutReader(string path) : base(path)
+        public LayoutReader(IDataReader reader) : base(reader)
         {
         }
 

@@ -1,20 +1,18 @@
-﻿using System.IO;
-
-namespace Rekog.Controllers.Options
+﻿namespace Rekog.Controllers.Options
 {
     public record LayoutOptions
     {
-        public LayoutOptions(FileInfo layout, FileInfo ngrams)
+        public LayoutOptions(string layout, string ngrams)
         {
             Layout = layout;
             Ngrams = ngrams;
         }
 
-        public FileInfo Layout { get; init; }
+        public string Layout { get; init; }
 
-        public FileInfo Ngrams { get; init; }
+        public string Ngrams { get; init; }
 
-        public FileInfo? Output { get; init; }
+        public string? Output { get; init; }
 
         public bool IncludeSameCharacter { get; init; }
 

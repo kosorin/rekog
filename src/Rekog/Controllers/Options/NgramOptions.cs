@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace Rekog.Controllers.Options
+﻿namespace Rekog.Controllers.Options
 {
     public record NgramOptions
     {
@@ -13,7 +11,7 @@ namespace Rekog.Controllers.Options
 
         public string? Pattern { get; init; }
 
-        public FileInfo? Output { get; init; }
+        public string? Output { get; init; }
 
         public bool Raw { get; init; }
 
@@ -23,7 +21,7 @@ namespace Rekog.Controllers.Options
 
         public bool CaseSensitive { get; init; }
 
-        public FileInfo[]? Alphabets { get; init; }
+        public string[]? Alphabets { get; init; }
 
         public int? TopCount { get; init; }
     }

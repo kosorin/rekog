@@ -1,7 +1,7 @@
 ﻿using Rekog.IO;
 using System.CommandLine;
-using System.CommandLine.Invocation;
 using System.IO;
+using System.IO.Abstractions;
 using System.Threading.Tasks;
 
 namespace Rekog.Controllers
@@ -9,26 +9,30 @@ namespace Rekog.Controllers
     public abstract class ControllerBase<TOptions>
         where TOptions : class
     {
-        protected ControllerBase(TOptions options, InvocationContext context)
+        protected ControllerBase(TOptions options, IConsole console, IFileSystem fileSystem)
         {
             Options = options;
-            Context = context;
+            Console = console;
+            FileSystem = fileSystem;
         }
 
         public TOptions Options { get; }
 
-        public InvocationContext Context { get; }
+        public IConsole Console { get; }
 
-        public ICommand Command => Context.ParseResult.CommandResult.Command;
-
-        public IConsole Console => Context.Console;
+        public IFileSystem FileSystem { get; }
 
         public abstract Task HandleAsync();
 
-        protected virtual IDataWriter CreateOutputWriter(FileInfo? fileInfo)
+        protected virtual IDataReader CreateDataReader(string path)
         {
-            return fileInfo != null
-                ? new FileWriter(fileInfo.FullName)
+            return new FileReader(FileSystem.FileStream.Create(path, FileMode.Open));
+        }
+
+        protected virtual IDataWriter CreateDataWriter(string? path)
+        {
+            return path != null
+                ? new FileWriter(FileSystem.FileStream.Create(path, FileMode.Create))
                 : new ConsoleWriter(Console.Out);
         }
     }

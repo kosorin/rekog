@@ -7,7 +7,7 @@ namespace Rekog.IO
 {
     public class NgramCollectionReader : DataReader
     {
-        public NgramCollectionReader(string path) : base(path)
+        public NgramCollectionReader(IDataReader reader) : base(reader)
         {
         }
 

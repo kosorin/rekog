@@ -1,17 +1,24 @@
 ﻿using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Rekog.IO
 {
-    public abstract class DataReader : IDisposable
+    public class FileReader : IDataReader
     {
         private bool _disposed;
 
-        protected DataReader(IDataReader reader)
+        public FileReader(Stream stream)
         {
-            Reader = reader;
+            Reader = new StreamReader(stream);
         }
 
-        protected IDataReader Reader { get; }
+        protected TextReader Reader { get; }
+
+        public Task<string?> ReadLineAsync()
+        {
+            return Reader.ReadLineAsync();
+        }
 
         public void Dispose()
         {
@@ -25,10 +32,7 @@ namespace Rekog.IO
             {
                 if (disposing)
                 {
-                    if (Reader is IDisposable disposable)
-                    {
-                        disposable.Dispose();
-                    }
+                    Reader?.Dispose();
                 }
                 _disposed = true;
             }

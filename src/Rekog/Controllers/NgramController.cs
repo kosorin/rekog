@@ -5,9 +5,9 @@ using Rekog.Core.Ngrams;
 using Rekog.IO;
 using System;
 using System.Collections.Generic;
-using System.CommandLine.Invocation;
+using System.CommandLine;
 using System.CommandLine.IO;
-using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +15,7 @@ namespace Rekog.Controllers
 {
     public class NgramController : ControllerBase<NgramOptions>
     {
-        public NgramController(NgramOptions options, InvocationContext context) : base(options, context)
+        public NgramController(NgramOptions options, IConsole console, IFileSystem fileSystem) : base(options, console, fileSystem)
         {
         }
 
@@ -27,7 +27,7 @@ namespace Rekog.Controllers
 
         private async Task<NgramCollection> Analyze()
         {
-            var paths = GetInputPaths();
+            var paths = PathHelper.GetPaths(FileSystem, Options.Input, Options.Pattern);
             if (!paths.Any())
             {
                 return new NgramCollection();
@@ -42,9 +42,9 @@ namespace Rekog.Controllers
                 try
                 {
                     Console.Out.WriteLine($"File: {path}");
-                    using (var reader = new StreamReader(path.FullName))
+                    using (var dataReader = CreateDataReader(path))
                     {
-                        await analyzer.AnalyzeNext(reader);
+                        await analyzer.AnalyzeNext(dataReader);
                     }
                 }
                 catch (Exception e)
@@ -56,26 +56,6 @@ namespace Rekog.Controllers
             return analyzer.CreateResult();
         }
 
-        private List<FileInfo> GetInputPaths()
-        {
-            var attributes = File.GetAttributes(Options.Input);
-            if (attributes.HasFlag(FileAttributes.Directory))
-            {
-                var pattern = string.IsNullOrWhiteSpace(Options.Pattern) ? "*" : Options.Pattern;
-                var allDirectories = false;
-                if (pattern[0] == '/')
-                {
-                    pattern = pattern[1..];
-                    allDirectories = true;
-                }
-                return Directory.GetFiles(Options.Input, pattern, allDirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).Select(x => new FileInfo(x)).ToList();
-            }
-            else
-            {
-                return new List<FileInfo> { new FileInfo(Options.Input) };
-            }
-        }
-
         private async Task<Alphabet> ReadAlphabet()
         {
             if (Options.Alphabets == null)
@@ -85,9 +65,10 @@ namespace Rekog.Controllers
 
             var characters = new List<char>();
 
-            foreach (var fileInfo in Options.Alphabets)
+            foreach (var path in Options.Alphabets)
             {
-                using (var reader = new AlphabetReader(fileInfo.FullName))
+                using (var dataReader = CreateDataReader(path))
+                using (var reader = new AlphabetReader(dataReader))
                 {
                     characters.AddRange(await reader.ReadCharacters());
                 }
@@ -98,7 +79,8 @@ namespace Rekog.Controllers
 
         private async Task<NgramCollection> ReadAnalyzed()
         {
-            using (var ngramsReader = new NgramCollectionReader(Options.Input))
+            using (var dataReader = CreateDataReader(Options.Input))
+            using (var ngramsReader = new NgramCollectionReader(dataReader))
             {
                 return await ngramsReader.Read();
             }
@@ -106,8 +88,8 @@ namespace Rekog.Controllers
 
         private async Task Write(NgramCollection ngrams)
         {
-            using (var outputWriter = CreateOutputWriter(Options.Output))
-            using (var ngramsWriter = new NgramCollectionWriter(outputWriter, Options.Raw))
+            using (var dataWriter = CreateDataWriter(Options.Output))
+            using (var ngramsWriter = new NgramCollectionWriter(dataWriter, Options.Raw))
             {
                 await ngramsWriter.Write(ngrams, Options.TopCount ?? int.MaxValue);
             }

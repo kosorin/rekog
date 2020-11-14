@@ -1,6 +1,6 @@
 ﻿using Rekog.Core.Ngrams;
+using Rekog.IO;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Rekog.Core.Ngram
@@ -26,11 +26,11 @@ namespace Rekog.Core.Ngram
             return new NgramCollection(_rawData.Values);
         }
 
-        public async Task AnalyzeNext(TextReader reader)
+        public async Task AnalyzeNext(IDataReader dataReader)
         {
             while (true)
             {
-                var line = await reader.ReadLineAsync();
+                var line = await dataReader.ReadLineAsync();
                 if (line == null)
                 {
                     break;

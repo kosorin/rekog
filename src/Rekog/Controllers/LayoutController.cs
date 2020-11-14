@@ -3,7 +3,8 @@ using Rekog.Core;
 using Rekog.Core.Ngrams;
 using Rekog.IO;
 using System.Collections.Generic;
-using System.CommandLine.Invocation;
+using System.CommandLine;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace Rekog.Controllers
 {
     public class LayoutController : ControllerBase<LayoutOptions>
     {
-        public LayoutController(LayoutOptions options, InvocationContext context) : base(options, context)
+        public LayoutController(LayoutOptions options, IConsole console, IFileSystem fileSystem) : base(options, console, fileSystem)
         {
         }
 
@@ -51,7 +52,8 @@ namespace Rekog.Controllers
 
         private async Task<Dictionary<Finger, HashSet<char>>> ReadLayout()
         {
-            using (var fingerCharactersReader = new LayoutReader(Options.Layout.FullName))
+            using (var dataReader = CreateDataReader(Options.Layout))
+            using (var fingerCharactersReader = new LayoutReader(dataReader))
             {
                 return await fingerCharactersReader.Read();
             }
@@ -59,7 +61,8 @@ namespace Rekog.Controllers
 
         private async Task<NgramCollection> ReadNgrams()
         {
-            using (var ngramsReader = new NgramCollectionReader(Options.Ngrams.FullName))
+            using (var dataReader = CreateDataReader(Options.Ngrams))
+            using (var ngramsReader = new NgramCollectionReader(dataReader))
             {
                 return await ngramsReader.Read();
             }
@@ -67,8 +70,8 @@ namespace Rekog.Controllers
 
         private async Task Write(Dictionary<Finger, List<Ngram>> fingerNgrams)
         {
-            using (var outputWriter = CreateOutputWriter(Options.Output))
-            using (var writer = new FingerNgramsWriter(outputWriter))
+            using (var dataWriter = CreateDataWriter(Options.Output))
+            using (var writer = new FingerNgramsWriter(dataWriter))
             {
                 await writer.Write(fingerNgrams);
             }

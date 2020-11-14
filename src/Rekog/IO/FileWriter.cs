@@ -9,9 +9,9 @@ namespace Rekog.IO
     {
         private bool _disposed;
 
-        public FileWriter(string path)
+        public FileWriter(Stream stream)
         {
-            Writer = new StreamWriter(path);
+            Writer = new StreamWriter(stream);
         }
 
         protected TextWriter Writer { get; }

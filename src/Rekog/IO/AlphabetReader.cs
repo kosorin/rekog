@@ -5,7 +5,7 @@ namespace Rekog.IO
 {
     public class AlphabetReader : DataReader
     {
-        public AlphabetReader(string path) : base(path)
+        public AlphabetReader(IDataReader reader) : base(reader)
         {
         }
 
