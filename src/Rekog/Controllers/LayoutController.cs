@@ -67,8 +67,8 @@ namespace Rekog.Controllers
 
         private async Task Write(Dictionary<Finger, List<Ngram>> fingerNgrams)
         {
-            using (var dataWriter = Options.Output != null ? (IDataWriter)new FileWriter(Options.Output.FullName) : new ConsoleWriter(Console.Out))
-            using (var writer = new FingerNgramsWriter(dataWriter))
+            using (var outputWriter = CreateOutputWriter(Options.Output))
+            using (var writer = new FingerNgramsWriter(outputWriter))
             {
                 await writer.Write(fingerNgrams);
             }

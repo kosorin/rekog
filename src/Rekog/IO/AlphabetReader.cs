@@ -1,5 +1,4 @@
-﻿using Rekog.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Rekog.IO

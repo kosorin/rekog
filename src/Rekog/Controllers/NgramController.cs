@@ -106,8 +106,8 @@ namespace Rekog.Controllers
 
         private async Task Write(NgramCollection ngrams)
         {
-            using (var dataWriter = Options.Output != null ? (IDataWriter)new FileWriter(Options.Output.FullName) : new ConsoleWriter(Console.Out))
-            using (var ngramsWriter = new NgramCollectionWriter(dataWriter, Options.Raw))
+            using (var outputWriter = CreateOutputWriter(Options.Output))
+            using (var ngramsWriter = new NgramCollectionWriter(outputWriter, Options.Raw))
             {
                 await ngramsWriter.Write(ngrams, Options.TopCount ?? int.MaxValue);
             }

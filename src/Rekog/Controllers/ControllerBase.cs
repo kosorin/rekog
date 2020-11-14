@@ -1,5 +1,7 @@
-﻿using System.CommandLine;
+﻿using Rekog.IO;
+using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Rekog.Controllers
@@ -22,5 +24,12 @@ namespace Rekog.Controllers
         public IConsole Console => Context.Console;
 
         public abstract Task HandleAsync();
+
+        protected virtual IDataWriter CreateOutputWriter(FileInfo? fileInfo)
+        {
+            return fileInfo != null
+                ? new FileWriter(fileInfo.FullName)
+                : new ConsoleWriter(Console.Out);
+        }
     }
 }
