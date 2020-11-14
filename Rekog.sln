@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rekog", "Rekog\Rekog.csproj", "{7D5CB28E-B1ED-4D03-962D-23D043EC23D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rekog", "src\Rekog\Rekog.csproj", "{7D5CB28E-B1ED-4D03-962D-23D043EC23D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rekog.UnitTests", "tests\Rekog.UnitTests\Rekog.UnitTests.csproj", "{DCA486C1-6DD9-4F81-8A19-D1C2779603F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7D5CB28E-B1ED-4D03-962D-23D043EC23D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D5CB28E-B1ED-4D03-962D-23D043EC23D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D5CB28E-B1ED-4D03-962D-23D043EC23D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCA486C1-6DD9-4F81-8A19-D1C2779603F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCA486C1-6DD9-4F81-8A19-D1C2779603F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCA486C1-6DD9-4F81-8A19-D1C2779603F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCA486C1-6DD9-4F81-8A19-D1C2779603F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
