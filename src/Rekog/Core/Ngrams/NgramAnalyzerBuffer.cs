@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Linq;
 
 namespace Rekog.Core.Ngram
 {
     public class NgramAnalyzerBuffer
     {
         private int _position;
+        private int _lastInvalidPosition;
         private readonly char[] _characters;
-        private readonly bool[] _states;
 
         private readonly int _size;
         private readonly bool _caseSensitive;
@@ -25,55 +24,53 @@ namespace Rekog.Core.Ngram
             _alphabet = alphabet;
 
             _position = 0;
+            _lastInvalidPosition = 0;
             _characters = new char[size];
-            _states = new bool[size];
         }
 
-        public void Skip()
+        public void Clear()
         {
-            Next('\0', out _);
+            _position = GetNextPosition(_position);
+            _lastInvalidPosition = _position;
         }
 
         public bool Next(char character, out string ngramValue)
         {
-            _position = GetNextPosition();
-
             if (!_caseSensitive)
             {
                 character = char.ToUpper(character);
             }
 
-            _characters[_position] = character;
-            _states[_position] = _alphabet.Contains(character);
+            _position = GetNextPosition(_position);
 
-            if (IsValidNgram())
+            if (_alphabet.Contains(character))
             {
-                ngramValue = GetNgramValue();
-                return true;
+                _characters[_position] = character;
+
+                if (_position == _lastInvalidPosition)
+                {
+                    var nextPosition = GetNextPosition(_position);
+
+                    _lastInvalidPosition = nextPosition;
+
+                    ngramValue = new string(_characters[nextPosition..]) + new string(_characters[..nextPosition]);
+                    return true;
+                }
             }
             else
             {
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-                ngramValue = null;
-                return false;
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+                _lastInvalidPosition = _position;
             }
+
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+            ngramValue = null;
+            return false;
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
-        private bool IsValidNgram()
+        private int GetNextPosition(int position)
         {
-            return _states.All(x => x);
-        }
-
-        private string GetNgramValue()
-        {
-            var position = GetNextPosition();
-            return new string(_characters, position, _size - position) + new string(_characters, 0, position);
-        }
-
-        private int GetNextPosition()
-        {
-            return (_position + 1) % _size;
+            return (position + 1) % _size;
         }
     }
 }

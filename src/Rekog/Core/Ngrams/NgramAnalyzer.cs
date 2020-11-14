@@ -47,7 +47,7 @@ namespace Rekog.Core.Ngram
 
         private void OnNewLine()
         {
-            _buffer.Skip();
+            _buffer.Clear();
         }
 
         private void OnNextCharacter(char character)
