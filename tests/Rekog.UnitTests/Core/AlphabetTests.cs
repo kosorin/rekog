@@ -24,23 +24,5 @@ namespace Rekog.UnitTests.Core
 
             alphabet.Contains(char.ToUpper(character, CultureInfo.InvariantCulture)).ShouldBeTrue();
         }
-
-        [Fact]
-        public void Contains_Tab_True()
-        {
-            var character = '\t';
-            var alphabet = new Alphabet(character.ToString());
-
-            alphabet.Contains(character).ShouldBeTrue();
-        }
-
-        [Fact]
-        public void Contains_ControlCharacters_False()
-        {
-            var characters = "\n\r\0\f\a\b";
-            var alphabet = new Alphabet(characters);
-
-            characters.ShouldAllBe(x => !alphabet.Contains(x));
-        }
     }
 }
