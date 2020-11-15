@@ -1,5 +1,6 @@
 ﻿using Rekog.Core;
 using Rekog.Core.Ngram;
+using Shouldly;
 using System;
 using System.Linq;
 using Xunit;
@@ -13,7 +14,7 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var alphabet = new Alphabet("ABCDEF");
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => new NgramParser(0, false, alphabet));
+            Should.Throw<ArgumentOutOfRangeException>(() => new NgramParser(0, false, alphabet));
         }
 
         [Fact]
@@ -25,13 +26,13 @@ namespace Rekog.UnitTests.Core.Ngrams
 
             var ngramValues = GetNgramValues("AB CDEF EAF AZBC", parser);
 
-            Assert.Equal(new[]
+            ngramValues.ShouldBe(new[]
             {
                 "A", "B",
                 "C", "D", "E", "F",
                 "E", "A", "F",
                 "A", "B", "C",
-            }, ngramValues);
+            });
         }
 
         [Fact]
@@ -43,13 +44,13 @@ namespace Rekog.UnitTests.Core.Ngrams
 
             var ngramValues = GetNgramValues("AB CDEF EAF AZBC", parser);
 
-            Assert.Equal(new[]
+            ngramValues.ShouldBe(new[]
             {
                 "AB",
                 "CD", "DE", "EF",
                 "EA", "AF",
                 "BC",
-            }, ngramValues);
+            });
         }
 
         [Fact]
@@ -61,11 +62,11 @@ namespace Rekog.UnitTests.Core.Ngrams
 
             var ngramValues = GetNgramValues("AB CDEF EAFAB AZBC ABC", parser);
 
-            Assert.Equal(new[]
+            ngramValues.ShouldBe(new[]
             {
                 "CDEF",
                 "EAFA", "AFAB",
-            }, ngramValues);
+            });
         }
 
         [Fact]
@@ -77,14 +78,14 @@ namespace Rekog.UnitTests.Core.Ngrams
 
             var ngramValues = GetNgramValues("aB abc aD Ecc DEf", parser);
 
-            Assert.Equal(new[]
+            ngramValues.ShouldBe(new[]
             {
                 "AB",
                 "AB", "BC",
                 "AD",
                 "EC", "CC",
                 "DE", "EF",
-            }, ngramValues);
+            });
         }
 
         [Fact]
@@ -96,14 +97,14 @@ namespace Rekog.UnitTests.Core.Ngrams
 
             var ngramValues = GetNgramValues("aB abc aD Ecc DEf", parser);
 
-            Assert.Equal(new[]
+            ngramValues.ShouldBe(new[]
             {
                 "aB",
                 "ab", "bc",
                 "aD",
                 "Ec", "cc",
                 "DE", "Ef",
-            }, ngramValues);
+            });
         }
 
         [Fact]
@@ -115,12 +116,12 @@ namespace Rekog.UnitTests.Core.Ngrams
 
             var ngramValues1 = GetNgramValues("    AB   BCD   DE    ", parser);
 
-            Assert.Equal(new[]
+            ngramValues1.ShouldBe(new[]
             {
                 "AB",
                 "BC", "CD",
                 "DE",
-            }, ngramValues1);
+            });
         }
 
         [Fact]
@@ -133,14 +134,14 @@ namespace Rekog.UnitTests.Core.Ngrams
             var ngramValues1 = GetNgramValues("ABCD", parser);
             var ngramValues2 = GetNgramValues("CDEF", parser);
 
-            Assert.Equal(new[]
+            ngramValues1.ShouldBe(new[]
             {
                 "AB", "BC", "CD"
-            }, ngramValues1);
-            Assert.Equal(new[]
+            });
+            ngramValues2.ShouldBe(new[]
             {
                 "DC", "CD", "DE", "EF",
-            }, ngramValues2);
+            });
         }
 
         [Fact]
@@ -154,14 +155,14 @@ namespace Rekog.UnitTests.Core.Ngrams
             parser.Clear();
             var ngramValues2 = GetNgramValues("CDEF", parser);
 
-            Assert.Equal(new[]
+            ngramValues1.ShouldBe(new[]
             {
                 "AB", "BC", "CD"
-            }, ngramValues1);
-            Assert.Equal(new[]
+            });
+            ngramValues2.ShouldBe(new[]
             {
                 "CD", "DE", "EF",
-            }, ngramValues2);
+            });
         }
 
         private string[] GetNgramValues(string input, NgramParser parser)

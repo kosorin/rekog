@@ -1,4 +1,5 @@
 ﻿using Rekog.IO;
+using Shouldly;
 using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
 using Xunit;
@@ -14,11 +15,10 @@ namespace Rekog.UnitTests.IO
             {
                 [@"T:\Test\A.txt"] = new MockFileData(string.Empty),
             });
-            var path = @"T:\Test\A.txt";
 
-            var paths = PathHelper.GetPaths(fileSystem, path, null);
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test\A.txt", null);
 
-            Assert.Equal(new[] { path }, paths);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt" }, ignoreOrder: true);
         }
 
         [Fact]
@@ -32,11 +32,10 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\C.gif"] = new MockFileData(string.Empty),
                 [@"T:\Test\Sub1\D.txt"] = new MockFileData(string.Empty),
             });
-            var path = @"T:\Test";
 
-            var paths = PathHelper.GetPaths(fileSystem, path, null);
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", null);
 
-            Assert.Equal(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif" }, paths);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif" }, ignoreOrder: true);
         }
 
         [Fact]
@@ -50,11 +49,10 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\C.gif"] = new MockFileData(string.Empty),
                 [@"T:\Test\Sub1\D.txt"] = new MockFileData(string.Empty),
             });
-            var path = @"T:\Test";
 
-            var paths = PathHelper.GetPaths(fileSystem, path, "*.txt");
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", "*.txt");
 
-            Assert.Equal(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt" }, paths);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt" }, ignoreOrder: true);
         }
 
         [Fact]
@@ -72,11 +70,10 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\Sub3\F.gif"] = new MockFileData(string.Empty),
                 [@"T:\Test\Sub3\Sub1\G.gif"] = new MockFileData(string.Empty),
             });
-            var path = @"T:\Test";
 
-            var paths = PathHelper.GetPaths(fileSystem, path, PathHelper.SearchOptionPrefix + PathHelper.DefaultSearchPattern);
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", PathHelper.SearchOptionPrefix + PathHelper.DefaultSearchPattern);
 
-            Assert.Equal(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif", @"T:\Test\Sub1\D.txt", @"T:\Test\Sub1\E.txt", @"T:\Test\Sub3\F.gif", @"T:\Test\Sub3\Sub1\G.gif" }, paths);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif", @"T:\Test\Sub1\D.txt", @"T:\Test\Sub1\E.txt", @"T:\Test\Sub3\F.gif", @"T:\Test\Sub3\Sub1\G.gif" }, ignoreOrder: true);
         }
     }
 }
