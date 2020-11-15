@@ -74,7 +74,7 @@ namespace Rekog.Controllers
                 }
             }
 
-            return new Alphabet(characters, Options.CaseSensitive);
+            return new Alphabet(characters);
         }
 
         private async Task<NgramCollection> ReadAnalyzed()

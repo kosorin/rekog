@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Rekog.Core.Ngram
 {
@@ -36,16 +37,11 @@ namespace Rekog.Core.Ngram
 
         public bool Next(char character, out string ngramValue)
         {
-            if (!_caseSensitive)
-            {
-                character = char.ToUpper(character);
-            }
-
             _position = GetNextPosition(_position);
 
             if (_alphabet.Contains(character))
             {
-                _characters[_position] = character;
+                _characters[_position] = _caseSensitive ? character : char.ToUpper(character, CultureInfo.InvariantCulture);
 
                 if (_position == _lastInvalidPosition)
                 {
