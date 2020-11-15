@@ -54,18 +54,11 @@ namespace Rekog.Core.Ngram
         {
             if (_parser.Next(character, out var ngramValue))
             {
-                if (_rawData.TryGetValue(ngramValue, out var rawNgram))
+                if (!_rawData.TryGetValue(ngramValue, out var rawNgram))
                 {
-                    rawNgram.Occurrences++;
+                    _rawData.Add(ngramValue, rawNgram = new RawNgram(ngramValue));
                 }
-                else
-                {
-                    _rawData[ngramValue] = new RawNgram
-                    {
-                        Value = ngramValue,
-                        Occurrences = 1
-                    };
-                }
+                rawNgram.Occurrences++;
             }
         }
     }

@@ -1,12 +1,20 @@
 ﻿namespace Rekog.Core.Ngrams
 {
-#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-    // TODO: RawNgram is probably useless
+    // TODO: RawNgram is probably not necessary
     public class RawNgram
     {
-        public string Value { get; set; }
+        public RawNgram(string value)
+        {
+            Value = value;
+        }
+
+        public RawNgram(string value, ulong occurrences) : this(value)
+        {
+            Occurrences = occurrences;
+        }
+
+        public string Value { get; }
 
         public ulong Occurrences { get; set; }
     }
-#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
 }

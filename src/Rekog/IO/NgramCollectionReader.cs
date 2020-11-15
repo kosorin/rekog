@@ -32,11 +32,7 @@ namespace Rekog.IO
                 var value = parts[0];
                 var occurrences = ulong.TryParse(parts[1], out var number) ? number : throw new FormatException();
 
-                rawNgrams.Add(new RawNgram
-                {
-                    Value = value,
-                    Occurrences = occurrences
-                });
+                rawNgrams.Add(new RawNgram(value, occurrences));
             }
 
             return new NgramCollection(rawNgrams);
