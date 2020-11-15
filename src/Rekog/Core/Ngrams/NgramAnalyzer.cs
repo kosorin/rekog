@@ -7,12 +7,12 @@ namespace Rekog.Core.Ngram
 {
     public class NgramAnalyzer
     {
-        private readonly NgramAnalyzerBuffer _buffer;
+        private readonly NgramParser _parser;
         private readonly Dictionary<string, RawNgram> _rawData;
 
         public NgramAnalyzer(int size, bool caseSensitive, Alphabet alphabet)
         {
-            _buffer = new NgramAnalyzerBuffer(size, caseSensitive, alphabet);
+            _parser = new NgramParser(size, caseSensitive, alphabet);
             _rawData = new Dictionary<string, RawNgram>();
         }
 
@@ -40,19 +40,19 @@ namespace Rekog.Core.Ngram
 
                 foreach (var character in line)
                 {
-                    OnNextCharacter(character);
+                    OnCharacter(character);
                 }
             }
         }
 
         private void OnNewLine()
         {
-            _buffer.Clear();
+            _parser.Clear();
         }
 
-        private void OnNextCharacter(char character)
+        private void OnCharacter(char character)
         {
-            if (_buffer.Next(character, out var ngramValue))
+            if (_parser.Next(character, out var ngramValue))
             {
                 if (_rawData.TryGetValue(ngramValue, out var rawNgram))
                 {

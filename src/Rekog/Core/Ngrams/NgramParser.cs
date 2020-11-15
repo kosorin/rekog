@@ -2,7 +2,7 @@
 
 namespace Rekog.Core.Ngram
 {
-    public class NgramAnalyzerBuffer
+    public class NgramParser
     {
         private int _position;
         private int _lastInvalidPosition;
@@ -12,7 +12,7 @@ namespace Rekog.Core.Ngram
         private readonly bool _caseSensitive;
         private readonly Alphabet _alphabet;
 
-        public NgramAnalyzerBuffer(int size, bool caseSensitive, Alphabet alphabet)
+        public NgramParser(int size, bool caseSensitive, Alphabet alphabet)
         {
             if (size < 1)
             {

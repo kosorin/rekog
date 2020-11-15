@@ -6,14 +6,14 @@ using Xunit;
 
 namespace Rekog.UnitTests.Core.Ngrams
 {
-    public class NgramAnalyzerBufferTests
+    public class NgramParserTests
     {
         [Fact]
         public void Ctor_SizeLessThan1()
         {
             var alphabet = new Alphabet("ABCDEF");
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => new NgramAnalyzerBuffer(0, false, alphabet));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new NgramParser(0, false, alphabet));
         }
 
         [Fact]
@@ -21,9 +21,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF", caseSensitive);
-            var buffer = new NgramAnalyzerBuffer(1, caseSensitive, alphabet);
+            var parser = new NgramParser(1, caseSensitive, alphabet);
 
-            var ngramValues = GetNgramValues("AB CDEF EAF AZBC", buffer);
+            var ngramValues = GetNgramValues("AB CDEF EAF AZBC", parser);
 
             Assert.Equal(new[]
             {
@@ -39,9 +39,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF", caseSensitive);
-            var buffer = new NgramAnalyzerBuffer(2, caseSensitive, alphabet);
+            var parser = new NgramParser(2, caseSensitive, alphabet);
 
-            var ngramValues = GetNgramValues("AB CDEF EAF AZBC", buffer);
+            var ngramValues = GetNgramValues("AB CDEF EAF AZBC", parser);
 
             Assert.Equal(new[]
             {
@@ -57,9 +57,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF", caseSensitive);
-            var buffer = new NgramAnalyzerBuffer(4, caseSensitive, alphabet);
+            var parser = new NgramParser(4, caseSensitive, alphabet);
 
-            var ngramValues = GetNgramValues("AB CDEF EAFAB AZBC ABC", buffer);
+            var ngramValues = GetNgramValues("AB CDEF EAFAB AZBC ABC", parser);
 
             Assert.Equal(new[]
             {
@@ -73,9 +73,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = true;
             var alphabet = new Alphabet("abcDEF", caseSensitive);
-            var buffer = new NgramAnalyzerBuffer(2, caseSensitive, alphabet);
+            var parser = new NgramParser(2, caseSensitive, alphabet);
 
-            var ngramValues = GetNgramValues("aB abc aD Ecc DEf", buffer);
+            var ngramValues = GetNgramValues("aB abc aD Ecc DEf", parser);
 
             Assert.Equal(new[]
             {
@@ -91,9 +91,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF", caseSensitive);
-            var buffer = new NgramAnalyzerBuffer(2, caseSensitive, alphabet);
+            var parser = new NgramParser(2, caseSensitive, alphabet);
 
-            var ngramValues1 = GetNgramValues("    AB   BCD   DE    ", buffer);
+            var ngramValues1 = GetNgramValues("    AB   BCD   DE    ", parser);
 
             Assert.Equal(new[]
             {
@@ -108,10 +108,10 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF", caseSensitive);
-            var buffer = new NgramAnalyzerBuffer(2, caseSensitive, alphabet);
+            var parser = new NgramParser(2, caseSensitive, alphabet);
 
-            var ngramValues1 = GetNgramValues("ABCD", buffer);
-            var ngramValues2 = GetNgramValues("CDEF", buffer);
+            var ngramValues1 = GetNgramValues("ABCD", parser);
+            var ngramValues2 = GetNgramValues("CDEF", parser);
 
             Assert.Equal(new[]
             {
@@ -128,11 +128,11 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF", caseSensitive);
-            var buffer = new NgramAnalyzerBuffer(2, caseSensitive, alphabet);
+            var parser = new NgramParser(2, caseSensitive, alphabet);
 
-            var ngramValues1 = GetNgramValues("ABCD", buffer);
-            buffer.Clear();
-            var ngramValues2 = GetNgramValues("CDEF", buffer);
+            var ngramValues1 = GetNgramValues("ABCD", parser);
+            parser.Clear();
+            var ngramValues2 = GetNgramValues("CDEF", parser);
 
             Assert.Equal(new[]
             {
@@ -144,10 +144,10 @@ namespace Rekog.UnitTests.Core.Ngrams
             }, ngramValues2);
         }
 
-        private string[] GetNgramValues(string input, NgramAnalyzerBuffer buffer)
+        private string[] GetNgramValues(string input, NgramParser parser)
         {
             return input
-                .Select(character => buffer.Next(character, out var ngramValue) ? ngramValue : null)
+                .Select(character => parser.Next(character, out var ngramValue) ? ngramValue : null)
                 .Where(x => x != null)
                 .Cast<string>()
                 .ToArray();
