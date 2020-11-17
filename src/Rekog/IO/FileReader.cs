@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace Rekog.IO
 {
-    public class FileReader : IDataReader
+    public class DataReader : IDataReader
     {
         private bool _disposed;
 
-        public FileReader(Stream stream)
+        public DataReader(Stream stream)
         {
             Reader = new StreamReader(stream);
         }

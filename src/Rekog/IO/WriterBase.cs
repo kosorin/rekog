@@ -2,16 +2,16 @@
 
 namespace Rekog.IO
 {
-    public abstract class DataReader : IDisposable
+    public abstract class WriterBase : IDisposable
     {
         private bool _disposed;
 
-        protected DataReader(IDataReader reader)
+        protected WriterBase(IDataWriter writer)
         {
-            Reader = reader;
+            Writer = writer;
         }
 
-        protected IDataReader Reader { get; }
+        protected IDataWriter Writer { get; }
 
         public void Dispose()
         {
@@ -25,7 +25,7 @@ namespace Rekog.IO
             {
                 if (disposing)
                 {
-                    if (Reader is IDisposable disposable)
+                    if (Writer is IDisposable disposable)
                     {
                         disposable.Dispose();
                     }

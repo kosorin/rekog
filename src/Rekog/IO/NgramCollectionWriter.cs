@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rekog.IO
 {
-    public class NgramCollectionWriter : DataWriter
+    public class NgramCollectionWriter : WriterBase
     {
         private readonly bool _raw;
 

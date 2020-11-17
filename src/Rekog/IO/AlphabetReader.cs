@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Rekog.IO
 {
-    public class AlphabetReader : DataReader
+    public class AlphabetReader : ReaderBase
     {
         public AlphabetReader(IDataReader reader) : base(reader)
         {

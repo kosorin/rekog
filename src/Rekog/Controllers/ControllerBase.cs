@@ -26,13 +26,13 @@ namespace Rekog.Controllers
 
         protected virtual IDataReader CreateDataReader(string path)
         {
-            return new FileReader(FileSystem.FileStream.Create(path, FileMode.Open));
+            return new DataReader(FileSystem.FileStream.Create(path, FileMode.Open));
         }
 
         protected virtual IDataWriter CreateDataWriter(string? path)
         {
             return path != null
-                ? new FileWriter(FileSystem.FileStream.Create(path, FileMode.Create))
+                ? new DataWriter(FileSystem.FileStream.Create(path, FileMode.Create))
                 : new ConsoleWriter(Console.Out);
         }
     }

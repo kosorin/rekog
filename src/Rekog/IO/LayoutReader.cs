@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Rekog.IO
 {
-    public class LayoutReader : DataReader
+    public class LayoutReader : ReaderBase
     {
         public LayoutReader(IDataReader reader) : base(reader)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Rekog.IO
 {
-    public class FingerNgramsWriter : DataWriter
+    public class FingerNgramsWriter : WriterBase
     {
         public FingerNgramsWriter(IDataWriter writer) : base(writer)
         {

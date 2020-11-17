@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Rekog.IO
 {
-    public class NgramCollectionReader : DataReader
+    public class NgramCollectionReader : ReaderBase
     {
         public NgramCollectionReader(IDataReader reader) : base(reader)
         {

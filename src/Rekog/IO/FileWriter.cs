@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Rekog.IO
 {
-    public class FileWriter : IDataWriter
+    public class DataWriter : IDataWriter
     {
         private bool _disposed;
 
-        public FileWriter(Stream stream)
+        public DataWriter(Stream stream)
         {
             Writer = new StreamWriter(stream);
         }
