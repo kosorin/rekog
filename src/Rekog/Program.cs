@@ -14,22 +14,24 @@ namespace Rekog
         // TODO: Handle errors/exceptions and return correct code (e.g. return 1 on error)
         private static Task<int> Main(string[] args)
         {
-            return BuildCommandLine()
-                .UseDefaults()
-                .Build()
-                .InvokeAsync(args);
+            return BuildParser().InvokeAsync(args);
         }
 
-        private static CommandLineBuilder BuildCommandLine()
+        private static Parser BuildParser()
+        {
+            return new CommandLineBuilder(GetRootCommand())
+                .UseDefaults()
+                .Build();
+        }
+
+        private static Command GetRootCommand()
         {
             var root = new RootCommand();
-
             foreach (var command in GetCommands())
             {
                 root.AddCommand(command);
             }
-
-            return new CommandLineBuilder(root);
+            return root;
         }
 
         private static IEnumerable<Command> GetCommands()
