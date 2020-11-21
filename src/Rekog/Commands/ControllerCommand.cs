@@ -1,5 +1,4 @@
-﻿using Rekog.Controllers;
-using System;
+﻿using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO.Abstractions;

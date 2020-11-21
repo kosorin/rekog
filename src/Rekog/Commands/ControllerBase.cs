@@ -4,7 +4,7 @@ using System.IO;
 using System.IO.Abstractions;
 using System.Threading.Tasks;
 
-namespace Rekog.Controllers
+namespace Rekog.Commands
 {
     public abstract class ControllerBase<TOptions>
         where TOptions : class
