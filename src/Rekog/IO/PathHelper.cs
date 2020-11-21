@@ -12,6 +12,16 @@ namespace Rekog.IO
             return GetPaths(fileSystem, path, DefaultSearchPattern, false);
         }
 
+        public static string[] GetPaths(IFileSystem fileSystem, string path, string searchPattern)
+        {
+            return GetPaths(fileSystem, path, searchPattern, false);
+        }
+
+        public static string[] GetPaths(IFileSystem fileSystem, string path, bool recurseSubdirectories)
+        {
+            return GetPaths(fileSystem, path, DefaultSearchPattern, recurseSubdirectories);
+        }
+
         public static string[] GetPaths(IFileSystem fileSystem, string path, string searchPattern, bool recurseSubdirectories)
         {
             var attributes = fileSystem.File.GetAttributes(path);
