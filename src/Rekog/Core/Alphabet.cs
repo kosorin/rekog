@@ -9,6 +9,7 @@ namespace Rekog.Core
     {
         private readonly HashSet<char> _characters;
 
+        // TODO: Remove parameterless constructor
         public Alphabet() : this("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
         {
         }

@@ -3,6 +3,8 @@ using System.Globalization;
 
 namespace Rekog.Core.Ngram
 {
+    // TODO: Add unigram parser (implements INgramParser)
+    // TODO: Rename parser to scanner
     public class NgramParser
     {
         private int _position;
