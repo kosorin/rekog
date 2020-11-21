@@ -16,7 +16,7 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\A.txt"] = new MockFileData(string.Empty),
             });
 
-            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test\A.txt", null);
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test\A.txt", null, false);
 
             paths.ShouldBe(new[] { @"T:\Test\A.txt" }, ignoreOrder: true);
         }
@@ -33,7 +33,7 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\Sub1\D.txt"] = new MockFileData(string.Empty),
             });
 
-            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", null);
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", null, false);
 
             paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif" }, ignoreOrder: true);
         }
@@ -50,13 +50,13 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\Sub1\D.txt"] = new MockFileData(string.Empty),
             });
 
-            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", "*.txt");
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", "*.txt", false);
 
             paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt" }, ignoreOrder: true);
         }
 
         [Fact]
-        public void GetPaths_Directory_AllSubdirectories()
+        public void GetPaths_Directory_RecurseSubdirectories()
         {
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
@@ -71,7 +71,7 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\Sub3\Sub1\G.gif"] = new MockFileData(string.Empty),
             });
 
-            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", PathHelper.SearchOptionPrefix + PathHelper.DefaultSearchPattern);
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", PathHelper.DefaultSearchPattern, true);
 
             paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif", @"T:\Test\Sub1\D.txt", @"T:\Test\Sub1\E.txt", @"T:\Test\Sub3\F.gif", @"T:\Test\Sub3\Sub1\G.gif" }, ignoreOrder: true);
         }
