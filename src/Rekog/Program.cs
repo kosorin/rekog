@@ -11,6 +11,7 @@ namespace Rekog
 {
     internal static class Program
     {
+        // TODO: Handle errors/exceptions and return correct code (e.g. return 1 on error)
         private static Task<int> Main(string[] args)
         {
             return BuildCommandLine()
