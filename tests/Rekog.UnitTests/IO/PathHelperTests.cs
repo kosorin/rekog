@@ -22,6 +22,36 @@ namespace Rekog.UnitTests.IO
         }
 
         [Fact]
+        public void GetPaths_RelativeFile()
+        {
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                [@"T:\Test\A.txt"] = new MockFileData(string.Empty),
+            }, @"T:\Test\");
+
+            var paths = PathHelper.GetPaths(fileSystem, "A.txt", null, false);
+
+            paths.ShouldBe(new[] { @"T:\Test\A.txt" }, ignoreOrder: true);
+        }
+
+        [Fact]
+        public void GetPaths_RelativeDirectory()
+        {
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                [@"T:\ROOT.txt"] = new MockFileData(string.Empty),
+                [@"T:\Test\A.txt"] = new MockFileData(string.Empty),
+                [@"T:\Test\B.txt"] = new MockFileData(string.Empty),
+                [@"T:\Test\C.gif"] = new MockFileData(string.Empty),
+                [@"T:\Test\Sub1\D.txt"] = new MockFileData(string.Empty),
+            }, @"T:\Test\");
+
+            var paths = PathHelper.GetPaths(fileSystem, ".", null, false);
+
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif" }, ignoreOrder: true);
+        }
+
+        [Fact]
         public void GetPaths_Directory_DefaultSearchPattern()
         {
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>

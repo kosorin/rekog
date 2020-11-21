@@ -21,7 +21,7 @@ namespace Rekog.IO
             }
             else
             {
-                return new[] { path };
+                return new[] { fileSystem.Path.GetFullPath(path) };
             }
         }
     }
