@@ -1,4 +1,4 @@
-﻿using Rekog.Commands;
+﻿using Rekog.Commands.Corpus;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
@@ -8,17 +8,19 @@ namespace Rekog
 {
     internal static class Program
     {
-        private static async Task<int> Main(string[] args) => await BuildCommandLine()
-            .UseDefaults()
-            .Build()
-            .InvokeAsync(args);
+        private static async Task<int> Main(string[] args)
+        {
+            return await BuildCommandLine()
+                .UseDefaults()
+                .Build()
+                .InvokeAsync(@"corpus D:\");
+        }
 
         private static CommandLineBuilder BuildCommandLine()
         {
             var root = new RootCommand
             {
-                new LayoutCommand(),
-                new NgramCommand(),
+                new CorpusCommand(),
             };
             return new CommandLineBuilder(root);
         }
