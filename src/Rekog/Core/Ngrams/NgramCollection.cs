@@ -18,7 +18,7 @@ namespace Rekog.Core.Ngrams
         {
             _data = new Dictionary<string, Ngram>(rawNgrams.Count);
 
-            if (!rawNgrams.Any())
+            if (rawNgrams.Count == 0)
             {
                 return;
             }

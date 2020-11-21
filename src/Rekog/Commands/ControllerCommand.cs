@@ -17,7 +17,7 @@ namespace Rekog.Commands
             FileSystem = new FileSystem();
         }
 
-        public ControllerCommand(string name, string? description = null) : base(name, description)
+        protected ControllerCommand(string name, string? description = null) : base(name, description)
         {
             Handler = CommandHandler.Create<TOptions, IConsole>(HandleAsync);
         }
