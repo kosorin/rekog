@@ -16,7 +16,7 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\A.txt"] = new MockFileData(string.Empty),
             });
 
-            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test\A.txt", null, false);
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test\A.txt");
 
             paths.ShouldBe(new[] { @"T:\Test\A.txt" }, ignoreOrder: true);
         }
@@ -29,9 +29,26 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\A.txt"] = new MockFileData(string.Empty),
             }, @"T:\Test\");
 
-            var paths = PathHelper.GetPaths(fileSystem, "A.txt", null, false);
+            var paths = PathHelper.GetPaths(fileSystem, "A.txt");
 
             paths.ShouldBe(new[] { @"T:\Test\A.txt" }, ignoreOrder: true);
+        }
+
+        [Fact]
+        public void GetPaths_Directory()
+        {
+            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            {
+                [@"T:\ROOT.txt"] = new MockFileData(string.Empty),
+                [@"T:\Test\A.txt"] = new MockFileData(string.Empty),
+                [@"T:\Test\B.txt"] = new MockFileData(string.Empty),
+                [@"T:\Test\C.gif"] = new MockFileData(string.Empty),
+                [@"T:\Test\Sub1\D.txt"] = new MockFileData(string.Empty),
+            });
+
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test");
+
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif" }, ignoreOrder: true);
         }
 
         [Fact]
@@ -46,24 +63,7 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\Sub1\D.txt"] = new MockFileData(string.Empty),
             }, @"T:\Test\");
 
-            var paths = PathHelper.GetPaths(fileSystem, ".", null, false);
-
-            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif" }, ignoreOrder: true);
-        }
-
-        [Fact]
-        public void GetPaths_Directory_DefaultSearchPattern()
-        {
-            var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-            {
-                [@"T:\ROOT.txt"] = new MockFileData(string.Empty),
-                [@"T:\Test\A.txt"] = new MockFileData(string.Empty),
-                [@"T:\Test\B.txt"] = new MockFileData(string.Empty),
-                [@"T:\Test\C.gif"] = new MockFileData(string.Empty),
-                [@"T:\Test\Sub1\D.txt"] = new MockFileData(string.Empty),
-            });
-
-            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", null, false);
+            var paths = PathHelper.GetPaths(fileSystem, ".");
 
             paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif" }, ignoreOrder: true);
         }
