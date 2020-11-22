@@ -1,8 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.Abstractions;
 
 namespace Rekog.IO
 {
+    [Obsolete("Logic moved to PathConfig")]
     public static class PathHelper
     {
         public static string DefaultSearchPattern { get; } = "*";

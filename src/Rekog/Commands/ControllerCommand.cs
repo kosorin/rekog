@@ -1,33 +1,57 @@
-﻿using System;
+﻿using Rekog.Controllers;
+using Rekog.Input.Configurations;
+using Rekog.Input.Options;
+using Rekog.Serialization;
+using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.IO;
 using System.IO.Abstractions;
 using System.Threading.Tasks;
 
 namespace Rekog.Commands
 {
-    public abstract class ControllerCommand<TOptions, TController> : Command
-        where TOptions : class
-        where TController : ControllerBase<TOptions>
+    public abstract class ControllerCommand<TConfig, TOptions, TController> : Command
+        where TConfig : CommandConfig<TOptions>
+        where TOptions : CommandOptions
+        where TController : CommandController<TConfig, TOptions>
     {
-        private static readonly FileSystem FileSystem;
-
-        static ControllerCommand()
+        protected ControllerCommand(IFileSystem fileSystem, string name, string? description = null) : base(name, description)
         {
-            FileSystem = new FileSystem();
+            FileSystem = fileSystem;
+
+            Handler = CommandHandler.Create<TOptions, IConsole>(HandleAsync);
+
+            AddArgument(new Argument<string>("config"));
+            AddOption(new Option<string>(new[] { "--output", "-o" }) { IsRequired = true });
         }
 
-        protected ControllerCommand(string name, string? description = null) : base(name, description)
+        protected IFileSystem FileSystem { get; }
+
+        protected abstract ConfigDeserializer<TConfig> GetConfigDeserializer();
+
+        private TConfig BuildConfig(TOptions options)
         {
-            Handler = CommandHandler.Create<TOptions, IConsole>(HandleAsync);
+            using var stream = FileSystem.FileStream.Create(options.Config, FileMode.Open);
+            using var reader = new StreamReader(stream);
+
+            var config = GetConfigDeserializer().Deserialize(reader);
+
+            config.Options = options;
+            config.Fix();
+
+            return config;
         }
 
         private Task HandleAsync(TOptions options, IConsole console)
         {
-            if (Activator.CreateInstance(typeof(TController), options, console, FileSystem) is TController controller)
+            var config = BuildConfig(options);
+
+            if (Activator.CreateInstance(typeof(TController), config, console, FileSystem) is TController controller)
             {
                 return controller.HandleAsync();
             }
+
             return Task.CompletedTask;
         }
     }

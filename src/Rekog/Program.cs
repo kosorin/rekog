@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace Rekog
 {
     internal static class Program
     {
+        private static readonly FileSystem FileSystem = new();
+
         // TODO: Handle errors/exceptions and return correct code (e.g. return 1 on error)
         private static Task<int> Main(string[] args)
         {
@@ -36,12 +39,12 @@ namespace Rekog
 
         private static IEnumerable<Command> GetCommands()
         {
-            var baseType = typeof(ControllerCommand<,>);
+            var baseType = typeof(ControllerCommand<,,>);
             return baseType.Assembly.GetTypes()
                 .Where(x => x.BaseType != null
                          && x.BaseType.IsGenericType
                          && x.BaseType.GetGenericTypeDefinition() == baseType)
-                .Select(x => Activator.CreateInstance(x) is Command command ? command : throw new NullReferenceException());
+                .Select(x => Activator.CreateInstance(x, FileSystem) is Command command ? command : throw new NullReferenceException());
         }
     }
 }

@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Corpus": {
+      "commandName": "Project",
+      "commandLineArgs": "corpus config.yml -o o -ac cs_wiki",
+      "workingDirectory": "..\\..\\data\\"
+    }
+  }
+}

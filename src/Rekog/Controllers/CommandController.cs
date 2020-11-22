@@ -1,22 +1,25 @@
-﻿using Rekog.IO;
+﻿using Rekog.Input.Configurations;
+using Rekog.Input.Options;
+using Rekog.IO;
 using System.CommandLine;
 using System.IO;
 using System.IO.Abstractions;
 using System.Threading.Tasks;
 
-namespace Rekog.Commands
+namespace Rekog.Controllers
 {
-    public abstract class ControllerBase<TOptions>
-        where TOptions : class
+    public abstract class CommandController<TConfig, TOptions>
+        where TConfig : CommandConfig<TOptions>
+        where TOptions : CommandOptions
     {
-        protected ControllerBase(TOptions options, IConsole console, IFileSystem fileSystem)
+        protected CommandController(TConfig config, IConsole console, IFileSystem fileSystem)
         {
-            Options = options;
+            Config = config;
             Console = console;
             FileSystem = fileSystem;
         }
 
-        public TOptions Options { get; }
+        public TConfig Config { get; }
 
         public IConsole Console { get; }
 
