@@ -17,7 +17,7 @@ namespace Rekog.Core
         public Alphabet(IEnumerable<char> characters)
         {
             characters = characters
-                .SelectMany(x => new[] { char.ToLower(x, CultureInfo.InvariantCulture), char.ToUpper(x, CultureInfo.InvariantCulture) })
+                .SelectMany(x => new[] { char.ToLowerInvariant(x), char.ToUpperInvariant(x) })
                 .Distinct();
             _characters = new HashSet<char>(characters);
         }

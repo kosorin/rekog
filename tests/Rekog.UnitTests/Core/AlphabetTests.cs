@@ -1,6 +1,5 @@
 ﻿using Rekog.Core;
 using Shouldly;
-using System.Globalization;
 using Xunit;
 
 namespace Rekog.UnitTests.Core
@@ -13,7 +12,7 @@ namespace Rekog.UnitTests.Core
             var character = 'A';
             var alphabet = new Alphabet(character.ToString());
 
-            alphabet.Contains(char.ToLower(character, CultureInfo.InvariantCulture)).ShouldBeTrue();
+            alphabet.Contains(char.ToLowerInvariant(character)).ShouldBeTrue();
         }
 
         [Fact]
@@ -22,7 +21,7 @@ namespace Rekog.UnitTests.Core
             var character = 'a';
             var alphabet = new Alphabet(character.ToString());
 
-            alphabet.Contains(char.ToUpper(character, CultureInfo.InvariantCulture)).ShouldBeTrue();
+            alphabet.Contains(char.ToUpperInvariant(character)).ShouldBeTrue();
         }
     }
 }

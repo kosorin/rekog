@@ -43,7 +43,7 @@ namespace Rekog.Core.Ngram
 
             if (_alphabet.Contains(character))
             {
-                _characters[_position] = _caseSensitive ? character : char.ToUpper(character, CultureInfo.InvariantCulture);
+                _characters[_position] = _caseSensitive ? character : char.ToUpperInvariant(character);
 
                 if (_position == _lastInvalidPosition)
                 {
