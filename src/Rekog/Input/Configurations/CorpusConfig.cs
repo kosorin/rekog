@@ -38,11 +38,6 @@ namespace Rekog.Input.Configurations
             {
                 PathConfigs.Remove(key);
             }
-
-            foreach (var pathConfig in PathConfigs.Values)
-            {
-                pathConfig.SearchPattern ??= PathConfig.DefaultSearchPattern;
-            }
         }
 
         protected override IEnumerable<Input> CollectChildren()
