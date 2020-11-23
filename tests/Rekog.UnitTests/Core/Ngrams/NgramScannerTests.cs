@@ -1,5 +1,5 @@
 ﻿using Rekog.Core;
-using Rekog.Core.Ngram;
+using Rekog.Core.Ngrams;
 using Shouldly;
 using System;
 using System.Linq;
@@ -136,7 +136,7 @@ namespace Rekog.UnitTests.Core.Ngrams
 
             ngramValues1.ShouldBe(new[]
             {
-                "AB", "BC", "CD"
+                "AB", "BC", "CD",
             });
             ngramValues2.ShouldBe(new[]
             {
@@ -157,7 +157,7 @@ namespace Rekog.UnitTests.Core.Ngrams
 
             ngramValues1.ShouldBe(new[]
             {
-                "AB", "BC", "CD"
+                "AB", "BC", "CD",
             });
             ngramValues2.ShouldBe(new[]
             {

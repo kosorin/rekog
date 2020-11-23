@@ -1,18 +1,17 @@
-﻿using Rekog.Core.Ngrams;
-using Rekog.IO;
+﻿using Rekog.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Rekog.Core.Ngram
+namespace Rekog.Core.Ngrams
 {
     public class NgramAnalyzer
     {
-        private readonly NgramScanner _scanner;
+        private readonly INgramScanner _scanner;
         private readonly Dictionary<string, RawNgram> _rawData;
 
         public NgramAnalyzer(int size, bool caseSensitive, Alphabet alphabet)
         {
-            _scanner = new NgramScanner(size, caseSensitive, alphabet);
+            _scanner = new NgramScannerFactory().Create(size, caseSensitive, alphabet);
             _rawData = new Dictionary<string, RawNgram>();
         }
 

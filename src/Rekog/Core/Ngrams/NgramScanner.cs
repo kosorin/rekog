@@ -1,17 +1,12 @@
 ﻿using System;
 
-namespace Rekog.Core.Ngram
+namespace Rekog.Core.Ngrams
 {
-    // TODO: Add unigram scanner (implements INgramScanner)
-    public class NgramScanner
+    public class NgramScanner : INgramScanner
     {
         private int _position;
         private int _lastInvalidPosition;
         private readonly char[] _characters;
-
-        private readonly int _size;
-        private readonly bool _caseSensitive;
-        private readonly Alphabet _alphabet;
 
         public NgramScanner(int size, bool caseSensitive, Alphabet alphabet)
         {
@@ -20,14 +15,20 @@ namespace Rekog.Core.Ngram
                 throw new ArgumentOutOfRangeException(nameof(size));
             }
 
-            _size = size;
-            _caseSensitive = caseSensitive;
-            _alphabet = alphabet;
+            Size = size;
+            CaseSensitive = caseSensitive;
+            Alphabet = alphabet;
 
             _position = 0;
             _lastInvalidPosition = 0;
             _characters = new char[size];
         }
+
+        public int Size { get; }
+
+        public bool CaseSensitive { get; }
+
+        public Alphabet Alphabet { get; }
 
         public void Clear()
         {
@@ -39,9 +40,9 @@ namespace Rekog.Core.Ngram
         {
             _position = GetNextPosition(_position);
 
-            if (_alphabet.Contains(character))
+            if (Alphabet.Contains(character))
             {
-                _characters[_position] = _caseSensitive ? character : char.ToUpperInvariant(character);
+                _characters[_position] = CaseSensitive ? character : char.ToUpperInvariant(character);
 
                 if (_position == _lastInvalidPosition)
                 {
@@ -66,7 +67,7 @@ namespace Rekog.Core.Ngram
 
         private int GetNextPosition(int position)
         {
-            return (position + 1) % _size;
+            return (position + 1) % Size;
         }
     }
 }
