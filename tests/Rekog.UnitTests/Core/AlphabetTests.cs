@@ -1,5 +1,6 @@
 ﻿using Rekog.Core;
 using Shouldly;
+using System.Linq;
 using Xunit;
 
 namespace Rekog.UnitTests.Core
@@ -22,6 +23,14 @@ namespace Rekog.UnitTests.Core
             var alphabet = new Alphabet(character.ToString());
 
             alphabet.Contains(char.ToUpperInvariant(character)).ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Enumerable()
+        {
+            var alphabet = new Alphabet("1abc");
+
+            alphabet.ToArray().ShouldBe("1abcABC", ignoreOrder: true);
         }
     }
 }
