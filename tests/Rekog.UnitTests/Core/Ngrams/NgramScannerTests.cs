@@ -7,14 +7,14 @@ using Xunit;
 
 namespace Rekog.UnitTests.Core.Ngrams
 {
-    public class NgramParserTests
+    public class NgramScannerTests
     {
         [Fact]
         public void Ctor_SizeLessThan1()
         {
             var alphabet = new Alphabet("ABCDEF");
 
-            Should.Throw<ArgumentOutOfRangeException>(() => new NgramParser(0, false, alphabet));
+            Should.Throw<ArgumentOutOfRangeException>(() => new NgramScanner(0, false, alphabet));
         }
 
         [Fact]
@@ -22,9 +22,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF");
-            var parser = new NgramParser(1, caseSensitive, alphabet);
+            var scanner = new NgramScanner(1, caseSensitive, alphabet);
 
-            var ngramValues = GetNgramValues("AB CDEF EAF AZBC", parser);
+            var ngramValues = GetNgramValues("AB CDEF EAF AZBC", scanner);
 
             ngramValues.ShouldBe(new[]
             {
@@ -40,9 +40,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF");
-            var parser = new NgramParser(2, caseSensitive, alphabet);
+            var scanner = new NgramScanner(2, caseSensitive, alphabet);
 
-            var ngramValues = GetNgramValues("AB CDEF EAF AZBC", parser);
+            var ngramValues = GetNgramValues("AB CDEF EAF AZBC", scanner);
 
             ngramValues.ShouldBe(new[]
             {
@@ -58,9 +58,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF");
-            var parser = new NgramParser(4, caseSensitive, alphabet);
+            var scanner = new NgramScanner(4, caseSensitive, alphabet);
 
-            var ngramValues = GetNgramValues("AB CDEF EAFAB AZBC ABC", parser);
+            var ngramValues = GetNgramValues("AB CDEF EAFAB AZBC ABC", scanner);
 
             ngramValues.ShouldBe(new[]
             {
@@ -74,9 +74,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF");
-            var parser = new NgramParser(2, caseSensitive, alphabet);
+            var scanner = new NgramScanner(2, caseSensitive, alphabet);
 
-            var ngramValues = GetNgramValues("aB abc aD Ecc DEf", parser);
+            var ngramValues = GetNgramValues("aB abc aD Ecc DEf", scanner);
 
             ngramValues.ShouldBe(new[]
             {
@@ -93,9 +93,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = true;
             var alphabet = new Alphabet("ABCDEF");
-            var parser = new NgramParser(2, caseSensitive, alphabet);
+            var scanner = new NgramScanner(2, caseSensitive, alphabet);
 
-            var ngramValues = GetNgramValues("aB abc aD Ecc DEf", parser);
+            var ngramValues = GetNgramValues("aB abc aD Ecc DEf", scanner);
 
             ngramValues.ShouldBe(new[]
             {
@@ -112,9 +112,9 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF");
-            var parser = new NgramParser(2, caseSensitive, alphabet);
+            var scanner = new NgramScanner(2, caseSensitive, alphabet);
 
-            var ngramValues1 = GetNgramValues("    AB   BCD   DE    ", parser);
+            var ngramValues1 = GetNgramValues("    AB   BCD   DE    ", scanner);
 
             ngramValues1.ShouldBe(new[]
             {
@@ -129,10 +129,10 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF");
-            var parser = new NgramParser(2, caseSensitive, alphabet);
+            var scanner = new NgramScanner(2, caseSensitive, alphabet);
 
-            var ngramValues1 = GetNgramValues("ABCD", parser);
-            var ngramValues2 = GetNgramValues("CDEF", parser);
+            var ngramValues1 = GetNgramValues("ABCD", scanner);
+            var ngramValues2 = GetNgramValues("CDEF", scanner);
 
             ngramValues1.ShouldBe(new[]
             {
@@ -149,11 +149,11 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             var caseSensitive = false;
             var alphabet = new Alphabet("ABCDEF");
-            var parser = new NgramParser(2, caseSensitive, alphabet);
+            var scanner = new NgramScanner(2, caseSensitive, alphabet);
 
-            var ngramValues1 = GetNgramValues("ABCD", parser);
-            parser.Clear();
-            var ngramValues2 = GetNgramValues("CDEF", parser);
+            var ngramValues1 = GetNgramValues("ABCD", scanner);
+            scanner.Clear();
+            var ngramValues2 = GetNgramValues("CDEF", scanner);
 
             ngramValues1.ShouldBe(new[]
             {
@@ -165,10 +165,10 @@ namespace Rekog.UnitTests.Core.Ngrams
             });
         }
 
-        private string[] GetNgramValues(string input, NgramParser parser)
+        private string[] GetNgramValues(string input, NgramScanner scanner)
         {
             return input
-                .Select(character => parser.Next(character, out var ngramValue) ? ngramValue : null)
+                .Select(character => scanner.Next(character, out var ngramValue) ? ngramValue : null)
                 .Where(x => x != null)
                 .Cast<string>()
                 .ToArray();

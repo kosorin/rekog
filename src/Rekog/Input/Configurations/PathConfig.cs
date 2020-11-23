@@ -1,6 +1,5 @@
 ﻿using Rekog.IO;
 using System.Collections.Generic;
-using System.IO;
 using System.IO.Abstractions;
 
 namespace Rekog.Input.Configurations

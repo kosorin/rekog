@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Globalization;
 
 namespace Rekog.Core.Ngram
 {
-    // TODO: Add unigram parser (implements INgramParser)
-    // TODO: Rename parser to scanner
-    public class NgramParser
+    // TODO: Add unigram scanner (implements INgramScanner)
+    public class NgramScanner
     {
         private int _position;
         private int _lastInvalidPosition;
@@ -15,7 +13,7 @@ namespace Rekog.Core.Ngram
         private readonly bool _caseSensitive;
         private readonly Alphabet _alphabet;
 
-        public NgramParser(int size, bool caseSensitive, Alphabet alphabet)
+        public NgramScanner(int size, bool caseSensitive, Alphabet alphabet)
         {
             if (size < 1)
             {
