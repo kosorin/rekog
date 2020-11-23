@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 
 namespace Rekog.Core
@@ -8,11 +7,6 @@ namespace Rekog.Core
     public class Alphabet : IEnumerable<char>
     {
         private readonly HashSet<char> _characters;
-
-        // TODO: Remove parameterless constructor
-        public Alphabet() : this("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-        {
-        }
 
         public Alphabet(IEnumerable<char> characters)
         {
