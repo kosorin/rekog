@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Rekog.Input
 {
-    public abstract class Input
+    public abstract record Input
     {
         public void Fix()
         {
