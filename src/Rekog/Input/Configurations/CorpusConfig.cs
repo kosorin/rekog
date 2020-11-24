@@ -14,6 +14,8 @@ namespace Rekog.Input.Configurations
 
         protected override void FixSelf()
         {
+            base.FixSelf();
+
             FixAlphabetConfigs();
             FixPathConfigs();
         }
