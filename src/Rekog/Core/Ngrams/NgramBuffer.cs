@@ -2,13 +2,13 @@
 
 namespace Rekog.Core.Ngrams
 {
-    public class NgramScanner : INgramScanner
+    public class NgramBuffer : INgramBuffer
     {
         private int _position;
         private int _lastInvalidPosition;
         private readonly char[] _characters;
 
-        public NgramScanner(int size, bool caseSensitive, Alphabet alphabet)
+        public NgramBuffer(int size)
         {
             if (size < 1)
             {
@@ -16,8 +16,6 @@ namespace Rekog.Core.Ngrams
             }
 
             Size = size;
-            CaseSensitive = caseSensitive;
-            Alphabet = alphabet;
 
             _position = 0;
             _lastInvalidPosition = 0;
@@ -26,11 +24,7 @@ namespace Rekog.Core.Ngrams
 
         public int Size { get; }
 
-        public bool CaseSensitive { get; }
-
-        public Alphabet Alphabet { get; }
-
-        public void Clear()
+        public void Skip()
         {
             _position = GetNextPosition(_position);
             _lastInvalidPosition = _position;
@@ -39,24 +33,16 @@ namespace Rekog.Core.Ngrams
         public bool Next(char character, out string ngramValue)
         {
             _position = GetNextPosition(_position);
+            _characters[_position] = character;
 
-            if (Alphabet.Contains(character))
+            if (_position == _lastInvalidPosition)
             {
-                _characters[_position] = CaseSensitive ? character : char.ToUpperInvariant(character);
+                var nextPosition = GetNextPosition(_position);
 
-                if (_position == _lastInvalidPosition)
-                {
-                    var nextPosition = GetNextPosition(_position);
+                _lastInvalidPosition = nextPosition;
 
-                    _lastInvalidPosition = nextPosition;
-
-                    ngramValue = new string(_characters[nextPosition..]) + new string(_characters[..nextPosition]);
-                    return true;
-                }
-            }
-            else
-            {
-                _lastInvalidPosition = _position;
+                ngramValue = new string(_characters[nextPosition..]) + new string(_characters[..nextPosition]);
+                return true;
             }
 
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
