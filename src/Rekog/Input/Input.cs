@@ -7,18 +7,11 @@ namespace Rekog.Input
     {
         public void Fix()
         {
-            try
-            {
-                FixSelf();
+            FixSelf();
 
-                foreach (var input in CollectChildren())
-                {
-                    input.Fix();
-                }
-            }
-            catch (Exception e) when (e is not InputException)
+            foreach (var input in CollectChildren())
             {
-                throw new InputException("Unknown input exception", e);
+                input.Fix();
             }
         }
 

@@ -15,7 +15,7 @@ namespace Rekog.Input.Configurations
         {
             if (Options == null)
             {
-                throw new Exception("Options is not set.");
+                throw new InputException("Options is not set.");
             }
         }
 
