@@ -1,5 +1,5 @@
-﻿using Rekog.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Rekog.Core.Ngrams
@@ -25,7 +25,7 @@ namespace Rekog.Core.Ngrams
             return new NgramCollection(_rawData.Values);
         }
 
-        public async Task AnalyzeNext(IDataReader dataReader)
+        public async Task AnalyzeNext(TextReader dataReader)
         {
             while (true)
             {

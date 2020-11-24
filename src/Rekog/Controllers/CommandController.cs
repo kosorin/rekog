@@ -1,8 +1,6 @@
 ﻿using Rekog.Input.Configurations;
 using Rekog.Input.Options;
-using Rekog.IO;
 using System.CommandLine;
-using System.IO;
 using System.IO.Abstractions;
 using System.Threading.Tasks;
 
@@ -26,17 +24,5 @@ namespace Rekog.Controllers
         public IFileSystem FileSystem { get; }
 
         public abstract Task HandleAsync();
-
-        protected virtual IDataReader CreateDataReader(string path)
-        {
-            return new DataReader(FileSystem.FileStream.Create(path, FileMode.Open));
-        }
-
-        protected virtual IDataWriter CreateDataWriter(string? path)
-        {
-            return path != null
-                ? new DataWriter(FileSystem.FileStream.Create(path, FileMode.Create))
-                : new ConsoleWriter(Console.Out);
-        }
     }
 }
