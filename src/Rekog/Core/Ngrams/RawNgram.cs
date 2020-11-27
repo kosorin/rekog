@@ -1,6 +1,5 @@
 ﻿namespace Rekog.Core.Ngrams
 {
-    // TODO: RawNgram is probably not necessary
     public class RawNgram
     {
         public RawNgram(string value)
