@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Rekog.Core.Ngrams
 {
-    public class NgramCollection : IEnumerable<Ngram>
+    public class NgramCollection : IReadOnlyCollection<Ngram>
     {
         private readonly Dictionary<string, Ngram> _data;
 
@@ -49,6 +49,8 @@ namespace Rekog.Core.Ngrams
         public int Size { get; }
 
         public ulong TotalOccurrences { get; }
+
+        public int Count => _data.Count;
 
         public Ngram this[string ngram] => _data[ngram];
 
