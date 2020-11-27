@@ -7,6 +7,7 @@ namespace Rekog.Core.Ngrams
         private int _position;
         private int _lastInvalidPosition;
         private readonly char[] _characters;
+        private readonly char[] _buffer;
 
         public NgramBuffer(int size)
         {
@@ -20,6 +21,7 @@ namespace Rekog.Core.Ngrams
             _position = 0;
             _lastInvalidPosition = 0;
             _characters = new char[size];
+            _buffer = new char[size];
         }
 
         public int Size { get; }
@@ -37,11 +39,14 @@ namespace Rekog.Core.Ngrams
 
             if (_position == _lastInvalidPosition)
             {
-                var nextPosition = GetNextPosition(_position);
+                _lastInvalidPosition = GetNextPosition(_position);
 
-                _lastInvalidPosition = nextPosition;
-
-                ngramValue = new string(_characters[nextPosition..]) + new string(_characters[..nextPosition]);
+                var nextPosition = _lastInvalidPosition;
+                for (var i = 0; i < Size; i++)
+                {
+                    _buffer[i] = _characters[(nextPosition + i) % Size];
+                }
+                ngramValue = new string(_buffer);
                 return true;
             }
 
