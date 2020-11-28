@@ -1,4 +1,4 @@
-﻿using Rekog.Core;
+﻿using Rekog.Core.Corpora;
 using Shouldly;
 using System.Linq;
 using Xunit;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Rekog.Core
+namespace Rekog.Core.Corpora
 {
     public class Alphabet : IEnumerable<char>
     {
