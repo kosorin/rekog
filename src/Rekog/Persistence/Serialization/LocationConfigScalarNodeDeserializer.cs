@@ -4,7 +4,7 @@ using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 
-namespace Rekog.Serialization
+namespace Rekog.Persistence.Serialization
 {
     public sealed class LocationConfigScalarNodeDeserializer : INodeDeserializer
     {

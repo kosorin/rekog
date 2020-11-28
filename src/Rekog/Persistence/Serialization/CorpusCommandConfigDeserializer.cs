@@ -1,7 +1,7 @@
 ﻿using Rekog.Persistence;
 using YamlDotNet.Serialization;
 
-namespace Rekog.Serialization
+namespace Rekog.Persistence.Serialization
 {
     public class CorpusCommandConfigDeserializer : DataObjectDeserializer<CorpusCommandConfig>
     {
