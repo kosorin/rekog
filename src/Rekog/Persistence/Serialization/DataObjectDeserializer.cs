@@ -4,7 +4,7 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace Rekog.Serialization
 {
-    public abstract class ConfigDeserializer<TConfig>
+    public abstract class DataObjectDeserializer<TConfig>
         where TConfig : class
     {
         private IDeserializer? _deserializer;

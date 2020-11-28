@@ -1,23 +1,25 @@
 ﻿using System.Collections.Generic;
 
-namespace Rekog.Input.Configurations
+namespace Rekog.Persistence
 {
-    public record AlphabetConfig : Input
+    public abstract record CommandConfig<TOptions> : DataObject
+        where TOptions : CommandOptions
     {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public string Characters { get; set; }
-
-        public bool IncludeWhitespace { get; set; }
+        public TOptions Options { get; set; }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         protected override void FixSelf()
         {
-            Characters ??= string.Empty;
+            if (Options == null)
+            {
+                throw new PersistenceException("Options is not set.");
+            }
         }
 
-        protected override IEnumerable<Input> CollectChildren()
+        protected override IEnumerable<DataObject> CollectChildren()
         {
-            yield break;
+            yield return Options;
         }
     }
 }

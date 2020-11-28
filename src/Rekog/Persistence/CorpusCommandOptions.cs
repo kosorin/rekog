@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Rekog.Input.Options
+namespace Rekog.Persistence
 {
-    public record CorpusOptions : CommandOptions
+    public record CorpusCommandOptions : CommandOptions
     {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public bool CaseSensitive { get; set; }
@@ -24,14 +24,12 @@ namespace Rekog.Input.Options
             Corpus = Corpus?.Where(x => x != null).ToArray() ?? Array.Empty<string>();
         }
 
-        protected override IEnumerable<Input> CollectChildren()
+        protected override IEnumerable<DataObject> CollectChildren()
         {
-            foreach (var input in base.CollectChildren())
+            foreach (var child in base.CollectChildren())
             {
-                yield return input;
+                yield return child;
             }
-
-            yield break;
         }
     }
 }

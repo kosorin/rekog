@@ -1,4 +1,4 @@
-﻿using Rekog.Input.Configurations;
+﻿using Rekog.Persistence;
 using System;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
@@ -6,19 +6,19 @@ using YamlDotNet.Serialization;
 
 namespace Rekog.Serialization
 {
-    public sealed class PathConfigScalarNodeDeserializer : INodeDeserializer
+    public sealed class AlphabetConfigScalarNodeDeserializer : INodeDeserializer
     {
         bool INodeDeserializer.Deserialize(IParser parser, Type expectedType, Func<IParser, Type, object?> nestedObjectDeserializer, out object? value)
         {
-            if (expectedType != typeof(PathConfig) || !parser.TryConsume<Scalar>(out var scalar))
+            if (expectedType != typeof(AlphabetConfig) || !parser.TryConsume<Scalar>(out var scalar))
             {
                 value = null;
                 return false;
             }
 
-            value = new PathConfig
+            value = new AlphabetConfig
             {
-                Path = scalar.Value
+                Characters = scalar.Value
             };
             return true;
         }

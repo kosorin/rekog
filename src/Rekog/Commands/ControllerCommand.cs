@@ -1,6 +1,5 @@
 ﻿using Rekog.Controllers;
-using Rekog.Input.Configurations;
-using Rekog.Input.Options;
+using Rekog.Persistence;
 using Rekog.Serialization;
 using System;
 using System.CommandLine;
@@ -29,7 +28,7 @@ namespace Rekog.Commands
 
         protected IFileSystem FileSystem { get; }
 
-        protected abstract ConfigDeserializer<TConfig> GetConfigDeserializer();
+        protected abstract DataObjectDeserializer<TConfig> GetConfigDeserializer();
 
         private TConfig? BuildConfig(TOptions options)
         {

@@ -1,14 +1,13 @@
-﻿using Rekog.Input.Configurations;
-using Rekog.Input.Options;
+﻿using Rekog.Persistence;
 using System.CommandLine;
 using System.IO.Abstractions;
 using System.Threading.Tasks;
 
 namespace Rekog.Controllers
 {
-    public class CorpusController : CommandController<CorpusConfig, CorpusOptions>
+    public class CorpusController : CommandController<CorpusCommandConfig, CorpusCommandOptions>
     {
-        public CorpusController(CorpusConfig config, IConsole console, IFileSystem fileSystem) : base(config, console, fileSystem)
+        public CorpusController(CorpusCommandConfig config, IConsole console, IFileSystem fileSystem) : base(config, console, fileSystem)
         {
         }
 

@@ -1,13 +1,12 @@
 ﻿using Rekog.Controllers;
-using Rekog.Input.Configurations;
-using Rekog.Input.Options;
+using Rekog.Persistence;
 using Rekog.Serialization;
 using System.CommandLine;
 using System.IO.Abstractions;
 
 namespace Rekog.Commands
 {
-    public class CorpusCommand : ControllerCommand<CorpusConfig, CorpusOptions, CorpusController>
+    public class CorpusCommand : ControllerCommand<CorpusCommandConfig, CorpusCommandOptions, CorpusController>
     {
         public CorpusCommand(IFileSystem fileSystem) : base(fileSystem, "corpus")
         {
@@ -17,9 +16,9 @@ namespace Rekog.Commands
             AddOption(new Option<bool>(new[] { "--include-ignored", "-i" }));
         }
 
-        protected override ConfigDeserializer<CorpusConfig> GetConfigDeserializer()
+        protected override DataObjectDeserializer<CorpusCommandConfig> GetConfigDeserializer()
         {
-            return new CorpusConfigDeserializer();
+            return new CorpusCommandConfigDeserializer();
         }
     }
 }

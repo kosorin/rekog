@@ -50,10 +50,8 @@ namespace Rekog.Core.Ngrams
                 return true;
             }
 
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-            ngramValue = null;
+            ngramValue = null!;
             return false;
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         private int GetNextPosition(int position)

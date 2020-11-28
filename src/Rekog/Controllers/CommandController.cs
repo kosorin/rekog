@@ -1,5 +1,4 @@
-﻿using Rekog.Input.Configurations;
-using Rekog.Input.Options;
+﻿using Rekog.Persistence;
 using System.CommandLine;
 using System.IO.Abstractions;
 using System.Threading.Tasks;
