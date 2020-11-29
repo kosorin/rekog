@@ -1,6 +1,7 @@
 ﻿using Rekog.Persistence;
 using System.CommandLine;
 using System.IO.Abstractions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Rekog.Controllers
@@ -11,9 +12,9 @@ namespace Rekog.Controllers
         {
         }
 
-        public override Task HandleAsync()
+        public override Task<int> HandleAsync(CancellationToken cancellationToken)
         {
-            return Task.CompletedTask;
+            return Task.FromResult(0);
         }
     }
 }
