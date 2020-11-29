@@ -1,9 +1,10 @@
 ﻿using Rekog.Core.Ngrams;
-using Rekog.Extensions;
 using Rekog.Persistence;
+using System;
 using System.Collections.Generic;
-using System.IO.Abstractions;
+using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace Rekog.Core.Corpora
 {
@@ -51,23 +52,33 @@ namespace Rekog.Core.Corpora
             }
         }
 
-        public void Analyze(IFileSystem fileSystem, CorpusFile file)
+        public void Analyze(StreamReader reader, CancellationToken cancellationToken)
         {
-            Skip();
+            OnFile();
 
-            using (var reader = file.Open(fileSystem))
+            Span<char> buffer = new char[4096];
+            while (!cancellationToken.IsCancellationRequested && reader.Read(buffer) is > 0 and var count)
             {
-                while (reader.TryReadChar(out var character))
+                foreach (var character in buffer.Slice(0, count))
                 {
-                    if (char.IsSurrogate(character))
-                    {
-                        Skip();
-                        continue;
-                    }
-
-                    Next(character);
+                    OnCharacter(character);
                 }
             }
+        }
+
+        private void OnFile()
+        {
+            Skip();
+        }
+
+        private void OnCharacter(char character)
+        {
+            if (char.IsSurrogate(character))
+            {
+                Skip();
+                return;
+            }
+            Next(character);
         }
 
         private void Skip()

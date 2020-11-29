@@ -27,9 +27,9 @@ namespace Rekog.Controllers
         public override Task<int> HandleAsync(CancellationToken cancellationToken)
         {
             var alphabet = GetAlphabet();
-            var corpusFiles = GetCorpusFiles();
+            var files = GetFiles();
 
-            var report = AnalyzeCorpusFiles(alphabet, corpusFiles);
+            var report = AnalyzeFiles(alphabet, files, cancellationToken);
 
             SaveReport(report);
 
@@ -59,7 +59,7 @@ namespace Rekog.Controllers
             return new Alphabet(alphabetConfigs.SelectMany(x => x.IncludeWhitespace ? x.Characters : Regex.Replace(x.Characters, @"\s+", "")));
         }
 
-        private List<CorpusFile> GetCorpusFiles()
+        private List<CorpusFile> GetFiles()
         {
             IEnumerable<LocationConfig> locationConfigs;
             if (Config.Options.Corpus.Length == 0)
@@ -76,8 +76,8 @@ namespace Rekog.Controllers
             else
             {
                 locationConfigs = from o in Config.Options.Corpus
-                              join c in Config.Locations on o equals c.Key
-                              select c.Value;
+                                  join c in Config.Locations on o equals c.Key
+                                  select c.Value;
             }
             return locationConfigs
                 .SelectMany(x => PathHelper
@@ -87,21 +87,32 @@ namespace Rekog.Controllers
                 .ToList();
         }
 
-        private CorpusReport AnalyzeCorpusFiles(Alphabet alphabet, List<CorpusFile> corpusFiles)
+        private CorpusReport AnalyzeFiles(Alphabet alphabet, List<CorpusFile> files, CancellationToken cancellationToken)
         {
+            var interrupted = false;
+
             Console.Out.WriteLine($"Started: {DateTime.Now}");
             var sw = Stopwatch.StartNew();
 
+            var i = 0;
             var analyzer = new CorpusAnalyzer(alphabet, Config.Options.CaseSensitive, Config.Options.IncludeIgnored);
-            foreach (var corpusFile in corpusFiles)
+            foreach (var file in files)
             {
-                Console.Out.WriteLine($"File: {corpusFile.Path}");
-                analyzer.Analyze(FileSystem, corpusFile);
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    interrupted = true;
+                    break;
+                }
+
+                i++;
+                Console.Out.WriteLine($"File [{new string(' ', (int)Math.Log10(files.Count) - (int)Math.Log10(i))}{i}/{files.Count}]: {file.Path}");
+                using var reader = file.Open(FileSystem);
+                analyzer.Analyze(reader, cancellationToken);
             }
             var report = analyzer.CreateReport();
 
             sw.Stop();
-            Console.Out.WriteLine($"Finished: {DateTime.Now}");
+            Console.Out.WriteLine($"{(interrupted ? "Interrupted" : "Finished")}: {DateTime.Now}");
             Console.Out.WriteLine($"Elapsed time: {sw.Elapsed}");
 
             return report;
@@ -109,11 +120,9 @@ namespace Rekog.Controllers
 
         private void SaveReport(CorpusReport report)
         {
-            using (var outputStream = FileSystem.FileStream.Create(Config.Options.Output, FileMode.Create, FileAccess.Write))
-            using (var outputWriter = new StreamWriter(outputStream, Encoding.UTF8))
-            {
-                new CorpusReportSerializer().Serialize(outputWriter, report);
-            }
+            using var stream = FileSystem.FileStream.Create(Config.Options.Output, FileMode.Create, FileAccess.Write);
+            using var writer = new StreamWriter(stream, Encoding.UTF8);
+            new CorpusReportSerializer().Serialize(writer, report);
         }
     }
 }
