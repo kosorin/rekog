@@ -1,0 +1,51 @@
+keymaps:
+  qwertz_cs:
+    layers:
+    - name: base
+      placeholder: '~' # default: '~'
+      keymap: |2
+        {2}   q w e r t   z u i o p   {2}
+        {1}   a s d f g   h j k l ~   {1}
+        {~}   y x c v b   n m ~ ~ ~   {~}
+                {t} {~}   ~ ~
+            {~} {s} {n}   ~ ~ ~
+    - name: base [shift]
+      keymap: |2
+        {~}   Q W E R T   Z U I O P   {~}
+        {~}   A S D F G   H J K L ~   {~}
+        {~}   Y X C V B   N M ~ ~ ~   {~}
+                    ~ ~   ~ ~
+                  ~ ~ ~   ~ ~ ~
+    - name: diacritic
+      keymap: |2
+        {~}   ~ ~ ě ř ť   ž ů í ó ~   {~}
+        {3}   á š ď é ~   ~ ú ~ ~ ~   {3}
+        {~}   ý ~ č ~ ~   ň ~ ~ ~ ~   {~}
+                    ~ ~   ~ ~
+                  ~ ~ ~   ~ ~ ~
+    - name: diacritic [shift]
+      keymap: |2
+        {~}   ~ ~ Ě Ř Ť   Ž Ů Í Ó ~   {~}
+        {~}   Á Š Ď É ~   ~ Ú ~ ~ ~   {~}
+        {~}   Ý ~ Č ~ ~   Ň ~ ~ ~ ~   {~}
+                    ~ ~   ~ ~
+                  ~ ~ ~   ~ ~ ~
+
+layouts:
+  klave:
+    fingers: |2 # 0..4 (left pinky..thumb); 5..9 (right thumb..pinky)
+      0   0 1 2 3 3   6 6 7 8 9   9
+      0   0 1 2 3 3   6 6 7 8 9   9
+      0   0 1 2 3 3   6 6 7 8 9   9
+                4 4   5 5
+              4 4 4   5 5 5
+    effort: |2 # lower is better
+      4.5   4.0 3.0 2.5 2.0 3.8   3.8 2.0 2.5 3.0 4.0   4.5
+      1.5   1.0 1.0 1.0 1.0 3.0   3.0 1.0 1.0 1.0 1.0   1.5
+      4.5   4.0 4.5 3.2 1.5 5.0   5.0 1.5 3.2 4.5 4.0   4.5
+                        2.0 3.0   3.0 2.0
+                    1.0 1.0 1.5   1.5 1.0 1.0
+    penalties:
+      shift: 1.0 # default: 0.0
+      layers:
+        diacritic: 2.0

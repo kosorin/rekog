@@ -1,0 +1,22 @@
+case_sensitive: yes
+alphabet: ETA
+unigrams:
+  total: 6744073709551615
+  data:
+    E:	445155370175
+    T:	330535289102
+    A:	286527429118
+bigrams:
+  total: 12345
+  data:
+    E:	445155370175
+trigrams:
+  total: 12345
+  data:
+    E:	445155370175
+ignored:
+  total: 456789
+  data:
+    '#': 456
+    '$': 123
+    

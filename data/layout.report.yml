@@ -1,0 +1,65 @@
+keyboard:
+
+  frequency:
+    rows:
+      0: 0.19432
+      1: 0.70457
+      2: 0.10111
+    fingers:
+      0: 0.07594
+      1: 0.07594
+      2: 0.07594
+      3: 0.07594
+      4: 0.07594
+      5: 0.07594
+      6: 0.07594
+      7: 0.07594
+      8: 0.07594
+      9: 0.07594
+    hands:
+      0: 0.50877
+      1: 0.49123
+
+  bigram:
+    same-finger:
+      0: 0.07594
+      1: 0.07594
+      2: 0.07594
+      3: 0.07594
+      4: 0.07594
+      5: 0.07594
+      6: 0.07594
+      7: 0.07594
+      8: 0.07594
+      9: 0.07594
+    neighbour-finger:
+      0-1: 0.07594
+      1-2: 0.07594
+      2-3: 0.07594
+      6-7: 0.07594
+      7-8: 0.07594
+      8-9: 0.07594
+    top 10 same-finger:
+    - n-gram: "TH"
+      frequency: 0.03556
+      finger: 3
+    - n-gram: "HE"
+      frequency: 0.03075
+      finger: 6
+    - n-gram: "IN"
+      frequency: 0.02433
+      finger: 7
+    top 10 neighbour-finger:
+    - n-gram: "TH"
+      frequency: 0.03556
+      fingers: [ 3, 4 ]
+    - n-gram: "HE"
+      frequency: 0.03075
+      fingers: [ 3, 4 ]
+    - n-gram: "IN"
+      frequency: 0.02433
+      fingers: [ 3, 4 ]
+  
+  run length:
+
+
