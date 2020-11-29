@@ -36,6 +36,17 @@ namespace Rekog.Core.Corpora
             _ignoredCollector = includeIgnored ? new NgramCollector(new UnigramBuffer()) : null;
         }
 
+        public void Append(CorpusAnalyzer other)
+        {
+            if (_ignoredCollector != null && other._ignoredCollector != null)
+            {
+                _ignoredCollector.Append(other._ignoredCollector);
+            }
+            _unigramCollector.Append(other._unigramCollector);
+            _bigramCollector.Append(other._bigramCollector);
+            _trigramCollector.Append(other._trigramCollector);
+        }
+
         public CorpusReport CreateReport()
         {
             return new CorpusReport

@@ -13,6 +13,14 @@ namespace Rekog.Core.Ngrams
             _rawNgrams = new Dictionary<string, RawNgram>();
         }
 
+        public void Append(NgramCollector other)
+        {
+            foreach (var otherRawNgram in other._rawNgrams.Values)
+            {
+                AddNgramValue(otherRawNgram.Value, otherRawNgram.Occurrences);
+            }
+        }
+
         public NgramCollection GetNgrams()
         {
             return new NgramCollection(_rawNgrams.Values);
@@ -25,16 +33,19 @@ namespace Rekog.Core.Ngrams
 
         public void Next(char character)
         {
-            if (!_buffer.Next(character, out var ngramValue))
+            if (_buffer.Next(character, out var ngramValue))
             {
-                return;
+                AddNgramValue(ngramValue, 1);
             }
+        }
 
+        private void AddNgramValue(string ngramValue, ulong occurrences)
+        {
             if (!_rawNgrams.TryGetValue(ngramValue, out var rawNgram))
             {
                 _rawNgrams.Add(ngramValue, rawNgram = new RawNgram(ngramValue));
             }
-            rawNgram.Occurrences++;
+            rawNgram.Occurrences += occurrences;
         }
     }
 }

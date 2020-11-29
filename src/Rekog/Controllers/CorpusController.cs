@@ -4,6 +4,7 @@ using Rekog.IO;
 using Rekog.Persistence;
 using Rekog.Persistence.Serialization;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.IO;
@@ -30,8 +31,10 @@ namespace Rekog.Controllers
             var files = GetFiles();
 
             var report = AnalyzeFiles(alphabet, files, cancellationToken);
-
-            SaveReport(report);
+            if (report != null)
+            {
+                SaveReport(report);
+            }
 
             return Task.FromResult(0);
         }
@@ -87,35 +90,42 @@ namespace Rekog.Controllers
                 .ToList();
         }
 
-        private CorpusReport AnalyzeFiles(Alphabet alphabet, List<CorpusFile> files, CancellationToken cancellationToken)
+        private CorpusReport? AnalyzeFiles(Alphabet alphabet, List<CorpusFile> files, CancellationToken cancellationToken)
         {
-            var interrupted = false;
+            var mainAnalyzer = BuildAnalyzer();
 
             Console.Out.WriteLine($"Started: {DateTime.Now}");
             var sw = Stopwatch.StartNew();
 
-            var i = 0;
-            var analyzer = new CorpusAnalyzer(alphabet, Config.Options.CaseSensitive, Config.Options.IncludeIgnored);
-            foreach (var file in files)
-            {
-                if (cancellationToken.IsCancellationRequested)
+            var parallelLoopResult = Parallel.ForEach(files, new ParallelOptions(),
+                BuildAnalyzer,
+                (file, state, i, analyzer) =>
                 {
-                    interrupted = true;
-                    break;
-                }
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        state.Break();
+                    }
+                    Console.Out.WriteLine($"File: {file.Path}");
 
-                i++;
-                Console.Out.WriteLine($"File [{new string(' ', (int)Math.Log10(files.Count) - (int)Math.Log10(i))}{i}/{files.Count}]: {file.Path}");
-                using var reader = file.Open(FileSystem);
-                analyzer.Analyze(reader, cancellationToken);
-            }
-            var report = analyzer.CreateReport();
+                    using var reader = file.Open(FileSystem);
+                    analyzer.Analyze(reader, cancellationToken);
+                    return analyzer;
+                },
+                analyzer =>
+                {
+                    lock (mainAnalyzer)
+                    {
+                        mainAnalyzer.Append(analyzer);
+                    }
+                });
 
             sw.Stop();
-            Console.Out.WriteLine($"{(interrupted ? "Interrupted" : "Finished")}: {DateTime.Now}");
+            Console.Out.WriteLine($"{(parallelLoopResult.IsCompleted ? "Finished" : "Interrupted")}: {DateTime.Now}");
             Console.Out.WriteLine($"Elapsed time: {sw.Elapsed}");
 
-            return report;
+            return parallelLoopResult.IsCompleted ? mainAnalyzer.CreateReport() : null;
+
+            CorpusAnalyzer BuildAnalyzer() => new CorpusAnalyzer(alphabet, Config.Options.CaseSensitive, Config.Options.IncludeIgnored);
         }
 
         private void SaveReport(CorpusReport report)
