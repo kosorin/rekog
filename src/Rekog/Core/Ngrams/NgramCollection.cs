@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Rekog.Core.Ngrams
 {
-    public class NgramCollection : IReadOnlyCollection<Ngram>
+    public class NgramCollection : IReadOnlyDictionary<string, NgramCollection.Ngram>
     {
         private readonly Dictionary<string, Ngram> _data;
 
@@ -52,16 +53,32 @@ namespace Rekog.Core.Ngrams
 
         public int Count => _data.Count;
 
-        public Ngram this[string ngram] => _data[ngram];
+        public IEnumerable<string> Keys => _data.Keys;
 
-        public IEnumerator<Ngram> GetEnumerator()
+        public IEnumerable<Ngram> Values => _data.Values;
+
+        public Ngram this[string ngramValue] => _data[ngramValue];
+
+        public bool ContainsKey(string key)
         {
-            return _data.Values.GetEnumerator();
+            return _data.ContainsKey(key);
+        }
+
+        public bool TryGetValue(string key, [MaybeNullWhen(false)] out Ngram value)
+        {
+            return _data.TryGetValue(key, out value);
+        }
+
+        public IEnumerator<KeyValuePair<string, Ngram>> GetEnumerator()
+        {
+            return _data.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return _data.Values.GetEnumerator();
         }
+
+        public sealed record Ngram(string Value, int Rank, double Percentage, ulong Occurrences);
     }
 }

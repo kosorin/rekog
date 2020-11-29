@@ -1,6 +1,6 @@
 ﻿using Rekog.Controllers;
 using Rekog.Persistence;
-using Rekog.Serialization;
+using Rekog.Persistence.Serialization;
 using System.CommandLine;
 using System.IO.Abstractions;
 
@@ -16,9 +16,9 @@ namespace Rekog.Commands
             AddOption(new Option<bool>(new[] { "--include-ignored", "-i" }));
         }
 
-        protected override DataObjectDeserializer<CorpusCommandConfig> GetConfigDeserializer()
+        protected override SerializerBase<CorpusCommandConfig> GetConfigSerializer()
         {
-            return new CorpusCommandConfigDeserializer();
+            return new CorpusCommandConfigSerializer();
         }
     }
 }

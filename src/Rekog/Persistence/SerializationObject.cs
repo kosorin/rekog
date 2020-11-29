@@ -2,7 +2,7 @@
 
 namespace Rekog.Persistence
 {
-    public abstract record DataObject
+    public abstract record SerializationObject
     {
         public void Fix()
         {
@@ -16,6 +16,6 @@ namespace Rekog.Persistence
 
         protected abstract void FixSelf();
 
-        protected abstract IEnumerable<DataObject> CollectChildren();
+        protected abstract IEnumerable<SerializationObject> CollectChildren();
     }
 }

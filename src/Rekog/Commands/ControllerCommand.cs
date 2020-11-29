@@ -1,6 +1,6 @@
 ﻿using Rekog.Controllers;
 using Rekog.Persistence;
-using Rekog.Serialization;
+using Rekog.Persistence.Serialization;
 using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
@@ -29,7 +29,7 @@ namespace Rekog.Commands
 
         protected IFileSystem FileSystem { get; }
 
-        protected abstract DataObjectDeserializer<TConfig> GetConfigDeserializer();
+        protected abstract SerializerBase<TConfig> GetConfigSerializer();
 
         private TConfig? BuildConfig(TOptions options)
         {
@@ -37,7 +37,7 @@ namespace Rekog.Commands
             {
                 using var stream = FileSystem.FileStream.Create(options.Config, FileMode.Open);
                 using var reader = new StreamReader(stream);
-                var config = GetConfigDeserializer().Deserialize(reader);
+                var config = GetConfigSerializer().Deserialize(reader);
                 config.Options = options;
                 config.Fix();
                 return config;

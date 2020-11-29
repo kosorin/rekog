@@ -2,23 +2,20 @@
 
 namespace Rekog.Persistence
 {
-    public record AlphabetConfig : DataObject
+    public record AlphabetConfig : SerializationObject
     {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public string Characters { get; set; }
+        public string Characters { get; set; } = default!;
 
-        public bool IncludeWhitespace { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public bool IncludeWhitespace { get; set; } = default!;
 
         protected override void FixSelf()
         {
             Characters ??= string.Empty;
         }
 
-        protected override IEnumerable<DataObject> CollectChildren()
+        protected override IEnumerable<SerializationObject> CollectChildren()
         {
             yield break;
         }
     }
 }
-      

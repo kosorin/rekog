@@ -5,11 +5,9 @@ namespace Rekog.Persistence
 {
     public record CorpusCommandConfig : CommandConfig<CorpusCommandOptions>
     {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public Dictionary<string, AlphabetConfig> Alphabets { get; set; }
+        public Dictionary<string, AlphabetConfig> Alphabets { get; set; } = default!;
 
-        public Dictionary<string, LocationConfig> Locations { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public Dictionary<string, LocationConfig> Locations { get; set; } = default!;
 
         protected override void FixSelf()
         {
@@ -41,7 +39,7 @@ namespace Rekog.Persistence
             }
         }
 
-        protected override IEnumerable<DataObject> CollectChildren()
+        protected override IEnumerable<SerializationObject> CollectChildren()
         {
             foreach (var child in base.CollectChildren())
             {

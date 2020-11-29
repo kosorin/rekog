@@ -3,17 +3,15 @@ using System.Collections.Generic;
 
 namespace Rekog.Persistence
 {
-    public record LocationConfig : DataObject
+    public record LocationConfig : SerializationObject
     {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public string Path { get; set; }
+        public string Path { get; set; } = default!;
 
-        public string SearchPattern { get; set; }
+        public string SearchPattern { get; set; } = default!;
 
-        public bool Recursive { get; set; }
+        public bool Recursive { get; set; } = default!;
 
-        public string Encoding { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public string Encoding { get; set; } = default!;
 
         protected override void FixSelf()
         {
@@ -22,7 +20,7 @@ namespace Rekog.Persistence
             Encoding ??= System.Text.Encoding.UTF8.WebName;
         }
 
-        protected override IEnumerable<DataObject> CollectChildren()
+        protected override IEnumerable<SerializationObject> CollectChildren()
         {
             yield break;
         }

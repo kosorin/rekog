@@ -1,4 +1,6 @@
-﻿namespace Rekog.Core.Ngrams
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Rekog.Core.Ngrams
 {
     public class UnigramBuffer : INgramBuffer
     {
@@ -7,7 +9,7 @@
             // Nothing to do
         }
 
-        public bool Next(char character, out string ngramValue)
+        public bool Next(char character, [MaybeNullWhen(false)] out string ngramValue)
         {
             ngramValue = character.ToString();
             return true;

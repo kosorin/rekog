@@ -2,12 +2,10 @@
 
 namespace Rekog.Persistence
 {
-    public abstract record CommandConfig<TOptions> : DataObject
+    public abstract record CommandConfig<TOptions> : SerializationObject
         where TOptions : CommandOptions
     {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public TOptions Options { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public TOptions Options { get; set; } = default!;
 
         protected override void FixSelf()
         {
@@ -17,7 +15,7 @@ namespace Rekog.Persistence
             }
         }
 
-        protected override IEnumerable<DataObject> CollectChildren()
+        protected override IEnumerable<SerializationObject> CollectChildren()
         {
             yield return Options;
         }

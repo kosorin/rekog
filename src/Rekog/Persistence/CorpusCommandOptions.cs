@@ -6,15 +6,13 @@ namespace Rekog.Persistence
 {
     public record CorpusCommandOptions : CommandOptions
     {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-        public bool CaseSensitive { get; set; }
+        public bool CaseSensitive { get; set; } = default!;
 
-        public string[] Alphabet { get; set; }
+        public bool IncludeIgnored { get; set; } = default!;
 
-        public string[] Corpus { get; set; }
+        public string[] Alphabet { get; set; } = default!;
 
-        public bool IncludeIgnored { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+        public string[] Corpus { get; set; } = default!;
 
         protected override void FixSelf()
         {
@@ -24,7 +22,7 @@ namespace Rekog.Persistence
             Corpus = Corpus?.Where(x => x != null).ToArray() ?? Array.Empty<string>();
         }
 
-        protected override IEnumerable<DataObject> CollectChildren()
+        protected override IEnumerable<SerializationObject> CollectChildren()
         {
             foreach (var child in base.CollectChildren())
             {

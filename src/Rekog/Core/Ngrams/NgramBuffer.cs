@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rekog.Core.Ngrams
 {
@@ -32,7 +33,7 @@ namespace Rekog.Core.Ngrams
             _lastInvalidPosition = _position;
         }
 
-        public bool Next(char character, out string ngramValue)
+        public bool Next(char character, [MaybeNullWhen(false)] out string ngramValue)
         {
             _position = GetNextPosition(_position);
             _characters[_position] = character;
@@ -50,7 +51,7 @@ namespace Rekog.Core.Ngrams
                 return true;
             }
 
-            ngramValue = null!;
+            ngramValue = null;
             return false;
         }
 
