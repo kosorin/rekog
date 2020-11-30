@@ -105,8 +105,8 @@ namespace Rekog.Controllers
                     {
                         state.Break();
                     }
-                    Console.Out.WriteLine($"File: {file.Path}");
 
+                    Console.Out.WriteLine($"File: {file.Path}");
                     using var reader = file.Open(FileSystem);
                     analyzer.Analyze(reader, cancellationToken);
                     return analyzer;
@@ -121,6 +121,7 @@ namespace Rekog.Controllers
 
             sw.Stop();
             Console.Out.WriteLine($"{(parallelLoopResult.IsCompleted ? "Finished" : "Interrupted")}: {DateTime.Now}");
+            Console.Out.WriteLine($"Files: {files.Count}");
             Console.Out.WriteLine($"Elapsed time: {sw.Elapsed}");
 
             return parallelLoopResult.IsCompleted ? mainAnalyzer.CreateReport() : null;
