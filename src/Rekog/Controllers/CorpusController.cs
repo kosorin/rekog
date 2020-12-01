@@ -122,7 +122,7 @@ namespace Rekog.Controllers
             sw.Stop();
             Console.Out.WriteLine($"{(parallelLoopResult.IsCompleted ? "Finished" : "Interrupted")}: {DateTime.Now}");
             Console.Out.WriteLine($"Files: {files.Count}");
-            Console.Out.WriteLine($"Elapsed time: {sw.Elapsed}");
+            Console.Out.WriteLine($"Elapsed time: {sw.Elapsed} ({(files.Count > 0 ? (int)(sw.Elapsed.TotalMilliseconds / files.Count) : 0):N0} ms/file)");
 
             return parallelLoopResult.IsCompleted ? mainAnalyzer.CreateReport() : null;
 
