@@ -7,7 +7,7 @@ namespace Rekog.Persistence
     {
         public string Path { get; set; } = default!;
 
-        public string SearchPattern { get; set; } = default!;
+        public string Pattern { get; set; } = default!;
 
         public bool Recursive { get; set; } = default!;
 
@@ -16,7 +16,7 @@ namespace Rekog.Persistence
         protected override void FixSelf()
         {
             Path ??= string.Empty;
-            SearchPattern ??= PathHelper.DefaultSearchPattern;
+            Pattern ??= PathHelper.DefaultSearchPattern;
             Encoding ??= System.Text.Encoding.UTF8.WebName;
         }
 

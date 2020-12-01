@@ -84,7 +84,7 @@ namespace Rekog.Controllers
             }
             return locationConfigs
                 .SelectMany(x => PathHelper
-                    .GetPaths(FileSystem, x.Path, x.SearchPattern, x.Recursive)
+                    .GetPaths(FileSystem, x.Path, x.Pattern, x.Recursive)
                     .Select(p => new CorpusFile(p, Encoding.GetEncoding(x.Encoding))))
                 .DistinctBy(x => x.Path)
                 .ToList();
