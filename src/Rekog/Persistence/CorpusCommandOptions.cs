@@ -8,11 +8,11 @@ namespace Rekog.Persistence
     {
         public bool CaseSensitive { get; set; } = default!;
 
-        public bool IncludeIgnored { get; set; } = default!;
-
         public string[] Alphabet { get; set; } = default!;
 
         public string[] Corpus { get; set; } = default!;
+
+        public bool Extended { get; set; } = default!;
 
         protected override void FixSelf()
         {

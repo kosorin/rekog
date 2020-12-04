@@ -126,7 +126,7 @@ namespace Rekog.Controllers
 
             return parallelLoopResult.IsCompleted ? mainAnalyzer.CreateReport() : null;
 
-            CorpusAnalyzer BuildAnalyzer() => new CorpusAnalyzer(alphabet, Config.Options.CaseSensitive, Config.Options.IncludeIgnored);
+            CorpusAnalyzer BuildAnalyzer() => new CorpusAnalyzer(alphabet, Config.Options.CaseSensitive, Config.Options.Extended);
         }
 
         private void SaveReport(CorpusReport report)

@@ -10,20 +10,23 @@ namespace Rekog.Core.Corpora
 {
     public class CorpusAnalyzer
     {
+        private readonly NgramCollector _ignoredCollector;
         private readonly NgramCollector _unigramCollector;
         private readonly NgramCollector _bigramCollector;
         private readonly NgramCollector _trigramCollector;
         private readonly List<NgramCollector> _ngramCollectors;
-        private readonly NgramCollector? _ignoredCollector;
 
         private readonly Alphabet _alphabet;
         private readonly bool _caseSensitive;
+        private readonly bool _extended;
 
-        public CorpusAnalyzer(Alphabet alphabet, bool caseSensitive, bool includeIgnored)
+        public CorpusAnalyzer(Alphabet alphabet, bool caseSensitive, bool extended)
         {
             _alphabet = alphabet;
             _caseSensitive = caseSensitive;
+            _extended = extended;
 
+            _ignoredCollector = new NgramCollector(new UnigramBuffer());
             _unigramCollector = new NgramCollector(new UnigramBuffer());
             _bigramCollector = new NgramCollector(new NgramBuffer(2));
             _trigramCollector = new NgramCollector(new NgramBuffer(3));
@@ -33,15 +36,11 @@ namespace Rekog.Core.Corpora
                 _bigramCollector,
                 _trigramCollector,
             };
-            _ignoredCollector = includeIgnored ? new NgramCollector(new UnigramBuffer()) : null;
         }
 
         public void Append(CorpusAnalyzer other)
         {
-            if (_ignoredCollector != null && other._ignoredCollector != null)
-            {
-                _ignoredCollector.Append(other._ignoredCollector);
-            }
+            _ignoredCollector.Append(other._ignoredCollector);
             _unigramCollector.Append(other._unigramCollector);
             _bigramCollector.Append(other._bigramCollector);
             _trigramCollector.Append(other._trigramCollector);
@@ -51,15 +50,15 @@ namespace Rekog.Core.Corpora
         {
             return new CorpusReport
             {
-                Unigrams = GetNgrams(_unigramCollector.GetNgrams()),
-                Bigrams = GetNgrams(_bigramCollector.GetNgrams()),
-                Trigrams = GetNgrams(_trigramCollector.GetNgrams()),
-                Ignored = _ignoredCollector != null ? GetNgrams(_ignoredCollector.GetNgrams()) : null,
+                Unigrams = GetNgrams(_unigramCollector),
+                Bigrams = GetNgrams(_bigramCollector),
+                Trigrams = GetNgrams(_trigramCollector),
+                Ignored = _extended ? GetNgrams(_ignoredCollector) : null,
             };
 
-            static Dictionary<string, ulong> GetNgrams(NgramCollection ngrams)
+            static Dictionary<string, ulong> GetNgrams(NgramCollector collector)
             {
-                return ngrams.Values.OrderByDescending(x => x.Occurrences).ToDictionary(x => x.Value, x => x.Occurrences);
+                return collector.GetNgrams().Values.OrderByDescending(x => x.Occurrences).ToDictionary(x => x.Value, x => x.Occurrences);
             }
         }
 
@@ -94,7 +93,10 @@ namespace Rekog.Core.Corpora
 
         private void Skip()
         {
-            _ignoredCollector?.Skip();
+            if (_extended)
+            {
+                _ignoredCollector.Skip();
+            }
             foreach (var ngramCollector in _ngramCollectors)
             {
                 ngramCollector.Skip();
@@ -110,7 +112,10 @@ namespace Rekog.Core.Corpora
 
             if (_alphabet.Contains(character))
             {
-                _ignoredCollector?.Skip();
+                if (_extended)
+                {
+                    _ignoredCollector.Skip();
+                }
                 foreach (var ngramCollector in _ngramCollectors)
                 {
                     ngramCollector.Next(character);
@@ -118,7 +123,10 @@ namespace Rekog.Core.Corpora
             }
             else
             {
-                _ignoredCollector?.Next(character);
+                if (_extended)
+                {
+                    _ignoredCollector.Next(character);
+                }
                 foreach (var ngramCollector in _ngramCollectors)
                 {
                     ngramCollector.Skip();
