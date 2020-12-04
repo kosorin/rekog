@@ -33,9 +33,12 @@ namespace Rekog.Controllers
             if (report != null)
             {
                 SaveReport(report);
+                return Task.FromResult(0);
             }
-
-            return Task.FromResult(0);
+            else
+            {
+                return Task.FromResult(1);
+            }
         }
 
         private Alphabet GetAlphabet()
