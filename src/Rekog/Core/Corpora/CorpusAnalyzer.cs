@@ -67,11 +67,17 @@ namespace Rekog.Core.Corpora
             OnFile();
 
             Span<char> buffer = new char[4096];
-            while (!cancellationToken.IsCancellationRequested && reader.Read(buffer) is > 0 and var count)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                foreach (var character in buffer.Slice(0, count))
+                var count = reader.Read(buffer);
+                if (count == 0)
                 {
-                    OnCharacter(character);
+                    break;
+                }
+
+                for (var i = 0; i < count; i++)
+                {
+                    OnCharacter(buffer[i]);
                 }
             }
         }

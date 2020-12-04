@@ -4,7 +4,6 @@ using Rekog.IO;
 using Rekog.Persistence;
 using Rekog.Persistence.Serialization;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.IO;
