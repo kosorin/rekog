@@ -80,6 +80,11 @@ namespace Rekog.Core.Ngrams
             return _data.TryGetValue(key, out value);
         }
 
+        public List<RawNgram> ToRawNgrams()
+        {
+            return Values.Select(x => new RawNgram(x.Value, x.Occurrences)).ToList();
+        }
+
         public IEnumerator<KeyValuePair<string, Ngram>> GetEnumerator()
         {
             return _data.GetEnumerator();

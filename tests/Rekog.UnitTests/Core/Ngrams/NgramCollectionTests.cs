@@ -183,6 +183,17 @@ namespace Rekog.UnitTests.Core.Ngrams
         }
 
         [Fact]
+        public void ToRawNgrams()
+        {
+            var ngrams = TestNgrams.Instance;
+            var expectedRawNgrams = TestNgrams.RawNgrams;
+
+            var rawNgrams = ngrams.ToRawNgrams();
+
+            rawNgrams.ShouldBe(expectedRawNgrams, RawNgram.EqualityComparer, ignoreOrder: true);
+        }
+
+        [Fact]
         public void EnumerableToList()
         {
             var ngrams = TestNgrams.Instance;
@@ -202,18 +213,21 @@ namespace Rekog.UnitTests.Core.Ngrams
         {
             static TestNgrams()
             {
-                Instance = new NgramCollection(new[]
+                RawNgrams = new[]
                 {
                     new RawNgram("A", 1),
                     new RawNgram("B", 1),
                     new RawNgram("C", 2),
-                });
+                };
+                Instance = new NgramCollection(RawNgrams);
                 A = new NgramCollection.Ngram("A", 2, 0.25, 1);
                 B = new NgramCollection.Ngram("B", 2, 0.25, 1);
                 C = new NgramCollection.Ngram("C", 1, 0.5, 2);
             }
 
             public static NgramCollection Instance { get; }
+
+            public static RawNgram[] RawNgrams { get; }
 
             public static NgramCollection.Ngram A { get; }
 
