@@ -40,6 +40,11 @@ namespace Rekog.Core.Corpora
 
         public void Append(CorpusAnalyzer other)
         {
+            if (other == this)
+            {
+                throw new ArgumentException(nameof(other));
+            }
+
             _ignoredCollector.Append(other._ignoredCollector);
             _unigramCollector.Append(other._unigramCollector);
             _bigramCollector.Append(other._bigramCollector);

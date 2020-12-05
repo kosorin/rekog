@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Rekog.Core.Ngrams
 {
@@ -15,6 +16,11 @@ namespace Rekog.Core.Ngrams
 
         public void Append(NgramCollector other)
         {
+            if (other == this)
+            {
+                throw new ArgumentException(nameof(other));
+            }
+
             foreach (var otherRawNgram in other._rawNgrams.Values)
             {
                 AddNgramValue(otherRawNgram.Value, otherRawNgram.Occurrences);
