@@ -97,7 +97,7 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\Sub1\D.txt"] = new MockFileData(string.Empty),
             });
 
-            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", searchPattern: "*.txt");
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", searchPattern: @"\.txt$");
 
             paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt" }, ignoreOrder: true);
         }
@@ -139,7 +139,7 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\Sub3\Sub1\G.gif"] = new MockFileData(string.Empty),
             });
 
-            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", searchPattern: "*.gif", recurseSubdirectories: true);
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", searchPattern: @"\.gif$", recurseSubdirectories: true);
 
             paths.ShouldBe(new[] { @"T:\Test\C.gif", @"T:\Test\Sub3\F.gif", @"T:\Test\Sub3\Sub1\G.gif" }, ignoreOrder: true);
         }

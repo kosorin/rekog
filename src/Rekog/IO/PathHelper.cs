@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.IO.Abstractions;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Rekog.IO
 {
     public static class PathHelper
     {
-        public static string DefaultSearchPattern { get; } = "*";
+        public static string DefaultSearchPattern { get; } = string.Empty;
 
         public static string[] GetPaths(IFileSystem fileSystem, string path)
         {
@@ -27,8 +29,13 @@ namespace Rekog.IO
             var attributes = fileSystem.File.GetAttributes(path);
             if (attributes.HasFlag(FileAttributes.Directory))
             {
-                var searchOption = recurseSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
-                return fileSystem.Directory.GetFiles(path, searchPattern, searchOption);
+                return fileSystem.Directory
+                    .EnumerateFiles(path, "*", new EnumerationOptions
+                    {
+                        RecurseSubdirectories = recurseSubdirectories,
+                    })
+                    .Where(x => string.IsNullOrEmpty(searchPattern) || Regex.IsMatch(x, searchPattern, RegexOptions.CultureInvariant))
+                    .ToArray();
             }
             else
             {
