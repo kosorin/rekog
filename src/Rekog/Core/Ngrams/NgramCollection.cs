@@ -27,7 +27,9 @@ namespace Rekog.Core.Ngrams
             Size = rawNgrams.First().Value.Length;
             TotalOccurrences = (ulong)rawNgrams.Sum(x => (decimal)x.Occurrences);
 
-            var rank = 1;
+            var rank = 0;
+            var skippedRanks = 0;
+            var previousOccurrences = (ulong?)null;
             foreach (var rawNgram in rawNgrams.OrderByDescending(x => x.Occurrences))
             {
                 if (_data.ContainsKey(rawNgram.Value))
@@ -39,11 +41,20 @@ namespace Rekog.Core.Ngrams
                     throw new FormatException($"All ngrams must be of same length '{Size}'.");
                 }
 
+                if (previousOccurrences == rawNgram.Occurrences)
+                {
+                    skippedRanks++;
+                }
+                else
+                {
+                    rank += 1 + skippedRanks;
+                    skippedRanks = 0;
+                }
+                previousOccurrences = rawNgram.Occurrences;
+
                 var percentage = rawNgram.Occurrences / (double)TotalOccurrences;
 
                 _data[rawNgram.Value] = new Ngram(rawNgram.Value, rank, percentage, rawNgram.Occurrences);
-
-                rank++;
             }
         }
 
