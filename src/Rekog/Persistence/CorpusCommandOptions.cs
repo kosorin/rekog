@@ -12,8 +12,6 @@ namespace Rekog.Persistence
 
         public string[] Corpus { get; set; } = default!;
 
-        public bool Extended { get; set; } = default!;
-
         protected override void FixSelf()
         {
             base.FixSelf();

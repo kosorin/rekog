@@ -10,8 +10,6 @@ namespace Rekog.Persistence
 
         public Dictionary<string, ulong> Trigrams { get; set; } = default!;
 
-        public Dictionary<string, ulong>? Ignored { get; set; } = default!;
-
         protected override void FixSelf()
         {
             Unigrams ??= new();
