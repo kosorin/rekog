@@ -6,7 +6,6 @@ using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using System.IO.Abstractions;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Rekog
 {
@@ -15,9 +14,9 @@ namespace Rekog
         private static readonly FileSystem FileSystem = new();
 
         // TODO: Handle errors/exceptions and return correct code (e.g. return 1 on error)
-        private static Task<int> Main(string[] args)
+        private static int Main(string[] args)
         {
-            return BuildParser().InvokeAsync(args);
+            return BuildParser().Invoke(args);
         }
 
         private static Parser BuildParser()

@@ -2,7 +2,6 @@
 using System.CommandLine;
 using System.IO.Abstractions;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Rekog.Controllers
 {
@@ -23,6 +22,6 @@ namespace Rekog.Controllers
 
         public IFileSystem FileSystem { get; }
 
-        public abstract Task<int> HandleAsync(CancellationToken cancellationToken);
+        public abstract int Handle(CancellationToken cancellationToken);
     }
 }

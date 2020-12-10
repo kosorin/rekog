@@ -24,7 +24,7 @@ namespace Rekog.Controllers
         {
         }
 
-        public override Task<int> HandleAsync(CancellationToken cancellationToken)
+        public override int Handle(CancellationToken cancellationToken)
         {
             var alphabet = GetAlphabet();
             var files = GetFiles();
@@ -33,11 +33,11 @@ namespace Rekog.Controllers
             if (report != null)
             {
                 SaveReport(report);
-                return Task.FromResult(0);
+                return 0;
             }
             else
             {
-                return Task.FromResult(1);
+                return 1;
             }
         }
 
