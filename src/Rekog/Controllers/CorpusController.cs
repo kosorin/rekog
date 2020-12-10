@@ -108,7 +108,8 @@ namespace Rekog.Controllers
                         state.Break();
                     }
 
-                    Console.Out.WriteLine($"File: {file.Path}");
+                    // Use \n instead of WriteLine because WriteLine extension is not thread safe and produce bad output
+                    Console.Out.Write($"File: {file.Path}\n"); 
                     using var reader = file.Open(FileSystem);
                     analyzer.Analyze(reader, cancellationToken);
                     return analyzer;
