@@ -29,7 +29,7 @@ namespace Rekog.Controllers
             var alphabet = GetAlphabet();
             var files = GetFiles();
 
-            var report = AnalyzeFiles(alphabet, files, cancellationToken);
+            var report = ParseFiles(files, alphabet, cancellationToken);
             if (report != null)
             {
                 SaveReport(report);
@@ -85,23 +85,25 @@ namespace Rekog.Controllers
                                   select c.Value;
             }
             return locationConfigs
-                .SelectMany(x => PathHelper
-                    .GetPaths(FileSystem, x.Path, x.Pattern, x.Recursive)
-                    .Select(p => new CorpusFile(p, Encoding.GetEncoding(x.Encoding))))
+                .SelectMany(config => PathHelper
+                    .GetPaths(FileSystem, config.Path, config.Pattern, config.Recursive)
+                    .Select(path => new CorpusFile(path, string.IsNullOrWhiteSpace(config.Encoding)
+                        ? Encoding.UTF8
+                        : Encoding.GetEncoding(config.Encoding))))
                 .DistinctBy(x => x.Path)
                 .ToList();
         }
 
-        private CorpusReport? AnalyzeFiles(Alphabet alphabet, List<CorpusFile> files, CancellationToken cancellationToken)
+        private CorpusReport? ParseFiles(List<CorpusFile> files, Alphabet alphabet, CancellationToken cancellationToken)
         {
-            var mainAnalyzer = BuildAnalyzer();
+            var data = new CorpusData();
 
             Console.Out.WriteLine($"Started: {DateTime.Now}");
             var sw = Stopwatch.StartNew();
 
             var parallelLoopResult = Parallel.ForEach(files, new ParallelOptions(),
-                BuildAnalyzer,
-                (file, state, i, analyzer) =>
+                () => new CorpusParser(alphabet, Config.Options.CaseSensitive),
+                (file, state, i, parser) =>
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
@@ -109,16 +111,24 @@ namespace Rekog.Controllers
                     }
 
                     // Use \n instead of WriteLine because WriteLine extension is not thread safe and produce bad output
-                    Console.Out.Write($"File: {file.Path}\n"); 
-                    using var reader = file.Open(FileSystem);
-                    analyzer.Analyze(reader, cancellationToken);
-                    return analyzer;
-                },
-                analyzer =>
-                {
-                    lock (mainAnalyzer)
+                    Console.Out.Write($"File: {file.Path}\n");
+                    using (var reader = file.Open(FileSystem))
                     {
-                        mainAnalyzer.Append(analyzer);
+                        parser.Parse(reader, cancellationToken);
+                    }
+
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        state.Break();
+                    }
+
+                    return parser;
+                },
+                parser =>
+                {
+                    lock (data)
+                    {
+                        data.Add(parser.GetData());
                     }
                 });
 
@@ -134,9 +144,7 @@ namespace Rekog.Controllers
                 Console.Out.WriteLine($"Interrupted: {DateTime.Now}");
             }
 
-            return parallelLoopResult.IsCompleted ? mainAnalyzer.CreateReport() : null;
-
-            CorpusAnalyzer BuildAnalyzer() => new CorpusAnalyzer(alphabet, Config.Options.CaseSensitive);
+            return parallelLoopResult.IsCompleted ? data.ToReport() : null;
         }
 
         private void SaveReport(CorpusReport report)

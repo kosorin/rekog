@@ -2,7 +2,7 @@
 
 namespace Rekog.Core.Ngrams
 {
-    public interface INgramBuffer
+    public interface INgramParser
     {
         void Skip();
 

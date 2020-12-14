@@ -35,7 +35,7 @@ namespace Rekog.Commands
             using var reader = new StreamReader(stream);
             var config = GetConfigSerializer().Deserialize(reader);
             config.Options = options;
-            config.Fix();
+            config.FixAll();
             return config;
         }
 

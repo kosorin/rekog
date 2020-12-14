@@ -1,57 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Rekog.Core.Ngrams
+﻿namespace Rekog.Core.Ngrams
 {
     public class NgramCollector
     {
-        private readonly INgramBuffer _buffer;
-        private readonly Dictionary<string, RawNgram> _rawNgrams;
+        private readonly INgramParser _parser;
 
-        public NgramCollector(INgramBuffer buffer)
+        public NgramCollector(INgramParser parser)
         {
-            _buffer = buffer;
-            _rawNgrams = new Dictionary<string, RawNgram>();
+            _parser = parser;
         }
 
-        public void Append(NgramCollector other)
-        {
-            if (other == this)
-            {
-                throw new ArgumentException(nameof(other));
-            }
-
-            foreach (var otherRawNgram in other._rawNgrams.Values)
-            {
-                AddNgramValue(otherRawNgram.Value, otherRawNgram.Occurrences);
-            }
-        }
-
-        public NgramCollection GetNgrams()
-        {
-            return new NgramCollection(_rawNgrams.Values);
-        }
+        public OccurrenceCollection<string> Occurrences { get; } = new();
 
         public void Skip()
         {
-            _buffer.Skip();
+            _parser.Skip();
         }
 
         public void Next(char character)
         {
-            if (_buffer.Next(character, out var ngramValue))
+            if (_parser.Next(character, out var ngramValue))
             {
-                AddNgramValue(ngramValue, 1);
+                Occurrences.Add(ngramValue, 1);
             }
-        }
-
-        private void AddNgramValue(string ngramValue, ulong occurrences)
-        {
-            if (!_rawNgrams.TryGetValue(ngramValue, out var rawNgram))
-            {
-                _rawNgrams.Add(ngramValue, rawNgram = new RawNgram(ngramValue));
-            }
-            rawNgram.Occurrences += occurrences;
         }
     }
 }

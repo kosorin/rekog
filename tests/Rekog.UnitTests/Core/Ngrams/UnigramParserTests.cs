@@ -4,15 +4,15 @@ using Xunit;
 
 namespace Rekog.UnitTests.Core.Ngrams
 {
-    public class UnigramBufferTests
+    public class UnigramParserTests
     {
         [Fact]
         public void Next()
         {
-            var buffer = new UnigramBuffer();
+            var parser = new UnigramParser();
 
-            var result1 = buffer.Next('x', out var ngramValue1);
-            var result2 = buffer.Next('y', out var ngramValue2);
+            var result1 = parser.Next('x', out var ngramValue1);
+            var result2 = parser.Next('y', out var ngramValue2);
 
             result1.ShouldBeTrue();
             result2.ShouldBeTrue();

@@ -7,25 +7,26 @@ alphabets:
   symbols: >
     !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
   whitespace:
-    include_whitespace: yes # default: no
+    include_whitespace: yes
     characters: " \t\n"
 
 locations:
   test: D:\Projects\Rekog\data\corpus\test.txt
+  projects:
+    path: D:\Projects
+    pattern: '\.cs$'
+    recursive: yes
   cs_wiki: D:\corpus\cs\wiki\
   cs_volne_knihy: D:\corpus\cs\volne_knihy\
   cs_forum: D:\corpus\cs\forum\cs_forum_temnota.txt
   carpalx: 
     path: D:\carpalx-0.12\corpus\books
     recursive: yes
-
-  test_file1: D:\corpora\books\1984.txt
-  test_file2: 
-    path: D:\corpora\books\1984.txt
-    encoding: iso-8859-1
-  test_dir1: D:\corpora\books\
-  test_dir2:
-    path: D:\corpora\books\
-    search_pattern: '*.txt' # default: '*'
-    recursive: yes # default: no
-    encoding: iso-8859-1 # default: utf-8
+  c_txt:
+    path: c:\
+    pattern: '\.txt$'
+    recursive: yes
+  d_txt:
+    path: D:\
+    pattern: '\.txt$'
+    recursive: yes

@@ -2,7 +2,7 @@
 
 namespace Rekog.Core.Ngrams
 {
-    public class UnigramBuffer : INgramBuffer
+    public class UnigramParser : INgramParser
     {
         public void Skip()
         {

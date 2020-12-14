@@ -3,14 +3,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Rekog.Core.Ngrams
 {
-    public class NgramBuffer : INgramBuffer
+    public class NgramParser : INgramParser
     {
         private int _position;
         private int _lastInvalidPosition;
         private readonly char[] _characters;
         private readonly char[] _buffer;
 
-        public NgramBuffer(int size)
+        public NgramParser(int size)
         {
             if (size < 1)
             {

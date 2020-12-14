@@ -4,13 +4,13 @@ namespace Rekog.Persistence
 {
     public abstract record SerializationObject
     {
-        public void Fix()
+        public void FixAll()
         {
             FixSelf();
 
             foreach (var child in CollectChildren())
             {
-                child.Fix();
+                child.FixAll();
             }
         }
 

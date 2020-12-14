@@ -1,5 +1,4 @@
-﻿using Rekog.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Rekog.Persistence
 {
@@ -16,8 +15,8 @@ namespace Rekog.Persistence
         protected override void FixSelf()
         {
             Path ??= string.Empty;
-            Pattern ??= PathHelper.DefaultSearchPattern;
-            Encoding ??= System.Text.Encoding.UTF8.WebName;
+            Pattern ??= string.Empty;
+            Encoding ??= string.Empty;
         }
 
         protected override IEnumerable<SerializationObject> CollectChildren()

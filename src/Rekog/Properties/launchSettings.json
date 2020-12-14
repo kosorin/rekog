@@ -2,7 +2,7 @@
   "profiles": {
     "Corpus": {
       "commandName": "Project",
-      "commandLineArgs": "corpus config.yml -o o -ac cs_wiki",
+      "commandLineArgs": "corpus corpus.config.yml -o o.yml -a cs -c cs_wiki",
       "workingDirectory": "..\\..\\data\\"
     }
   }
