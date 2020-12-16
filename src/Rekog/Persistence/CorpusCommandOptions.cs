@@ -19,13 +19,5 @@ namespace Rekog.Persistence
             Alphabet = Alphabet?.Where(x => x != null).ToArray() ?? Array.Empty<string>();
             Corpus = Corpus?.Where(x => x != null).ToArray() ?? Array.Empty<string>();
         }
-
-        protected override IEnumerable<SerializationObject> CollectChildren()
-        {
-            foreach (var child in base.CollectChildren())
-            {
-                yield return child;
-            }
-        }
     }
 }
