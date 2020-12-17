@@ -39,8 +39,6 @@ namespace Rekog.Core.Corpora
 
         public void Parse(StreamReader reader, CancellationToken cancellationToken)
         {
-            Skip();
-
             Span<char> buffer = new char[4096];
             while (true)
             {
@@ -60,6 +58,8 @@ namespace Rekog.Core.Corpora
                     Next(buffer[i]);
                 }
             }
+
+            Skip();
         }
 
         private void Skip()
