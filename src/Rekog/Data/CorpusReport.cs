@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Rekog.Persistence
+namespace Rekog.Data
 {
     public record CorpusReport : SerializationObject
     {

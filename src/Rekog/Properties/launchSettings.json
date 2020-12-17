@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "Corpus": {
+    "Console": {
       "commandName": "Project",
-      "commandLineArgs": "corpus corpus.config.yml -o o.yml -a cs -c cs_wiki",
+      "commandLineArgs": "-c cs_volne_knihy -a cs -l klave -k qwertz_cs",
       "workingDirectory": "..\\..\\data\\"
     }
   }

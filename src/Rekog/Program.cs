@@ -1,11 +1,11 @@
-﻿using Rekog.Commands;
-using System;
-using System.Collections.Generic;
+﻿using Rekog.Data;
+using Rekog.Data.Serialization;
 using System.CommandLine;
 using System.CommandLine.Builder;
+using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 using System.IO.Abstractions;
-using System.Linq;
+using System.Threading;
 
 namespace Rekog
 {
@@ -21,29 +21,41 @@ namespace Rekog
 
         private static Parser BuildParser()
         {
-            return new CommandLineBuilder(GetRootCommand())
+            return new CommandLineBuilder(GetCommand())
                 .UseDefaults()
                 .Build();
         }
 
-        private static Command GetRootCommand()
+        private static Command GetCommand()
         {
-            var root = new RootCommand();
-            foreach (var command in GetCommands())
-            {
-                root.AddCommand(command);
-            }
-            return root;
+            var command = new RootCommand();
+
+            command.AddOption(new Option<string>(new[] { "--data-root", "-d" }));
+            command.AddOption(new Option<string>(new[] { "--alphabet", "-a" }) { IsRequired = true });
+            command.AddOption(new Option<string>(new[] { "--corpus", "-c" }) { IsRequired = true });
+            command.AddOption(new Option<string>(new[] { "--keymap", "-k" }) { IsRequired = true });
+            command.AddOption(new Option<string>(new[] { "--layout", "-l" }) { IsRequired = true });
+
+            command.Handler = CommandHandler.Create<Options, IConsole, CancellationToken>(Handle);
+
+            return command;
         }
 
-        private static IEnumerable<Command> GetCommands()
+        private static void Handle(Options options, IConsole console, CancellationToken cancellationToken)
         {
-            var baseType = typeof(ControllerCommand<,,>);
-            return baseType.Assembly.GetTypes()
-                .Where(x => x.BaseType != null
-                         && x.BaseType.IsGenericType
-                         && x.BaseType.GetGenericTypeDefinition() == baseType)
-                .Select(x => Activator.CreateInstance(x, FileSystem) is Command command ? command : throw new NullReferenceException());
+            var dataFileManager = new DataFileManager(options.DataRoot, FileSystem);
+            var config = BuildConfig(options, dataFileManager);
+            var controller = new Controller(config, dataFileManager, console, FileSystem);
+            controller.Handle(cancellationToken);
+        }
+
+        private static Config BuildConfig(Options options, DataFileManager dataFileManager)
+        {
+            using var reader = dataFileManager.GetConfigReader();
+            var config = new ConfigSerializer().Deserialize(reader);
+            config.Options = options;
+            config.FixAll();
+            return config;
         }
     }
 }

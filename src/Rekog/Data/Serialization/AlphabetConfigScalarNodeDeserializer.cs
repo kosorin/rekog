@@ -3,21 +3,21 @@ using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 
-namespace Rekog.Persistence.Serialization
+namespace Rekog.Data.Serialization
 {
-    public sealed class LocationConfigScalarNodeDeserializer : INodeDeserializer
+    public sealed class AlphabetConfigScalarNodeDeserializer : INodeDeserializer
     {
         bool INodeDeserializer.Deserialize(IParser parser, Type expectedType, Func<IParser, Type, object?> nestedObjectDeserializer, out object? value)
         {
-            if (expectedType != typeof(LocationConfig) || !parser.TryConsume<Scalar>(out var scalar))
+            if (expectedType != typeof(AlphabetConfig) || !parser.TryConsume<Scalar>(out var scalar))
             {
                 value = null;
                 return false;
             }
 
-            value = new LocationConfig
+            value = new AlphabetConfig
             {
-                Path = scalar.Value
+                Characters = scalar.Value
             };
             return true;
         }

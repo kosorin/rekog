@@ -2,7 +2,7 @@
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Rekog.Persistence.Serialization
+namespace Rekog.Data.Serialization
 {
     public abstract class SerializerBase<TObject>
         where TObject : class

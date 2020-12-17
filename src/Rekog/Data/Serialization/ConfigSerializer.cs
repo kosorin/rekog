@@ -1,8 +1,8 @@
 ﻿using YamlDotNet.Serialization;
 
-namespace Rekog.Persistence.Serialization
+namespace Rekog.Data.Serialization
 {
-    public class CorpusCommandConfigSerializer : SerializerBase<CorpusCommandConfig>
+    public class ConfigSerializer : SerializerBase<Config>
     {
         protected override void ConfigureDeserializerBuilder(DeserializerBuilder builder)
         {

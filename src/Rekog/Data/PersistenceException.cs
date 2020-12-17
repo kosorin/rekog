@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Rekog.Persistence
+namespace Rekog.Data
 {
     [Serializable]
     public class PersistenceException : Exception

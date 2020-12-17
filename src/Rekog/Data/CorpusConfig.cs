@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Rekog.Persistence
+namespace Rekog.Data
 {
-    public record LocationConfig : SerializationObject
+    public record CorpusConfig : SerializationObject
     {
         public string Path { get; set; } = default!;
 

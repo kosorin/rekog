@@ -1,6 +1,6 @@
 ﻿using YamlDotNet.Serialization;
 
-namespace Rekog.Persistence.Serialization
+namespace Rekog.Data.Serialization
 {
     public class CorpusReportSerializer : SerializerBase<CorpusReport>
     {

@@ -1,0 +1,43 @@
+keymaps:
+  qwertz_cs:
+    layers:
+    - |2
+      q w e r t   z u i o p
+      a s d f g   h j k l ~
+      y x c v b   n m ~ ~ ~
+    - |2
+      ~ ~ ě ř ť   ž ů í ó ~
+      á š ď é ~   ~ ú ~ ~ ~
+      ý ~ č ~ ~   ň ~ ~ ~ ~
+
+layouts:
+  klave:
+    fingers: |2
+      0 1 2 3 3   6 6 7 8 9
+      0 1 2 3 3   6 6 7 8 9
+      0 1 2 3 3   6 6 7 8 9
+
+alphabets:
+  en: abcdefghijklmnopqrstuvwxyz
+  cs: >
+    abcdefghijklmnopqrstuvwxyz
+    áčďěéíňóřšťůúýž
+  digits: 0123456789
+  symbols: >
+    !"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+  whitespace:
+    include_whitespace: yes
+    characters: " \t\n"
+
+corpora:
+  test: D:\Projects\Rekog\data\corpus\test.txt
+  projects:
+    path: D:\Projects
+    pattern: '\.cs$'
+    recursive: yes
+  cs_wiki: D:\corpus\cs\wiki\
+  cs_volne_knihy: D:\corpus\cs\volne_knihy\
+  cs_forum: D:\corpus\cs\forum\cs_forum_temnota.txt
+  carpalx:
+    path: D:\carpalx-0.12\corpus\books
+    recursive: yes
