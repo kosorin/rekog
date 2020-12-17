@@ -20,7 +20,7 @@
         {
             if (_parser.Next(character, out var ngramValue))
             {
-                Occurrences.Add(ngramValue, 1);
+                Occurrences.Add(ngramValue);
             }
         }
     }

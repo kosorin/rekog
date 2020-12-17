@@ -34,6 +34,11 @@ namespace Rekog.Core
             Total += count;
         }
 
+        public void Add(TValue value)
+        {
+            Add(value, 1);
+        }
+
         public void Add(TValue value, ulong count)
         {
             if (!_occurrences.TryGetValue(value, out var occurrence))

@@ -34,6 +34,26 @@ namespace Rekog.UnitTests.Core
                 ["B"] = 1,
                 ["C"] = 2,
             });
+            var expectedOccurrenceCount = 3ul;
+            var expectedTotal = 5ul;
+
+            occurrences.Add("C");
+            var occurrenceCount = occurrences["C"].Count;
+            var total = occurrences.Total;
+
+            occurrenceCount.ShouldBe(expectedOccurrenceCount);
+            total.ShouldBe(expectedTotal);
+        }
+
+        [Fact]
+        public void Add_ValueCount()
+        {
+            var occurrences = new OccurrenceCollection<string>(new Dictionary<string, ulong>
+            {
+                ["A"] = 1,
+                ["B"] = 1,
+                ["C"] = 2,
+            });
             var expectedOccurrenceCount = 5ul;
             var expectedTotal = 7ul;
 
