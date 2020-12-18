@@ -1,0 +1,48 @@
+﻿<Window x:Class="Rekog.Kle.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="KLE"
+        Width="1600"
+        Height="1200"
+        Background="Gray"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Open" Executed="CommandBinding_Executed" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="Enter"
+                    Command="ApplicationCommands.Open"
+                    Modifiers="Ctrl" />
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="RawData"
+                 Grid.Row="2"
+                 AcceptsReturn="True"
+                 AcceptsTab="True"
+                 Background="DarkGray"
+                 BorderThickness="0"
+                 FontFamily="Fira Code,Consolas"
+                 HorizontalScrollBarVisibility="Auto"
+                 VerticalScrollBarVisibility="Auto" />
+        <TextBlock Grid.Row="3"
+                   Margin="4,2"
+                   Foreground="Black"
+                   Text="Press Ctrl+Enter to parse raw data" />
+        <GridSplitter Grid.Row="1"
+                      HorizontalAlignment="Stretch"
+                      Background="DimGray"
+                      ResizeDirection="Rows" />
+        <Viewbox Grid.Row="0">
+            <Canvas x:Name="MainCanvas" />
+        </Viewbox>
+    </Grid>
+</Window>
