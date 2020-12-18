@@ -11,7 +11,7 @@ namespace Rekog.Core.Corpora
         private readonly NgramCollector _unigramCollector;
         private readonly NgramCollector _bigramCollector;
         private readonly NgramCollector _trigramCollector;
-        private readonly List<NgramCollector> _ngramCollectors;
+        private readonly List<ITokenCollector> _tokenCollectors;
 
         private readonly Alphabet _alphabet;
         private readonly bool _caseSensitive;
@@ -24,7 +24,7 @@ namespace Rekog.Core.Corpora
             _unigramCollector = new NgramCollector(new UnigramParser());
             _bigramCollector = new NgramCollector(new NgramParser(2));
             _trigramCollector = new NgramCollector(new NgramParser(3));
-            _ngramCollectors = new List<NgramCollector>
+            _tokenCollectors = new List<ITokenCollector>
             {
                 _unigramCollector,
                 _bigramCollector,
@@ -64,9 +64,9 @@ namespace Rekog.Core.Corpora
 
         private void Skip()
         {
-            foreach (var ngramCollector in _ngramCollectors)
+            foreach (var tokenCollector in _tokenCollectors)
             {
-                ngramCollector.Skip();
+                tokenCollector.Skip();
             }
         }
 
@@ -79,9 +79,9 @@ namespace Rekog.Core.Corpora
                     character = char.ToUpperInvariant(character);
                 }
 
-                foreach (var ngramCollector in _ngramCollectors)
+                foreach (var tokenCollector in _tokenCollectors)
                 {
-                    ngramCollector.Next(character);
+                    tokenCollector.Next(character);
                 }
             }
             else

@@ -50,12 +50,12 @@ namespace Rekog.Core.Corpora
         {
             return new CorpusReport
             {
-                Unigrams = GetNgrams(UnigramOccurrences),
-                Bigrams = GetNgrams(BigramOccurrences),
-                Trigrams = GetNgrams(TrigramOccurrences),
+                Unigrams = GetRawCollection(UnigramOccurrences),
+                Bigrams = GetRawCollection(BigramOccurrences),
+                Trigrams = GetRawCollection(TrigramOccurrences),
             };
 
-            static Dictionary<string, ulong> GetNgrams(OccurrenceCollection<string> ngramOccurrences)
+            static Dictionary<string, ulong> GetRawCollection(OccurrenceCollection<string> ngramOccurrences)
             {
                 return ngramOccurrences.OrderByDescending(x => x.Count).ToDictionary(x => x.Value, x => x.Count);
             }

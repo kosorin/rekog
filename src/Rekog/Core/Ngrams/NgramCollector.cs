@@ -1,6 +1,6 @@
 ﻿namespace Rekog.Core.Ngrams
 {
-    public class NgramCollector
+    public class NgramCollector : ITokenCollector
     {
         private readonly INgramParser _parser;
 
