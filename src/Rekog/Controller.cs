@@ -6,7 +6,6 @@ using Rekog.Data.Serialization;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
-using System.CommandLine.IO;
 using System.Diagnostics;
 using System.IO.Abstractions;
 using System.Linq;
@@ -81,8 +80,7 @@ namespace Rekog
                         state.Break();
                     }
 
-                    // Use \n instead of WriteLine because WriteLine extension is not thread safe and produce bad output
-                    _console.Out.Write($"File: {file.Path}\n");
+                    _console.Out.WriteLine($"File: {file.Path}");
                     using (var reader = file.Open(_fileSystem))
                     {
                         parser.Parse(reader, cancellationToken);
