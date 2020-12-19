@@ -60,7 +60,7 @@ namespace Rekog
                 .GetPaths(_fileSystem, corpusConfig.Path, corpusConfig.Pattern, corpusConfig.Recursive)
                 .DistinctBy(x => x)
                 .Select(path => new CorpusFile(path, string.IsNullOrWhiteSpace(corpusConfig.Encoding)
-                    ? Encoding.UTF8
+                    ? CorpusFile.DefaultEncoding
                     : Encoding.GetEncoding(corpusConfig.Encoding)))
                 .ToList();
         }
