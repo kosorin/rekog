@@ -10,6 +10,7 @@ namespace Rekog.Core
     {
         private readonly Dictionary<TValue, Occurrence> _data;
 
+        // TODO: Remove logic from constructor
         public OccurrenceAnalysis(OccurrenceCollection<TValue> occurrences)
         {
             _data = new Dictionary<TValue, Occurrence>(occurrences.Count);
