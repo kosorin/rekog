@@ -34,5 +34,24 @@ namespace Rekog.Core.Extensions
             var distance = neighbor - finger;
             return distance == 1 || distance == -1;
         }
+
+        public static Roll GetRoll(this Finger firstFinger, Finger secondFinger)
+        {
+            var hand = firstFinger.ToHand();
+            if (hand != secondFinger.ToHand())
+            {
+                return Roll.None;
+            }
+
+            var distance = secondFinger - firstFinger;
+            return (hand, distance) switch
+            {
+                (Hand.Left, 1) => Roll.Inward,
+                (Hand.Left, -1) => Roll.Outward,
+                (Hand.Right, 1) => Roll.Outward,
+                (Hand.Right, -1) => Roll.Inward,
+                _ => Roll.None,
+            };
+        }
     }
 }
