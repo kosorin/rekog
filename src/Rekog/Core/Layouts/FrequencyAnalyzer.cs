@@ -52,7 +52,7 @@ namespace Rekog.Core.Layouts
                 }
                 else
                 {
-                    sameFingerBigramOccurrences.AddTotal(ngram.Count);
+                    sameFingerBigramOccurrences.AddNull(ngram.Count);
                 }
 
                 if (firstFinger.IsNeighbor(secondFinger))
@@ -61,7 +61,7 @@ namespace Rekog.Core.Layouts
                 }
                 else
                 {
-                    neighborFingerBigramOccurrences.AddTotal(ngram.Count);
+                    neighborFingerBigramOccurrences.AddNull(ngram.Count);
                 }
             }
         }

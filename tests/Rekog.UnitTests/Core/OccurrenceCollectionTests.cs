@@ -9,7 +9,23 @@ namespace Rekog.UnitTests.Core
     public class OccurrenceCollectionTests
     {
         [Fact]
-        public void AddTotal()
+        public void AddNull()
+        {
+            var occurrences = new OccurrenceCollection<string>(new Dictionary<string, ulong>
+            {
+                ["A"] = 1,
+                ["B"] = 1,
+                ["C"] = 2,
+            });
+            var expectedTotal = 5ul;
+
+            occurrences.AddNull();
+            var total = occurrences.Total;
+
+            total.ShouldBe(expectedTotal);
+        }
+        [Fact]
+        public void AddNull_Value()
         {
             var occurrences = new OccurrenceCollection<string>(new Dictionary<string, ulong>
             {
@@ -19,7 +35,7 @@ namespace Rekog.UnitTests.Core
             });
             var expectedTotal = 14ul;
 
-            occurrences.AddTotal(10);
+            occurrences.AddNull(10);
             var total = occurrences.Total;
 
             total.ShouldBe(expectedTotal);

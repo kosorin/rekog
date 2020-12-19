@@ -28,8 +28,12 @@ namespace Rekog.Core
 
         public Occurrence<TValue> this[TValue value] => _occurrences[value];
 
-        // TODO: Consider rename
-        public void AddTotal(ulong count)
+        public void AddNull()
+        {
+            AddNull(1);
+        }
+
+        public void AddNull(ulong count)
         {
             Total += count;
         }
