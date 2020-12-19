@@ -56,6 +56,12 @@ namespace Rekog
         private List<CorpusFile> GetCorpusFiles()
         {
             var corpusConfig = _config.Corpora[_config.Options.Corpus];
+
+            if (corpusConfig.Path == null)
+            {
+                return new List<CorpusFile>();
+            }
+
             return PathHelper
                 .GetPaths(_fileSystem, corpusConfig.Path, corpusConfig.Pattern, corpusConfig.Recursive)
                 .DistinctBy(x => x)
@@ -68,6 +74,12 @@ namespace Rekog
         private CorpusData? ParseCorpusFiles(List<CorpusFile> corpusFiles, Alphabet alphabet, CancellationToken cancellationToken)
         {
             var data = new CorpusData();
+
+            if (corpusFiles.Count == 0)
+            {
+                return data;
+            }
+
             _console.Out.WriteLine($"Started: {DateTime.Now}");
             var sw = Stopwatch.StartNew();
 

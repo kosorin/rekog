@@ -4,7 +4,7 @@ namespace Rekog.Data
 {
     public record CorpusConfig : SerializationObject
     {
-        public string Path { get; set; } = default!;
+        public string? Path { get; set; }
 
         public string Pattern { get; set; } = default!;
 
@@ -14,7 +14,6 @@ namespace Rekog.Data
 
         protected override void FixSelf()
         {
-            Path ??= string.Empty;
             Pattern ??= string.Empty;
             Encoding ??= string.Empty;
         }

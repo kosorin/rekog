@@ -29,7 +29,7 @@ namespace Rekog.Data
 
         private void FixLocationConfigs()
         {
-            Corpora = FixMap(Corpora, x => x?.Path == null);
+            Corpora = FixMap(Corpora);
         }
 
         private void FixAlphabetConfigs()
