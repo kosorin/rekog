@@ -4,7 +4,7 @@ namespace Rekog.Core.Extensions
 {
     public static class FingerExtensions
     {
-        public static Hand ToHand(this Finger finger)
+        public static Hand GetHand(this Finger finger)
         {
             switch (finger)
             {
@@ -37,8 +37,8 @@ namespace Rekog.Core.Extensions
 
         public static Roll GetRoll(this Finger firstFinger, Finger secondFinger)
         {
-            var hand = firstFinger.ToHand();
-            if (hand != secondFinger.ToHand())
+            var hand = firstFinger.GetHand();
+            if (hand != secondFinger.GetHand())
             {
                 return Roll.None;
             }

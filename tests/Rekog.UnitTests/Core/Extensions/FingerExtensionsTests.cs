@@ -21,9 +21,9 @@ namespace Rekog.UnitTests.Core.Extensions
         [InlineData(Finger.RightMiddle, Hand.Right)]
         [InlineData(Finger.RightIndex, Hand.Right)]
         [InlineData(Finger.RightThumb, Hand.Right)]
-        public void ToHand(Finger finger, Hand expectedHand)
+        public void GetHand(Finger finger, Hand expectedHand)
         {
-            var hand = FingerExtensions.ToHand(finger);
+            var hand = FingerExtensions.GetHand(finger);
 
             hand.ShouldBe(expectedHand);
         }
