@@ -19,7 +19,19 @@ namespace Rekog.Core
         public OccurrenceCollection(IReadOnlyDictionary<TValue, ulong> occurrences)
         {
             _occurrences = occurrences.ToDictionary(x => x.Key, x => new Occurrence<TValue>(x.Key, x.Value));
-            Total = (ulong)_occurrences.Values.Sum(x => (decimal)x.Count);
+            Total = (ulong)occurrences.Values.Sum(x => (decimal)x);
+        }
+
+        // TODO: Add unit test
+        public OccurrenceCollection(IReadOnlyDictionary<TValue, ulong> occurrences, ulong total)
+        {
+            if (total < (ulong)occurrences.Values.Sum(x => (decimal)x))
+            {
+                throw new ArgumentException(null, nameof(total));
+            }
+
+            _occurrences = occurrences.ToDictionary(x => x.Key, x => new Occurrence<TValue>(x.Key, x.Value));
+            Total = total;
         }
 
         public int Count => _occurrences.Count;
@@ -64,6 +76,16 @@ namespace Rekog.Core
             {
                 Add(occurrence.Value, occurrence.Count);
             }
+        }
+
+        // TODO: Add unit test
+        public OccurrenceCollection<TGroup> Group<TGroup>(Func<Occurrence<TValue>, TGroup> groupSelector)
+            where TGroup : notnull
+        {
+            var groupedOccurrences = _occurrences.Values
+                .GroupBy(groupSelector)
+                .ToDictionary(g => g.Key, g => (ulong)g.Sum(x => (decimal)x.Count));
+            return new OccurrenceCollection<TGroup>(groupedOccurrences, Total);
         }
 
         public bool Contains(TValue value)

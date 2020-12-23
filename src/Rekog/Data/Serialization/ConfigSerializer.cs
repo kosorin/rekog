@@ -10,7 +10,8 @@ namespace Rekog.Data.Serialization
 
             builder
                 .WithNodeDeserializer(new AlphabetConfigScalarNodeDeserializer())
-                .WithNodeDeserializer(new LocationConfigScalarNodeDeserializer());
+                .WithNodeDeserializer(new LocationConfigScalarNodeDeserializer())
+                ;
         }
     }
 }

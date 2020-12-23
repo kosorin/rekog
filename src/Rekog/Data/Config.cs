@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Rekog.Data
 {
     public record Config : SerializationObject
     {
-        public Options Options { get; set; } = default!;
-
         public Dictionary<string, CorpusConfig> Corpora { get; set; } = default!;
 
         public Dictionary<string, AlphabetConfig> Alphabets { get; set; } = default!;
@@ -16,11 +15,6 @@ namespace Rekog.Data
 
         protected override void FixSelf()
         {
-            if (Options == null)
-            {
-                throw new PersistenceException("Options is not set.");
-            }
-
             FixLocationConfigs();
             FixAlphabetConfigs();
             FixLayoutConfigs();
@@ -29,28 +23,26 @@ namespace Rekog.Data
 
         private void FixLocationConfigs()
         {
-            Corpora = FixMap(Corpora);
+            Corpora = Corpora?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new();
         }
 
         private void FixAlphabetConfigs()
         {
-            Alphabets = FixMap(Alphabets, x => x?.Characters == null);
+            Alphabets = Alphabets?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new();
         }
 
         private void FixLayoutConfigs()
         {
-            Layouts = FixMap(Layouts);
+            Layouts = Layouts?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new();
         }
 
         private void FixKeymapConfigs()
         {
-            Keymaps = FixMap(Keymaps);
+            Keymaps = Keymaps?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new();
         }
 
         protected override IEnumerable<SerializationObject> CollectChildren()
         {
-            yield return Options;
-
             foreach (var child in Corpora.Values)
             {
                 yield return child;

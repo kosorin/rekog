@@ -4,12 +4,13 @@ using System.Linq;
 
 namespace Rekog.Core.Layouts
 {
+    [Obsolete]
     public class Matrix<T> where T : notnull
     {
         private readonly T[,] _data;
         private readonly Dictionary<T, (int x, int y)> _positions = new();
 
-        public Matrix(List<List<T>> rawData)
+        public Matrix(List<List<T?>> rawData)
         {
             Width = rawData.Max(x => x.Count);
             Height = rawData.Count;
@@ -20,6 +21,10 @@ namespace Rekog.Core.Layouts
                 for (var x = 0; x < rawData[y].Count; x++)
                 {
                     var value = rawData[y][x];
+                    if (value == null)
+                    {
+                        continue;
+                    }
                     _data[y, x] = value;
                     _positions[value] = (x, y);
                 }

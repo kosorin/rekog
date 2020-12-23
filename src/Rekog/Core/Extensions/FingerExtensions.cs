@@ -24,9 +24,14 @@ namespace Rekog.Core.Extensions
             }
         }
 
+        public static bool IsThumb(this Finger finger)
+        {
+            return finger == Finger.LeftThumb || finger == Finger.RightThumb;
+        }
+
         public static bool IsNeighbor(this Finger finger, Finger neighbor)
         {
-            if (finger == Finger.LeftThumb || finger == Finger.RightThumb || neighbor == Finger.LeftThumb || neighbor == Finger.RightThumb)
+            if (finger.IsThumb() || neighbor.IsThumb())
             {
                 return false;
             }
@@ -35,6 +40,7 @@ namespace Rekog.Core.Extensions
             return distance == 1 || distance == -1;
         }
 
+        [Obsolete]
         public static Roll GetRoll(this Finger firstFinger, Finger secondFinger)
         {
             var hand = firstFinger.GetHand();

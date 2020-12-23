@@ -5,7 +5,7 @@ using YamlDotNet.Serialization.NamingConventions;
 namespace Rekog.Data.Serialization
 {
     public abstract class SerializerBase<TObject>
-        where TObject : class
+        where TObject : SerializationObject
     {
         private ISerializer? _serializer;
         private IDeserializer? _deserializer;
@@ -22,6 +22,7 @@ namespace Rekog.Data.Serialization
         {
             var deserializer = GetDeserializer();
             var obj = deserializer.Deserialize<TObject>(reader);
+            obj.FixAll();
             return obj;
         }
 

@@ -1,61 +1,127 @@
-﻿using Rekog.Data;
+﻿using Autofac;
+using Rekog.Controllers;
+using Rekog.Data;
 using Rekog.Data.Serialization;
+using Rekog.Logging;
+using Serilog;
+using Serilog.Events;
+using System;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Invocation;
+using System.CommandLine.IO;
 using System.CommandLine.Parsing;
 using System.IO.Abstractions;
 using System.Threading;
 
 namespace Rekog
 {
-    internal static class Program
+    internal class Program
     {
-        private static readonly FileSystem FileSystem = new();
+        private readonly SystemConsole _console;
+        private readonly ILogger _logger;
 
-        // TODO: Handle errors/exceptions and return correct code (e.g. return 1 on error)
-        private static int Main(string[] args)
+        private static void Main(string[] args)
         {
-            return BuildParser().Invoke(args);
+            new Program().Run(args);
         }
 
-        private static Parser BuildParser()
+        private Program()
+        {
+            _console = new SystemConsole();
+            _logger = CreateLogger(_console);
+        }
+
+        private void Run(string[] args)
+        {
+            try
+            {
+                BuildParser().Invoke(args, _console);
+            }
+            catch (Exception e)
+            {
+                _logger.Fatal(e, "Unhandled exception");
+            }
+        }
+
+        private ILogger CreateLogger(IConsole console)
+        {
+            var outputTemplate = "[{Timestamp:HH:mm:ss.fff} {Level:u3}] {Message:lj}{NewLine}{Exception}";
+            return new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .Enrich.FromLogContext()
+                .WriteTo.Debug(LogEventLevel.Debug, outputTemplate)
+                .WriteTo.Console(console, LogEventLevel.Information, outputTemplate)
+                .CreateLogger();
+        }
+
+        private Parser BuildParser()
         {
             return new CommandLineBuilder(GetCommand())
-                .UseDefaults()
+                .UseVersionOption()
+                .UseHelp()
+                .UseParseErrorReporting()
+                .UseSuggestDirective()
+                .RegisterWithDotnetSuggest()
+                .CancelOnProcessTermination()
                 .Build();
         }
 
-        private static Command GetCommand()
+        private Command GetCommand()
         {
             var command = new RootCommand();
 
-            command.AddOption(new Option<string>(new[] { "--data-root", "-d" }));
             command.AddOption(new Option<string>(new[] { "--alphabet", "-a" }) { IsRequired = true });
             command.AddOption(new Option<string>(new[] { "--corpus", "-c" }) { IsRequired = true });
             command.AddOption(new Option<string>(new[] { "--keymap", "-k" }) { IsRequired = true });
             command.AddOption(new Option<string>(new[] { "--layout", "-l" }) { IsRequired = true });
 
-            command.Handler = CommandHandler.Create<Options, IConsole, CancellationToken>(Handle);
+            command.Handler = CommandHandler.Create<Options, CancellationToken>(Handle);
 
             return command;
         }
 
-        private static void Handle(Options options, IConsole console, CancellationToken cancellationToken)
+        private void Handle(Options options, CancellationToken cancellationToken)
         {
-            var dataFileManager = new DataFileManager(options.DataRoot, FileSystem);
-            var config = BuildConfig(options, dataFileManager);
-            var controller = new Controller(config, dataFileManager, console, FileSystem);
-            controller.Handle(cancellationToken);
+            FixOptions(options);
+
+            var container = BuildContainer(options);
+
+            container.Resolve<ProgramController>().Run(cancellationToken);
         }
 
-        private static Config BuildConfig(Options options, DataFileManager dataFileManager)
+        private void FixOptions(Options options)
         {
-            using var reader = dataFileManager.GetConfigReader();
-            var config = new ConfigSerializer().Deserialize(reader);
-            config.Options = options;
-            config.FixAll();
-            return config;
+            options.Corpus ??= string.Empty;
+            options.Alphabet ??= string.Empty;
+            options.Layout ??= string.Empty;
+            options.Keymap ??= string.Empty;
+        }
+
+        private IContainer BuildContainer(Options options)
+        {
+            var fileSystem = new FileSystem();
+            var config = LoadConfig(fileSystem);
+
+            var builder = new ContainerBuilder();
+            builder.RegisterInstance(_console).As<IConsole>();
+            builder.RegisterInstance(_logger).As<ILogger>();
+            builder.RegisterInstance(fileSystem).As<IFileSystem>();
+            builder.RegisterInstance(config).As<Config>();
+            builder.RegisterInstance(options).As<Options>();
+            builder.RegisterType<CorpusController>();
+            builder.RegisterType<LayoutController>();
+            builder.RegisterType<ProgramController>();
+
+            var container = builder.Build();
+
+            return container;
+        }
+
+        private Config LoadConfig(FileSystem fileSystem)
+        {
+            using var reader = new DataFile(fileSystem, "config.yml").GetReader();
+            return new ConfigSerializer().Deserialize(reader);
         }
     }
 }

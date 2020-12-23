@@ -19,12 +19,12 @@ namespace Rekog.IO
             return GetPaths(fileSystem, path, searchPattern, false);
         }
 
-        public static string[] GetPaths(IFileSystem fileSystem, string path, bool recurseSubdirectories)
+        public static string[] GetPaths(IFileSystem fileSystem, string path, bool recursive)
         {
-            return GetPaths(fileSystem, path, DefaultSearchPattern, recurseSubdirectories);
+            return GetPaths(fileSystem, path, DefaultSearchPattern, recursive);
         }
 
-        public static string[] GetPaths(IFileSystem fileSystem, string path, string searchPattern, bool recurseSubdirectories)
+        public static string[] GetPaths(IFileSystem fileSystem, string path, string searchPattern, bool recursive)
         {
             var attributes = fileSystem.File.GetAttributes(path);
             if (attributes.HasFlag(FileAttributes.Directory))
@@ -32,7 +32,7 @@ namespace Rekog.IO
                 return fileSystem.Directory
                     .EnumerateFiles(path, "*", new EnumerationOptions
                     {
-                        RecurseSubdirectories = recurseSubdirectories,
+                        RecurseSubdirectories = recursive,
                     })
                     .Where(x => string.IsNullOrEmpty(searchPattern) || Regex.IsMatch(x, searchPattern, RegexOptions.CultureInvariant))
                     .ToArray();

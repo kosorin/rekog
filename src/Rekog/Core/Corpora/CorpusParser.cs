@@ -16,10 +16,10 @@ namespace Rekog.Core.Corpora
         private readonly Alphabet _alphabet;
         private readonly bool _caseSensitive;
 
-        public CorpusParser(Alphabet alphabet, bool caseSensitive)
+        public CorpusParser(Alphabet alphabet)
         {
             _alphabet = alphabet;
-            _caseSensitive = caseSensitive;
+            _caseSensitive = false;
 
             _unigramCollector = new NgramCollector(new UnigramParser());
             _bigramCollector = new NgramCollector(new NgramParser(2));

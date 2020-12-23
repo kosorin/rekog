@@ -1,27 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Rekog.Core.Layouts
 {
     public class Layout
     {
-        private readonly Dictionary<char, Finger> _characterFingers;
-        private readonly Dictionary<char, Hand> _handFingers;
+        private readonly Dictionary<char, Key> _keys;
 
-        public int RowCount { get; }
-
-        public Finger GetFinger(char character)
+        public Layout(IReadOnlyDictionary<char, Key> keys)
         {
-            return _characterFingers[character];
+            _keys = keys.ToDictionary(x => x.Key, x => x.Value);
         }
 
-        public Hand GetHand(char character)
+        public bool TryGetKey(char character, [MaybeNullWhen(false)] out Key key)
         {
-            return _handFingers[character];
-        }
-
-        public int GetRow(char character)
-        {
-            return 0;
+            return _keys.TryGetValue(character, out key);
         }
     }
 }

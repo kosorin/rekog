@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "Console": {
+    "Rekog": {
       "commandName": "Project",
-      "commandLineArgs": "-c cs_volne_knihy -a cs -l klave -k qwertz_cs",
+      "commandLineArgs": "-c cs_wiki -a cs -l standard -ks dvorak",
       "workingDirectory": "..\\..\\data\\"
     }
   }
