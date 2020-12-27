@@ -18,8 +18,9 @@ namespace Rekog
 {
     internal class Program
     {
-        private readonly SystemConsole _console;
         private readonly ILogger _logger;
+        private readonly SystemConsole _console;
+        private readonly FileSystem _fileSystem;
 
         private static void Main(string[] args)
         {
@@ -30,6 +31,7 @@ namespace Rekog
         {
             _console = new SystemConsole();
             _logger = CreateLogger(_console);
+            _fileSystem = new FileSystem();
         }
 
         private void Run(string[] args)
@@ -51,7 +53,7 @@ namespace Rekog
                 .MinimumLevel.Debug()
                 .Enrich.FromLogContext()
                 .WriteTo.Debug(LogEventLevel.Debug, outputTemplate)
-                .WriteTo.Console(console, LogEventLevel.Information, outputTemplate)
+                .WriteTo.Console(console, LogEventLevel.Debug, outputTemplate)
                 .CreateLogger();
         }
 
@@ -83,45 +85,49 @@ namespace Rekog
 
         private void Handle(Options options, CancellationToken cancellationToken)
         {
-            FixOptions(options);
+            PrepareOptions(options);
+            var config = LoadConfig();
 
-            var container = BuildContainer(options);
+            var container = BuildContainer(options, config);
 
             container.Resolve<ProgramController>().Run(cancellationToken);
         }
 
-        private void FixOptions(Options options)
+        private void PrepareOptions(Options options)
         {
             options.Corpus ??= string.Empty;
             options.Alphabet ??= string.Empty;
             options.Layout ??= string.Empty;
             options.Keymap ??= string.Empty;
+
+            _logger.Debug("Parsed command line options");
         }
 
-        private IContainer BuildContainer(Options options)
+        private Config LoadConfig()
         {
-            var fileSystem = new FileSystem();
-            var config = LoadConfig(fileSystem);
+            var configFile = new DataFile(_fileSystem, "config.yml");
+            using var reader = configFile.GetReader();
+            var config = new ConfigSerializer().Deserialize(reader);
 
+            _logger.Debug("Loaded config {ConfigFile}", configFile.Path);
+
+            return config;
+        }
+
+        private IContainer BuildContainer(Options options, Config config)
+        {
             var builder = new ContainerBuilder();
-            builder.RegisterInstance(_console).As<IConsole>();
-            builder.RegisterInstance(_logger).As<ILogger>();
-            builder.RegisterInstance(fileSystem).As<IFileSystem>();
-            builder.RegisterInstance(config).As<Config>();
+
             builder.RegisterInstance(options).As<Options>();
+            builder.RegisterInstance(config).As<Config>();
+            builder.RegisterInstance(_logger).As<ILogger>();
+            builder.RegisterInstance(_console).As<IConsole>();
+            builder.RegisterInstance(_fileSystem).As<IFileSystem>();
             builder.RegisterType<CorpusController>();
             builder.RegisterType<LayoutController>();
             builder.RegisterType<ProgramController>();
 
-            var container = builder.Build();
-
-            return container;
-        }
-
-        private Config LoadConfig(FileSystem fileSystem)
-        {
-            using var reader = new DataFile(fileSystem, "config.yml").GetReader();
-            return new ConfigSerializer().Deserialize(reader);
+            return builder.Build();
         }
     }
 }

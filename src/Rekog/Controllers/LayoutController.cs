@@ -6,6 +6,7 @@ using Rekog.Data;
 using Rekog.Data.Serialization;
 using Rekog.Extensions;
 using Rekog.IO;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
@@ -24,88 +25,120 @@ namespace Rekog
     {
         private readonly Options _options;
         private readonly Config _config;
-        private readonly IFileSystem _fileSystem;
         private readonly IConsole _console;
+        private readonly ILogger _logger;
 
-        public LayoutController(Options options, Config config, IFileSystem fileSystem, IConsole console)
+        public LayoutController(Options options, Config config, IConsole console, ILogger logger)
         {
             _options = options;
             _config = config;
-            _fileSystem = fileSystem;
             _console = console;
+            _logger = logger.ForContext<LayoutController>();
         }
 
         public void Analyze(CorpusData corpusData)
         {
-            var corpusAnalysis = new CorpusAnalysis(corpusData);
-            //var layout = GetLayout(alphabet);
-
-
-            //var layoutAnalyzers = new LayoutAnalyzer[]
-            //{
-            //    new FingerFrequencyLayoutAnalyzer(),
-            //    new HandFrequencyLayoutAnalyzer(),
-            //    new RowFrequencyLayoutAnalyzer(),
-            //};
-
-            //foreach (var layoutAnalyzer in layoutAnalyzers)
-            //{
-            //    layoutAnalyzer.Analyze(corpusAnalysis, layout);
-            //    layoutAnalyzer.Print(_console);
-            //}
-
-            //new NgramAnalyzer().Analyze(corpusAnalysis, layout);
-        }
-
-        public Layout GetLayout(Alphabet alphabet)
-        {
-            var keymapConfig = _config.Keymaps[_options.Keymap];
-            foreach (var layerConfig in keymapConfig.Layers)
+            var layout = GetLayout();
+            if (layout == null)
             {
-                _console.Out.WriteLine(string.Join('\n', layerConfig.Keys.Select(x => string.Join(' ', x.Select(i => i ?? ' ')))));
-                _console.Out.WriteLine();
+                return;
             }
 
+            //return;
+            var corpusAnalysis = new CorpusAnalysis(corpusData);
+
+            var layoutAnalyzers = new LayoutAnalyzer[]
+            {
+                new FingerFrequencyLayoutAnalyzer(),
+                new HandFrequencyLayoutAnalyzer(),
+                new RowFrequencyLayoutAnalyzer(),
+            };
+
+            foreach (var layoutAnalyzer in layoutAnalyzers)
+            {
+                layoutAnalyzer.Analyze(corpusAnalysis, layout);
+                layoutAnalyzer.Print(_console);
+            }
+
+            new NgramAnalyzer().Analyze(corpusAnalysis, layout);
+
+
+
+
+
+
+
+
+            //foreach (var unigram in corpusAnalysis.Unigrams)
+            //{
+            //    if (layout.TryGetKey(unigram.Value[0], out var key))
+            //    {
+            //        if (TryGet(key, out var value))
+            //        {
+            //            Occurrences.Add(value, unigram.Count);
+            //            continue;
+            //        }
+            //    }
+
+            //    Occurrences.AddNull(unigram.Count);
+            //}
+
+            //foreach (var bigram in corpusAnalysis.Bigrams)
+            //{
+            //    if (layout.TryGetKey(bigram.Value[0], out var firstKey) && layout.TryGetKey(bigram.Value[1], out var secondKey))
+            //    {
+            //        if (TryGet(firstKey, secondKey, out var value))
+            //        {
+            //            Occurrences.Add(value, bigram.Count);
+            //            continue;
+            //        }
+            //    }
+
+            //    Occurrences.AddNull(bigram.Count);
+            //}
+        }
+
+        private Layout? GetLayout()
+        {
+            var keymapConfig = _config.Keymaps[_options.Keymap];
             var layoutConfig = _config.Layouts[_options.Layout];
-            _console.Out.WriteLine(string.Join('\n', layoutConfig.Fingers.Select(x => string.Join(' ', x.Select(i => i)))));
-            _console.Out.WriteLine();
 
             var keys = new Dictionary<char, Key>();
             for (var row = 0; row < layoutConfig.Fingers.Count; row++)
             {
                 for (var column = 0; column < layoutConfig.Fingers[row].Count; column++)
                 {
-                    var finger = (Finger)layoutConfig.Fingers[row][column];
-                    var isHoming = layoutConfig.Homing[row][column];
+                    var fingerValue = layoutConfig.Fingers[row][column];
+                    if (!fingerValue.HasValue || !Enum.GetValues<Finger>().Contains((Finger)fingerValue.Value))
+                    {
+                        _logger.Error("Bad layout finger format: {FingerValue}", fingerValue);
+                        return null;
+                    }
+
+                    var finger = (Finger)fingerValue.Value;
                     foreach (var layerConfig in keymapConfig.Layers)
                     {
                         var character = layerConfig.Keys[row][column];
-                        if (!character.HasValue || !alphabet.Contains(character.Value))
+                        if (!character.HasValue)
                         {
                             continue;
                         }
 
-                        var key = new Key(character.Value, finger, row);
-                        if (!keys.TryAdd(character.Value, key))
+                        var key = new Key(char.ToUpperInvariant(character.Value), finger, row, column);
+                        if (!keys.TryAdd(key.Character, key))
                         {
-                            _console.Error.WriteLine($"Warning: Multiple character {character.Value}");
+                            _logger.Warning("Multiple layout character {Character}", key.Character);
                             continue;
                         }
                     }
                 }
             }
 
-            var missingCharacters = from a in alphabet.Select(x => char.ToUpperInvariant(x))
-                                    join k in keys.Select(x => (char?)char.ToUpperInvariant(x.Key)) on a equals k into g
-                                    from k in g.DefaultIfEmpty()
-                                    where !k.HasValue
-                                    select a;
-            foreach (var missingCharacter in missingCharacters.Distinct())
-            {
-                _console.Error.WriteLine($"Warning: Missing character {missingCharacter}");
-            }
+            var layout = new Layout(keys);
 
-            return new Layout(keys);
+            _logger.Information("Parsed layout {Layout} with keymap {Keymap}", _options.Layout, _options.Keymap);
+
+            return layout;
         }
     }
 }

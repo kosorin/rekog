@@ -5,12 +5,13 @@ namespace Rekog.Core.Layouts
 {
     public class Key
     {
-        public Key(char character, Finger finger, int row)
+        public Key(char character, Finger finger, int row, int column)
         {
             Character = character;
             Finger = finger;
             Hand = finger.GetHand();
             Row = row;
+            Column = column;
         }
 
         public char Character { get; }
@@ -20,6 +21,8 @@ namespace Rekog.Core.Layouts
         public Hand Hand { get; }
 
         public int Row { get; }
+
+        public int Column { get; }
 
         public Roll GetHandRoll(Key other)
         {

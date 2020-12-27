@@ -22,4 +22,17 @@ namespace Rekog.Core.Layouts.Analyzers
             }
         }
     }
+
+    public abstract class OccurrenceLayoutAnalyzer : OccurrenceLayoutAnalyzer<bool>
+    {
+        protected OccurrenceLayoutAnalyzer(string description) : base(description)
+        {
+        }
+
+        public override void Print(IConsole console)
+        {
+            var value = new OccurrenceAnalysis<bool>(Occurrences).TryGet(true, out var alternation) ? alternation.Percentage : 0;
+            console.Out.WriteLine($"{Description}: {value,10:P3}");
+        }
+    }
 }

@@ -42,9 +42,9 @@ keymaps:
   dvorak:
     layers:
     - keys:
-      - [ '~','~','~','P','Y'  ,  'F','G','C','R','L' ]
+      - [  ~ , ~ , ~ ,'P','Y'  ,  'F','G','C','R','L' ]
       - [ 'A','O','E','U','I'  ,  'D','H','T','N','S' ]
-      - [ '~','Q','J','K','X'  ,  'B','M','W','V','Z' ]
+      - [  ~ ,'Q','J','K','X'  ,  'B','M','W','V','Z' ]
 
 layouts:
   standard:

@@ -2,7 +2,7 @@
 
 namespace Rekog.Data
 {
-    public class Map<T> : List<List<T>>
+    public class Matrix<T> : List<List<T>>
     {
         public void Fix()
         {

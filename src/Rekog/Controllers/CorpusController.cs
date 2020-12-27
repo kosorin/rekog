@@ -56,7 +56,7 @@ namespace Rekog.Controllers
         {
             if (!datafile.TryGetReader(out var reader))
             {
-                _logger.Debug("Corpus data file {CorpusDataFile} not found", datafile.Path);
+                _logger.Debug("Corpus data {CorpusDataFile} not found", datafile.Path);
 
                 data = null;
                 return false;
@@ -65,7 +65,7 @@ namespace Rekog.Controllers
             using (reader)
             {
                 var report = new CorpusReportSerializer().Deserialize(reader);
-                _logger.Information("Loaded corpus data file {CorpusDataFile}", datafile.Path);
+                _logger.Information("Loaded corpus data {CorpusDataFile}", datafile.Path);
 
                 data = new CorpusData(report);
                 return true;
@@ -80,7 +80,7 @@ namespace Rekog.Controllers
                 new CorpusReportSerializer().Serialize(writer, report);
             }
 
-            _logger.Information("Saved corpus data file {CorpusDataFile}", datafile.Path);
+            _logger.Information("Saved corpus data {CorpusDataFile}", datafile.Path);
         }
 
         private CorpusData? ParseCorpus(CancellationToken cancellationToken)
@@ -139,7 +139,6 @@ namespace Rekog.Controllers
 
         private void ParseCorpusFile(CorpusFile file, CorpusParser parser, CancellationToken cancellationToken)
         {
-
             using (var reader = file.Open(_fileSystem))
             {
                 parser.Parse(reader, cancellationToken);

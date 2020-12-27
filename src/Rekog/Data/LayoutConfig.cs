@@ -4,9 +4,9 @@ namespace Rekog.Data
 {
     public record LayoutConfig : SerializationObject
     {
-        public Map<int> Fingers { get; set; } = default!;
+        public Matrix<int?> Fingers { get; set; } = default!;
 
-        public Map<bool> Homing { get; set; } = default!;
+        public Matrix<bool> Homing { get; set; } = default!;
 
         protected override void FixSelf()
         {

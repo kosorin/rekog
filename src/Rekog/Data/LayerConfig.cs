@@ -4,7 +4,7 @@ namespace Rekog.Data
 {
     public record LayerConfig : SerializationObject
     {
-        public Map<char?> Keys { get; set; } = default!;
+        public Matrix<char?> Keys { get; set; } = default!;
 
         protected override void FixSelf()
         {
