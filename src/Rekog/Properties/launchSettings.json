@@ -2,7 +2,7 @@
   "profiles": {
     "Rekog": {
       "commandName": "Project",
-      "commandLineArgs": "-c cs_volne_knihy -a cs -l standard -k colemak",
+      "commandLineArgs": "-c norvig -a en -l standard -k qwerty",
       "workingDirectory": "..\\..\\data\\"
     }
   }

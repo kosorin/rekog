@@ -1,28 +1,31 @@
 ﻿using Rekog.Core.Corpora;
 using Rekog.Core.Extensions;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Rekog.Core.Layouts.Analyzers
 {
-    public class HandAlternationLayoutAnalyzer : BigramLayoutAnalyzer<bool>
+    internal class SameFingerBigramAnalyzer : BigramAnalyzer<Finger>
     {
-        public HandAlternationLayoutAnalyzer() : base("Hand alternation")
+        public SameFingerBigramAnalyzer() : base("Same finger bigram")
         {
         }
 
-        protected override bool TryGet(Key firstKey, Key secondKey, [MaybeNullWhen(false)] out bool value)
+        protected override bool TryAccept(Key firstKey, Key secondKey, out Finger value)
         {
-            value = firstKey.Hand != secondKey.Hand;
-            return true;
+            if (firstKey.Finger == secondKey.Finger && firstKey.Position != secondKey.Position)
+            {
+                value = firstKey.Finger;
+                return true;
+            }
+            value = default;
+            return false;
         }
     }
     public class NgramAnalyzer
     {
         public void Analyze(CorpusAnalysis corpusAnalysis, Layout layout)
         {
-            var handAlternationOccurrences = new OccurrenceCollection<bool>();
             var sameHandRowJumpOccurrences = new OccurrenceCollection<(int firstRow, int secondRow)>();
             var sameHandRowJumpDistanceOccurrences = new OccurrenceCollection<int>();
             var handRollOccurrences = new OccurrenceCollection<(Hand hand, Roll roll)>();
@@ -39,7 +42,6 @@ namespace Rekog.Core.Layouts.Analyzers
             {
                 if (!layout.TryGetKey(bigram.Value[0], out var firstKey) || !layout.TryGetKey(bigram.Value[1], out var secondKey))
                 {
-                    handAlternationOccurrences.AddNull(bigram.Count);
                     sameHandRowJumpOccurrences.AddNull(bigram.Count);
                     sameHandRowJumpDistanceOccurrences.AddNull(bigram.Count);
                     handRollOccurrences.AddNull(bigram.Count);
@@ -71,8 +73,6 @@ namespace Rekog.Core.Layouts.Analyzers
                 {
                     neighborFingerBigramOccurrences.AddNull(bigram.Count);
                 }
-
-                handAlternationOccurrences.Add(firstKey.Hand != secondKey.Hand, bigram.Count);
 
                 if (firstKey.Hand == secondKey.Hand && firstKey.Row != secondKey.Row)
                 {
@@ -153,10 +153,6 @@ namespace Rekog.Core.Layouts.Analyzers
 
             System.Console.WriteLine();
 
-            var handAlternationAnalysis = new OccurrenceAnalysis<bool>(handAlternationOccurrences);
-            System.Console.WriteLine($"Hand alternation: {(handAlternationAnalysis.TryGet(true, out var alternation) ? alternation.Percentage : 0):P3}");
-
-            System.Console.WriteLine();
 
             var sameHandRowJumpAnalysis = new OccurrenceAnalysis<(int, int)>(sameHandRowJumpOccurrences);
             System.Console.WriteLine($"Same hand row jump (from, to)");

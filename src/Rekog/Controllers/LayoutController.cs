@@ -1,23 +1,12 @@
 ﻿using Rekog.Core;
 using Rekog.Core.Corpora;
 using Rekog.Core.Layouts;
-using Rekog.Core.Layouts.Analyzers;
 using Rekog.Data;
-using Rekog.Data.Serialization;
-using Rekog.Extensions;
-using Rekog.IO;
 using Serilog;
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.IO.Abstractions;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Rekog
 {
@@ -44,58 +33,10 @@ namespace Rekog
                 return;
             }
 
-            //return;
             var corpusAnalysis = new CorpusAnalysis(corpusData);
 
-            var layoutAnalyzers = new LayoutAnalyzer[]
-            {
-                new FingerFrequencyLayoutAnalyzer(),
-                new HandFrequencyLayoutAnalyzer(),
-                new RowFrequencyLayoutAnalyzer(),
-            };
-
-            foreach (var layoutAnalyzer in layoutAnalyzers)
-            {
-                layoutAnalyzer.Analyze(corpusAnalysis, layout);
-                layoutAnalyzer.Print(_console);
-            }
-
-            new NgramAnalyzer().Analyze(corpusAnalysis, layout);
-
-
-
-
-
-
-
-
-            //foreach (var unigram in corpusAnalysis.Unigrams)
-            //{
-            //    if (layout.TryGetKey(unigram.Value[0], out var key))
-            //    {
-            //        if (TryGet(key, out var value))
-            //        {
-            //            Occurrences.Add(value, unigram.Count);
-            //            continue;
-            //        }
-            //    }
-
-            //    Occurrences.AddNull(unigram.Count);
-            //}
-
-            //foreach (var bigram in corpusAnalysis.Bigrams)
-            //{
-            //    if (layout.TryGetKey(bigram.Value[0], out var firstKey) && layout.TryGetKey(bigram.Value[1], out var secondKey))
-            //    {
-            //        if (TryGet(firstKey, secondKey, out var value))
-            //        {
-            //            Occurrences.Add(value, bigram.Count);
-            //            continue;
-            //        }
-            //    }
-
-            //    Occurrences.AddNull(bigram.Count);
-            //}
+            var layoutAnalyzer = new LayoutAnalyzer();
+            layoutAnalyzer.Analyze(corpusAnalysis, layout);
         }
 
         private Layout? GetLayout()

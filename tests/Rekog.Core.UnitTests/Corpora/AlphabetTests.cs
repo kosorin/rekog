@@ -3,7 +3,7 @@ using Shouldly;
 using System.Linq;
 using Xunit;
 
-namespace Rekog.UnitTests.Core
+namespace Rekog.Core.UnitTests.Corpora
 {
     public class AlphabetTests
     {

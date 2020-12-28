@@ -1,9 +1,8 @@
-﻿using Rekog.Core;
-using Shouldly;
+﻿using Shouldly;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Rekog.UnitTests.Core
+namespace Rekog.Core.UnitTests
 {
     public class OccurrenceAnalysisTests
     {

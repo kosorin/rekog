@@ -1,4 +1,5 @@
-﻿using Rekog.Core.Corpora;
+﻿using Rekog.Core;
+using Rekog.Core.Corpora;
 using Rekog.Data;
 using Rekog.Data.Serialization;
 using Rekog.Extensions;
@@ -67,20 +68,40 @@ namespace Rekog.Controllers
                 var report = new CorpusReportSerializer().Deserialize(reader);
                 _logger.Information("Loaded corpus data {CorpusDataFile}", datafile.Path);
 
-                data = new CorpusData(report);
+                data = ReportToData(report);
                 return true;
+            }
+
+            static CorpusData ReportToData(CorpusReport report)
+            {
+                return new CorpusData(new(report.Unigrams), new(report.Bigrams), new(report.Trigrams));
             }
         }
 
         private void SaveCorpusData(DataFile datafile, CorpusData data)
         {
-            var report = data.ToReport();
+            var report = DataToReport(data);
             using (var writer = datafile.GetWriter())
             {
                 new CorpusReportSerializer().Serialize(writer, report);
             }
 
             _logger.Information("Saved corpus data {CorpusDataFile}", datafile.Path);
+
+            static CorpusReport DataToReport(CorpusData data)
+            {
+                return new CorpusReport
+                {
+                    Unigrams = GetRawCollection(data.UnigramOccurrences),
+                    Bigrams = GetRawCollection(data.BigramOccurrences),
+                    Trigrams = GetRawCollection(data.TrigramOccurrences),
+                };
+
+                static Dictionary<string, ulong> GetRawCollection(OccurrenceCollection<string> ngramOccurrences)
+                {
+                    return ngramOccurrences.OrderByDescending(x => x.Count).ToDictionary(x => x.Value, x => x.Count);
+                }
+            }
         }
 
         private CorpusData? ParseCorpus(CancellationToken cancellationToken)

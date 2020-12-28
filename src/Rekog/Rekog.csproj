@@ -16,4 +16,8 @@
     <PackageReference Include="YamlDotNet" Version="9.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Rekog.Core\Rekog.Core.csproj" />
+  </ItemGroup>
+
 </Project>

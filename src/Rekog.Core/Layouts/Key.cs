@@ -12,6 +12,7 @@ namespace Rekog.Core.Layouts
             Hand = finger.GetHand();
             Row = row;
             Column = column;
+            Position = (row, column);
         }
 
         public char Character { get; }
@@ -23,6 +24,8 @@ namespace Rekog.Core.Layouts
         public int Row { get; }
 
         public int Column { get; }
+
+        public (int row, int column) Position { get; }
 
         public Roll GetHandRoll(Key other)
         {

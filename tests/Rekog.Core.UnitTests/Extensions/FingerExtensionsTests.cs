@@ -1,12 +1,11 @@
-﻿using Rekog.Core;
-using Rekog.Core.Extensions;
+﻿using Rekog.Core.Extensions;
 using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Rekog.UnitTests.Core.Extensions
+namespace Rekog.Core.UnitTests.Extensions
 {
     public class FingerExtensionsTests
     {

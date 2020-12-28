@@ -103,7 +103,7 @@ namespace Rekog.UnitTests.IO
         }
 
         [Fact]
-        public void GetPaths_Directory_RecurseSubdirectories()
+        public void GetPaths_Directory_Recursive()
         {
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
@@ -118,13 +118,13 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\Sub3\Sub1\G.gif"] = new MockFileData(string.Empty),
             });
 
-            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", recurseSubdirectories: true);
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", recursive: true);
 
             paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif", @"T:\Test\Sub1\D.txt", @"T:\Test\Sub1\E.txt", @"T:\Test\Sub3\F.gif", @"T:\Test\Sub3\Sub1\G.gif" }, ignoreOrder: true);
         }
 
         [Fact]
-        public void GetPaths_Directory_GifSearchPattern_RecurseSubdirectories()
+        public void GetPaths_Directory_GifSearchPattern_Recursive()
         {
             var fileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
             {
@@ -139,7 +139,7 @@ namespace Rekog.UnitTests.IO
                 [@"T:\Test\Sub3\Sub1\G.gif"] = new MockFileData(string.Empty),
             });
 
-            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", searchPattern: @"\.gif$", recurseSubdirectories: true);
+            var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", searchPattern: @"\.gif$", recursive: true);
 
             paths.ShouldBe(new[] { @"T:\Test\C.gif", @"T:\Test\Sub3\F.gif", @"T:\Test\Sub3\Sub1\G.gif" }, ignoreOrder: true);
         }

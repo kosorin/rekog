@@ -3,7 +3,7 @@ using Shouldly;
 using System;
 using Xunit;
 
-namespace Rekog.UnitTests.Core.Ngrams
+namespace Rekog.Core.UnitTests.Ngrams
 {
     public class NgramParserTests
     {
