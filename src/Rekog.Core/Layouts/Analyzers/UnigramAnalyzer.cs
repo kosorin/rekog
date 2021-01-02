@@ -1,26 +1,19 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Rekog.Core.Layouts.Analyzers
+﻿namespace Rekog.Core.Layouts.Analyzers
 {
-    internal abstract class UnigramAnalyzer<T> : OccurrenceAnalyzer<T>, IUnigramAnalyzer
+    internal abstract class UnigramAnalyzer<T> : NgramAnalyzer<T>
         where T : notnull
     {
         protected UnigramAnalyzer(string description) : base(description)
         {
         }
 
-        public void Analyze(Key key, ulong count)
+        public override int Size => 1;
+
+        protected override bool TryGetValue(Key[] keys, out (T, double?) value)
         {
-            if (TryAccept(key, out var value))
-            {
-                Occurrences.Add(value, count);
-            }
-            else
-            {
-                Skip(count);
-            }
+            return TryGetValue(keys[0], out value);
         }
 
-        protected abstract bool TryAccept(Key key, [MaybeNullWhen(false)] out T value);
+        protected abstract bool TryGetValue(Key key, out (T, double?) value);
     }
 }

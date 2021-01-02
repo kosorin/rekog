@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Rekog.Core.Layouts.Analyzers
 {
-    internal class FingerFrequencyAnalyzer : UnigramAnalyzer<Finger>
+    internal class SameFingerBigramAnalyzer : BigramAnalyzer<Finger>
     {
-        public FingerFrequencyAnalyzer() : base("Finger frequencies")
+        public SameFingerBigramAnalyzer() : base("Same finger bigram")
         {
         }
 
@@ -22,10 +22,20 @@ namespace Rekog.Core.Layouts.Analyzers
                 .ToList();
         }
 
-        protected override bool TryGetValue(Key key, out (Finger, double?) value)
+        protected override bool TryGetValue(Key firstKey, Key secondKey, out (Finger, double?) value)
         {
-            value = (key.Finger, key.Effort);
-            return true;
+            if (firstKey.Finger == secondKey.Finger && firstKey.Position != secondKey.Position)
+            {
+                var finger = firstKey.Finger;
+
+                var distance = firstKey.GetDistance(secondKey);
+                var effort = distance + 1.5;
+
+                value = (finger, effort);
+                return true;
+            }
+            value = default;
+            return false;
         }
     }
 }

@@ -4,6 +4,29 @@ namespace Rekog.Core.Extensions
 {
     public static class FingerExtensions
     {
+        public static FingerKind GetKind(this Finger finger)
+        {
+            switch (finger)
+            {
+            case Finger.LeftPinky:
+            case Finger.RightPinky:
+                return FingerKind.Pinky;
+            case Finger.LeftRing:
+            case Finger.RightRing:
+                return FingerKind.Ring;
+            case Finger.LeftMiddle:
+            case Finger.RightMiddle:
+                return FingerKind.Middle;
+            case Finger.LeftIndex:
+            case Finger.RightIndex:
+                return FingerKind.Index;
+            case Finger.LeftThumb:
+            case Finger.RightThumb:
+                return FingerKind.Thumb;
+            default: throw new ArgumentOutOfRangeException(nameof(finger));
+            }
+        }
+
         public static Hand GetHand(this Finger finger)
         {
             switch (finger)
@@ -24,14 +47,9 @@ namespace Rekog.Core.Extensions
             }
         }
 
-        public static bool IsThumb(this Finger finger)
-        {
-            return finger == Finger.LeftThumb || finger == Finger.RightThumb;
-        }
-
         public static bool IsNeighbor(this Finger finger, Finger neighbor)
         {
-            if (finger.IsThumb() || neighbor.IsThumb())
+            if (finger.GetKind() == FingerKind.Thumb || neighbor.GetKind() == FingerKind.Thumb)
             {
                 return false;
             }

@@ -32,20 +32,20 @@ namespace Rekog.Controllers
             _logger = logger.ForContext<CorpusController>();
         }
 
-        public CorpusData? GetCorpusData(CancellationToken cancellationToken)
+        public CorpusAnalysisData? GetCorpusAnalysisData(CancellationToken cancellationToken)
         {
-            var datafile = GetCorpusDataFile();
-            if (!TryLoadCorpusData(datafile, out var data))
+            var analysisDatafile = GetCorpusDataFile();
+            if (!TryLoadAnalysisData(analysisDatafile, out var analysisData))
             {
-                data = ParseCorpus(cancellationToken);
+                analysisData = ParseCorpus(cancellationToken);
 
-                if (data != null)
+                if (analysisData != null)
                 {
-                    SaveCorpusData(datafile, data);
+                    SaveAnalysisData(analysisDatafile, analysisData);
                 }
             }
 
-            return data;
+            return analysisData;
         }
 
         private DataFile GetCorpusDataFile()
@@ -53,44 +53,44 @@ namespace Rekog.Controllers
             return new DataFile(_fileSystem, "corpus", _options.Alphabet, _options.Corpus + ".yml");
         }
 
-        private bool TryLoadCorpusData(DataFile datafile, [MaybeNullWhen(false)] out CorpusData data)
+        private bool TryLoadAnalysisData(DataFile analysisDatafile, [MaybeNullWhen(false)] out CorpusAnalysisData analysisData)
         {
-            if (!datafile.TryGetReader(out var reader))
+            if (!analysisDatafile.TryGetReader(out var reader))
             {
-                _logger.Debug("Corpus data {CorpusDataFile} not found", datafile.Path);
+                _logger.Debug("Corpus analysis data {CorpusAnalysisDataFile} not found", analysisDatafile.Path);
 
-                data = null;
+                analysisData = null;
                 return false;
             }
 
             using (reader)
             {
                 var report = new CorpusReportSerializer().Deserialize(reader);
-                _logger.Information("Loaded corpus data {CorpusDataFile}", datafile.Path);
+                _logger.Information("Loaded corpus analysis data {CorpusAnalysisDataFile}", analysisDatafile.Path);
 
-                data = ReportToData(report);
+                analysisData = ReportToData(report);
                 return true;
             }
 
-            static CorpusData ReportToData(CorpusReport report)
+            static CorpusAnalysisData ReportToData(CorpusAnalysisReport report)
             {
-                return new CorpusData(new(report.Unigrams), new(report.Bigrams), new(report.Trigrams));
+                return new CorpusAnalysisData(new(report.Unigrams), new(report.Bigrams), new(report.Trigrams));
             }
         }
 
-        private void SaveCorpusData(DataFile datafile, CorpusData data)
+        private void SaveAnalysisData(DataFile analysisDatafile, CorpusAnalysisData analysisData)
         {
-            var report = DataToReport(data);
-            using (var writer = datafile.GetWriter())
+            var report = DataToReport(analysisData);
+            using (var writer = analysisDatafile.GetWriter())
             {
                 new CorpusReportSerializer().Serialize(writer, report);
             }
 
-            _logger.Information("Saved corpus data {CorpusDataFile}", datafile.Path);
+            _logger.Information("Saved corpus analysis data {CorpusAnalysisDataFile}", analysisDatafile.Path);
 
-            static CorpusReport DataToReport(CorpusData data)
+            static CorpusAnalysisReport DataToReport(CorpusAnalysisData data)
             {
-                return new CorpusReport
+                return new CorpusAnalysisReport
                 {
                     Unigrams = GetRawCollection(data.UnigramOccurrences),
                     Bigrams = GetRawCollection(data.BigramOccurrences),
@@ -104,14 +104,14 @@ namespace Rekog.Controllers
             }
         }
 
-        private CorpusData? ParseCorpus(CancellationToken cancellationToken)
+        private CorpusAnalysisData? ParseCorpus(CancellationToken cancellationToken)
         {
-            var data = new CorpusData();
+            var analysisData = new CorpusAnalysisData();
 
             var files = GetCorpusFiles();
             if (files.Count == 0)
             {
-                return data;
+                return analysisData;
             }
 
             var alphabet = GetAlphabet();
@@ -139,9 +139,9 @@ namespace Rekog.Controllers
                         return;
                     }
 
-                    lock (data)
+                    lock (analysisData)
                     {
-                        data.Add(parser.GetData());
+                        analysisData.Add(parser.GetAnalysisData());
                     }
                 });
             sw.Stop();
@@ -155,7 +155,7 @@ namespace Rekog.Controllers
                 files.Count,
                 sw.Elapsed,
                 files.Count > 0 ? (int)(sw.Elapsed.TotalMilliseconds / files.Count) : 0);
-            return data;
+            return analysisData;
         }
 
         private void ParseCorpusFile(CorpusFile file, CorpusParser parser, CancellationToken cancellationToken)

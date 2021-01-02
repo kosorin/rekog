@@ -16,13 +16,13 @@ namespace Rekog.Controllers
 
         public void Run(CancellationToken cancellationToken)
         {
-            var corpusData = _corpusControllerFactory.Invoke().GetCorpusData(cancellationToken);
-            if (corpusData == null)
+            var corpusAnalysisData = _corpusControllerFactory.Invoke().GetCorpusAnalysisData(cancellationToken);
+            if (corpusAnalysisData == null)
             {
                 return;
             }
 
-            _layoutControllerFactory.Invoke().Analyze(corpusData);
+            _layoutControllerFactory.Invoke().Analyze(corpusAnalysisData);
         }
     }
 }

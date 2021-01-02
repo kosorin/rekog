@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Rekog.Core.Layouts.Analyzers
+﻿namespace Rekog.Core.Layouts.Analyzers
 {
     internal class HandAlternationAnalyzer : BigramAnalyzer<bool>
     {
@@ -8,9 +6,11 @@ namespace Rekog.Core.Layouts.Analyzers
         {
         }
 
-        protected override bool TryAccept(Key firstKey, Key secondKey, [MaybeNullWhen(false)] out bool value)
+        protected override bool TryGetValue(Key firstKey, Key secondKey, out (bool, double?) value)
         {
-            value = firstKey.Hand != secondKey.Hand;
+            var isAlternation = firstKey.Hand != secondKey.Hand;
+
+            value = (isAlternation, default);
             return true;
         }
     }

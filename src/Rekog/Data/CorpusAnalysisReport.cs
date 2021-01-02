@@ -2,7 +2,7 @@
 
 namespace Rekog.Data
 {
-    public record CorpusReport : SerializationObject
+    public record CorpusAnalysisReport : SerializationObject
     {
         public Dictionary<string, ulong> Unigrams { get; set; } = default!;
 

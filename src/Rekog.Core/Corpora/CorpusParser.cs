@@ -32,9 +32,9 @@ namespace Rekog.Core.Corpora
             };
         }
 
-        public CorpusData GetData()
+        public CorpusAnalysisData GetAnalysisData()
         {
-            return new CorpusData(_unigramCollector.Occurrences, _bigramCollector.Occurrences, _trigramCollector.Occurrences);
+            return new CorpusAnalysisData(_unigramCollector.Occurrences, _bigramCollector.Occurrences, _trigramCollector.Occurrences);
         }
 
         public void Parse(StreamReader reader, CancellationToken cancellationToken)

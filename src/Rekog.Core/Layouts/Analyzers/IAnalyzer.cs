@@ -3,5 +3,7 @@
     internal interface IAnalyzer
     {
         string Description { get; }
+
+        LayoutAnalysisResult GetResult();
     }
 }

@@ -25,7 +25,7 @@ namespace Rekog
             _logger = logger.ForContext<LayoutController>();
         }
 
-        public void Analyze(CorpusData corpusData)
+        public void Analyze(CorpusAnalysisData corpusAnalysisData)
         {
             var layout = GetLayout();
             if (layout == null)
@@ -33,10 +33,8 @@ namespace Rekog
                 return;
             }
 
-            var corpusAnalysis = new CorpusAnalysis(corpusData);
-
             var layoutAnalyzer = new LayoutAnalyzer();
-            layoutAnalyzer.Analyze(corpusAnalysis, layout);
+            layoutAnalyzer.Analyze(corpusAnalysisData, layout);
         }
 
         private Layout? GetLayout()
@@ -57,7 +55,10 @@ namespace Rekog
                     }
 
                     var finger = (Finger)fingerValue.Value;
-                    foreach (var layerConfig in keymapConfig.Layers)
+                    var effort = layoutConfig.Efforts[row][column];
+                    var isHoming = layoutConfig.Homing[row][column];
+
+                    foreach (var (layerConfig, layer) in keymapConfig.Layers.Select((x, i) => (x, i)))
                     {
                         var character = layerConfig.Keys[row][column];
                         if (!character.HasValue)
@@ -65,7 +66,7 @@ namespace Rekog
                             continue;
                         }
 
-                        var key = new Key(char.ToUpperInvariant(character.Value), finger, row, column);
+                        var key = new Key(char.ToUpperInvariant(character.Value), finger, isHoming, effort, layer, row, column);
                         if (!keys.TryAdd(key.Character, key))
                         {
                             _logger.Warning("Multiple layout character {Character}", key.Character);

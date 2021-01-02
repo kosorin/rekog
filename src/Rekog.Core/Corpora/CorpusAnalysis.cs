@@ -2,7 +2,7 @@
 {
     public class CorpusAnalysis
     {
-        public CorpusAnalysis(CorpusData data)
+        public CorpusAnalysis(CorpusAnalysisData data)
         {
             Unigrams = new OccurrenceAnalysis<string>(data.UnigramOccurrences);
             Bigrams = new OccurrenceAnalysis<string>(data.BigramOccurrences);

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Rekog.Core.Layouts
@@ -13,9 +12,13 @@ namespace Rekog.Core.Layouts
             _keys = keys.ToDictionary(x => x.Key, x => x.Value);
         }
 
-        public bool TryGetKey(char character, [MaybeNullWhen(false)] out Key key)
+        public Key[]? GetNgramKeys(string ngram)
         {
-            return _keys.TryGetValue(character, out key);
+            return ngram
+                .Select(character => _keys.TryGetValue(character, out var key) ? key : null)
+                .Where(x => x != null)
+                .Select(x => x!)
+                .ToArray();
         }
     }
 }

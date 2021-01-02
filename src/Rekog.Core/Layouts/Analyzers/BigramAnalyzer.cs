@@ -1,26 +1,19 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Rekog.Core.Layouts.Analyzers
+﻿namespace Rekog.Core.Layouts.Analyzers
 {
-    internal abstract class BigramAnalyzer<T> : OccurrenceAnalyzer<T>, IBigramAnalyzer
+    internal abstract class BigramAnalyzer<T> : NgramAnalyzer<T>
         where T : notnull
     {
         protected BigramAnalyzer(string description) : base(description)
         {
         }
 
-        public void Analyze(Key firstKey, Key secondKey, ulong count)
+        public override int Size => 2;
+
+        protected override bool TryGetValue(Key[] keys, out (T, double?) value)
         {
-            if (TryAccept(firstKey, secondKey, out var value))
-            {
-                Occurrences.Add(value, count);
-            }
-            else
-            {
-                Skip(count);
-            }
+            return TryGetValue(keys[0], keys[1], out value);
         }
 
-        protected abstract bool TryAccept(Key firstKey, Key secondKey, [MaybeNullWhen(false)] out T value);
+        protected abstract bool TryGetValue(Key firstKey, Key secondKey, out (T, double?) value);
     }
 }

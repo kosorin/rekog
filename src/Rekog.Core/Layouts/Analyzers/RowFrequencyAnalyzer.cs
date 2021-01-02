@@ -6,9 +6,9 @@
         {
         }
 
-        protected override bool TryAccept(Key key,out int value)
+        protected override bool TryGetValue(Key key, out (int, double?) value)
         {
-            value = key.Row;
+            value = (key.Row, default);
             return true;
         }
     }

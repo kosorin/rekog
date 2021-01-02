@@ -8,6 +8,8 @@ namespace Rekog.Data
 
         public Matrix<bool> Homing { get; set; } = default!;
 
+        public Matrix<double> Efforts { get; set; } = default!;
+
         protected override void FixSelf()
         {
             Fingers ??= new();
@@ -15,6 +17,9 @@ namespace Rekog.Data
 
             Homing ??= new();
             Homing.Fix();
+
+            Efforts ??= new();
+            Efforts.Fix();
         }
 
         protected override IEnumerable<SerializationObject> CollectChildren()

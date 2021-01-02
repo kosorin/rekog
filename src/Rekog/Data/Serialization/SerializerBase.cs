@@ -16,6 +16,7 @@ namespace Rekog.Data.Serialization
         {
             var serializer = GetSerializer();
             serializer.Serialize(writer, obj);
+            writer.Flush();
         }
 
         public TObject Deserialize(TextReader reader)

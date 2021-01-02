@@ -2,16 +2,16 @@
 
 namespace Rekog.Core.Corpora
 {
-    public class CorpusData
+    public class CorpusAnalysisData
     {
-        public CorpusData()
+        public CorpusAnalysisData()
         {
             UnigramOccurrences = new();
             BigramOccurrences = new();
             TrigramOccurrences = new();
         }
 
-        public CorpusData(OccurrenceCollection<string> unigramOccurrences, OccurrenceCollection<string> bigramOccurrences, OccurrenceCollection<string> trigramOccurrences)
+        public CorpusAnalysisData(OccurrenceCollection<string> unigramOccurrences, OccurrenceCollection<string> bigramOccurrences, OccurrenceCollection<string> trigramOccurrences)
         {
             UnigramOccurrences = unigramOccurrences;
             BigramOccurrences = bigramOccurrences;
@@ -24,7 +24,7 @@ namespace Rekog.Core.Corpora
 
         public OccurrenceCollection<string> TrigramOccurrences { get; }
 
-        public void Add(CorpusData other)
+        public void Add(CorpusAnalysisData other)
         {
             if (other == this)
             {
