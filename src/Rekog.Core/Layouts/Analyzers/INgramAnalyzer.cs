@@ -4,7 +4,7 @@
     {
         int Size { get; }
 
-        void Analyze(Occurrence<Key[]> ngram);
+        void Analyze(Occurrence<LayoutNgram> ngram);
 
         void AnalyzeNull(ulong count);
     }

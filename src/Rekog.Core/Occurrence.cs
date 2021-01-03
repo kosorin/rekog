@@ -2,7 +2,7 @@
 
 namespace Rekog.Core
 {
-    public class Occurrence<TValue> : IOccurrenceItem<TValue>, IEquatable<Occurrence<TValue>>
+    public class Occurrence<TValue> : IEquatable<Occurrence<TValue>>, IComparable<Occurrence<TValue>>
         where TValue : notnull
     {
         public Occurrence(TValue value)
@@ -73,6 +73,19 @@ namespace Rekog.Core
         public override int GetHashCode()
         {
             return Value.GetHashCode();
+        }
+
+        public int CompareTo(Occurrence<TValue>? other)
+        {
+            if (ReferenceEquals(other, this))
+            {
+                return 0;
+            }
+            if (other is null)
+            {
+                return 1;
+            }
+            return Count.CompareTo(other.Count);
         }
     }
 }

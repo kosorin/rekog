@@ -1,74 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-
-namespace Rekog.Core
+﻿namespace Rekog.Core
 {
-    public class OccurrenceAnalysis<TValue> : IOccurrenceMap<TValue, OccurrenceAnalysis<TValue>.Occurrence>
+    public class OccurrenceAnalysis<TValue>
         where TValue : notnull
     {
-        private readonly Dictionary<TValue, Occurrence> _data;
-
-        // TODO: Remove logic from constructor
-        internal OccurrenceAnalysis(OccurrenceCollection<TValue> occurrences)
+        internal OccurrenceAnalysis(TValue value, ulong count, int rank, double percentage)
         {
-            _data = new Dictionary<TValue, Occurrence>(occurrences.Count);
-
-            if (occurrences.Count == 0)
-            {
-                return;
-            }
-
-            Total = occurrences.Total;
-
-            var rank = 0;
-            var skippedRanks = 0;
-            var previousCount = (ulong?)null;
-            foreach (var occurrence in occurrences.OrderByDescending(x => x.Count))
-            {
-                if (previousCount == occurrence.Count)
-                {
-                    skippedRanks++;
-                }
-                else
-                {
-                    rank += 1 + skippedRanks;
-                    skippedRanks = 0;
-                }
-                previousCount = occurrence.Count;
-
-                _data[occurrence.Value] = new Occurrence(occurrence.Value, occurrence.Count, rank, occurrence.Count / (double)Total);
-            }
+            Value = value;
+            Count = count;
+            Rank = rank;
+            Percentage = percentage;
         }
 
-        public int Count => _data.Count;
+        public TValue Value { get; }
 
-        public ulong Total { get; }
+        public ulong Count { get; }
 
-        public Occurrence this[TValue value] => _data[value];
+        public int Rank { get; }
 
-        public bool Contains(TValue value)
-        {
-            return _data.ContainsKey(value);
-        }
-
-        public bool TryGet(TValue value, [MaybeNullWhen(false)] out Occurrence occurrence)
-        {
-            return _data.TryGetValue(value, out occurrence);
-        }
-
-        public IEnumerator<Occurrence> GetEnumerator()
-        {
-            return _data.Values.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public record Occurrence(TValue Value, ulong Count, int Rank, double Percentage) : IOccurrenceItem<TValue>;
+        public double Percentage { get; }
     }
 }

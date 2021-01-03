@@ -14,9 +14,9 @@ namespace Rekog.Core.Layouts.Analyzers
 
         public abstract int Size { get; }
 
-        public void Analyze(Occurrence<Key[]> ngram)
+        public void Analyze(Occurrence<LayoutNgram> ngram)
         {
-            if (TryGetValue(ngram.Value, out var value))
+            if (ngram.Value.Keys != null && TryGetValue(ngram.Value.Keys, out var value))
             {
                 _occurrences.Add(value, ngram.Count);
             }
@@ -33,7 +33,7 @@ namespace Rekog.Core.Layouts.Analyzers
 
         public override LayoutAnalysisResult GetResult()
         {
-            var items = _occurrences.Analyze()
+            var items = _occurrences.Analyze().Occurrences.Values
                 .GroupBy(x => x.Value.value)
                 .Select(g => (g.Key, new LayoutAnalysisResult(g.Key.ToString()!)
                 {

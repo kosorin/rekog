@@ -9,7 +9,7 @@ namespace Rekog.Core.UnitTests
         [Fact]
         public void Test()
         {
-            var analysis = new OccurrenceAnalysis<string>(new OccurrenceCollection<string>(new Dictionary<string, ulong>
+            var analysis = new OccurrenceCollection<string>(new Dictionary<string, ulong>
             {
                 ["A"] = 1,
                 ["B"] = 1,
@@ -19,7 +19,7 @@ namespace Rekog.Core.UnitTests
                 ["F"] = 2,
                 ["G"] = 2,
                 ["H"] = 1,
-            }));
+            }).Analyze();
 
             AssertOccurrence("A", 5, 0.05_2631);
             AssertOccurrence("B", 5, 0.05_2631);
@@ -32,7 +32,7 @@ namespace Rekog.Core.UnitTests
 
             void AssertOccurrence(string value, int rank, double percentage)
             {
-                var occurrence = analysis[value];
+                var occurrence = analysis.Occurrences[value];
                 occurrence.Rank.ShouldBe(rank);
                 occurrence.Percentage.ShouldBe(percentage, 0.00_0001);
             }

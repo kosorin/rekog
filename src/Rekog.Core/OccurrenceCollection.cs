@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Rekog.Core
 {
-    public class OccurrenceCollection<TValue> : IOccurrenceMap<TValue, Occurrence<TValue>>
+    public class OccurrenceCollection<TValue> : IReadOnlyCollection<Occurrence<TValue>>
         where TValue : notnull
     {
         private readonly Dictionary<TValue, Occurrence<TValue>> _occurrences;
@@ -18,40 +18,32 @@ namespace Rekog.Core
 
         public OccurrenceCollection(IReadOnlyDictionary<TValue, ulong> occurrences)
         {
-            ItemTotal = GetItemTotal(occurrences);
-            NullTotal = 0;
-
             _occurrences = occurrences.ToDictionary(x => x.Key, x => new Occurrence<TValue>(x.Key, x.Value));
+
+            ValueTotal = (ulong)occurrences.Values.Sum(x => (decimal)x);
+            NullTotal = 0;
         }
 
         // TODO: Add unit test
         public OccurrenceCollection(IReadOnlyDictionary<TValue, ulong> occurrences, ulong total)
+            : this(occurrences)
         {
-            ItemTotal = GetItemTotal(occurrences);
-            if (total < ItemTotal)
+            if (total < ValueTotal)
             {
                 throw new ArgumentException(null, nameof(total));
             }
-            NullTotal = total - ItemTotal;
-
-            _occurrences = occurrences.ToDictionary(x => x.Key, x => new Occurrence<TValue>(x.Key, x.Value));
+            NullTotal = total - ValueTotal;
         }
 
         public int Count => _occurrences.Count;
 
-        public ulong Total => NullTotal + ItemTotal;
+        public ulong Total => ValueTotal + NullTotal;
 
-        public ulong ItemTotal { get; private set; }
+        public ulong ValueTotal { get; private set; }
 
         public ulong NullTotal { get; private set; }
 
         public Occurrence<TValue> this[TValue value] => _occurrences[value];
-
-        // TODO: Add unit test
-        public OccurrenceAnalysis<TValue> Analyze()
-        {
-            return new(this);
-        }
 
         public void AddNull()
         {
@@ -75,7 +67,7 @@ namespace Rekog.Core
                 _occurrences.Add(value, occurrence = new Occurrence<TValue>(value));
             }
             occurrence.Add(count);
-            ItemTotal += count;
+            ValueTotal += count;
         }
 
         public void Add(OccurrenceCollection<TValue> occurrences)
@@ -92,13 +84,40 @@ namespace Rekog.Core
         }
 
         // TODO: Add unit test
-        public OccurrenceCollection<TGroup> Group<TGroup>(Func<Occurrence<TValue>, TGroup> groupSelector)
-            where TGroup : notnull
+        public OccurrenceCollection<TGroupValue> Group<TGroupValue>(Func<Occurrence<TValue>, TGroupValue> groupValueSelector)
+            where TGroupValue : notnull
         {
             var groupedOccurrences = _occurrences.Values
-                .GroupBy(groupSelector)
+                .GroupBy(groupValueSelector)
                 .ToDictionary(g => g.Key, g => (ulong)g.Sum(x => (decimal)x.Count));
-            return new OccurrenceCollection<TGroup>(groupedOccurrences, Total);
+            return new OccurrenceCollection<TGroupValue>(groupedOccurrences, Total);
+        }
+
+        // TODO: Add unit test
+        public OccurrenceCollectionAnalysis<TValue> Analyze()
+        {
+            var occurrences = new Dictionary<TValue, OccurrenceAnalysis<TValue>>(_occurrences.Count);
+
+            var rank = 0;
+            var skippedRanks = 0;
+            var previousCount = (ulong?)null;
+            foreach (var occurrence in _occurrences.Values.OrderByDescending(x => x.Count))
+            {
+                if (previousCount == occurrence.Count)
+                {
+                    skippedRanks++;
+                }
+                else
+                {
+                    rank += 1 + skippedRanks;
+                    skippedRanks = 0;
+                }
+                previousCount = occurrence.Count;
+
+                occurrences[occurrence.Value] = new OccurrenceAnalysis<TValue>(occurrence.Value, occurrence.Count, rank, occurrence.Count / (double)Total);
+            }
+
+            return new OccurrenceCollectionAnalysis<TValue>(occurrences, Total, ValueTotal, NullTotal);
         }
 
         public bool Contains(TValue value)
@@ -119,11 +138,6 @@ namespace Rekog.Core
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-        }
-
-        private static ulong GetItemTotal(IReadOnlyDictionary<TValue, ulong> occurrences)
-        {
-            return (ulong)occurrences.Values.Sum(x => (decimal)x);
         }
     }
 }

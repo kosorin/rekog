@@ -1,7 +1,6 @@
 ﻿using Rekog.Core.Corpora;
 using Rekog.Core.Layouts.Analyzers;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -11,7 +10,6 @@ namespace Rekog.Core.Layouts
     {
         public LayoutAnalyzer()
         {
-
         }
 
         public void Analyze(CorpusAnalysisData corpusAnalysisData, Layout layout)
@@ -37,7 +35,7 @@ namespace Rekog.Core.Layouts
             };
 
             var unigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 1);
-            var unigrams = GetNgrams(corpusAnalysisData.UnigramOccurrences, layout);
+            var unigrams = GetNgramKeyOccurrences2(corpusAnalysisData.UnigramOccurrences, layout);
             foreach (var unigram in unigrams)
             {
                 foreach (var analyzer in unigramAnalyzers)
@@ -51,7 +49,7 @@ namespace Rekog.Core.Layouts
             }
 
             var bigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 2);
-            var bigrams = GetNgrams(corpusAnalysisData.BigramOccurrences, layout);
+            var bigrams = GetNgramKeyOccurrences2(corpusAnalysisData.BigramOccurrences, layout);
             foreach (var unigram in bigrams)
             {
                 foreach (var analyzer in bigramAnalyzers)
@@ -65,7 +63,7 @@ namespace Rekog.Core.Layouts
             }
 
             var trigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 3);
-            var trigrams = GetNgrams(corpusAnalysisData.TrigramOccurrences, layout);
+            var trigrams = GetNgramKeyOccurrences2(corpusAnalysisData.TrigramOccurrences, layout);
             foreach (var unigram in trigrams)
             {
                 foreach (var analyzer in trigramAnalyzers)
@@ -104,15 +102,12 @@ namespace Rekog.Core.Layouts
                     Print(item, indent + 2);
                 }
             }
+        }
 
-            static OccurrenceCollection<Key[]> GetNgrams(OccurrenceCollection<string> ngramOccurrences, Layout layout)
-            {
-                var unigramsData = ngramOccurrences
-                    .Select(x => (count: x.Count, keys: layout.GetNgramKeys(x.Value)))
-                    .Where(x => x.keys != null)
-                    .ToDictionary(x => x.keys!, x => x.count);
-                return new OccurrenceCollection<Key[]>(unigramsData, ngramOccurrences.Total);
-            }
+        private OccurrenceCollection<LayoutNgram> GetNgramKeyOccurrences2(OccurrenceCollection<string> ngramOccurrences, Layout layout)
+        {
+            var unigramsData = ngramOccurrences.ToDictionary(x => new LayoutNgram(x.Value, layout.GetNgramKeys(x.Value)), x => x.Count);
+            return new OccurrenceCollection<LayoutNgram>(unigramsData, ngramOccurrences.Total);
         }
     }
 }

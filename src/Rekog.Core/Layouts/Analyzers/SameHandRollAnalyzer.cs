@@ -28,7 +28,7 @@ namespace Rekog.Core.Layouts.Analyzers
             {
                 var effort = handRoll switch
                 {
-                    Roll.Inward => -0.2,
+                    Roll.Inward => -0.5,
                     Roll.Outward => 0.5,
                     _ => throw new NotSupportedException(),
                 };
