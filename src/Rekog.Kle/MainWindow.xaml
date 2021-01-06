@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         Title="KLE"
-        Width="1600"
+        Width="2400"
         Height="1200"
         Background="Gray"
         WindowStartupLocation="CenterScreen"
@@ -21,7 +21,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="3*" />
             <RowDefinition Height="8" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBox x:Name="RawData"
@@ -42,7 +42,13 @@
                       Background="DimGray"
                       ResizeDirection="Rows" />
         <Viewbox Grid.Row="0">
-            <Canvas x:Name="MainCanvas" />
+            <Border Margin="32"
+                    Background="#33000000"
+                    CornerRadius="8">
+                <Canvas x:Name="MainCanvas"
+                        Width="32"
+                        Height="32" />
+            </Border>
         </Viewbox>
     </Grid>
 </Window>
