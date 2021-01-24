@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Rekog.Kle
+namespace Rekog.App
 {
     public partial class App : Application
     {

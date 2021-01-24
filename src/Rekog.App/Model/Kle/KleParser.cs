@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Rekog.Kle
+namespace Rekog.App.Model.Kle
 {
-    public class KleParser
+    public static class KleParser
     {
-        private static readonly int MaxValueCount = 12;
+        private static readonly int ValueCount = 12;
         private static readonly int?[,] ValueMap =
         {
             { 0, 6, 2, 8, 9, 11, 3, 5, 1, 4, 7, 10 },
@@ -21,16 +21,13 @@ namespace Rekog.Kle
             { 4, null, null, null, 10, null, null, null, null, null, null, null },
         };
 
-        public List<KleKey> ParseRawData(string rawDataText)
+        public static List<KleKey> ParseRawData(string rawDataText)
         {
-            var rawData = DeserializeRawData(rawDataText);
+            var keys = new List<KleKey>();
 
+            var rawData = DeserializeRawData(rawDataText);
             var currentKey = new KleKey
             {
-                RotationAngle = 0d,
-                RotationX = 0d,
-                RotationY = 0d,
-
                 X = 0d,
                 Y = 0d,
                 Width = 1d,
@@ -41,19 +38,22 @@ namespace Rekog.Kle
                 Width2 = 1d,
                 Height2 = 1d,
 
-                BackgroundColor = "#cccccc",
-                DefaultTextColor = "#000000",
-                DefaultTextSize = 3,
+                RotationAngle = 0d,
+                RotationX = 0d,
+                RotationY = 0d,
 
+                Color = "#cccccc",
                 IsHoming = false,
-                IsStepped = false,
                 IsDecal = false,
                 IsGhosted = false,
+                IsStepped = false,
+
+                DefaultTextColor = "#000000",
+                DefaultTextSize = 3,
             };
             var cluster = (x: 0d, y: 0d);
             var align = 4;
 
-            var keys = new List<KleKey>();
             foreach (var (rowIndex, rowData) in rawData.Select((x, i) => (i, x)))
             {
                 if (rowData is JArray)
@@ -78,7 +78,7 @@ namespace Rekog.Kle
 
                             TryUse(properties, "a", (int value) => align = value);
 
-                            TryUse(properties, "c", (string value) => currentKey.BackgroundColor = value);
+                            TryUse(properties, "c", (string value) => currentKey.Color = value);
                             TryUse(properties, "t", (string value) =>
                             {
                                 var colors = value.Split('\n');
@@ -89,7 +89,7 @@ namespace Rekog.Kle
                             TryUse(properties, "f", (int value) =>
                             {
                                 currentKey.DefaultTextSize = value;
-                                currentKey.TextSizes = GetValues(new int?[0]);
+                                currentKey.TextSizes = GetValues(Array.Empty<int?>());
                             });
                             TryUse(properties, "f2", (int value) =>
                             {
@@ -130,12 +130,6 @@ namespace Rekog.Kle
                             var labels = GetValues(label.Value<string>().Split('\n').Select(x => !string.IsNullOrEmpty(x) ? x : null).ToArray());
                             var key = new KleKey
                             {
-                                Labels = ReorderValues(labels, align),
-
-                                RotationAngle = currentKey.RotationAngle,
-                                RotationX = currentKey.RotationX,
-                                RotationY = currentKey.RotationY,
-
                                 X = currentKey.X,
                                 Y = currentKey.Y,
                                 Width = currentKey.Width,
@@ -146,16 +140,21 @@ namespace Rekog.Kle
                                 Width2 = currentKey.Width2 == 0 ? currentKey.Width : currentKey.Width2,
                                 Height2 = currentKey.Height2 == 0 ? currentKey.Height : currentKey.Height2,
 
-                                BackgroundColor = currentKey.BackgroundColor,
+                                RotationAngle = currentKey.RotationAngle,
+                                RotationX = currentKey.RotationX,
+                                RotationY = currentKey.RotationY,
+
+                                Color = currentKey.Color,
+                                IsHoming = currentKey.IsHoming,
+                                IsDecal = currentKey.IsDecal,
+                                IsGhosted = currentKey.IsGhosted,
+                                IsStepped = currentKey.IsStepped,
+
                                 DefaultTextColor = currentKey.DefaultTextColor,
                                 DefaultTextSize = currentKey.DefaultTextSize,
                                 TextColors = ReorderValues(currentKey.TextColors.ToArray(), align),
                                 TextSizes = ReorderValues(currentKey.TextSizes.ToArray(), align),
-
-                                IsHoming = currentKey.IsHoming,
-                                IsStepped = currentKey.IsStepped,
-                                IsDecal = currentKey.IsDecal,
-                                IsGhosted = currentKey.IsGhosted,
+                                Labels = ReorderValues(labels, align),
                             };
                             keys.Add(key);
 
@@ -169,27 +168,28 @@ namespace Rekog.Kle
                             currentKey.Height2 = 0;
 
                             currentKey.IsHoming = false;
-                            currentKey.IsStepped = false;
                             currentKey.IsDecal = false;
+                            currentKey.IsStepped = false;
                         }
                     }
                     currentKey.Y++;
                 }
                 currentKey.X = currentKey.RotationX;
             }
+
             return keys;
         }
 
-        private T[] GetValues<T>(T[] values)
+        private static T[] GetValues<T>(T[] values)
         {
-            var result = new T[MaxValueCount];
+            var result = new T[ValueCount];
             Array.Copy(values, result, values.Length);
             return result;
         }
 
-        private T[] ReorderValues<T>(T[] values, int align)
+        private static T[] ReorderValues<T>(T[] values, int align)
         {
-            var result = new T[MaxValueCount];
+            var result = new T[ValueCount];
             for (var i = 0; i < values.Length; ++i)
             {
                 if (ValueMap[align, i] is int index)
@@ -200,7 +200,7 @@ namespace Rekog.Kle
             return result;
         }
 
-        private void TryUse<T>(JObject properties, string propertyName, Action<T> action)
+        private static void TryUse<T>(JObject properties, string propertyName, Action<T> action)
         {
             if (properties.TryGetValue(propertyName, out var token))
             {
@@ -208,7 +208,7 @@ namespace Rekog.Kle
             }
         }
 
-        private void TryUse<T>(JObject properties, string propertyName, Action<T[]> action)
+        private static void TryUse<T>(JObject properties, string propertyName, Action<T[]> action)
         {
             if (properties.TryGetValue(propertyName, out var token))
             {
@@ -216,7 +216,7 @@ namespace Rekog.Kle
             }
         }
 
-        private JArray DeserializeRawData(string rawDataText)
+        private static JArray DeserializeRawData(string rawDataText)
         {
             if (JsonConvert.DeserializeObject("[" + rawDataText + "]") is not JArray rawData)
             {

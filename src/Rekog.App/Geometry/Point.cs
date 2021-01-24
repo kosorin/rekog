@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WpfApp1.Geometry
+namespace Rekog.App.Geometry
 {
     public record Point : IComparable<Point>
     {

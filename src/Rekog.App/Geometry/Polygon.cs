@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace WpfApp1.Geometry
+namespace Rekog.App.Geometry
 {
     public class Polygon
     {
@@ -44,23 +44,6 @@ namespace WpfApp1.Geometry
                     {
                         throw new ArgumentException("Polygon must be simple (a simple polygon is one which does not intersect itself).", nameof(vertices));
                     }
-                }
-            }
-
-            Point previous, current, next;
-            for (int i = 1; i < Vertices.Count; i++)
-            {
-                previous = GetVertex(i - 1);
-                current = GetVertex(i);
-                next = GetVertex(i + 1);
-
-                var previousAngle = ((Math.Atan2(previous.Y - current.Y, previous.X - current.X) * 180d / Math.PI) + 360d) % 360d;
-                var nextAngle = ((Math.Atan2(next.Y - current.Y, next.X - current.X) * 180d / Math.PI) + 360d) % 360d;
-                var angle = ((previousAngle - nextAngle) + 360d) % 360d;
-
-                Point GetVertex(int index)
-                {
-                    return Vertices[(index + (Vertices.Count - 1)) % (Vertices.Count - 1)];
                 }
             }
         }

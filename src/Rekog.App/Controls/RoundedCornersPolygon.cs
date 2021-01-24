@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace Rekog.Kle
+namespace Rekog.App.Controls
 {
     public class RoundedCornersPolygon : Shape
     {
@@ -11,7 +11,7 @@ namespace Rekog.Kle
 
         #region Properties 
 
-        private PointCollection _points;
+        private PointCollection _points = new PointCollection();
         /// <summary>
         /// Gets or sets a collection that contains the points of the polygon.
         /// </summary>
@@ -75,7 +75,7 @@ namespace Rekog.Kle
                 RedrawShape();
             }
         }
-        public Geometry Data
+        public System.Windows.Media.Geometry Data
         {
             get
             {
@@ -90,18 +90,17 @@ namespace Rekog.Kle
             var geometry = new PathGeometry();
             geometry.Figures.Add(new PathFigure());
             _path = new Path { Data = geometry };
-            Points = new PointCollection();
             Points.Changed += Points_Changed;
         }
 
-        private void Points_Changed(object sender, EventArgs e)
+        private void Points_Changed(object? sender, EventArgs e)
         {
             RedrawShape();
         }
 
         #region Implementation of Shape
 
-        protected override Geometry DefiningGeometry
+        protected override System.Windows.Media.Geometry DefiningGeometry
         {
             get
             {
@@ -127,7 +126,7 @@ namespace Rekog.Kle
 
             pathFigure.Segments.Clear();
 
-            for (int counter = 0; counter < Points.Count; counter++)
+            for (var counter = 0; counter < Points.Count; counter++)
             {
                 switch (counter)
                 {
@@ -202,15 +201,15 @@ namespace Rekog.Kle
             Point backPoint, nextPoint;
             if (UseRoundnessPercentage)
             {
-                backPoint = GetPointAtDistancePercent(Points[Points.Count - 1], Points[0], ArcRoundness, false);
+                backPoint = GetPointAtDistancePercent(Points[^1], Points[0], ArcRoundness, false);
                 nextPoint = GetPointAtDistancePercent(Points[0], Points[1], ArcRoundness, true);
             }
             else
             {
-                backPoint = GetPointAtDistance(Points[Points.Count - 1], Points[0], ArcRoundness, false);
+                backPoint = GetPointAtDistance(Points[^1], Points[0], ArcRoundness, false);
                 nextPoint = GetPointAtDistance(Points[0], Points[1], ArcRoundness, true);
             }
-            ConnectLinePoints(pathFigure, Points[Points.Count - 2], Points[Points.Count - 1], backPoint, ArcRoundness, UseRoundnessPercentage);
+            ConnectLinePoints(pathFigure, Points[^2], Points[^1], backPoint, ArcRoundness, UseRoundnessPercentage);
             var line2 = new QuadraticBezierSegment { Point1 = Points[0], Point2 = nextPoint };
             pathFigure.Segments.Add(line2);
             pathFigure.StartPoint = nextPoint;
@@ -242,9 +241,9 @@ namespace Rekog.Kle
                 nextPoint = GetPointAtDistance(p2, p3, roundness, true);
             }
 
-            int lastSegmentIndex = pathFigure.Segments.Count - 1;
+            var lastSegmentIndex = pathFigure.Segments.Count - 1;
             //Set the ending point of the first segment.
-            ((LineSegment)(pathFigure.Segments[lastSegmentIndex])).Point = backPoint;
+            ((LineSegment)pathFigure.Segments[lastSegmentIndex]).Point = backPoint;
             //Create and add the curve.
             var curve = new QuadraticBezierSegment { Point1 = p2, Point2 = nextPoint };
             pathFigure.Segments.Add(curve);
@@ -263,8 +262,8 @@ namespace Rekog.Kle
         /// <returns></returns>
         private static Point GetPointAtDistancePercent(Point p1, Point p2, double distancePercent, bool firstPoint)
         {
-            double rap = firstPoint ? distancePercent / 100 : (100 - distancePercent) / 100;
-            return new Point(p1.X + (rap * (p2.X - p1.X)), p1.Y + (rap * (p2.Y - p1.Y)));
+            var rap = firstPoint ? distancePercent / 100 : (100 - distancePercent) / 100;
+            return new Point(p1.X + rap * (p2.X - p1.X), p1.Y + rap * (p2.Y - p1.Y));
         }
 
         /// <summary>
@@ -277,15 +276,15 @@ namespace Rekog.Kle
         /// <returns>The point calculated.</returns>
         private static Point GetPointAtDistance(Point p1, Point p2, double distance, bool firstPoint)
         {
-            double segmentLength = Math.Sqrt(Math.Pow((p2.X - p1.X), 2) + Math.Pow((p2.Y - p1.Y), 2));
+            var segmentLength = Math.Sqrt(Math.Pow(p2.X - p1.X, 2) + Math.Pow(p2.Y - p1.Y, 2));
             //The distance cannot be greater than half of the length of the segment
-            if (distance > (segmentLength / 2))
+            if (distance > segmentLength / 2)
             {
                 distance = segmentLength / 2;
             }
 
-            double rap = firstPoint ? distance / segmentLength : (segmentLength - distance) / segmentLength;
-            return new Point(p1.X + (rap * (p2.X - p1.X)), p1.Y + (rap * (p2.Y - p1.Y)));
+            var rap = firstPoint ? distance / segmentLength : (segmentLength - distance) / segmentLength;
+            return new Point(p1.X + rap * (p2.X - p1.X), p1.Y + rap * (p2.Y - p1.Y));
         }
 
         #endregion

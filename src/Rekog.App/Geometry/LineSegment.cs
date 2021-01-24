@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WpfApp1.Geometry
+namespace Rekog.App.Geometry
 {
     public record LineSegment
     {
@@ -46,6 +46,7 @@ namespace WpfApp1.Geometry
 
             public static Point[] GetIntersections(LineSegment lineSegment1, LineSegment lineSegment2)
             {
+                // TODO: Refactor GetIntersections
                 // We already know that there is intersection
                 // So now just get all intersection points
 

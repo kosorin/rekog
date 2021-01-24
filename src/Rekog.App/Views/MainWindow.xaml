@@ -1,11 +1,12 @@
-﻿<Window x:Class="Rekog.Kle.MainWindow"
+﻿<Window x:Class="Rekog.App.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="KLE"
-        Width="2400"
-        Height="1200"
+        xmlns:v="clr-namespace:Rekog.App.Views"
+        Title="Rekog"
+        Width="1200"
+        Height="800"
         Background="Gray"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
@@ -24,7 +25,7 @@
             <RowDefinition Height="100" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name="RawData"
+        <TextBox x:Name="KleRawData"
                  Grid.Row="2"
                  AcceptsReturn="True"
                  AcceptsTab="True"
@@ -41,14 +42,12 @@
                       HorizontalAlignment="Stretch"
                       Background="DimGray"
                       ResizeDirection="Rows" />
-        <Viewbox Grid.Row="0">
-            <Border Margin="32"
-                    Background="#33000000"
-                    CornerRadius="8">
-                <Canvas x:Name="MainCanvas"
-                        Width="32"
-                        Height="32" />
-            </Border>
-        </Viewbox>
+        <Border x:Name="BoardContainer"
+                Grid.Row="0"
+                PreviewMouseWheel="BoardContainer_PreviewMouseWheel">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <v:BoardView x:Name="BoardView" />
+            </ScrollViewer>
+        </Border>
     </Grid>
 </Window>
