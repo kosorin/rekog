@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Rekog.App.ObjectModel
 {
@@ -13,13 +14,12 @@ namespace Rekog.App.ObjectModel
 
         public ObservableObjectCollection(IEnumerable<T> collection) : base(collection)
         {
-            foreach (var item in Items)
-            {
-                Subscribe(item);
-            }
+            Subscribe(Items);
         }
 
         public event PropertyChangedEventHandler? ItemPropertyChanged;
+
+        public event CollectionItemChangedEventHandler? CollectionItemChanged;
 
         protected override void InsertItem(int index, T item)
         {
@@ -29,7 +29,13 @@ namespace Rekog.App.ObjectModel
 
         protected override void SetItem(int index, T item)
         {
-            Unsubscribe(Items[index]);
+            var oldItem = Items[index];
+            if (ReferenceEquals(oldItem, item))
+            {
+                return;
+            }
+
+            Unsubscribe(oldItem);
             base.SetItem(index, item);
             Subscribe(item);
         }
@@ -42,27 +48,52 @@ namespace Rekog.App.ObjectModel
 
         protected override void ClearItems()
         {
-            foreach (var item in Items)
-            {
-                Unsubscribe(item);
-            }
+            Unsubscribe(Items);
             base.ClearItems();
+        }
+
+        protected virtual void OnItemPropertyChanged(object? sender, PropertyChangedEventArgs args)
+        {
+            ItemPropertyChanged?.Invoke(sender, args);
+        }
+
+        protected virtual void OnCollectionItemChanged(CollectionItemChangedEventArgs args)
+        {
+            CollectionItemChanged?.Invoke(this, args);
         }
 
         private void Subscribe(T item)
         {
-            item.PropertyChanged -= Item_PropertyChanged;
-            item.PropertyChanged += Item_PropertyChanged;
+            Subscribe(new[] { item });
         }
 
         private void Unsubscribe(T item)
         {
-            item.PropertyChanged -= Item_PropertyChanged;
+            Unsubscribe(new[] { item });
+        }
+
+        private void Subscribe(IEnumerable<T> items)
+        {
+            OnCollectionItemChanged(new CollectionItemChangedEventArgs(new List<T>(), items.ToList()));
+            foreach (var item in items)
+            {
+                item.PropertyChanged -= Item_PropertyChanged;
+                item.PropertyChanged += Item_PropertyChanged;
+            }
+        }
+
+        private void Unsubscribe(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                item.PropertyChanged -= Item_PropertyChanged;
+            }
+            OnCollectionItemChanged(new CollectionItemChangedEventArgs(items.ToList(), new List<T>()));
         }
 
         private void Item_PropertyChanged(object? sender, PropertyChangedEventArgs args)
         {
-            ItemPropertyChanged?.Invoke(sender, args);
+            OnItemPropertyChanged(sender, args);
         }
     }
 }

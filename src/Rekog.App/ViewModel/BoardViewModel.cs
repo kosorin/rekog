@@ -1,6 +1,6 @@
 ﻿using Rekog.App.ObjectModel;
+using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -35,7 +35,7 @@ namespace Rekog.App.ViewModel
             {
                 if (Keys is KeyViewModelCollection oldValue)
                 {
-                    oldValue.CollectionChanged -= Keys_CollectionChanged;
+                    oldValue.CollectionItemChanged -= NewValue_CollectionItemChanged;
                     oldValue.ItemPropertyChanged -= OldKeys_ItemPropertyChanged;
                 }
 
@@ -43,8 +43,8 @@ namespace Rekog.App.ViewModel
                 {
                     if (Keys is KeyViewModelCollection newValue)
                     {
-                        newValue.CollectionChanged -= Keys_CollectionChanged;
-                        newValue.CollectionChanged += Keys_CollectionChanged;
+                        newValue.CollectionItemChanged -= NewValue_CollectionItemChanged;
+                        newValue.CollectionItemChanged += NewValue_CollectionItemChanged;
                         newValue.ItemPropertyChanged -= OldKeys_ItemPropertyChanged;
                         newValue.ItemPropertyChanged += OldKeys_ItemPropertyChanged;
                     }
@@ -69,26 +69,17 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _canvasSize, value, nameof(CanvasSize));
         }
 
-        private void Keys_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        private void NewValue_CollectionItemChanged(ICollection? collection, CollectionItemChangedEventArgs args)
         {
-            switch (e.Action)
+            if (args.NewItems is ICollection<KeyViewModel> keys)
             {
-            case NotifyCollectionChangedAction.Add:
-            case NotifyCollectionChangedAction.Replace:
-                if (e.NewItems is ICollection<KeyViewModel> keys)
-                {
-                    UpdateKeys(keys);
-                }
-                break;
-            case NotifyCollectionChangedAction.Reset:
-                UpdateKeys();
-                break;
+                UpdateKeys(keys);
             }
         }
 
-        private void OldKeys_ItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        private void OldKeys_ItemPropertyChanged(object? item, PropertyChangedEventArgs args)
         {
-            switch (e.PropertyName)
+            switch (args.PropertyName)
             {
             case nameof(KeyViewModel.RotatedBounds):
                 UpdateBoard();
