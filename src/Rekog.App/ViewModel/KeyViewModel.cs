@@ -1,8 +1,6 @@
 ﻿using Rekog.App.Model;
-using Rekog.App.ObjectModel;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -10,34 +8,20 @@ using System.Windows.Media;
 
 namespace Rekog.App.ViewModel
 {
-    public class KeyViewModel : ObservableObject
+    public class KeyViewModel : ViewModelBase<KeyModel>
     {
-        private KeyModel? _model;
-        public KeyModel? Model
+        public KeyViewModel()
         {
-            get => _model;
-            set
-            {
-                if (Model is KeyModel oldValue)
-                {
-                    oldValue.PropertyChanged -= Model_PropertyChanged;
-                }
-
-                if (Set(ref _model, value, nameof(Model)))
-                {
-                    if (Model is KeyModel newValue)
-                    {
-                        newValue.PropertyChanged -= Model_PropertyChanged;
-                        newValue.PropertyChanged += Model_PropertyChanged;
-                    }
-
-                    UpdateLayout();
-                }
-            }
         }
 
-        public static double MinimumScale = 4d;
-        public static double DefaultScale = 54d;
+        public KeyViewModel(KeyModel? model)
+            : base(model)
+        {
+        }
+
+        public const double MinScale = 1;
+        public const double MaxScale = 300;
+        public const double DefaultScale = 54;
 
         private double _scale = DefaultScale;
         public double Scale
@@ -45,12 +29,16 @@ namespace Rekog.App.ViewModel
             get => _scale;
             set
             {
-                if (value < MinimumScale)
+                if (value < MinScale)
                 {
-                    value = MinimumScale;
+                    value = MinScale;
+                }
+                else if (value > MaxScale)
+                {
+                    value = MaxScale;
                 }
 
-                if (Set(ref _scale, value, nameof(Scale)))
+                if (Set(ref _scale, value))
                 {
                     UpdateLayout();
                 }
@@ -61,47 +49,63 @@ namespace Rekog.App.ViewModel
         public Rect Bounds
         {
             get => _bounds;
-            private set => Set(ref _bounds, value, nameof(Bounds));
+            private set => Set(ref _bounds, value);
         }
 
         private Rect _rotatedBounds;
         public Rect RotatedBounds
         {
             get => _rotatedBounds;
-            private set => Set(ref _rotatedBounds, value, nameof(RotatedBounds));
+            private set => Set(ref _rotatedBounds, value);
         }
 
         private double _rotationAngle;
         public double RotationAngle
         {
             get => _rotationAngle;
-            private set => Set(ref _rotationAngle, value, nameof(RotationAngle));
+            private set => Set(ref _rotationAngle, value);
         }
 
         private Point _rotationOrigin;
         public Point RotationOrigin
         {
             get => _rotationOrigin;
-            private set => Set(ref _rotationOrigin, value, nameof(RotationOrigin));
+            private set => Set(ref _rotationOrigin, value);
         }
 
         private PointCollection _shape = new();
         public PointCollection Shape
         {
             get => _shape;
-            private set => Set(ref _shape, value, nameof(Shape));
+            private set => Set(ref _shape, value);
+        }
+
+        private PointCollection _rotatedShape = new();
+        public PointCollection RotatedShape
+        {
+            get => _rotatedShape;
+            private set => Set(ref _rotatedShape, value);
         }
 
         private Rect _labelBounds;
         public Rect LabelBounds
         {
             get => _labelBounds;
-            private set => Set(ref _labelBounds, value, nameof(LabelBounds));
+            private set => Set(ref _labelBounds, value);
         }
 
-        private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        protected override void OnModelChanged(KeyModel? oldModel, KeyModel? newModel)
         {
-            switch (e.PropertyName)
+            base.OnModelChanged(oldModel, newModel);
+
+            UpdateLayout();
+        }
+
+        protected override void OnModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
+        {
+            base.OnModelPropertyChanged(sender, args);
+
+            switch (args.PropertyName)
             {
             case nameof(KeyModel.X):
             case nameof(KeyModel.Y):
@@ -123,13 +127,13 @@ namespace Rekog.App.ViewModel
                 return;
             }
 
-            var shape = (Model.Shape ?? new ObservableCollection<Geometry.Point>(new Geometry.Point[]
+            var shape = (Model.Shape?.AsEnumerable() ?? new Geometry.Point[]
             {
                 new(0, 0),
                 new(Model.Width, 0),
                 new(Model.Width, Model.Height),
                 new(0, Model.Height),
-            })).Select(p => new Point(p.X, p.Y)).ToList();
+            }).Select(p => new Point(p.X, p.Y)).ToList();
             var rotatedShape = shape.Select(point =>
             {
                 var dx = point.X - Model.RotationOriginX;
@@ -139,11 +143,11 @@ namespace Rekog.App.ViewModel
                 var angle = Model.RotationAngle * (Math.PI / 180);
                 if (p != 0)
                 {
-                    angle += Math.Asin(dy / p);
+                    angle += Math.Atan2(dy, dx);
                 }
 
-                var rx = p * Math.Cos(angle);
                 var ry = p * Math.Sin(angle);
+                var rx = p * Math.Cos(angle);
 
                 return new Point(rx + Model.RotationOriginX, ry + Model.RotationOriginY);
             }).ToList();
@@ -161,6 +165,8 @@ namespace Rekog.App.ViewModel
             RotationOrigin = new Point((Model.RotationOriginX - shapeBounds.X) / shapeBounds.Width, (Model.RotationOriginY - shapeBounds.Y) / shapeBounds.Height);
 
             Shape = new PointCollection(shape.Select(p => new Point((p.X - shapeBounds.X) * Scale, (p.Y - shapeBounds.Y) * Scale)));
+            RotatedShape = new PointCollection(rotatedShape.Select(p => new Point((p.X + Model.X) * Scale, (p.Y + Model.Y) * Scale)));
+
             LabelBounds = new Rect(
                 new Point(-shapeBounds.X * Scale, -shapeBounds.Y * Scale),
                 new Size(Model.Width * Scale, Model.Height * Scale));

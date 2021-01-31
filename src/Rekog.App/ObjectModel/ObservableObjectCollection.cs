@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Rekog.App.ObjectModel
 {
-    public class ObservableObjectCollection<T> : ObservableCollection<T>
+    public class ObservableObjectCollection<T> : ObservableCollection<T>, IObservableObjectCollection
         where T : ObservableObject
     {
         public ObservableObjectCollection()
@@ -17,9 +17,9 @@ namespace Rekog.App.ObjectModel
             Subscribe(Items);
         }
 
-        public event PropertyChangedEventHandler? ItemPropertyChanged;
-
         public event CollectionItemChangedEventHandler? CollectionItemChanged;
+
+        public event CollectionItemPropertyChangedEventHandler? CollectionItemPropertyChanged;
 
         protected override void InsertItem(int index, T item)
         {
@@ -52,9 +52,9 @@ namespace Rekog.App.ObjectModel
             base.ClearItems();
         }
 
-        protected virtual void OnItemPropertyChanged(object? sender, PropertyChangedEventArgs args)
+        protected virtual void OnCollectionItemPropertyChanged(object item, CollectionItemPropertyChangedEventArgs args)
         {
-            ItemPropertyChanged?.Invoke(sender, args);
+            CollectionItemPropertyChanged?.Invoke(item, args);
         }
 
         protected virtual void OnCollectionItemChanged(CollectionItemChangedEventArgs args)
@@ -93,7 +93,10 @@ namespace Rekog.App.ObjectModel
 
         private void Item_PropertyChanged(object? sender, PropertyChangedEventArgs args)
         {
-            OnItemPropertyChanged(sender, args);
+            if (sender is T item)
+            {
+                OnCollectionItemPropertyChanged(item, new CollectionItemPropertyChangedEventArgs(args.PropertyName));
+            }
         }
     }
 }

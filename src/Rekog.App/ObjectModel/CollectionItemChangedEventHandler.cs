@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace Rekog.App.ObjectModel
+﻿namespace Rekog.App.ObjectModel
 {
-    public delegate void CollectionItemChangedEventHandler(ICollection? collection, CollectionItemChangedEventArgs args);
+    public delegate void CollectionItemChangedEventHandler(IObservableObjectCollection collection, CollectionItemChangedEventArgs args);
 }

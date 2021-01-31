@@ -4,64 +4,73 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="clr-namespace:Rekog.App.Model"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mx="clr-namespace:Rekog.App.Markup"
+             xmlns:v="clr-namespace:Rekog.App.Views"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center"
-             d:Background="Gray"
+             d:Height="250"
+             d:Width="300"
+             Background="Gray"
+             DataContextChanged="UserControl_DataContextChanged"
+             PreviewMouseDown="UserControl_PreviewMouseDown"
+             PreviewMouseMove="UserControl_PreviewMouseMove"
+             PreviewMouseUp="UserControl_PreviewMouseUp"
+             PreviewMouseWheel="UserControl_PreviewMouseWheel"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <vm:BoardViewModel x:Key="DesignBoard" Scale="38">
-            <vm:BoardViewModel.Keys>
-                <vm:KeyViewModelCollection>
-                    <vm:KeyViewModel>
-                        <vm:KeyViewModel.Model>
+    <Canvas x:Name="PlateContainer"
+            Background="Transparent"
+            ClipToBounds="True"
+            SizeChanged="PlateContainer_SizeChanged">
+        <d:Canvas.DataContext>
+            <vm:BoardViewModel>
+                <vm:BoardViewModel.Model>
+                    <m:BoardModel>
+                        <m:BoardModel.Keys>
                             <m:KeyModel Width="1"
                                         Height="1"
-                                        RotationAngle="-251"
-                                        RotationOriginX="-1"
+                                        RotationAngle="-228"
+                                        RotationOriginX="0"
                                         RotationOriginY="0"
                                         X="1"
-                                        Y="3" />
-                        </vm:KeyViewModel.Model>
-                    </vm:KeyViewModel>
-                    <vm:KeyViewModel>
-                        <vm:KeyViewModel.Model>
+                                        Y="0" />
                             <m:KeyModel Width="2"
                                         Height="1"
                                         RotationAngle="-13"
-                                        X="3"
+                                        X="1.5"
                                         Y="-1" />
-                        </vm:KeyViewModel.Model>
-                    </vm:KeyViewModel>
-                    <vm:KeyViewModel>
-                        <vm:KeyViewModel.Model>
                             <m:KeyModel Width="2"
-                                        Height="2"
-                                        RotationAngle="-150"
-                                        RotationOriginX="-1"
-                                        RotationOriginY="-1"
-                                        X="3"
-                                        Y="2" />
-                        </vm:KeyViewModel.Model>
-                    </vm:KeyViewModel>
-                </vm:KeyViewModelCollection>
-            </vm:BoardViewModel.Keys>
-        </vm:BoardViewModel>
-    </UserControl.Resources>
-    <Border x:Name="Root"
-            d:DataContext="{StaticResource DesignBoard}"
-            Margin="32"
-            Padding="16"
-            Background="#33000000"
-            ClipToBounds="True">
-        <Grid>
-            <ItemsControl ItemsSource="{Binding Keys}">
+                                        Height="0.75"
+                                        RotationAngle="63"
+                                        RotationOriginX="2"
+                                        RotationOriginY="2"
+                                        X="0"
+                                        Y="1" />
+                        </m:BoardModel.Keys>
+                    </m:BoardModel>
+                </vm:BoardViewModel.Model>
+            </vm:BoardViewModel>
+        </d:Canvas.DataContext>
+        <Border x:Name="Plate"
+                Padding="9"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="Silver"
+                BorderBrush="DimGray"
+                BorderThickness="2"
+                CornerRadius="6"
+                Visibility="{Binding Converter={StaticResource NullToVisibilityConverter}}">
+            <Border.RenderTransform>
+                <MatrixTransform x:Name="MatrixTransform" />
+            </Border.RenderTransform>
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="32" Opacity="0.5" />
+            </Border.Effect>
+            <ItemsControl x:Name="PlateCanvasContainer"
+                          Width="{Binding CanvasSize.Width}"
+                          Height="{Binding CanvasSize.Height}"
+                          ItemsSource="{Binding Keys}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas d:DataContext="{d:DesignInstance Type=vm:BoardViewModel}"
-                                MinWidth="{Binding CanvasSize.Width}"
-                                MinHeight="{Binding CanvasSize.Height}"
-                                Margin="{Binding CanvasMargin}" />
+                        <Canvas d:DataContext="{d:DesignInstance Type={x:Type vm:BoardViewModel}, IsDesignTimeCreatable=False}" Margin="{Binding CanvasOffset}" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
@@ -70,12 +79,119 @@
                         <Setter Property="Canvas.Top" Value="{Binding Bounds.Y}" />
                         <Setter Property="Width" Value="{Binding Bounds.Width}" />
                         <Setter Property="Height" Value="{Binding Bounds.Height}" />
+                        <Setter Property="Opacity" Value="1" />
                         <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
                         <Setter Property="RenderTransform">
                             <Setter.Value>
-                                <RotateTransform Angle="{Binding RotationAngle}" />
+                                <TransformGroup>
+                                    <RotateTransform Angle="{Binding RotationAngle}" />
+                                    <TranslateTransform v:BoardView.ScaleRatio="0">
+                                        <TranslateTransform.Y>
+                                            <MultiBinding Converter="{StaticResource MultConverter}">
+                                                <Binding Path="Scale" />
+                                                <Binding Path="(v:BoardView.ScaleRatio)" RelativeSource="{RelativeSource Self}" />
+                                            </MultiBinding>
+                                        </TranslateTransform.Y>
+                                    </TranslateTransform>
+                                </TransformGroup>
                             </Setter.Value>
                         </Setter>
+                        <Setter Property="Panel.ZIndex" Value="0" />
+                        <Setter Property="v:BoardView.ScaleRatio" Value="0" />
+                        <Style.Triggers>
+                            <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <Int32Animation Storyboard.TargetProperty="(Panel.ZIndex)"
+                                                        To="-100"
+                                                        Duration="0:0:0.2">
+                                            <Int32Animation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseOut" />
+                                            </Int32Animation.EasingFunction>
+                                        </Int32Animation>
+                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(v:BoardView.ScaleRatio)"
+                                                         To="0.1"
+                                                         Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeftButtonUp">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <Int32Animation Storyboard.TargetProperty="(Panel.ZIndex)"
+                                                        To="0"
+                                                        Duration="0:0:0.2">
+                                            <Int32Animation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseOut" />
+                                            </Int32Animation.EasingFunction>
+                                        </Int32Animation>
+                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(v:BoardView.ScaleRatio)"
+                                                         To="0"
+                                                         Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <Int32Animation Storyboard.TargetProperty="(Panel.ZIndex)"
+                                                        To="0"
+                                                        Duration="0:0:0.2">
+                                            <Int32Animation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseOut" />
+                                            </Int32Animation.EasingFunction>
+                                        </Int32Animation>
+                                        <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(v:BoardView.ScaleRatio)"
+                                                         To="0"
+                                                         Duration="0:0:0.2">
+                                            <DoubleAnimation.EasingFunction>
+                                                <QuarticEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                    <Condition Binding="{Binding IsDragging, RelativeSource={RelativeSource AncestorType={x:Type v:BoardView}}}" Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                             To="0.8"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </MultiDataTrigger.EnterActions>
+                                <MultiDataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                             To="1"
+                                                             Duration="0:0:0.2">
+                                                <DoubleAnimation.EasingFunction>
+                                                    <QuarticEase EasingMode="EaseOut" />
+                                                </DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </MultiDataTrigger.ExitActions>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
@@ -83,8 +199,14 @@
                         <Canvas>
                             <Polygon Fill="LightGray"
                                      Points="{Binding Shape}"
-                                     Stroke="DarkGray"
-                                     StrokeThickness="2" />
+                                     Stroke="DarkGray">
+                                <Polygon.StrokeThickness>
+                                    <MultiBinding Converter="{StaticResource MultConverter}">
+                                        <Binding Path="Scale" />
+                                        <Binding Source="{mx:Double 0.03}" />
+                                    </MultiBinding>
+                                </Polygon.StrokeThickness>
+                            </Polygon>
                             <Grid Canvas.Left="{Binding LabelBounds.X}"
                                   Canvas.Top="{Binding LabelBounds.Y}"
                                   Width="{Binding LabelBounds.Width}"
@@ -93,6 +215,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </Grid>
-    </Border>
+        </Border>
+    </Canvas>
 </UserControl>

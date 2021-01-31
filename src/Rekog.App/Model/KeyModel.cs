@@ -1,103 +1,101 @@
 ﻿using Rekog.App.Geometry;
 using Rekog.App.Model.Kle;
-using Rekog.App.ObjectModel;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Rekog.App.Model
 {
-    public class KeyModel : ObservableObject
+    public class KeyModel : ModelBase
     {
         private double _x;
         public double X
         {
             get => _x;
-            set => Set(ref _x, value, nameof(X));
+            set => Set(ref _x, value);
         }
 
         private double _y;
         public double Y
         {
             get => _y;
-            set => Set(ref _y, value, nameof(Y));
+            set => Set(ref _y, value);
         }
 
         private double _width;
         public double Width
         {
             get => _width;
-            set => Set(ref _width, value, nameof(Width));
+            set => Set(ref _width, value);
         }
 
         private double _height;
         public double Height
         {
             get => _height;
-            set => Set(ref _height, value, nameof(Height));
+            set => Set(ref _height, value);
         }
 
         private double _rotationAngle;
         public double RotationAngle
         {
             get => _rotationAngle;
-            set => Set(ref _rotationAngle, value, nameof(RotationAngle));
+            set => Set(ref _rotationAngle, value);
         }
 
         private double _rotationOriginX;
         public double RotationOriginX
         {
             get => _rotationOriginX;
-            set => Set(ref _rotationOriginX, value, nameof(RotationOriginX));
+            set => Set(ref _rotationOriginX, value);
         }
 
         private double _rotationOriginY;
         public double RotationOriginY
         {
             get => _rotationOriginY;
-            set => Set(ref _rotationOriginY, value, nameof(RotationOriginY));
+            set => Set(ref _rotationOriginY, value);
         }
 
-        private ObservableCollection<Point>? _shape;
-        public ObservableCollection<Point>? Shape
+        private List<Point>? _shape;
+        public List<Point>? Shape
         {
             get => _shape;
-            set => Set(ref _shape, value, nameof(Shape));
+            set => Set(ref _shape, value);
         }
 
-        private ObservableCollection<Point>? _steppedShape;
-        public ObservableCollection<Point>? SteppedShape
+        private List<Point>? _steppedShape;
+        public List<Point>? SteppedShape
         {
             get => _steppedShape;
-            set => Set(ref _steppedShape, value, nameof(SteppedShape));
+            set => Set(ref _steppedShape, value);
         }
 
         private string _color = string.Empty;
         public string Color
         {
             get => _color;
-            set => Set(ref _color, value, nameof(Color));
+            set => Set(ref _color, value);
         }
 
         private bool _isHoming;
         public bool IsHoming
         {
             get => _isHoming;
-            set => Set(ref _isHoming, value, nameof(IsHoming));
+            set => Set(ref _isHoming, value);
         }
 
         private bool _isDecal;
         public bool IsDecal
         {
             get => _isDecal;
-            set => Set(ref _isDecal, value, nameof(IsDecal));
+            set => Set(ref _isDecal, value);
         }
 
         private bool _isGhosted;
         public bool IsGhosted
         {
             get => _isGhosted;
-            set => Set(ref _isGhosted, value, nameof(IsGhosted));
+            set => Set(ref _isGhosted, value);
         }
 
         public List<KeyLabelModel> Labels { get; set; } = new();
@@ -144,9 +142,11 @@ namespace Rekog.App.Model
 
             return key;
 
-            static ObservableCollection<Point> PolygonToShape(double X, double Y, Polygon polygon)
+            static List<Point> PolygonToShape(double X, double Y, Polygon polygon)
             {
-                return new ObservableCollection<Point>(polygon.Vertices.Select(p => new Point(p.X - X, p.Y - Y)));
+                return polygon.Vertices
+                    .Select(p => new Point(p.X - X, p.Y - Y))
+                    .ToList();
             }
 
             static Polygon GetPolygon(KleKey kleKey)

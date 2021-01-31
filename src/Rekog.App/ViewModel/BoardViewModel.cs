@@ -1,4 +1,5 @@
-﻿using Rekog.App.ObjectModel;
+﻿using Rekog.App.Model;
+using Rekog.App.ObjectModel;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,69 +8,82 @@ using System.Windows;
 
 namespace Rekog.App.ViewModel
 {
-    public class BoardViewModel : ObservableObject
+    public class BoardViewModel : ViewModelBase<BoardModel>
     {
+        public BoardViewModel()
+        {
+        }
+
+        public BoardViewModel(BoardModel? model)
+            : base(model)
+        {
+        }
+
         private double _scale = KeyViewModel.DefaultScale;
         public double Scale
         {
             get => _scale;
             set
             {
-                if (value < KeyViewModel.MinimumScale)
+                if (value < KeyViewModel.MinScale)
                 {
-                    value = KeyViewModel.MinimumScale;
+                    value = KeyViewModel.MinScale;
+                }
+                else if (value > KeyViewModel.MaxScale)
+                {
+                    value = KeyViewModel.MaxScale;
                 }
 
-                if (Set(ref _scale, value, nameof(Scale)))
+                if (Set(ref _scale, value))
                 {
                     UpdateKeys();
                 }
             }
         }
 
-        private KeyViewModelCollection _keys = new KeyViewModelCollection();
-        public KeyViewModelCollection Keys
+        private ObservableObjectCollection<KeyViewModel> _keys = new();
+        public ObservableObjectCollection<KeyViewModel> Keys
         {
             get => _keys;
-            set
+            private set
             {
-                if (Keys is KeyViewModelCollection oldValue)
+                if (SetCollection(ref _keys, value, Keys_CollectionItemChanged, Keys_CollectionItemPropertyChanged))
                 {
-                    oldValue.CollectionItemChanged -= NewValue_CollectionItemChanged;
-                    oldValue.ItemPropertyChanged -= OldKeys_ItemPropertyChanged;
-                }
-
-                if (Set(ref _keys, value, nameof(Keys)))
-                {
-                    if (Keys is KeyViewModelCollection newValue)
-                    {
-                        newValue.CollectionItemChanged -= NewValue_CollectionItemChanged;
-                        newValue.CollectionItemChanged += NewValue_CollectionItemChanged;
-                        newValue.ItemPropertyChanged -= OldKeys_ItemPropertyChanged;
-                        newValue.ItemPropertyChanged += OldKeys_ItemPropertyChanged;
-                    }
-
                     UpdateKeys();
-                    UpdateBoard();
+                    UpdateCanvas();
                 }
             }
         }
 
-        private Thickness _canvasMargin;
-        public Thickness CanvasMargin
+        private Thickness _canvasOffset;
+        public Thickness CanvasOffset
         {
-            get => _canvasMargin;
-            private set => Set(ref _canvasMargin, value, nameof(CanvasMargin));
+            get => _canvasOffset;
+            private set => Set(ref _canvasOffset, value);
         }
 
         private Size _canvasSize;
         public Size CanvasSize
         {
             get => _canvasSize;
-            private set => Set(ref _canvasSize, value, nameof(CanvasSize));
+            private set => Set(ref _canvasSize, value);
         }
 
-        private void NewValue_CollectionItemChanged(ICollection? collection, CollectionItemChangedEventArgs args)
+        protected override void OnModelChanged(BoardModel? oldModel, BoardModel? newModel)
+        {
+            base.OnModelChanged(oldModel, newModel);
+
+            if (newModel?.Keys != null)
+            {
+                Keys = new(newModel.Keys.Select(x => new KeyViewModel(x)));
+            }
+            else
+            {
+                Keys = new();
+            }
+        }
+
+        private void Keys_CollectionItemChanged(ICollection collection, CollectionItemChangedEventArgs args)
         {
             if (args.NewItems is ICollection<KeyViewModel> keys)
             {
@@ -77,23 +91,34 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void OldKeys_ItemPropertyChanged(object? item, PropertyChangedEventArgs args)
+        private void Keys_CollectionItemPropertyChanged(object item, CollectionItemPropertyChangedEventArgs args)
         {
             switch (args.PropertyName)
             {
             case nameof(KeyViewModel.RotatedBounds):
-                UpdateBoard();
+                UpdateCanvas();
                 break;
             }
         }
 
-        private void UpdateBoard()
+        private void UpdateCanvas()
         {
+            if (!Keys.Any())
+            {
+                CanvasOffset = new Thickness();
+                CanvasSize = new Size();
+                return;
+            }
+
             var left = Keys.Min(x => x.RotatedBounds.Left);
             var top = Keys.Min(x => x.RotatedBounds.Top);
             var right = Keys.Max(x => x.RotatedBounds.Right);
             var bottom = Keys.Max(x => x.RotatedBounds.Bottom);
-            CanvasMargin = new Thickness(-left, -top, left, top);
+
+            var low = Keys.OrderByDescending(x => x.RotatedBounds.Bottom).FirstOrDefault();
+            var xxx = Keys.Where(x => x.Model?.Labels.Any(k => k.Text == "XXX") ?? false).FirstOrDefault();
+
+            CanvasOffset = new Thickness(-left, -top, left, top);
             CanvasSize = new Size(right - left, bottom - top);
         }
 

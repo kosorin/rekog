@@ -1,6 +1,18 @@
 ﻿<Application x:Class="Rekog.App.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:Rekog.App.ViewModel"
              StartupUri="Views/MainWindow.xaml">
-    <Application.Resources />
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/Converters.xaml" />
+                <ResourceDictionary Source="Themes/Icons.xaml" />
+                <ResourceDictionary />
+            </ResourceDictionary.MergedDictionaries>
+
+            <vm:MainViewModel x:Key="MainViewModel" />
+
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

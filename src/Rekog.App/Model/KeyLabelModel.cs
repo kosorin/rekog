@@ -1,6 +1,6 @@
 ﻿namespace Rekog.App.Model
 {
-    public class KeyLabelModel
+    public class KeyLabelModel : ModelBase
     {
         public int Position { get; set; }
 
