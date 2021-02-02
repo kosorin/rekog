@@ -101,7 +101,7 @@ namespace Rekog.App.Geometry
 
         private static bool IsVertexIntersection(Point vertex, LineSegment edge1, LineSegment edge2)
         {
-            return ((edge1.First == vertex || edge1.Second == vertex) && (edge2.First == vertex || edge2.Second == vertex));
+            return (edge1.First == vertex || edge1.Second == vertex) && (edge2.First == vertex || edge2.Second == vertex);
         }
 
         private class UnionHelper

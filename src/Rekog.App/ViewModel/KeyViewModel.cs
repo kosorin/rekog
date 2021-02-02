@@ -19,32 +19,6 @@ namespace Rekog.App.ViewModel
         {
         }
 
-        public const double MinScale = 1;
-        public const double MaxScale = 300;
-        public const double DefaultScale = 54;
-
-        private double _scale = DefaultScale;
-        public double Scale
-        {
-            get => _scale;
-            set
-            {
-                if (value < MinScale)
-                {
-                    value = MinScale;
-                }
-                else if (value > MaxScale)
-                {
-                    value = MaxScale;
-                }
-
-                if (Set(ref _scale, value))
-                {
-                    UpdateLayout();
-                }
-            }
-        }
-
         private Rect _bounds;
         public Rect Bounds
         {
@@ -154,22 +128,22 @@ namespace Rekog.App.ViewModel
 
             var shapeBounds = GetBounds(shape);
             Bounds = new Rect(
-                new Point((Model.X + shapeBounds.X) * Scale, (Model.Y + shapeBounds.Y) * Scale),
-                new Size(shapeBounds.Width * Scale, shapeBounds.Height * Scale));
+                new Point(Model.X + shapeBounds.X, Model.Y + shapeBounds.Y),
+                new Size(shapeBounds.Width, shapeBounds.Height));
 
             var rotatedShapeBounds = GetBounds(rotatedShape);
             RotatedBounds = new Rect(
-                new Point((Model.X + rotatedShapeBounds.X) * Scale, (Model.Y + rotatedShapeBounds.Y) * Scale),
-                new Size(rotatedShapeBounds.Width * Scale, rotatedShapeBounds.Height * Scale));
+                new Point(Model.X + rotatedShapeBounds.X, Model.Y + rotatedShapeBounds.Y),
+                new Size(rotatedShapeBounds.Width, rotatedShapeBounds.Height));
             RotationAngle = Model.RotationAngle;
             RotationOrigin = new Point((Model.RotationOriginX - shapeBounds.X) / shapeBounds.Width, (Model.RotationOriginY - shapeBounds.Y) / shapeBounds.Height);
 
-            Shape = new PointCollection(shape.Select(p => new Point((p.X - shapeBounds.X) * Scale, (p.Y - shapeBounds.Y) * Scale)));
-            RotatedShape = new PointCollection(rotatedShape.Select(p => new Point((p.X + Model.X) * Scale, (p.Y + Model.Y) * Scale)));
+            Shape = new PointCollection(shape.Select(p => new Point(p.X - shapeBounds.X, p.Y - shapeBounds.Y)));
+            RotatedShape = new PointCollection(rotatedShape.Select(p => new Point(p.X + Model.X, p.Y + Model.Y)));
 
             LabelBounds = new Rect(
-                new Point(-shapeBounds.X * Scale, -shapeBounds.Y * Scale),
-                new Size(Model.Width * Scale, Model.Height * Scale));
+                new Point(-shapeBounds.X, -shapeBounds.Y),
+                new Size(Model.Width, Model.Height));
 
             static Rect GetBounds(ICollection<Point> points)
             {

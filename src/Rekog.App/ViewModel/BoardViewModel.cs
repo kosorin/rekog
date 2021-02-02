@@ -1,8 +1,6 @@
 ﻿using Rekog.App.Model;
 using Rekog.App.ObjectModel;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 
@@ -19,28 +17,6 @@ namespace Rekog.App.ViewModel
         {
         }
 
-        private double _scale = KeyViewModel.DefaultScale;
-        public double Scale
-        {
-            get => _scale;
-            set
-            {
-                if (value < KeyViewModel.MinScale)
-                {
-                    value = KeyViewModel.MinScale;
-                }
-                else if (value > KeyViewModel.MaxScale)
-                {
-                    value = KeyViewModel.MaxScale;
-                }
-
-                if (Set(ref _scale, value))
-                {
-                    UpdateKeys();
-                }
-            }
-        }
-
         private ObservableObjectCollection<KeyViewModel> _keys = new();
         public ObservableObjectCollection<KeyViewModel> Keys
         {
@@ -49,7 +25,6 @@ namespace Rekog.App.ViewModel
             {
                 if (SetCollection(ref _keys, value, Keys_CollectionItemChanged, Keys_CollectionItemPropertyChanged))
                 {
-                    UpdateKeys();
                     UpdateCanvas();
                 }
             }
@@ -85,10 +60,7 @@ namespace Rekog.App.ViewModel
 
         private void Keys_CollectionItemChanged(ICollection collection, CollectionItemChangedEventArgs args)
         {
-            if (args.NewItems is ICollection<KeyViewModel> keys)
-            {
-                UpdateKeys(keys);
-            }
+            UpdateCanvas();
         }
 
         private void Keys_CollectionItemPropertyChanged(object item, CollectionItemPropertyChangedEventArgs args)
@@ -115,24 +87,8 @@ namespace Rekog.App.ViewModel
             var right = Keys.Max(x => x.RotatedBounds.Right);
             var bottom = Keys.Max(x => x.RotatedBounds.Bottom);
 
-            var low = Keys.OrderByDescending(x => x.RotatedBounds.Bottom).FirstOrDefault();
-            var xxx = Keys.Where(x => x.Model?.Labels.Any(k => k.Text == "XXX") ?? false).FirstOrDefault();
-
             CanvasOffset = new Thickness(-left, -top, left, top);
             CanvasSize = new Size(right - left, bottom - top);
-        }
-
-        private void UpdateKeys()
-        {
-            UpdateKeys(Keys);
-        }
-
-        private void UpdateKeys(ICollection<KeyViewModel> keys)
-        {
-            foreach (var key in keys)
-            {
-                key.Scale = Scale;
-            }
         }
     }
 }

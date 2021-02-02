@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.ComponentModel;
 
 namespace Rekog.App.ObjectModel
 {

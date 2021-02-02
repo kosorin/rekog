@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Rekog.App.Converters;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Rekog.App.Views
+namespace Rekog.App.View
 {
     public partial class BoardView : UserControl
     {
@@ -49,6 +50,99 @@ namespace Rekog.App.Views
 
         public static readonly DependencyProperty MinVisibleSizeProperty =
             DependencyProperty.Register(nameof(MinVisibleSize), typeof(double), typeof(BoardView), new PropertyMetadata(128d));
+
+        private double UnitSize => (double)Resources["UnitSize"];
+
+
+        public void CenterView(bool reset = false)
+        {
+            if (reset)
+            {
+                MatrixTransform.Matrix = new Matrix();
+            }
+
+            (var plateContainerBounds, var plateBounds, var plateOffset) = GetPlateBounds(null);
+
+            var matrix = MatrixTransform.Matrix;
+
+            matrix.OffsetX = ((plateContainerBounds.Width - plateBounds.Width) / 2) - plateOffset.X;
+            matrix.OffsetY = ((plateContainerBounds.Height - plateBounds.Height) / 2) - plateOffset.Y;
+
+            MatrixTransform.Matrix = matrix;
+        }
+
+        public void KeepInView(MouseEventArgs? args = null)
+        {
+            (var plateContainerBounds, var plateBounds, var plateOffset) = GetPlateBounds(null);
+
+            var minVisibleSize = new Size(
+                Math.Min(plateBounds.Width, plateContainerBounds.Width),
+                Math.Min(plateBounds.Height, plateContainerBounds.Height));
+
+            var matrix = MatrixTransform.Matrix;
+            var coerced = false;
+
+            if (plateContainerBounds.Left + minVisibleSize.Width > plateBounds.Right)
+            {
+                matrix.OffsetX = minVisibleSize.Width - plateOffset.X - plateBounds.Width;
+                coerced = true;
+            }
+            else if (plateContainerBounds.Right - minVisibleSize.Width < plateBounds.Left)
+            {
+                matrix.OffsetX = plateContainerBounds.Right - minVisibleSize.Width - plateOffset.X;
+                coerced = true;
+            }
+
+            if (plateContainerBounds.Top + minVisibleSize.Height > plateBounds.Bottom)
+            {
+                matrix.OffsetY = minVisibleSize.Height - plateOffset.Y - plateBounds.Height;
+                coerced = true;
+            }
+            else if (plateContainerBounds.Bottom - minVisibleSize.Height < plateBounds.Top)
+            {
+                matrix.OffsetY = plateContainerBounds.Bottom - minVisibleSize.Height - plateOffset.Y;
+                coerced = true;
+            }
+
+            if (coerced)
+            {
+                MatrixTransform.Matrix = matrix;
+            }
+        }
+
+        private (Rect plateContainerBounds, Rect plateBounds, Point plateOffset) GetPlateBounds(MouseEventArgs? args)
+        {
+            Point plateMousePosition;
+            Point plateContainerMousePosition;
+
+            if (args != null)
+            {
+                plateMousePosition = args.GetPosition(Plate);
+                plateContainerMousePosition = args.GetPosition(PlateContainer);
+            }
+            else
+            {
+                plateMousePosition = new Point(0, 0);
+                plateContainerMousePosition = Plate.TranslatePoint(plateMousePosition, PlateContainer);
+            }
+
+            var matrix = MatrixTransform.Matrix;
+            var scale = matrix.M11;
+
+            var plateContainerBounds = new Rect(
+                new Point(0, 0),
+                new Size(PlateContainer.ActualWidth, PlateContainer.ActualHeight));
+            var plateBounds = new Rect(
+                new Point(
+                    plateContainerMousePosition.X - (plateMousePosition.X * scale),
+                    plateContainerMousePosition.Y - (plateMousePosition.Y * scale)),
+                new Size(Plate.ActualWidth * scale, Plate.ActualHeight * scale));
+            var plateOffset = new Point(
+                plateContainerMousePosition.X - ((plateMousePosition.X * scale) + matrix.OffsetX),
+                plateContainerMousePosition.Y - ((plateMousePosition.Y * scale) + matrix.OffsetY));
+
+            return (plateContainerBounds, plateBounds, plateOffset);
+        }
 
 
         private void UserControl_PreviewMouseDown(object? sender, MouseButtonEventArgs args)
@@ -141,7 +235,7 @@ namespace Rekog.App.Views
 
             var matrix = MatrixTransform.Matrix;
 
-            var scroll = 32 * Math.Sign(args.Delta) / matrix.M11;
+            var scroll = UnitSize * 0.5 * Math.Sign(args.Delta) / matrix.M11;
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
                 matrix.TranslatePrepend(scroll, 0);
@@ -167,104 +261,9 @@ namespace Rekog.App.Views
             KeepInView(args);
         }
 
-        private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            CenterView(reset: true);
-        }
-
-        private void PlateContainer_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void Plate_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             KeepInView();
-        }
-
-        private void CenterView(bool reset = false)
-        {
-            if (reset)
-            {
-                MatrixTransform.Matrix = new Matrix();
-            }
-
-            (var plateContainerBounds, var plateBounds, var plateOffset) = GetPlateBounds(null);
-
-            var matrix = MatrixTransform.Matrix;
-
-            matrix.OffsetX = ((plateContainerBounds.Width - plateBounds.Width) / 2) - plateOffset.X;
-            matrix.OffsetY = ((plateContainerBounds.Height - plateBounds.Height) / 2) - plateOffset.Y;
-
-            MatrixTransform.Matrix = matrix;
-        }
-
-        private void KeepInView(MouseEventArgs? args = null)
-        {
-            (var plateContainerBounds, var plateBounds, var plateOffset) = GetPlateBounds(args);
-
-            var minVisibleSize = new Size(
-                Math.Min(plateBounds.Width, plateContainerBounds.Width),
-                Math.Min(plateBounds.Height, plateContainerBounds.Height));
-
-            var matrix = MatrixTransform.Matrix;
-            var coerced = false;
-
-            if (plateContainerBounds.Left + minVisibleSize.Width > plateBounds.Right)
-            {
-                matrix.OffsetX = minVisibleSize.Width - plateOffset.X - plateBounds.Width;
-                coerced = true;
-            }
-            else if (plateContainerBounds.Right - minVisibleSize.Width < plateBounds.Left)
-            {
-                matrix.OffsetX = (plateContainerBounds.Right - minVisibleSize.Width) - plateOffset.X;
-                coerced = true;
-            }
-
-            if (plateContainerBounds.Top + minVisibleSize.Height > plateBounds.Bottom)
-            {
-                matrix.OffsetY = minVisibleSize.Height - plateOffset.Y - plateBounds.Height;
-                coerced = true;
-            }
-            else if (plateContainerBounds.Bottom - minVisibleSize.Height < plateBounds.Top)
-            {
-                matrix.OffsetY = (plateContainerBounds.Bottom - minVisibleSize.Height) - plateOffset.Y;
-                coerced = true;
-            }
-
-            if (coerced)
-            {
-                MatrixTransform.Matrix = matrix;
-            }
-        }
-
-        private (Rect plateContainerBounds, Rect plateBounds, Point plateOffset) GetPlateBounds(MouseEventArgs? args)
-        {
-            Point plateMousePosition;
-            Point plateContainerMousePosition;
-
-            if (args != null)
-            {
-                plateMousePosition = args.GetPosition(Plate);
-                plateContainerMousePosition = args.GetPosition(PlateContainer);
-            }
-            else
-            {
-                plateMousePosition = new Point(0, 0);
-                plateContainerMousePosition = Plate.TranslatePoint(plateMousePosition, PlateContainer);
-            }
-
-            var matrix = MatrixTransform.Matrix;
-            var scale = matrix.M11;
-
-            var plateContainerBounds = new Rect(
-                new Point(0, 0),
-                new Size(PlateContainer.ActualWidth, PlateContainer.ActualHeight));
-            var plateBounds = new Rect(
-                new Point(
-                    plateContainerMousePosition.X - (plateMousePosition.X * scale),
-                    plateContainerMousePosition.Y - (plateMousePosition.Y * scale)),
-                new Size(Plate.ActualWidth * scale, Plate.ActualHeight * scale));
-            var plateOffset = new Point(
-                plateContainerMousePosition.X - ((plateMousePosition.X * scale) + matrix.OffsetX),
-                plateContainerMousePosition.Y - ((plateMousePosition.Y * scale) + matrix.OffsetY));
-
-            return (plateContainerBounds, plateBounds, plateOffset);
         }
     }
 }

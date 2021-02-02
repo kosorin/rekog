@@ -1,25 +1,27 @@
-﻿<UserControl x:Class="Rekog.App.Views.BoardView"
+﻿<UserControl x:Class="Rekog.App.View.BoardView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:clr="clr-namespace:System;assembly=mscorlib"
+             xmlns:cx="clr-namespace:Rekog.App.Converters"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:m="clr-namespace:Rekog.App.Model"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:mx="clr-namespace:Rekog.App.Markup"
-             xmlns:v="clr-namespace:Rekog.App.Views"
+             xmlns:v="clr-namespace:Rekog.App.View"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
              d:Height="250"
              d:Width="300"
-             Background="Gray"
-             DataContextChanged="UserControl_DataContextChanged"
+             Background="#D0D0D0"
              PreviewMouseDown="UserControl_PreviewMouseDown"
              PreviewMouseMove="UserControl_PreviewMouseMove"
              PreviewMouseUp="UserControl_PreviewMouseUp"
              PreviewMouseWheel="UserControl_PreviewMouseWheel"
              mc:Ignorable="d">
-    <Canvas x:Name="PlateContainer"
-            Background="Transparent"
-            ClipToBounds="True"
-            SizeChanged="PlateContainer_SizeChanged">
+    <UserControl.Resources>
+        <clr:Double x:Key="UnitSize">96</clr:Double>
+        <cx:ScaleConverter x:Key="ScaleConverter" Size="{StaticResource UnitSize}" />
+    </UserControl.Resources>
+    <Canvas x:Name="PlateContainer" ClipToBounds="True">
         <d:Canvas.DataContext>
             <vm:BoardViewModel>
                 <vm:BoardViewModel.Model>
@@ -50,49 +52,42 @@
             </vm:BoardViewModel>
         </d:Canvas.DataContext>
         <Border x:Name="Plate"
-                Padding="9"
+                Padding="{Binding Source={mx:Double 0.5}, Converter={StaticResource ScaleConverter}, Mode=OneTime}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Background="Silver"
-                BorderBrush="DimGray"
-                BorderThickness="2"
-                CornerRadius="6"
+                SizeChanged="Plate_SizeChanged"
                 Visibility="{Binding Converter={StaticResource NullToVisibilityConverter}}">
             <Border.RenderTransform>
                 <MatrixTransform x:Name="MatrixTransform" />
             </Border.RenderTransform>
-            <Border.Effect>
-                <DropShadowEffect BlurRadius="32" Opacity="0.5" />
-            </Border.Effect>
             <ItemsControl x:Name="PlateCanvasContainer"
-                          Width="{Binding CanvasSize.Width}"
-                          Height="{Binding CanvasSize.Height}"
+                          Width="{Binding CanvasSize.Width, Converter={StaticResource ScaleConverter}}"
+                          Height="{Binding CanvasSize.Height, Converter={StaticResource ScaleConverter}}"
                           ItemsSource="{Binding Keys}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas d:DataContext="{d:DesignInstance Type={x:Type vm:BoardViewModel}, IsDesignTimeCreatable=False}" Margin="{Binding CanvasOffset}" />
+                        <Canvas d:DataContext="{d:DesignInstance Type={x:Type vm:BoardViewModel}, IsDesignTimeCreatable=False}" Margin="{Binding CanvasOffset, Converter={StaticResource ScaleConverter}}">
+                            <Canvas.Effect>
+                                <DropShadowEffect BlurRadius="{Binding Source={mx:Double 0.5}, Converter={StaticResource ScaleConverter}, Mode=OneTime}"
+                                                  Opacity="0.25"
+                                                  ShadowDepth="0" />
+                            </Canvas.Effect>
+                        </Canvas>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
                     <Style TargetType="{x:Type ContentPresenter}">
-                        <Setter Property="Canvas.Left" Value="{Binding Bounds.X}" />
-                        <Setter Property="Canvas.Top" Value="{Binding Bounds.Y}" />
-                        <Setter Property="Width" Value="{Binding Bounds.Width}" />
-                        <Setter Property="Height" Value="{Binding Bounds.Height}" />
+                        <Setter Property="Canvas.Left" Value="{Binding Bounds.X, Converter={StaticResource ScaleConverter}}" />
+                        <Setter Property="Canvas.Top" Value="{Binding Bounds.Y, Converter={StaticResource ScaleConverter}}" />
+                        <Setter Property="Width" Value="{Binding Bounds.Width, Converter={StaticResource ScaleConverter}}" />
+                        <Setter Property="Height" Value="{Binding Bounds.Height, Converter={StaticResource ScaleConverter}}" />
                         <Setter Property="Opacity" Value="1" />
                         <Setter Property="RenderTransformOrigin" Value="{Binding RotationOrigin}" />
                         <Setter Property="RenderTransform">
                             <Setter.Value>
                                 <TransformGroup>
                                     <RotateTransform Angle="{Binding RotationAngle}" />
-                                    <TranslateTransform v:BoardView.ScaleRatio="0">
-                                        <TranslateTransform.Y>
-                                            <MultiBinding Converter="{StaticResource MultConverter}">
-                                                <Binding Path="Scale" />
-                                                <Binding Path="(v:BoardView.ScaleRatio)" RelativeSource="{RelativeSource Self}" />
-                                            </MultiBinding>
-                                        </TranslateTransform.Y>
-                                    </TranslateTransform>
+                                    <TranslateTransform v:BoardView.ScaleRatio="0" Y="{Binding Path=(v:BoardView.ScaleRatio), RelativeSource={RelativeSource Self}, Converter={StaticResource ScaleConverter}}" />
                                 </TransformGroup>
                             </Setter.Value>
                         </Setter>
@@ -159,58 +154,63 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
-                                    <Condition Binding="{Binding IsDragging, RelativeSource={RelativeSource AncestorType={x:Type v:BoardView}}}" Value="False" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                             To="0.8"
-                                                             Duration="0:0:0.2">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </MultiDataTrigger.EnterActions>
-                                <MultiDataTrigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
-                                                             To="1"
-                                                             Duration="0:0:0.2">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </MultiDataTrigger.ExitActions>
-                            </MultiDataTrigger>
                         </Style.Triggers>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:KeyViewModel}">
-                        <Canvas>
-                            <Polygon Fill="LightGray"
-                                     Points="{Binding Shape}"
-                                     Stroke="DarkGray">
-                                <Polygon.StrokeThickness>
-                                    <MultiBinding Converter="{StaticResource MultConverter}">
-                                        <Binding Path="Scale" />
-                                        <Binding Source="{mx:Double 0.03}" />
-                                    </MultiBinding>
-                                </Polygon.StrokeThickness>
+                        <Canvas Background="Transparent">
+                            <Polygon Points="{Binding Shape, Converter={StaticResource ScaleConverter}}"
+                                     Stroke="#666"
+                                     StrokeThickness="{Binding Source={mx:Double 0.02}, Converter={StaticResource ScaleConverter}, Mode=OneTime}">
+                                <Polygon.Style>
+                                    <Style TargetType="{x:Type Polygon}">
+                                        <Setter Property="Fill">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#EEE" />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                                    <Condition Binding="{Binding IsDragging, RelativeSource={RelativeSource AncestorType={x:Type v:BoardView}}}" Value="False" />
+                                                </MultiDataTrigger.Conditions>
+                                                <MultiDataTrigger.EnterActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ColorAnimation Storyboard.TargetProperty="(Polygon.Fill).(SolidColorBrush.Color)"
+                                                                            To="#DDD"
+                                                                            Duration="0:0:0.2">
+                                                                <ColorAnimation.EasingFunction>
+                                                                    <QuarticEase EasingMode="EaseOut" />
+                                                                </ColorAnimation.EasingFunction>
+                                                            </ColorAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </MultiDataTrigger.EnterActions>
+                                                <MultiDataTrigger.ExitActions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <ColorAnimation Storyboard.TargetProperty="(Polygon.Fill).(SolidColorBrush.Color)"
+                                                                            To="#EEE"
+                                                                            Duration="0:0:0.2">
+                                                                <ColorAnimation.EasingFunction>
+                                                                    <QuarticEase EasingMode="EaseOut" />
+                                                                </ColorAnimation.EasingFunction>
+                                                            </ColorAnimation>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </MultiDataTrigger.ExitActions>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Polygon.Style>
                             </Polygon>
-                            <Grid Canvas.Left="{Binding LabelBounds.X}"
-                                  Canvas.Top="{Binding LabelBounds.Y}"
-                                  Width="{Binding LabelBounds.Width}"
-                                  Height="{Binding LabelBounds.Height}" />
+                            <Grid Canvas.Left="{Binding LabelBounds.X, Converter={StaticResource ScaleConverter}}"
+                                  Canvas.Top="{Binding LabelBounds.Y, Converter={StaticResource ScaleConverter}}"
+                                  Width="{Binding LabelBounds.Width, Converter={StaticResource ScaleConverter}}"
+                                  Height="{Binding LabelBounds.Height, Converter={StaticResource ScaleConverter}}" />
                         </Canvas>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
