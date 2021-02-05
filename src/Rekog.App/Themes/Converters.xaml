@@ -7,5 +7,6 @@
     <cx:MultConverter x:Key="MultConverter" />
     <cx:NullToBooleanConverter x:Key="NullToBooleanConverter" />
     <cx:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    <cx:EnumIsInConverter x:Key="EnumIsInConverter" />
 
 </ResourceDictionary>

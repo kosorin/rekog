@@ -19,6 +19,13 @@ namespace Rekog.App.ViewModel
         {
         }
 
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set => Set(ref _isSelected, value);
+        }
+
         private Rect _bounds;
         public Rect Bounds
         {
@@ -140,6 +147,7 @@ namespace Rekog.App.ViewModel
 
             Shape = new PointCollection(shape.Select(p => new Point(p.X - shapeBounds.X, p.Y - shapeBounds.Y)));
             RotatedShape = new PointCollection(rotatedShape.Select(p => new Point(p.X + Model.X, p.Y + Model.Y)));
+
 
             LabelBounds = new Rect(
                 new Point(-shapeBounds.X, -shapeBounds.Y),

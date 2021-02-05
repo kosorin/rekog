@@ -21,14 +21,14 @@ namespace Rekog.App.Model
             set => Set(ref _y, value);
         }
 
-        private double _width;
+        private double _width = 1;
         public double Width
         {
             get => _width;
             set => Set(ref _width, value);
         }
 
-        private double _height;
+        private double _height = 1;
         public double Height
         {
             get => _height;

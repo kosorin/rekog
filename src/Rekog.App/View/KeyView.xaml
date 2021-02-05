@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Rekog.App.View.KeyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:a="clr-namespace:Rekog.App.AttachedProperties"
+             xmlns:clr="clr-namespace:System;assembly=mscorlib"
+             xmlns:cx="clr-namespace:Rekog.App.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:m="clr-namespace:Rekog.App.Model"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mx="clr-namespace:Rekog.App.Markup"
+             xmlns:v="clr-namespace:Rekog.App.View"
+             xmlns:vm="clr-namespace:Rekog.App.ViewModel"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             d:Height="200"
+             d:Width="200"
+             mc:Ignorable="d">
+    <Grid />
+</UserControl>
