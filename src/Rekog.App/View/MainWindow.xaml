@@ -218,7 +218,6 @@
                         <TextBox x:Name="KleRawData"
                                  Height="100"
                                  AcceptsReturn="True"
-                                 AcceptsTab="True"
                                  FontFamily="Fira Code,Consolas"
                                  HorizontalScrollBarVisibility="Auto"
                                  TextChanged="KleRawData_TextChanged"
