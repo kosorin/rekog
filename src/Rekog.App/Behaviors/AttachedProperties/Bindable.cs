@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Rekog.App.AttachedProperties
+namespace Rekog.App.Behaviors.AttachedProperties
 {
     public static class Bindable
     {
