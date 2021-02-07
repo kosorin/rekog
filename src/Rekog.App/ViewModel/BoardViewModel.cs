@@ -67,7 +67,7 @@ namespace Rekog.App.ViewModel
         {
             switch (args.PropertyName)
             {
-            case nameof(KeyViewModel.RotatedBounds):
+            case nameof(KeyViewModel.ActualBounds):
                 UpdateCanvas();
                 break;
             }
@@ -82,10 +82,10 @@ namespace Rekog.App.ViewModel
                 return;
             }
 
-            var left = Keys.Min(x => x.RotatedBounds.Left);
-            var top = Keys.Min(x => x.RotatedBounds.Top);
-            var right = Keys.Max(x => x.RotatedBounds.Right);
-            var bottom = Keys.Max(x => x.RotatedBounds.Bottom);
+            var left = Keys.Min(x => x.ActualBounds.Left);
+            var top = Keys.Min(x => x.ActualBounds.Top);
+            var right = Keys.Max(x => x.ActualBounds.Right);
+            var bottom = Keys.Max(x => x.ActualBounds.Bottom);
 
             CanvasOffset = new Thickness(-left, -top, left, top);
             CanvasSize = new Size(right - left, bottom - top);

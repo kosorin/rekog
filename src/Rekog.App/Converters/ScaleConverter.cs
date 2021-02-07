@@ -20,6 +20,7 @@ namespace Rekog.App.Converters
             case double v: return ConvertDouble(v, scale, targetType);
             case Thickness v: return ConvertThickness(v, scale, targetType);
             case PointCollection v: return ConvertPointCollection(v, scale, targetType);
+            case Geometry v: return ConvertGeometry(v, scale, targetType);
             default: throw new NotSupportedException();
             }
         }
@@ -60,6 +61,30 @@ namespace Rekog.App.Converters
                 return new PointCollection(value
                     .Cast<Point>()
                     .Select(p => new Point(p.X * scale * Size, p.Y * scale * Size)));
+            }
+
+            throw new NotSupportedException();
+        }
+
+        private object ConvertGeometry(Geometry value, double scale, Type targetType)
+        {
+            if (targetType == typeof(Geometry))
+            {
+                var scaleTransform = new ScaleTransform(scale * Size, scale * Size);
+
+                var geometry = value.Clone();
+                if (geometry.Transform is Transform transform)
+                {
+                    var transformGroup = new TransformGroup();
+                    transformGroup.Children.Add(transform);
+                    transformGroup.Children.Add(scaleTransform);
+                    geometry.Transform = transformGroup;
+                }
+                else
+                {
+                    geometry.Transform = scaleTransform;
+                }
+                return geometry;
             }
 
             throw new NotSupportedException();

@@ -1,7 +1,7 @@
-﻿using Rekog.App.Geometry;
-using Rekog.App.Model.Kle;
+﻿using Rekog.App.Model.Kle;
 using System.Collections.Generic;
-using System.Linq;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Rekog.App.Model
 {
@@ -56,15 +56,15 @@ namespace Rekog.App.Model
             set => Set(ref _rotationOriginY, value);
         }
 
-        private List<Point>? _shape;
-        public List<Point>? Shape
+        private Geometry? _shape;
+        public Geometry? Shape
         {
             get => _shape;
             set => Set(ref _shape, value);
         }
 
-        private List<Point>? _steppedShape;
-        public List<Point>? SteppedShape
+        private Geometry? _steppedShape;
+        public Geometry? SteppedShape
         {
             get => _steppedShape;
             set => Set(ref _steppedShape, value);
@@ -100,6 +100,10 @@ namespace Rekog.App.Model
 
         public List<KeyLabelModel> Labels { get; set; } = new();
 
+        public Geometry GetShape()
+        {
+            return Shape ?? new RectangleGeometry(new Rect(0, 0, Width, Height));
+        }
 
         public static KeyModel FromKle(KleKey kleKey)
         {
@@ -114,8 +118,8 @@ namespace Rekog.App.Model
                 RotationOriginX = kleKey.RotationX - kleKey.X,
                 RotationOriginY = kleKey.RotationY - kleKey.Y,
 
-                Shape = kleKey.IsSimple ? null : PolygonToShape(kleKey.X, kleKey.Y, GetPolygon(kleKey)),
-                SteppedShape = kleKey.IsSimple || !kleKey.IsStepped ? null : PolygonToShape(kleKey.X, kleKey.Y, GetSteppedPolygon(kleKey)),
+                Shape = kleKey.IsSimple ? null : GetShape(kleKey),
+                SteppedShape = kleKey.IsSimple || !kleKey.IsStepped ? null : GetSteppedShape(kleKey),
 
                 Color = kleKey.Color,
                 IsHoming = kleKey.IsHoming,
@@ -142,48 +146,23 @@ namespace Rekog.App.Model
 
             return key;
 
-            static List<Point> PolygonToShape(double X, double Y, Polygon polygon)
+            static Geometry GetShape(KleKey kleKey)
             {
-                return polygon.Vertices
-                    .Select(p => new Point(p.X - X, p.Y - Y))
-                    .ToList();
-            }
-
-            static Polygon GetPolygon(KleKey kleKey)
-            {
-                var polygon1 = new Polygon(new Point[]
-                {
-                    new(kleKey.X, kleKey.Y),
-                    new(kleKey.X + kleKey.Width, kleKey.Y),
-                    new(kleKey.X + kleKey.Width, kleKey.Y + kleKey.Height),
-                    new(kleKey.X, kleKey.Y + kleKey.Height),
-                });
+                var geometry1 = new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height));
 
                 if (kleKey.IsSimple)
                 {
-                    return polygon1;
+                    return geometry1;
                 }
 
-                var polygon2 = new Polygon(new Point[]
-                {
-                    new(kleKey.X + kleKey.X2, kleKey.Y + kleKey.Y2),
-                    new(kleKey.X + kleKey.X2 + kleKey.Width2, kleKey.Y + kleKey.Y2),
-                    new(kleKey.X + kleKey.X2 + kleKey.Width2, kleKey.Y + kleKey.Y2 + kleKey.Height2),
-                    new(kleKey.X + kleKey.X2, kleKey.Y + kleKey.Y2 + kleKey.Height2),
-                });
+                var geometry2 = new RectangleGeometry(new Rect(kleKey.X2, kleKey.Y2, kleKey.Width2, kleKey.Height2));
 
-                return polygon1.Union(polygon2).First();
+                return new CombinedGeometry(GeometryCombineMode.Union, geometry1, geometry2).GetFlattenedPathGeometry();
             }
 
-            static Polygon GetSteppedPolygon(KleKey kleKey)
+            static Geometry GetSteppedShape(KleKey kleKey)
             {
-                return new Polygon(new Point[]
-                {
-                    new(kleKey.X, kleKey.Y),
-                    new(kleKey.X + kleKey.Width, kleKey.Y),
-                    new(kleKey.X + kleKey.Width, kleKey.Y + kleKey.Height),
-                    new(kleKey.X, kleKey.Y + kleKey.Height),
-                });
+                return new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height));
             }
         }
     }
