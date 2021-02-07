@@ -144,6 +144,10 @@ namespace Rekog.App.View
             {
                 StartDrag(args);
             }
+            else if (args.ChangedButton == MouseButton.Middle)
+            {
+                Center();
+            }
         }
 
         private void UserControl_PreviewMouseMove(object? sender, MouseEventArgs args)
