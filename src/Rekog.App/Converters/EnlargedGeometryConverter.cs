@@ -19,7 +19,7 @@ namespace Rekog.App.Converters
             {
                 return geometry;
             }
-            return geometry.GetEnlargedPathGeometry(size);
+            return geometry.GetEnlargedPathGeometry(size, true);
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

@@ -11,13 +11,17 @@ namespace Rekog.App.Extensions
 
         public static PathGeometry GetEnlargedPathGeometry(this Geometry geometry, double size, bool round)
         {
-            var widened = geometry.GetWidenedPathGeometry(new Pen(Brushes.Black, size * 2) { LineJoin = round ? PenLineJoin.Round : PenLineJoin.Miter }).GetOutlinedPathGeometry();
-            if (widened.Figures.Count == 2)
+            var pen = new Pen(Brushes.Black, size * 2)
             {
-                widened.Figures.RemoveAt(size > 0 ? 0 : 1);
+                LineJoin = round ? PenLineJoin.Round : PenLineJoin.Miter,
+            };
+            var widenedPathGeometry = geometry.GetWidenedPathGeometry(pen).GetOutlinedPathGeometry();
+            if (widenedPathGeometry.Figures.Count == 2)
+            {
+                widenedPathGeometry.Figures.RemoveAt(size > 0 ? 0 : 1);
             }
 
-            return widened.GetFlattenedPathGeometry();
+            return widenedPathGeometry.GetFlattenedPathGeometry();
         }
     }
 }

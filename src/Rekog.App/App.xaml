@@ -10,45 +10,45 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/Converters.xaml" />
                 <ResourceDictionary Source="Themes/Icons.xaml" />
+                <ResourceDictionary>
+                    <Style x:Key="GridSplitterBase" TargetType="{x:Type GridSplitter}">
+                        <Setter Property="Background" Value="{x:Static SystemColors.ControlBrush}" />
+                        <Setter Property="BorderBrush" Value="{x:Static SystemColors.ActiveBorderBrush}" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="Tag" Value="" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type GridSplitter}">
+                                    <Border Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}">
+                                        <TextBlock HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Text="{TemplateBinding Tag}" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <Style x:Key="HorizontalGridSplitter"
+                           BasedOn="{StaticResource GridSplitterBase}"
+                           TargetType="{x:Type GridSplitter}">
+                        <Setter Property="BorderThickness" Value="0,1" />
+                        <Setter Property="Tag" Value="····" />
+                    </Style>
+                    <Style x:Key="VerticalGridSplitter"
+                           BasedOn="{StaticResource GridSplitterBase}"
+                           TargetType="{x:Type GridSplitter}">
+                        <Setter Property="BorderThickness" Value="1,0" />
+                        <Setter Property="Tag" Value="⁞" />
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 
             <vm:MainViewModel x:Key="MainViewModel" />
 
-            <Style x:Key="GridSplitterBase" TargetType="{x:Type GridSplitter}">
-                <Setter Property="Background" Value="{x:Static SystemColors.ControlBrush}" />
-                <Setter Property="BorderBrush" Value="{x:Static SystemColors.ActiveBorderBrush}" />
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Tag" Value="" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type GridSplitter}">
-                            <Border Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}">
-                                <TextBlock HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"
-                                           Text="{TemplateBinding Tag}" />
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <Style x:Key="HorizontalGridSplitter"
-                   BasedOn="{StaticResource GridSplitterBase}"
-                   TargetType="{x:Type GridSplitter}">
-                <Setter Property="BorderThickness" Value="0,1" />
-                <Setter Property="Tag" Value="····" />
-            </Style>
-
-            <Style x:Key="VerticalGridSplitter"
-                   BasedOn="{StaticResource GridSplitterBase}"
-                   TargetType="{x:Type GridSplitter}">
-                <Setter Property="BorderThickness" Value="1,0" />
-                <Setter Property="Tag" Value="⁞" />
-            </Style>
-
             <clr:Double x:Key="UnitSize">96</clr:Double>
+
             <cx:ScaleConverter x:Key="ScaleConverter" Size="{StaticResource UnitSize}" />
 
         </ResourceDictionary>
