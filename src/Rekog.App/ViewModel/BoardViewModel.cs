@@ -30,6 +30,13 @@ namespace Rekog.App.ViewModel
             }
         }
 
+        private ObservableObjectCollection<KeyViewModel> _selectedKeys = new();
+        public ObservableObjectCollection<KeyViewModel> SelectedKeys
+        {
+            get => _selectedKeys;
+            private set => Set(ref _selectedKeys, value);
+        }
+
         private Thickness _canvasOffset;
         public Thickness CanvasOffset
         {
@@ -69,6 +76,22 @@ namespace Rekog.App.ViewModel
             {
             case nameof(KeyViewModel.ActualBounds):
                 UpdateCanvas();
+                break;
+            case nameof(KeyViewModel.IsSelected):
+                if (item is KeyViewModel key)
+                {
+                    if (key.IsSelected)
+                    {
+                        if (!SelectedKeys.Contains(key))
+                        {
+                            SelectedKeys.Add(key);
+                        }
+                    }
+                    else
+                    {
+                        SelectedKeys.Remove(key);
+                    }
+                }
                 break;
             }
         }
