@@ -8,6 +8,8 @@ using System.Windows.Markup;
 
 namespace Rekog.App.Converters
 {
+    // Source: https://stackoverflow.com/a/8392590/1933104
+    // TODO: Pass correct targetType through converters chain
     [ContentProperty(nameof(Converters))]
     [ContentWrapper(typeof(ValueConverterChainItemCollection))]
     public class ValueConverterChain : IValueConverter
