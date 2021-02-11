@@ -145,7 +145,7 @@
                     <DataTemplate DataType="{x:Type vm:KeyViewModel}">
                         <Canvas x:Name="Root"
                                 v:BoardView.Bounds="{Binding ActualBounds}"
-                                v:BoardView.IsSelected="{Binding IsSelected}"
+                                v:BoardView.IsSelected="{Binding IsSelected, Mode=TwoWay}"
                                 Background="{x:Null}">
                             <Path x:Name="MainPolygon"
                                   Data="{Binding Shape, Converter={StaticResource ScaleConverter}}"
