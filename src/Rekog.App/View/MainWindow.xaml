@@ -53,6 +53,39 @@
                                     [{rx:8,y:-1.5,x:0.75,w:2.25,h:1.25,w2:1.5,h2:2.5,x2:0.25,y2:-0.5},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@\n+\n+&quot;]
                                 </ComboBoxItem.Tag>
                             </ComboBoxItem>
+                            <ComboBoxItem Content="Klave rev1">
+                                <ComboBoxItem.Tag>
+                                    [{x:3,p:&quot;SA&quot;,a:7},&quot;&quot;,{x:9},&quot;&quot;],
+                                    [{y:-0.75,x:2},&quot;&quot;,{x:11},&quot;&quot;],
+                                    [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;],
+                                    [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;],
+                                    [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;],
+                                    [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;],
+                                    [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;],
+                                    [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;],
+                                    [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;],
+                                    [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;],
+                                    [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;],
+                                    [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;],
+                                    [{y:-0.85,x:4,n:true},&quot;&quot;,{x:7,n:true},&quot;&quot;],
+                                    [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;],
+                                    [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;],
+                                    [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;],
+                                    [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;],
+                                    [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;],
+                                    [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;],
+                                    [{y:-0.5,x:1},&quot;&quot;,{x:13},&quot;&quot;],
+                                    [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;],
+                                    [{rx:3.95,ry:9.4,y:-5,x:-1.5},&quot;&quot;,&quot;&quot;],
+                                    [{rx:13.05,y:-5,x:-0.5},&quot;&quot;,&quot;&quot;],
+                                    [{r:14,rx:3.95,y:-5,x:-0.5},&quot;&quot;],
+                                    [{r:28,y:-2,x:-0.5},&quot;&quot;,&quot;&quot;],
+                                    [{x:-0.5},&quot;&quot;,&quot;&quot;],
+                                    [{r:-28,rx:13.05,y:-6,x:-1.5},&quot;&quot;,&quot;&quot;],
+                                    [{x:-1.5},&quot;&quot;,&quot;&quot;],
+                                    [{r:-14,y:-1,x:-0.5},&quot;&quot;]
+                                </ComboBoxItem.Tag>
+                            </ComboBoxItem>
                             <ComboBoxItem Content="ErgoDox">
                                 <ComboBoxItem.Tag>
                                     [{x:3.5,a:7},&quot;&quot;,{x:10.5},&quot;&quot;],
