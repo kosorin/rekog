@@ -3,10 +3,10 @@
                     xmlns:cx="clr-namespace:Rekog.App.Converters">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <cx:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
+    <cx:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter" />
 
     <cx:MultConverter x:Key="MultConverter" />
-    <cx:NullToBooleanConverter x:Key="NullToBooleanConverter" />
-    <cx:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
-    <cx:EnumIsInConverter x:Key="EnumIsInConverter" />
+    <cx:ContainsConverter x:Key="ContainsConverter" />
 
 </ResourceDictionary>

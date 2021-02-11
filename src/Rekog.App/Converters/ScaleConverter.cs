@@ -11,7 +11,7 @@ namespace Rekog.App.Converters
     {
         public double Size { get; init; }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             var scale = parameter is double s ? s : 1d;
 
@@ -25,7 +25,7 @@ namespace Rekog.App.Converters
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }
