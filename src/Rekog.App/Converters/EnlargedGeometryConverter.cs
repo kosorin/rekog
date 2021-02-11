@@ -6,6 +6,7 @@ using System.Windows.Media;
 
 namespace Rekog.App.Converters
 {
+    [ValueConversion(typeof(Geometry), typeof(PathGeometry), ParameterType = typeof(double))]
     public class EnlargedGeometryConverter : IValueConverter
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)

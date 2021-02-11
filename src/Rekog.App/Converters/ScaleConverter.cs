@@ -7,6 +7,11 @@ using System.Windows.Media;
 
 namespace Rekog.App.Converters
 {
+    [ValueConversion(typeof(double), typeof(double), ParameterType = typeof(double))]
+    [ValueConversion(typeof(double), typeof(Thickness), ParameterType = typeof(double))]
+    [ValueConversion(typeof(Thickness), typeof(Thickness), ParameterType = typeof(double))]
+    [ValueConversion(typeof(PointCollection), typeof(PointCollection), ParameterType = typeof(double))]
+    [ValueConversion(typeof(Geometry), typeof(Geometry), ParameterType = typeof(double))]
     public class ScaleConverter : IValueConverter
     {
         public double Size { get; init; }
@@ -15,14 +20,14 @@ namespace Rekog.App.Converters
         {
             var scale = parameter is double s ? s : 1d;
 
-            switch (value)
+            return value switch
             {
-            case double v: return ConvertDouble(v, scale, targetType);
-            case Thickness v: return ConvertThickness(v, scale, targetType);
-            case PointCollection v: return ConvertPointCollection(v, scale, targetType);
-            case Geometry v: return ConvertGeometry(v, scale, targetType);
-            default: throw new NotSupportedException();
-            }
+                double v => ConvertDouble(v, scale, targetType),
+                Thickness v => ConvertThickness(v, scale, targetType),
+                PointCollection v => ConvertPointCollection(v, scale, targetType),
+                Geometry v => ConvertGeometry(v, scale, targetType),
+                _ => throw new NotSupportedException(),
+            };
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
