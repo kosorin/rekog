@@ -32,62 +32,43 @@ namespace Rekog.App.Converters
 
         private object ConvertDouble(double value, double scale, Type targetType)
         {
-            if (targetType == typeof(double))
-            {
-                return value * scale * Size;
-            }
-            else if (targetType == typeof(Thickness))
+            if (targetType == typeof(Thickness))
             {
                 return new Thickness(value * scale * Size);
             }
 
-            throw new NotSupportedException();
+            return value * scale * Size;
         }
 
         private object ConvertThickness(Thickness value, double scale, Type targetType)
         {
-            if (targetType == typeof(Thickness))
-            {
-                return new Thickness(value.Left * scale * Size, value.Top * scale * Size, value.Right * scale * Size, value.Bottom * scale * Size);
-            }
-
-            throw new NotSupportedException();
+            return new Thickness(value.Left * scale * Size, value.Top * scale * Size, value.Right * scale * Size, value.Bottom * scale * Size);
         }
 
         private object ConvertPointCollection(PointCollection value, double scale, Type targetType)
         {
-            if (targetType == typeof(PointCollection))
-            {
-                return new PointCollection(value
-                    .Cast<Point>()
-                    .Select(p => new Point(p.X * scale * Size, p.Y * scale * Size)));
-            }
-
-            throw new NotSupportedException();
+            return new PointCollection(value
+                .Cast<Point>()
+                .Select(p => new Point(p.X * scale * Size, p.Y * scale * Size)));
         }
 
         private object ConvertGeometry(Geometry value, double scale, Type targetType)
         {
-            if (targetType == typeof(Geometry))
+            var scaleTransform = new ScaleTransform(scale * Size, scale * Size);
+
+            var geometry = value.Clone();
+            if (geometry.Transform is Transform transform)
             {
-                var scaleTransform = new ScaleTransform(scale * Size, scale * Size);
-
-                var geometry = value.Clone();
-                if (geometry.Transform is Transform transform)
-                {
-                    var transformGroup = new TransformGroup();
-                    transformGroup.Children.Add(transform);
-                    transformGroup.Children.Add(scaleTransform);
-                    geometry.Transform = transformGroup;
-                }
-                else
-                {
-                    geometry.Transform = scaleTransform;
-                }
-                return geometry;
+                var transformGroup = new TransformGroup();
+                transformGroup.Children.Add(transform);
+                transformGroup.Children.Add(scaleTransform);
+                geometry.Transform = transformGroup;
             }
-
-            throw new NotSupportedException();
+            else
+            {
+                geometry.Transform = scaleTransform;
+            }
+            return geometry;
         }
     }
 }

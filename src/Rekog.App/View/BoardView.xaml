@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:a="clr-namespace:Rekog.App.Behaviors.AttachedProperties"
+             xmlns:cx="clr-namespace:Rekog.App.Converters"
              xmlns:m="clr-namespace:Rekog.App.Model"
              xmlns:mx="clr-namespace:Rekog.App.Markup"
              xmlns:v="clr-namespace:Rekog.App.View"
@@ -58,150 +59,161 @@
             <Border.RenderTransform>
                 <MatrixTransform x:Name="PlateMatrixTransform" />
             </Border.RenderTransform>
-            <ItemsControl x:Name="PlateCanvasContainer"
-                          Width="{Binding CanvasSize.Width, Converter={StaticResource ScaleConverter}}"
-                          Height="{Binding CanvasSize.Height, Converter={StaticResource ScaleConverter}}"
-                          v:BoardView.PlateCanvasOffset="{Binding CanvasOffset, Converter={StaticResource ScaleConverter}}"
-                          Focusable="False"
-                          ItemsSource="{Binding Keys}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas Margin="{Binding Path=(v:BoardView.PlateCanvasOffset), RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
-                            <Canvas.Effect>
-                                <DropShadowEffect BlurRadius="{Binding Source={mx:Double 0.5}, Converter={StaticResource ScaleConverter}, Mode=OneTime}"
-                                                  Opacity="0.25"
-                                                  ShadowDepth="0" />
-                            </Canvas.Effect>
-                        </Canvas>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="{x:Type ContentPresenter}">
-                        <Setter Property="Canvas.Left" Value="{Binding Position.X, Converter={StaticResource ScaleConverter}}" />
-                        <Setter Property="Canvas.Top" Value="{Binding Position.Y, Converter={StaticResource ScaleConverter}}" />
-                        <Setter Property="Width" Value="{Binding Size.Width, Converter={StaticResource ScaleConverter}}" />
-                        <Setter Property="Height" Value="{Binding Size.Height, Converter={StaticResource ScaleConverter}}" />
-                        <Setter Property="Opacity" Value="1" />
-                        <Setter Property="RenderTransform">
-                            <Setter.Value>
-                                <TransformGroup>
-                                    <RotateTransform Angle="{Binding RotateTransform.Angle}" CenterX="{Binding RotateTransform.CenterX, Converter={StaticResource ScaleConverter}}" CenterY="{Binding RotateTransform.CenterY, Converter={StaticResource ScaleConverter}}" />
-                                    <TranslateTransform a:Bindable.Y="0" Y="{Binding Path=(a:Bindable.Y), RelativeSource={RelativeSource Self}, Converter={StaticResource ScaleConverter}}" />
-                                </TransformGroup>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Panel.ZIndex" Value="0" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
-                                    <Condition Binding="{Binding State, RelativeSource={RelativeSource AncestorType={x:Type v:BoardView}}}" Value="{x:Static v:BoardState.ClickSelecting}" />
-                                </MultiDataTrigger.Conditions>
-                                <MultiDataTrigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <Int32Animation Storyboard.TargetProperty="(Panel.ZIndex)"
-                                                            To="-100"
-                                                            Duration="0:0:0.2">
-                                                <Int32Animation.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseOut" />
-                                                </Int32Animation.EasingFunction>
-                                            </Int32Animation>
-                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(a:Bindable.Y)"
-                                                             To="0.1"
-                                                             Duration="0:0:0.2">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </MultiDataTrigger.EnterActions>
-                                <MultiDataTrigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <Int32Animation Storyboard.TargetProperty="(Panel.ZIndex)"
-                                                            To="0"
-                                                            Duration="0:0:0.2">
-                                                <Int32Animation.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseOut" />
-                                                </Int32Animation.EasingFunction>
-                                            </Int32Animation>
-                                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(a:Bindable.Y)"
-                                                             To="0"
-                                                             Duration="0:0:0.2">
-                                                <DoubleAnimation.EasingFunction>
-                                                    <QuarticEase EasingMode="EaseOut" />
-                                                </DoubleAnimation.EasingFunction>
-                                            </DoubleAnimation>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </MultiDataTrigger.ExitActions>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type vm:KeyViewModel}">
-                        <Canvas x:Name="Root"
-                                v:BoardView.Bounds="{Binding ActualBounds}"
-                                v:BoardView.IsSelected="{Binding IsSelected, Mode=TwoWay}"
-                                Background="{x:Null}">
-                            <Path x:Name="MainPolygon"
-                                  Data="{Binding Shape, Converter={StaticResource ScaleConverter}}"
-                                  Stroke="#666"
-                                  StrokeThickness="{Binding Source={mx:Double 0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}">
-                                <Path.Style>
-                                    <Style TargetType="{x:Type Path}">
-                                        <Setter Property="Fill" Value="#EEE " />
-                                        <Style.Triggers>
-                                            <MultiDataTrigger>
-                                                <MultiDataTrigger.Conditions>
-                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
-                                                    <Condition Value="True">
-                                                        <Condition.Binding>
-                                                            <MultiBinding Converter="{StaticResource ContainsConverter}">
-                                                                <Binding Path="State" RelativeSource="{RelativeSource AncestorType={x:Type v:BoardView}}" />
-                                                                <Binding Source="{x:Static v:BoardState.None}" />
-                                                                <Binding Source="{x:Static v:BoardState.ClickSelecting}" />
-                                                            </MultiBinding>
-                                                        </Condition.Binding>
-                                                    </Condition>
-                                                </MultiDataTrigger.Conditions>
-                                                <Setter Property="Fill" Value="#DDD" />
-                                            </MultiDataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Path.Style>
-                            </Path>
-                            <Path Data="{Binding Data, ElementName=MainPolygon}"
-                                  IsHitTestVisible="False"
-                                  Opacity="0.2"
-                                  Stroke="{Binding Stroke, ElementName=MainPolygon}"
-                                  StrokeThickness="{Binding StrokeThickness, ElementName=MainPolygon}">
-                                <Path.Style>
-                                    <Style TargetType="{x:Type Path}">
-                                        <Setter Property="Fill" Value="#FF00ED20" />
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=(v:BoardView.IsSelected), ElementName=Root}" Value="True">
-                                                <Setter Property="Visibility" Value="Visible" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=(v:BoardView.IsPreviewSelected), ElementName=Root}" Value="True">
-                                                <Setter Property="Fill" Value="#FFDB4B4B" />
-                                                <Setter Property="Visibility" Value="Visible" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Path.Style>
-                            </Path>
-                            <Grid Width="{Binding Size.Width, Converter={StaticResource ScaleConverter}}"
-                                  Height="{Binding Size.Height, Converter={StaticResource ScaleConverter}}"
-                                  IsHitTestVisible="False" />
-                        </Canvas>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <Grid>
+                <ItemsControl x:Name="PlateCanvasContainer"
+                              Width="{Binding CanvasSize.Width, Converter={StaticResource ScaleConverter}}"
+                              Height="{Binding CanvasSize.Height, Converter={StaticResource ScaleConverter}}"
+                              v:BoardView.PlateCanvasOffset="{Binding CanvasOffset, Converter={StaticResource ScaleConverter}}"
+                              Focusable="False"
+                              ItemsSource="{Binding Keys}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas Margin="{Binding Path=(v:BoardView.PlateCanvasOffset), RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
+                                <Canvas.Effect>
+                                    <DropShadowEffect BlurRadius="{Binding Source={mx:Double 0.5}, Converter={StaticResource ScaleConverter}, Mode=OneTime}"
+                                                      Opacity="0.25"
+                                                      ShadowDepth="0" />
+                                </Canvas.Effect>
+                            </Canvas>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="{x:Type ContentPresenter}">
+                            <Setter Property="Canvas.Left" Value="{Binding Position.X, Converter={StaticResource ScaleConverter}}" />
+                            <Setter Property="Canvas.Top" Value="{Binding Position.Y, Converter={StaticResource ScaleConverter}}" />
+                            <Setter Property="Width" Value="{Binding Size.Width, Converter={StaticResource ScaleConverter}}" />
+                            <Setter Property="Height" Value="{Binding Size.Height, Converter={StaticResource ScaleConverter}}" />
+                            <Setter Property="Opacity" Value="1" />
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="{Binding RotateTransform.Angle}" CenterX="{Binding RotateTransform.CenterX, Converter={StaticResource ScaleConverter}}" CenterY="{Binding RotateTransform.CenterY, Converter={StaticResource ScaleConverter}}" />
+                                        <TranslateTransform a:Bindable.Y="0" Y="{Binding Path=(a:Bindable.Y), RelativeSource={RelativeSource Self}, Converter={StaticResource ScaleConverter}}" />
+                                    </TransformGroup>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Panel.ZIndex" Value="0" />
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                        <Condition Binding="{Binding State, RelativeSource={RelativeSource AncestorType={x:Type v:BoardView}}}" Value="{x:Static v:BoardState.ClickSelecting}" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <Int32Animation Storyboard.TargetProperty="(Panel.ZIndex)"
+                                                                To="-100"
+                                                                Duration="0:0:0.2">
+                                                    <Int32Animation.EasingFunction>
+                                                        <QuarticEase EasingMode="EaseOut" />
+                                                    </Int32Animation.EasingFunction>
+                                                </Int32Animation>
+                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(a:Bindable.Y)"
+                                                                 To="0.1"
+                                                                 Duration="0:0:0.2">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <QuarticEase EasingMode="EaseOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiDataTrigger.EnterActions>
+                                    <MultiDataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <Int32Animation Storyboard.TargetProperty="(Panel.ZIndex)"
+                                                                To="0"
+                                                                Duration="0:0:0.2">
+                                                    <Int32Animation.EasingFunction>
+                                                        <QuarticEase EasingMode="EaseOut" />
+                                                    </Int32Animation.EasingFunction>
+                                                </Int32Animation>
+                                                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(a:Bindable.Y)"
+                                                                 To="0"
+                                                                 Duration="0:0:0.2">
+                                                    <DoubleAnimation.EasingFunction>
+                                                        <QuarticEase EasingMode="EaseOut" />
+                                                    </DoubleAnimation.EasingFunction>
+                                                </DoubleAnimation>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiDataTrigger.ExitActions>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vm:KeyViewModel}">
+                            <Canvas x:Name="Root"
+                                    v:BoardView.Bounds="{Binding ActualBounds}"
+                                    v:BoardView.IsSelected="{Binding IsSelected, Mode=TwoWay}"
+                                    Background="{x:Null}">
+                                <Path x:Name="MainPolygon"
+                                      Data="{Binding Shape, Converter={StaticResource ScaleConverter}}"
+                                      Stroke="#666"
+                                      StrokeThickness="{Binding Source={mx:Double 0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}">
+                                    <Path.Style>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="Fill" Value="#EEE " />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                                        <Condition Value="True">
+                                                            <Condition.Binding>
+                                                                <MultiBinding Converter="{StaticResource ContainsConverter}">
+                                                                    <Binding Path="State" RelativeSource="{RelativeSource AncestorType={x:Type v:BoardView}}" />
+                                                                    <Binding Source="{x:Static v:BoardState.None}" />
+                                                                    <Binding Source="{x:Static v:BoardState.ClickSelecting}" />
+                                                                </MultiBinding>
+                                                            </Condition.Binding>
+                                                        </Condition>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Fill" Value="#DDD" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                                <Path IsHitTestVisible="False"
+                                      Opacity="0.25"
+                                      StrokeThickness="{Binding Source={mx:Double 0.09}, Converter={StaticResource ScaleConverter}, Mode=OneTime}">
+                                    <Path.Data>
+                                        <Binding Path="Shape">
+                                            <Binding.Converter>
+                                                <cx:ValueConverterChain>
+                                                    <cx:ValueConverterChainItem Converter="{StaticResource ScaleConverter}" />
+                                                    <cx:ValueConverterChainItem Converter="{StaticResource EnlargedGeometryConverter}" ConverterParameter="{Binding Source={mx:Double -0.06}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
+                                                </cx:ValueConverterChain>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Path.Data>
+                                    <Path.Style>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="Stroke" Value="#FFDB4B4B" />
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=(v:BoardView.IsSelected), ElementName=Root}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=(v:BoardView.IsPreviewSelected), ElementName=Root}" Value="True">
+                                                    <Setter Property="Stroke" Value="#FF0012C5" />
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                                <Grid Width="{Binding Size.Width, Converter={StaticResource ScaleConverter}}"
+                                      Height="{Binding Size.Height, Converter={StaticResource ScaleConverter}}"
+                                      IsHitTestVisible="False" />
+                            </Canvas>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Canvas IsHitTestVisible="False" />
+            </Grid>
         </Border>
         <Rectangle x:Name="SelectionBox"
                    IsHitTestVisible="False"
