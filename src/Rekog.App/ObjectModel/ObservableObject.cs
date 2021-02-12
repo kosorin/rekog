@@ -6,7 +6,13 @@ namespace Rekog.App.ObjectModel
 {
     public abstract class ObservableObject : IObservableObject
     {
+        public event PropertyChangingEventHandler? PropertyChanging;
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanging(string? propertyName)
+        {
+            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
+        }
 
         protected virtual void OnPropertyChanged(string? propertyName)
         {
@@ -21,6 +27,7 @@ namespace Rekog.App.ObjectModel
                 return false;
             }
 
+            OnPropertyChanging(propertyName);
             field = value;
             OnPropertyChanged(propertyName);
 
@@ -40,6 +47,7 @@ namespace Rekog.App.ObjectModel
 
             var oldValue = field;
 
+            OnPropertyChanging(propertyName);
             field = value;
             OnPropertyChanged(propertyName);
 

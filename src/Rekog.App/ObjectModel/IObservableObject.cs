@@ -2,7 +2,7 @@
 
 namespace Rekog.App.ObjectModel
 {
-    public interface IObservableObject : INotifyPropertyChanged
+    public interface IObservableObject : INotifyPropertyChanging, INotifyPropertyChanged
     {
     }
 }
