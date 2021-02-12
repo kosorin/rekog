@@ -27,21 +27,21 @@ namespace Rekog.App.ViewModel
         public Point Position
         {
             get => _position;
-            set => Set(ref _position, value);
+            private set => Set(ref _position, value);
         }
 
         private Size _size;
         public Size Size
         {
             get => _size;
-            set => Set(ref _size, value);
+            private set => Set(ref _size, value);
         }
 
         private RotateTransform _rotateTransform = EmptyRotateTransform;
         public RotateTransform RotateTransform
         {
             get => _rotateTransform;
-            set => Set(ref _rotateTransform, value);
+            private set => Set(ref _rotateTransform, value);
         }
 
         private Rect _bounds;
@@ -62,7 +62,7 @@ namespace Rekog.App.ViewModel
         public Geometry SteppedShape
         {
             get => _steppedShape;
-            set => Set(ref _steppedShape, value);
+            private set => Set(ref _steppedShape, value);
         }
 
         private Rect _actualBounds;
