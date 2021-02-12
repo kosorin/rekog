@@ -94,6 +94,7 @@ namespace Rekog.App.ViewModel
             case nameof(KeyModel.RotationOriginY):
             case nameof(KeyModel.Shape):
             case nameof(KeyModel.SteppedShape):
+            case nameof(KeyModel.IsStepped):
                 UpdateLayout();
                 break;
             }
