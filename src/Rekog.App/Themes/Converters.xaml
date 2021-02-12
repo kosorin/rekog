@@ -8,6 +8,7 @@
 
     <cx:MultConverter x:Key="MultConverter" />
     <cx:ContainsConverter x:Key="ContainsConverter" />
-    <cx:EnlargedGeometryConverter x:Key="EnlargedGeometryConverter" />
+    <cx:EnlargedGeometryConverter x:Key="EnlargedGeometryConverter" Round="False" />
+    <cx:EnlargedGeometryConverter x:Key="EnlargedRoundGeometryConverter" Round="True" />
 
 </ResourceDictionary>

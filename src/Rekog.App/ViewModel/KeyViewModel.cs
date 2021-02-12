@@ -61,6 +61,13 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _shape, value);
         }
 
+        private Geometry _steppedShape = EmptyGeometry;
+        public Geometry SteppedShape
+        {
+            get => _steppedShape;
+            set => Set(ref _steppedShape, value);
+        }
+
         private Rect _actualBounds;
         public Rect ActualBounds
         {
@@ -96,6 +103,7 @@ namespace Rekog.App.ViewModel
             case nameof(KeyModel.RotationOriginX):
             case nameof(KeyModel.RotationOriginY):
             case nameof(KeyModel.Shape):
+            case nameof(KeyModel.SteppedShape):
                 UpdateLayout();
                 break;
             }
@@ -112,11 +120,11 @@ namespace Rekog.App.ViewModel
             Size = new Size(Model.Width, Model.Height);
             RotateTransform = new RotateTransform(Model.RotationAngle, Model.RotationOriginX, Model.RotationOriginY);
 
-            var shape = Model.GetShape().Clone();
-            Shape = shape;
+            Shape = Model.GetShape().Clone();
+            SteppedShape = Model.GetSteppedShape().Clone();
             Bounds = Shape.Bounds;
 
-            var actualShape = shape.Clone();
+            var actualShape = Model.GetShape().Clone();
             var actualTransform = new TransformGroup();
             actualTransform.Children.Add(RotateTransform);
             actualTransform.Children.Add(new TranslateTransform(Position.X, Position.Y));

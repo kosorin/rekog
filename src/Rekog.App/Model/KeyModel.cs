@@ -98,11 +98,32 @@ namespace Rekog.App.Model
             set => Set(ref _isGhosted, value);
         }
 
+        private bool _isStepped;
+        public bool IsStepped
+        {
+            get => _isStepped;
+            set => Set(ref _isStepped, value);
+        }
+
         public List<KeyLabelModel> Labels { get; set; } = new();
 
         public Geometry GetShape()
         {
-            return Shape ?? new RectangleGeometry(new Rect(0, 0, Width, Height));
+            return Shape ?? GetDefaultShape();
+        }
+
+        public Geometry GetSteppedShape()
+        {
+            if (!IsStepped)
+            {
+                return GetShape();
+            }
+            return SteppedShape ?? GetDefaultShape();
+        }
+
+        private RectangleGeometry GetDefaultShape()
+        {
+            return new RectangleGeometry(new Rect(0, 0, Width, Height));
         }
 
         public static KeyModel FromKle(KleKey kleKey)
@@ -119,12 +140,13 @@ namespace Rekog.App.Model
                 RotationOriginY = kleKey.RotationY - kleKey.Y,
 
                 Shape = kleKey.IsSimple ? null : GetShape(kleKey),
-                SteppedShape = kleKey.IsSimple || !kleKey.IsStepped ? null : GetSteppedShape(kleKey),
+                SteppedShape = kleKey.IsSimple ? null : GetSteppedShape(kleKey),
 
                 Color = kleKey.Color,
                 IsHoming = kleKey.IsHoming,
                 IsDecal = kleKey.IsDecal,
                 IsGhosted = kleKey.IsGhosted,
+                IsStepped = kleKey.IsStepped,
             };
 
             for (var i = 0; i < 9; i++)

@@ -39,24 +39,31 @@
     <UserControl.Resources>
         <cx:ValueConverterChain x:Key="KeyDataConverter">
             <cx:ValueConverterChainItem Converter="{StaticResource ScaleConverter}" />
-            <cx:ValueConverterChainItem Converter="{StaticResource EnlargedGeometryConverter}" ConverterParameter="{Binding Source={mx:Double -0.10}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
-            <cx:ValueConverterChainItem Converter="{StaticResource EnlargedGeometryConverter}" ConverterParameter="{Binding Source={mx:Double 0.06}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
+            <cx:ValueConverterChainItem Converter="{StaticResource EnlargedRoundGeometryConverter}" ConverterParameter="{Binding Source={mx:Double -0.10}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
+            <cx:ValueConverterChainItem Converter="{StaticResource EnlargedRoundGeometryConverter}" ConverterParameter="{Binding Source={mx:Double 0.08}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
         </cx:ValueConverterChain>
+        <cx:ValueConverterChain x:Key="KeySteppedDataConverter">
+            <cx:ValueConverterChainItem Converter="{StaticResource ScaleConverter}" />
+            <cx:ValueConverterChainItem Converter="{StaticResource EnlargedGeometryConverter}" ConverterParameter="{Binding Source={mx:Double -0.08}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
+            <cx:ValueConverterChainItem Converter="{StaticResource EnlargedRoundGeometryConverter}" ConverterParameter="{Binding Source={mx:Double -0.10}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
+            <cx:ValueConverterChainItem Converter="{StaticResource EnlargedRoundGeometryConverter}" ConverterParameter="{Binding Source={mx:Double 0.08}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
+        </cx:ValueConverterChain>
+        <TranslateTransform x:Key="KeySteppedTransform" Y="{Binding Source={mx:Double -0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
     </UserControl.Resources>
+    <d:UserControl.DataContext>
+        <vm:BoardViewModel>
+            <vm:BoardViewModel.Model>
+                <m:BoardModel>
+                    <m:BoardModel.Keys>
+                        <m:KeyModel />
+                    </m:BoardModel.Keys>
+                </m:BoardModel>
+            </vm:BoardViewModel.Model>
+        </vm:BoardViewModel>
+    </d:UserControl.DataContext>
     <Canvas x:Name="PlateContainer"
             ClipToBounds="True"
             SizeChanged="PlateContainer_SizeChanged">
-        <d:Canvas.DataContext>
-            <vm:BoardViewModel>
-                <vm:BoardViewModel.Model>
-                    <m:BoardModel>
-                        <m:BoardModel.Keys>
-                            <m:KeyModel />
-                        </m:BoardModel.Keys>
-                    </m:BoardModel>
-                </vm:BoardViewModel.Model>
-            </vm:BoardViewModel>
-        </d:Canvas.DataContext>
         <Border x:Name="Plate"
                 Padding="{Binding Source={mx:Double 0.5}, Converter={StaticResource ScaleConverter}, Mode=OneTime}"
                 HorizontalAlignment="Center"
@@ -150,26 +157,23 @@
                                     v:BoardView.Bounds="{Binding ActualBounds}"
                                     v:BoardView.IsSelected="{Binding IsSelected, Mode=TwoWay}"
                                     Background="{x:Null}">
-                                <Path x:Name="MainPolygon"
+                                <Path x:Name="MainPath"
+                                      Clip="{Binding Data, RelativeSource={RelativeSource Self}}"
                                       Data="{Binding Shape, Converter={StaticResource KeyDataConverter}}"
                                       StrokeThickness="{Binding Source={mx:Double 0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}">
                                     <Path.Resources>
-                                        <Color x:Key="DefaultColor">#999</Color>
-                                        <Color x:Key="HighlightColor">#e66</Color>
+                                        <SolidColorBrush x:Key="DefaultStrokeBrush">#999</SolidColorBrush>
+                                        <SolidColorBrush x:Key="HighlightStrokeBrush">#e66</SolidColorBrush>
                                     </Path.Resources>
                                     <Path.Style>
                                         <Style TargetType="{x:Type Path}">
-                                            <Setter Property="Fill" Value="#EEE " />
-                                            <Setter Property="Stroke">
-                                                <Setter.Value>
-                                                    <SolidColorBrush Color="{StaticResource DefaultColor}" />
-                                                </Setter.Value>
-                                            </Setter>
+                                            <Setter Property="Fill" Value="#EEE" />
+                                            <Setter Property="Stroke" Value="{StaticResource DefaultStrokeBrush}" />
                                             <Setter Property="StrokeDashArray" Value="{x:Null}" />
                                             <Style.Triggers>
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="True" />
+                                                        <Condition Binding="{Binding IsMouseOver, ElementName=Root}" Value="True" />
                                                         <Condition Value="True">
                                                             <Condition.Binding>
                                                                 <MultiBinding Converter="{StaticResource ContainsConverter}">
@@ -183,40 +187,60 @@
                                                     <Setter Property="Fill" Value="#DDD" />
                                                 </MultiDataTrigger>
                                                 <DataTrigger Binding="{Binding Path=(v:BoardView.IsSelected), ElementName=Root}" Value="True">
-                                                    <Setter Property="Stroke">
-                                                        <Setter.Value>
-                                                            <SolidColorBrush Color="{StaticResource HighlightColor}" />
-                                                        </Setter.Value>
-                                                    </Setter>
+                                                    <Setter Property="Stroke" Value="{StaticResource HighlightStrokeBrush}" />
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding Path=(v:BoardView.IsPreviewSelected), ElementName=Root}" Value="True">
-                                                    <Setter Property="Stroke">
-                                                        <Setter.Value>
-                                                            <LinearGradientBrush MappingMode="Absolute" SpreadMethod="Reflect" StartPoint="0,0" EndPoint="1,1">
-                                                                <LinearGradientBrush.RelativeTransform>
-                                                                    <ScaleTransform CenterX="0.5"
-                                                                                    CenterY="0.5"
-                                                                                    ScaleX="{Binding Source={mx:Double 0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}"
-                                                                                    ScaleY="{Binding Source={mx:Double 0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
-                                                                </LinearGradientBrush.RelativeTransform>
-                                                                <GradientStop Offset="0.5" Color="{StaticResource HighlightColor}" />
-                                                                <GradientStop Offset="0.5" Color="{StaticResource DefaultColor}" />
-                                                            </LinearGradientBrush>
-                                                        </Setter.Value>
-                                                    </Setter>
+                                                    <Setter Property="Stroke" Value="{StaticResource HighlightStrokeBrush}" />
+                                                    <Setter Property="StrokeDashArray" Value="1,1" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </Path.Style>
                                 </Path>
-                                <Grid Width="{Binding Size.Width, Converter={StaticResource ScaleConverter}}"
-                                      Height="{Binding Size.Height, Converter={StaticResource ScaleConverter}}"
-                                      IsHitTestVisible="False" />
+                                <Path x:Name="SteppedPath"
+                                      Clip="{Binding Data, RelativeSource={RelativeSource Self}}"
+                                      Data="{Binding SteppedShape, Converter={StaticResource KeySteppedDataConverter}}"
+                                      RenderTransform="{StaticResource KeySteppedTransform}"
+                                      RenderTransformOrigin="0.5,0.5"
+                                      StrokeThickness="{Binding Source={mx:Double 0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}">
+                                    <Path.Style>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Setter Property="Fill" Value="#FFF" />
+                                            <Setter Property="Stroke" Value="#DDD" />
+                                            <Style.Triggers>
+                                                <MultiDataTrigger>
+                                                    <MultiDataTrigger.Conditions>
+                                                        <Condition Binding="{Binding IsMouseOver, ElementName=Root}" Value="True" />
+                                                        <Condition Value="True">
+                                                            <Condition.Binding>
+                                                                <MultiBinding Converter="{StaticResource ContainsConverter}">
+                                                                    <Binding Path="State" RelativeSource="{RelativeSource AncestorType={x:Type v:BoardView}}" />
+                                                                    <Binding Source="{x:Static v:BoardState.None}" />
+                                                                    <Binding Source="{x:Static v:BoardState.ClickSelecting}" />
+                                                                </MultiBinding>
+                                                            </Condition.Binding>
+                                                        </Condition>
+                                                    </MultiDataTrigger.Conditions>
+                                                    <Setter Property="Fill" Value="#F0F0F0" />
+                                                    <Setter Property="Stroke" Value="#D3D3D3" />
+                                                </MultiDataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                                <Grid Canvas.Left="{Binding Data.Bounds.X, ElementName=SteppedPath}"
+                                      Canvas.Top="{Binding Data.Bounds.Y, ElementName=SteppedPath}"
+                                      Width="{Binding Data.Bounds.Width, ElementName=SteppedPath}"
+                                      Height="{Binding Data.Bounds.Height, ElementName=SteppedPath}"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Stretch"
+                                      RenderTransform="{StaticResource KeySteppedTransform}">
+                                    <ContentPresenter Content="{Binding}" Visibility="Collapsed" />
+                                </Grid>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Canvas IsHitTestVisible="False" />
             </Grid>
         </Border>
         <Rectangle x:Name="SelectionBox"
