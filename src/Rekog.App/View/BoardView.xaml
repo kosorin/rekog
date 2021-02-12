@@ -9,8 +9,8 @@
              xmlns:mx="clr-namespace:Rekog.App.Markup"
              xmlns:v="clr-namespace:Rekog.App.View"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
-             d:Height="200"
-             d:Width="200"
+             d:Height="480"
+             d:Width="240"
              Background="#D0D0D0"
              Focusable="True"
              IsTabStop="True"
@@ -51,15 +51,22 @@
         <TranslateTransform x:Key="KeySteppedTransform" Y="{Binding Source={mx:Double -0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
     </UserControl.Resources>
     <d:UserControl.DataContext>
-        <vm:BoardViewModel>
-            <vm:BoardViewModel.Model>
+        <ObjectDataProvider ObjectType="{x:Type vm:BoardViewModel}">
+            <ObjectDataProvider.ConstructorParameters>
                 <m:BoardModel>
                     <m:BoardModel.Keys>
-                        <m:KeyModel />
+                        <m:KeyModel Y="1" />
+                        <m:KeyModel Width="1.5" Y="2" />
+                        <m:KeyModel Width="1.5"
+                                    RotationAngle="30"
+                                    RotationOriginX="0.25"
+                                    Shape="M 0,0 1,0 1,1 0.75,2 0.5,1 z"
+                                    X="0.5"
+                                    Y="3.5" />
                     </m:BoardModel.Keys>
                 </m:BoardModel>
-            </vm:BoardViewModel.Model>
-        </vm:BoardViewModel>
+            </ObjectDataProvider.ConstructorParameters>
+        </ObjectDataProvider>
     </d:UserControl.DataContext>
     <Canvas x:Name="PlateContainer"
             ClipToBounds="True"

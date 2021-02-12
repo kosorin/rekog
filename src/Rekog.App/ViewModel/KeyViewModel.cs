@@ -10,13 +10,10 @@ namespace Rekog.App.ViewModel
         private static readonly RotateTransform EmptyRotateTransform = new RotateTransform();
         private static readonly Geometry EmptyGeometry = new PathGeometry();
 
-        public KeyViewModel()
-        {
-        }
-
-        public KeyViewModel(KeyModel? model)
+        public KeyViewModel(KeyModel model)
             : base(model)
         {
+            UpdateLayout();
         }
 
         private bool _isSelected;
@@ -82,13 +79,6 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _actualShape, value);
         }
 
-        protected override void OnModelChanged(KeyModel? oldModel, KeyModel? newModel)
-        {
-            base.OnModelChanged(oldModel, newModel);
-
-            UpdateLayout();
-        }
-
         protected override void OnModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
         {
             base.OnModelPropertyChanged(sender, args);
@@ -111,11 +101,6 @@ namespace Rekog.App.ViewModel
 
         private void UpdateLayout()
         {
-            if (Model == null)
-            {
-                return;
-            }
-
             Position = new Point(Model.X, Model.Y);
             Size = new Size(Model.Width, Model.Height);
             RotateTransform = new RotateTransform(Model.RotationAngle, Model.RotationOriginX, Model.RotationOriginY);

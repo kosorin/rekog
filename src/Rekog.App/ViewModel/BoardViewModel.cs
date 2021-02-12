@@ -1,6 +1,7 @@
 ﻿using Rekog.App.Model;
 using Rekog.App.ObjectModel;
 using System.Collections;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 
@@ -8,13 +9,11 @@ namespace Rekog.App.ViewModel
 {
     public class BoardViewModel : ViewModelBase<BoardModel>
     {
-        public BoardViewModel()
-        {
-        }
-
-        public BoardViewModel(BoardModel? model)
+        public BoardViewModel(BoardModel model)
             : base(model)
         {
+            UpdateKeys();
+            Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
         }
 
         private ObservableObjectCollection<KeyViewModel> _keys = new();
@@ -51,17 +50,52 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _canvasSize, value);
         }
 
-        protected override void OnModelChanged(BoardModel? oldModel, BoardModel? newModel)
+        protected override void OnModelPropertyChanging(object? sender, PropertyChangingEventArgs args)
         {
-            base.OnModelChanged(oldModel, newModel);
+            base.OnModelPropertyChanging(sender, args);
 
-            if (newModel?.Keys != null)
+            switch (args.PropertyName)
             {
-                Keys = new(newModel.Keys.Select(x => new KeyViewModel(x)));
+            case nameof(BoardModel.Keys):
+                Model.Keys.CollectionItemChanged -= ModelKeys_CollectionItemChanged;
+                break;
             }
-            else
+        }
+
+        protected override void OnModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
+        {
+            base.OnModelPropertyChanged(sender, args);
+
+            switch (args.PropertyName)
             {
-                Keys = new();
+            case nameof(BoardModel.Keys):
+                UpdateKeys();
+                Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
+                break;
+            }
+        }
+
+        private void UpdateKeys()
+        {
+            Keys = new(Model.Keys.Select(x => new KeyViewModel(x)));
+        }
+
+        private void ModelKeys_CollectionItemChanged(IObservableObjectCollection collection, CollectionItemChangedEventArgs args)
+        {
+            foreach (KeyModel oldKeyModel in args.OldItems)
+            {
+                for (var i = Keys.Count - 1; i >= 0; i--)
+                {
+                    if (Keys[i].Model == oldKeyModel)
+                    {
+                        Keys.RemoveAt(i);
+                    }
+                }
+            }
+
+            foreach (KeyModel newKeyModel in args.NewItems)
+            {
+                Keys.Add(new KeyViewModel(newKeyModel));
             }
         }
 
