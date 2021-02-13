@@ -59,7 +59,8 @@
                         <m:KeyModel Width="1.5" Y="2" />
                         <m:KeyModel Width="1.5"
                                     RotationAngle="30"
-                                    RotationOriginX="0.25"
+                                    RotationOriginX="0.75"
+                                    RotationOriginY="3.5"
                                     Shape="M 0,0 1,0 1,1 0.75,2 0.5,1 z"
                                     X="0.5"
                                     Y="3.5" />

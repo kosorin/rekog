@@ -104,7 +104,7 @@ namespace Rekog.App.ViewModel
         {
             Position = new Point(Model.X, Model.Y);
             Size = new Size(Model.Width, Model.Height);
-            RotateTransform = new RotateTransform(Model.RotationAngle, Model.RotationOriginX, Model.RotationOriginY);
+            RotateTransform = new RotateTransform(Model.RotationAngle, Model.RotationOriginX - Model.X, Model.RotationOriginY - Model.Y);
 
             Shape = Model.GetShape().Clone();
             SteppedShape = Model.GetSteppedShape().Clone();

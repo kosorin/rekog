@@ -136,8 +136,8 @@ namespace Rekog.App.Model
                 Height = kleKey.Height,
 
                 RotationAngle = kleKey.RotationAngle,
-                RotationOriginX = kleKey.RotationX - kleKey.X,
-                RotationOriginY = kleKey.RotationY - kleKey.Y,
+                RotationOriginX = kleKey.RotationX,
+                RotationOriginY = kleKey.RotationY,
 
                 Shape = kleKey.IsSimple ? null : GetShape(kleKey),
                 SteppedShape = kleKey.IsSimple ? null : GetSteppedShape(kleKey),
