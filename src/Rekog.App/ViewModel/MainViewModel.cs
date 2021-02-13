@@ -13,8 +13,8 @@ namespace Rekog.App.ViewModel
             ParseKleRawDataCommand = new DelegateCommand<string>(ParseKleRawData);
         }
 
-        private BoardViewModel? _board;
-        public BoardViewModel? Board
+        private BoardViewModel _board = new(new());
+        public BoardViewModel Board
         {
             get => _board;
             set => Set(ref _board, value);
@@ -25,11 +25,7 @@ namespace Rekog.App.ViewModel
         private void ParseKleRawData(string? kleRawData)
         {
             var kleKeys = Parse(kleRawData);
-            if (kleKeys == null)
-            {
-                Board = null;
-            }
-            else
+            if (kleKeys != null)
             {
                 var boardModel = new BoardModel
                 {
@@ -42,7 +38,7 @@ namespace Rekog.App.ViewModel
             {
                 if (string.IsNullOrWhiteSpace(kleRawData))
                 {
-                    return null;
+                    return new();
                 }
                 else
                 {
