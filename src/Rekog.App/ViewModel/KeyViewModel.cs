@@ -106,11 +106,11 @@ namespace Rekog.App.ViewModel
             Size = new Size(Model.Width, Model.Height);
             RotateTransform = new RotateTransform(Model.RotationAngle, Model.RotationOriginX - Model.X, Model.RotationOriginY - Model.Y);
 
-            Shape = Model.GetShape().Clone();
-            SteppedShape = Model.GetSteppedShape().Clone();
+            Shape = Model.GetShapeGeometry();
+            SteppedShape = Model.GetSteppedShapeGeometry();
             Bounds = Shape.Bounds;
 
-            var actualShape = Model.GetShape().Clone();
+            var actualShape = Model.GetShapeGeometry().Clone();
             var actualTransform = new TransformGroup();
             actualTransform.Children.Add(RotateTransform);
             actualTransform.Children.Add(new TranslateTransform(Position.X, Position.Y));

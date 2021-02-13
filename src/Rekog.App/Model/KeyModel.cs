@@ -1,5 +1,6 @@
 ﻿using Rekog.App.Model.Kle;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 
@@ -56,15 +57,15 @@ namespace Rekog.App.Model
             set => Set(ref _rotationOriginY, value);
         }
 
-        private Geometry? _shape;
-        public Geometry? Shape
+        private string? _shape;
+        public string? Shape
         {
             get => _shape;
             set => Set(ref _shape, value);
         }
 
-        private Geometry? _steppedShape;
-        public Geometry? SteppedShape
+        private string? _steppedShape;
+        public string? SteppedShape
         {
             get => _steppedShape;
             set => Set(ref _steppedShape, value);
@@ -107,21 +108,21 @@ namespace Rekog.App.Model
 
         public List<KeyLabelModel> Labels { get; set; } = new();
 
-        public Geometry GetShape()
+        public Geometry GetShapeGeometry()
         {
-            return Shape ?? GetDefaultShape();
+            return string.IsNullOrWhiteSpace(Shape) ? GetDefaultShapeGeometry() : Geometry.Parse(Shape);
         }
 
-        public Geometry GetSteppedShape()
+        public Geometry GetSteppedShapeGeometry()
         {
             if (!IsStepped)
             {
-                return GetShape();
+                return GetShapeGeometry();
             }
-            return SteppedShape ?? GetDefaultShape();
+            return string.IsNullOrWhiteSpace(SteppedShape) ? GetDefaultShapeGeometry() : Geometry.Parse(SteppedShape);
         }
 
-        private RectangleGeometry GetDefaultShape()
+        private Geometry GetDefaultShapeGeometry()
         {
             return new RectangleGeometry(new Rect(0, 0, Width, Height));
         }
@@ -139,8 +140,8 @@ namespace Rekog.App.Model
                 RotationOriginX = kleKey.RotationX,
                 RotationOriginY = kleKey.RotationY,
 
-                Shape = kleKey.IsSimple ? null : GetShape(kleKey),
-                SteppedShape = kleKey.IsSimple ? null : GetSteppedShape(kleKey),
+                Shape = kleKey.IsSimple ? null : GetShapePathGeometry(kleKey).ToString(CultureInfo.InvariantCulture),
+                SteppedShape = kleKey.IsSimple ? null : GetSteppedShapePathGeometry(kleKey).ToString(CultureInfo.InvariantCulture),
 
                 Color = kleKey.Color,
                 IsHoming = kleKey.IsHoming,
@@ -168,13 +169,13 @@ namespace Rekog.App.Model
 
             return key;
 
-            static Geometry GetShape(KleKey kleKey)
+            static PathGeometry GetShapePathGeometry(KleKey kleKey)
             {
                 var geometry1 = new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height));
 
                 if (kleKey.IsSimple)
                 {
-                    return geometry1;
+                    return geometry1.GetFlattenedPathGeometry();
                 }
 
                 var geometry2 = new RectangleGeometry(new Rect(kleKey.X2, kleKey.Y2, kleKey.Width2, kleKey.Height2));
@@ -182,9 +183,9 @@ namespace Rekog.App.Model
                 return new CombinedGeometry(GeometryCombineMode.Union, geometry1, geometry2).GetFlattenedPathGeometry();
             }
 
-            static Geometry GetSteppedShape(KleKey kleKey)
+            static PathGeometry GetSteppedShapePathGeometry(KleKey kleKey)
             {
-                return new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height));
+                return new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height)).GetFlattenedPathGeometry();
             }
         }
     }
