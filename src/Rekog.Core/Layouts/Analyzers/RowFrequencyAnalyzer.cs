@@ -2,7 +2,8 @@
 {
     internal class RowFrequencyAnalyzer : UnigramAnalyzer<int>
     {
-        public RowFrequencyAnalyzer() : base("Row frequencies")
+        public RowFrequencyAnalyzer()
+            : base("Row frequencies")
         {
         }
 

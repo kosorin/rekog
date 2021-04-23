@@ -6,9 +6,10 @@ namespace Rekog.Core.Layouts.Analyzers
     internal abstract class NgramAnalyzer<T> : Analyzer, INgramAnalyzer
         where T : notnull
     {
-        private readonly OccurrenceCollection<(T value, double? effort)> _occurrences = new();
+        private readonly OccurrenceCollection<(T value, double? effort)> _occurrences = new OccurrenceCollection<(T value, double? effort)>();
 
-        protected NgramAnalyzer(string description) : base(description)
+        protected NgramAnalyzer(string description)
+            : base(description)
         {
         }
 
@@ -16,7 +17,7 @@ namespace Rekog.Core.Layouts.Analyzers
 
         public void Analyze(Occurrence<LayoutNgram> ngram)
         {
-            if (ngram.Value.Keys != null && TryGetValue(ngram.Value.Keys, out var value))
+            if (TryGetValue(ngram.Value.Keys, out var value))
             {
                 _occurrences.Add(value, ngram.Count);
             }
@@ -35,16 +36,16 @@ namespace Rekog.Core.Layouts.Analyzers
         {
             var items = _occurrences.Analyze().Occurrences.Values
                 .GroupBy(x => x.Value.value)
-                .Select(g => (g.Key, new LayoutAnalysisResult(g.Key.ToString()!)
+                .Select(g => (value: g.Key, result: new LayoutAnalysisResult(g.Key.ToString()!)
                 {
                     Percentage = g.Sum(x => x.Percentage),
                     Effort = g.Any(x => x.Value.effort.HasValue) ? g.Sum(x => x.Percentage * x.Value.effort) : null,
                 }))
                 .ToList();
 
-            if (items is List<(bool value, LayoutAnalysisResult result)> boolItems)
+            if (typeof(T) == typeof(bool))
             {
-                var trueResult = boolItems.Where(x => x.value).Select(x => x.result).FirstOrDefault();
+                var trueResult = items.Where(x => Equals(true, x.value)).Select(x => x.result).FirstOrDefault();
                 return new LayoutAnalysisResult(Description)
                 {
                     Effort = trueResult?.Effort,

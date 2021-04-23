@@ -1,5 +1,5 @@
-﻿using Rekog.Core.Extensions;
-using System;
+﻿using System;
+using Rekog.Core.Extensions;
 
 namespace Rekog.Core.Layouts
 {
@@ -69,7 +69,7 @@ namespace Rekog.Core.Layouts
             {
                 > 0 => Motion.Curl,
                 < 0 => Motion.Stretch,
-                _ => Motion.None
+                _ => Motion.None,
             };
         }
 
@@ -84,7 +84,7 @@ namespace Rekog.Core.Layouts
             {
                 > 0 => Motion.Curl,
                 < 0 => Motion.Stretch,
-                _ => Motion.None
+                _ => Motion.None,
             };
         }
     }

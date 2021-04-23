@@ -17,7 +17,7 @@ namespace Rekog.Data.Serialization
 
             value = new CorpusConfig
             {
-                Path = scalar.Value
+                Path = scalar.Value,
             };
             return true;
         }

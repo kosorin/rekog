@@ -1,14 +1,14 @@
-﻿using Serilog;
+﻿using System;
+using System.CommandLine;
+using System.CommandLine.IO;
+using System.Globalization;
+using System.IO;
+using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Formatting.Display;
-using System;
-using System.CommandLine;
-using System.CommandLine.IO;
-using System.Globalization;
-using System.IO;
 
 namespace Rekog.Logging
 {

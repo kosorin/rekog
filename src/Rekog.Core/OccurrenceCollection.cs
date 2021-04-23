@@ -13,7 +13,7 @@ namespace Rekog.Core
 
         public OccurrenceCollection()
         {
-            _occurrences = new();
+            _occurrences = new Dictionary<TValue, Occurrence<TValue>>();
         }
 
         public OccurrenceCollection(IReadOnlyDictionary<TValue, ulong> occurrences)

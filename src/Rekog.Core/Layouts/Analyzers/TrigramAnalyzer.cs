@@ -3,7 +3,8 @@
     internal abstract class TrigramAnalyzer<T> : NgramAnalyzer<T>
         where T : notnull
     {
-        protected TrigramAnalyzer(string description) : base(description)
+        protected TrigramAnalyzer(string description)
+            : base(description)
         {
         }
 

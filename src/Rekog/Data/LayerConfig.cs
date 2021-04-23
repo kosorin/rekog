@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rekog.Data
 {
@@ -6,9 +7,10 @@ namespace Rekog.Data
     {
         public Matrix<char?> Keys { get; set; } = default!;
 
+        [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
         protected override void FixSelf()
         {
-            Keys ??= new();
+            Keys ??= new Matrix<char?>();
             Keys.Fix();
         }
 

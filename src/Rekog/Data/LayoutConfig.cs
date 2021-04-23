@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rekog.Data
 {
@@ -10,15 +11,16 @@ namespace Rekog.Data
 
         public Matrix<double> Efforts { get; set; } = default!;
 
+        [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
         protected override void FixSelf()
         {
-            Fingers ??= new();
+            Fingers ??= new Matrix<int?>();
             Fingers.Fix();
 
-            Homing ??= new();
+            Homing ??= new Matrix<bool>();
             Homing.Fix();
 
-            Efforts ??= new();
+            Efforts ??= new Matrix<double>();
             Efforts.Fix();
         }
 

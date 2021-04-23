@@ -1,7 +1,7 @@
 ﻿using Shouldly;
 using Xunit;
 
-namespace Rekog.Core.UnitTests.Ngrams
+namespace Rekog.Core.UnitTests
 {
     public class OccurrenceTests
     {

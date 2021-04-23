@@ -1,12 +1,13 @@
-﻿using Rekog.Core.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Rekog.Core.Extensions;
 
 namespace Rekog.Core.Layouts.Analyzers
 {
     internal class SameFingerBigramAnalyzer : BigramAnalyzer<Finger>
     {
-        public SameFingerBigramAnalyzer() : base("Same finger bigram")
+        public SameFingerBigramAnalyzer()
+            : base("Same finger bigram")
         {
         }
 

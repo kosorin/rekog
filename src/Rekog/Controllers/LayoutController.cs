@@ -1,27 +1,24 @@
-﻿using Rekog.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Rekog.Core;
 using Rekog.Core.Corpora;
 using Rekog.Core.Layouts;
 using Rekog.Data;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.CommandLine;
-using System.Linq;
 
-namespace Rekog
+namespace Rekog.Controllers
 {
     public class LayoutController
     {
         private readonly Options _options;
         private readonly Config _config;
-        private readonly IConsole _console;
         private readonly ILogger _logger;
 
-        public LayoutController(Options options, Config config, IConsole console, ILogger logger)
+        public LayoutController(Options options, Config config, ILogger logger)
         {
             _options = options;
             _config = config;
-            _console = console;
             _logger = logger.ForContext<LayoutController>();
         }
 
@@ -70,7 +67,6 @@ namespace Rekog
                         if (!keys.TryAdd(key.Character, key))
                         {
                             _logger.Warning("Multiple layout character {Character}", key.Character);
-                            continue;
                         }
                     }
                 }

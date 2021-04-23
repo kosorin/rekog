@@ -1,11 +1,4 @@
-﻿using Rekog.Core;
-using Rekog.Core.Corpora;
-using Rekog.Data;
-using Rekog.Data.Serialization;
-using Rekog.Extensions;
-using Rekog.IO;
-using Serilog;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO.Abstractions;
@@ -14,6 +7,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Rekog.Core;
+using Rekog.Core.Corpora;
+using Rekog.Data;
+using Rekog.Data.Serialization;
+using Rekog.Extensions;
+using Rekog.IO;
+using Serilog;
 
 namespace Rekog.Controllers
 {
@@ -34,14 +34,13 @@ namespace Rekog.Controllers
 
         public CorpusAnalysisData? GetCorpusAnalysisData(CancellationToken cancellationToken)
         {
-            var analysisDatafile = GetCorpusDataFile();
-            if (!TryLoadAnalysisData(analysisDatafile, out var analysisData))
+            var analysisDataFile = GetCorpusDataFile();
+            if (!TryLoadAnalysisData(analysisDataFile, out var analysisData))
             {
                 analysisData = ParseCorpus(cancellationToken);
-
                 if (analysisData != null)
                 {
-                    SaveAnalysisData(analysisDatafile, analysisData);
+                    SaveAnalysisData(analysisDataFile, analysisData);
                 }
             }
 
@@ -74,7 +73,7 @@ namespace Rekog.Controllers
 
             static CorpusAnalysisData ReportToData(CorpusAnalysisReport report)
             {
-                return new CorpusAnalysisData(new(report.Unigrams), new(report.Bigrams), new(report.Trigrams));
+                return new CorpusAnalysisData(new OccurrenceCollection<string>(report.Unigrams), new OccurrenceCollection<string>(report.Bigrams), new OccurrenceCollection<string>(report.Trigrams));
             }
         }
 

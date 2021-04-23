@@ -37,10 +37,8 @@ namespace Rekog.IO
                     .Where(x => string.IsNullOrEmpty(searchPattern) || Regex.IsMatch(x, searchPattern, RegexOptions.CultureInvariant))
                     .ToArray();
             }
-            else
-            {
-                return new[] { fileSystem.Path.GetFullPath(path) };
-            }
+
+            return new[] { fileSystem.Path.GetFullPath(path), };
         }
     }
 }

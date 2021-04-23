@@ -2,7 +2,8 @@
 {
     internal class HomingAnalyzer : UnigramAnalyzer<bool>
     {
-        public HomingAnalyzer() : base("Homing")
+        public HomingAnalyzer()
+            : base("Homing")
         {
         }
 

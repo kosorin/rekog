@@ -2,7 +2,8 @@
 {
     internal class LayerSwitchAnalyzer : BigramAnalyzer<bool>
     {
-        public LayerSwitchAnalyzer() : base("Layer switch")
+        public LayerSwitchAnalyzer()
+            : base("Layer switch")
         {
         }
 

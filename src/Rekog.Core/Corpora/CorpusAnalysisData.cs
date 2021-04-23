@@ -6,9 +6,9 @@ namespace Rekog.Core.Corpora
     {
         public CorpusAnalysisData()
         {
-            UnigramOccurrences = new();
-            BigramOccurrences = new();
-            TrigramOccurrences = new();
+            UnigramOccurrences = new OccurrenceCollection<string>();
+            BigramOccurrences = new OccurrenceCollection<string>();
+            TrigramOccurrences = new OccurrenceCollection<string>();
         }
 
         public CorpusAnalysisData(OccurrenceCollection<string> unigramOccurrences, OccurrenceCollection<string> bigramOccurrences, OccurrenceCollection<string> trigramOccurrences)

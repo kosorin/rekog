@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Rekog.Data
@@ -21,24 +22,28 @@ namespace Rekog.Data
             FixKeymapConfigs();
         }
 
+        [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier")]
         private void FixLocationConfigs()
         {
-            Corpora = Corpora?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new();
+            Corpora = Corpora?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<string, CorpusConfig>();
         }
 
+        [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier")]
         private void FixAlphabetConfigs()
         {
-            Alphabets = Alphabets?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new();
+            Alphabets = Alphabets?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<string, AlphabetConfig>();
         }
 
+        [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier")]
         private void FixLayoutConfigs()
         {
-            Layouts = Layouts?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new();
+            Layouts = Layouts?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<string, LayoutConfig>();
         }
 
+        [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier")]
         private void FixKeymapConfigs()
         {
-            Keymaps = Keymaps?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new();
+            Keymaps = Keymaps?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<string, KeymapConfig>();
         }
 
         protected override IEnumerable<SerializationObject> CollectChildren()

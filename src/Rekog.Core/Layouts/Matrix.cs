@@ -8,7 +8,7 @@ namespace Rekog.Core.Layouts
     public class Matrix<T> where T : notnull
     {
         private readonly T[,] _data;
-        private readonly Dictionary<T, (int x, int y)> _positions = new();
+        private readonly Dictionary<T, (int x, int y)> _positions = new Dictionary<T, (int x, int y)>();
 
         public Matrix(List<List<T?>> rawData)
         {

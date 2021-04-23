@@ -6,7 +6,8 @@ namespace Rekog.Core.Layouts.Analyzers
 {
     internal class SameHandRollAnalyzer : BigramAnalyzer<(Hand hand, Roll roll)>
     {
-        public SameHandRollAnalyzer() : base("Same hand roll")
+        public SameHandRollAnalyzer()
+            : base("Same hand roll")
         {
         }
 
@@ -24,7 +25,7 @@ namespace Rekog.Core.Layouts.Analyzers
 
         protected override bool TryGetValue(Key firstKey, Key secondKey, out ((Hand, Roll), double?) value)
         {
-            if (firstKey.GetHandRoll(secondKey) is not Roll.None and Roll handRoll)
+            if (firstKey.GetHandRoll(secondKey) is not Roll.None and var handRoll)
             {
                 var effort = handRoll switch
                 {

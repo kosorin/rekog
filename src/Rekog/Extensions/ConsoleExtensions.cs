@@ -14,6 +14,7 @@ namespace Rekog.Extensions
 
             writer.Write(Environment.NewLine);
         }
+
         public static void WriteLine(this IStandardStreamWriter writer, string value)
         {
             if (writer == null)

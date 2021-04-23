@@ -1,5 +1,5 @@
-﻿using Shouldly;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Shouldly;
 using Xunit;
 
 namespace Rekog.Core.UnitTests

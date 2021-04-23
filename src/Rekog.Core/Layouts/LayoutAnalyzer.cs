@@ -1,17 +1,13 @@
-﻿using Rekog.Core.Corpora;
-using Rekog.Core.Layouts.Analyzers;
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
+using Rekog.Core.Corpora;
+using Rekog.Core.Layouts.Analyzers;
 
 namespace Rekog.Core.Layouts
 {
     public class LayoutAnalyzer
     {
-        public LayoutAnalyzer()
-        {
-        }
-
         public void Analyze(CorpusAnalysisData corpusAnalysisData, Layout layout)
         {
             var ngramAnalyzers = new INgramAnalyzer[]
@@ -34,7 +30,7 @@ namespace Rekog.Core.Layouts
                 new LayerSwitchAnalyzer(),
             };
 
-            var unigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 1);
+            var unigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 1).ToArray();
             var unigrams = GetNgramKeyOccurrences2(corpusAnalysisData.UnigramOccurrences, layout);
             foreach (var unigram in unigrams)
             {
@@ -48,7 +44,7 @@ namespace Rekog.Core.Layouts
                 analyzer.AnalyzeNull(unigrams.NullTotal);
             }
 
-            var bigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 2);
+            var bigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 2).ToArray();
             var bigrams = GetNgramKeyOccurrences2(corpusAnalysisData.BigramOccurrences, layout);
             foreach (var unigram in bigrams)
             {
@@ -62,7 +58,7 @@ namespace Rekog.Core.Layouts
                 analyzer.AnalyzeNull(bigrams.NullTotal);
             }
 
-            var trigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 3);
+            var trigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 3).ToArray();
             var trigrams = GetNgramKeyOccurrences2(corpusAnalysisData.TrigramOccurrences, layout);
             foreach (var unigram in trigrams)
             {

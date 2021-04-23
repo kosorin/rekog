@@ -1,18 +1,19 @@
-﻿using Autofac;
+﻿using System;
+using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Invocation;
+using System.CommandLine.IO;
+using System.CommandLine.Parsing;
+using System.Diagnostics.CodeAnalysis;
+using System.IO.Abstractions;
+using System.Threading;
+using Autofac;
 using Rekog.Controllers;
 using Rekog.Data;
 using Rekog.Data.Serialization;
 using Rekog.Logging;
 using Serilog;
 using Serilog.Events;
-using System;
-using System.CommandLine;
-using System.CommandLine.Builder;
-using System.CommandLine.Invocation;
-using System.CommandLine.IO;
-using System.CommandLine.Parsing;
-using System.IO.Abstractions;
-using System.Threading;
 
 namespace Rekog
 {
@@ -22,16 +23,16 @@ namespace Rekog
         private readonly SystemConsole _console;
         private readonly FileSystem _fileSystem;
 
-        private static void Main(string[] args)
-        {
-            new Program().Run(args);
-        }
-
         private Program()
         {
             _console = new SystemConsole();
             _logger = CreateLogger(_console);
             _fileSystem = new FileSystem();
+        }
+
+        private static void Main(string[] args)
+        {
+            new Program().Run(args);
         }
 
         private void Run(string[] args)
@@ -73,10 +74,10 @@ namespace Rekog
         {
             var command = new RootCommand();
 
-            command.AddOption(new Option<string>(new[] { "--alphabet", "-a" }) { IsRequired = true });
-            command.AddOption(new Option<string>(new[] { "--corpus", "-c" }) { IsRequired = true });
-            command.AddOption(new Option<string>(new[] { "--keymap", "-k" }) { IsRequired = true });
-            command.AddOption(new Option<string>(new[] { "--layout", "-l" }) { IsRequired = true });
+            command.AddOption(new Option<string>(new[] { "--alphabet", "-a", }) { IsRequired = true, });
+            command.AddOption(new Option<string>(new[] { "--corpus", "-c", }) { IsRequired = true, });
+            command.AddOption(new Option<string>(new[] { "--keymap", "-k", }) { IsRequired = true, });
+            command.AddOption(new Option<string>(new[] { "--layout", "-l", }) { IsRequired = true, });
 
             command.Handler = CommandHandler.Create<Options, CancellationToken>(Handle);
 
@@ -93,6 +94,7 @@ namespace Rekog
             container.Resolve<ProgramController>().Run(cancellationToken);
         }
 
+        [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
         private void PrepareOptions(Options options)
         {
             options.Corpus ??= string.Empty;

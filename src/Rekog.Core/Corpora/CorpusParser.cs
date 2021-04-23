@@ -1,8 +1,8 @@
-﻿using Rekog.Core.Ngrams;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using Rekog.Core.Ngrams;
 
 namespace Rekog.Core.Corpora
 {

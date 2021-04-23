@@ -1,6 +1,6 @@
-﻿using Shouldly;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Shouldly;
 using Xunit;
 
 namespace Rekog.Core.UnitTests
@@ -23,6 +23,7 @@ namespace Rekog.Core.UnitTests
 
             total.ShouldBe(expectedTotal);
         }
+
         [Fact]
         public void AddNull_Value()
         {

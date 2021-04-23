@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rekog.Data
 {
@@ -8,6 +9,7 @@ namespace Rekog.Data
 
         public bool IncludeWhitespace { get; set; } = default!;
 
+        [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
         protected override void FixSelf()
         {
             Characters ??= string.Empty;

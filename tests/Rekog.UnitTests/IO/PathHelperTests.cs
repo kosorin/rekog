@@ -1,7 +1,7 @@
-﻿using Rekog.IO;
-using Shouldly;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
+using Rekog.IO;
+using Shouldly;
 using Xunit;
 
 namespace Rekog.UnitTests.IO
@@ -18,7 +18,7 @@ namespace Rekog.UnitTests.IO
 
             var paths = PathHelper.GetPaths(fileSystem, @"T:\Test\A.txt");
 
-            paths.ShouldBe(new[] { @"T:\Test\A.txt" }, ignoreOrder: true);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", }, ignoreOrder: true);
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace Rekog.UnitTests.IO
 
             var paths = PathHelper.GetPaths(fileSystem, "A.txt");
 
-            paths.ShouldBe(new[] { @"T:\Test\A.txt" }, ignoreOrder: true);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", }, ignoreOrder: true);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace Rekog.UnitTests.IO
 
             var paths = PathHelper.GetPaths(fileSystem, @"T:\Test");
 
-            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif" }, ignoreOrder: true);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif", }, ignoreOrder: true);
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace Rekog.UnitTests.IO
 
             var paths = PathHelper.GetPaths(fileSystem, ".");
 
-            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif" }, ignoreOrder: true);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif", }, ignoreOrder: true);
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace Rekog.UnitTests.IO
 
             var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", searchPattern: PathHelper.DefaultSearchPattern);
 
-            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif" }, ignoreOrder: true);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif", }, ignoreOrder: true);
         }
 
         [Fact]
@@ -99,7 +99,7 @@ namespace Rekog.UnitTests.IO
 
             var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", searchPattern: @"\.txt$");
 
-            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt" }, ignoreOrder: true);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", }, ignoreOrder: true);
         }
 
         [Fact]
@@ -120,7 +120,7 @@ namespace Rekog.UnitTests.IO
 
             var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", recursive: true);
 
-            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif", @"T:\Test\Sub1\D.txt", @"T:\Test\Sub1\E.txt", @"T:\Test\Sub3\F.gif", @"T:\Test\Sub3\Sub1\G.gif" }, ignoreOrder: true);
+            paths.ShouldBe(new[] { @"T:\Test\A.txt", @"T:\Test\B.txt", @"T:\Test\C.gif", @"T:\Test\Sub1\D.txt", @"T:\Test\Sub1\E.txt", @"T:\Test\Sub3\F.gif", @"T:\Test\Sub3\Sub1\G.gif", }, ignoreOrder: true);
         }
 
         [Fact]
@@ -141,7 +141,7 @@ namespace Rekog.UnitTests.IO
 
             var paths = PathHelper.GetPaths(fileSystem, @"T:\Test", searchPattern: @"\.gif$", recursive: true);
 
-            paths.ShouldBe(new[] { @"T:\Test\C.gif", @"T:\Test\Sub3\F.gif", @"T:\Test\Sub3\Sub1\G.gif" }, ignoreOrder: true);
+            paths.ShouldBe(new[] { @"T:\Test\C.gif", @"T:\Test\Sub3\F.gif", @"T:\Test\Sub3\Sub1\G.gif", }, ignoreOrder: true);
         }
     }
 }

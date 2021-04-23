@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rekog.Data
 {
@@ -10,11 +11,12 @@ namespace Rekog.Data
 
         public Dictionary<string, ulong> Trigrams { get; set; } = default!;
 
+        [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
         protected override void FixSelf()
         {
-            Unigrams ??= new();
-            Bigrams ??= new();
-            Trigrams ??= new();
+            Unigrams ??= new Dictionary<string, ulong>();
+            Bigrams ??= new Dictionary<string, ulong>();
+            Trigrams ??= new Dictionary<string, ulong>();
         }
 
         protected override IEnumerable<SerializationObject> CollectChildren()

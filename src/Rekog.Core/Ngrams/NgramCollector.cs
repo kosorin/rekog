@@ -9,7 +9,7 @@
             _parser = parser;
         }
 
-        public OccurrenceCollection<string> Occurrences { get; } = new();
+        public OccurrenceCollection<string> Occurrences { get; } = new OccurrenceCollection<string>();
 
         public void Skip()
         {

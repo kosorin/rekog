@@ -3,7 +3,8 @@
     internal abstract class UnigramAnalyzer<T> : NgramAnalyzer<T>
         where T : notnull
     {
-        protected UnigramAnalyzer(string description) : base(description)
+        protected UnigramAnalyzer(string description)
+            : base(description)
         {
         }
 

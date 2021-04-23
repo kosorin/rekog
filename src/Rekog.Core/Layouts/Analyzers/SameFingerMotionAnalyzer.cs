@@ -5,7 +5,8 @@ namespace Rekog.Core.Layouts.Analyzers
 {
     internal class SameFingerMotionAnalyzer : BigramAnalyzer<(Finger finger, Motion motion)>
     {
-        public SameFingerMotionAnalyzer() : base("Same finger motion")
+        public SameFingerMotionAnalyzer()
+            : base("Same finger motion")
         {
         }
 
@@ -23,7 +24,7 @@ namespace Rekog.Core.Layouts.Analyzers
 
         protected override bool TryGetValue(Key firstKey, Key secondKey, out ((Finger, Motion), double?) value)
         {
-            if (firstKey.GetFingerMotion(secondKey) is not Motion.None and Motion fingerMotion)
+            if (firstKey.GetFingerMotion(secondKey) is not Motion.None and var fingerMotion)
             {
                 value = ((firstKey.Finger, fingerMotion), default);
                 return true;

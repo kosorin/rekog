@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Rekog.Data
@@ -8,6 +9,7 @@ namespace Rekog.Data
     {
         public LayerConfig[] Layers { get; set; } = default!;
 
+        [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier")]
         protected override void FixSelf()
         {
             Layers = Layers?.Where(x => x != null).ToArray() ?? Array.Empty<LayerConfig>();

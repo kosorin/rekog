@@ -1,12 +1,13 @@
-﻿using Rekog.Core.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Rekog.Core.Extensions;
 
 namespace Rekog.Core.Layouts.Analyzers
 {
     internal class NeighborFingerBigramAnalyzer : BigramAnalyzer<(Finger firstFinger, Finger secondFinger)>
     {
-        public NeighborFingerBigramAnalyzer() : base("Neighbor finger bigram")
+        public NeighborFingerBigramAnalyzer()
+            : base("Neighbor finger bigram")
         {
         }
 

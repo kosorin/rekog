@@ -17,7 +17,7 @@ namespace Rekog.Data.Serialization
 
             value = new AlphabetConfig
             {
-                Characters = scalar.Value
+                Characters = scalar.Value,
             };
             return true;
         }

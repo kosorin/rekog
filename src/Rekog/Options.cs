@@ -1,6 +1,6 @@
 ﻿namespace Rekog
 {
-    public class Options 
+    public class Options
     {
         public string Corpus { get; set; } = default!;
 

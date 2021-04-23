@@ -1,6 +1,6 @@
-﻿using Rekog.Core.Corpora;
+﻿using System.Linq;
+using Rekog.Core.Corpora;
 using Shouldly;
-using System.Linq;
 using Xunit;
 
 namespace Rekog.Core.UnitTests.Corpora

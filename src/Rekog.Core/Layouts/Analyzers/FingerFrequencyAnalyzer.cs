@@ -1,12 +1,13 @@
-﻿using Rekog.Core.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Rekog.Core.Extensions;
 
 namespace Rekog.Core.Layouts.Analyzers
 {
     internal class FingerFrequencyAnalyzer : UnigramAnalyzer<Finger>
     {
-        public FingerFrequencyAnalyzer() : base("Finger frequencies")
+        public FingerFrequencyAnalyzer()
+            : base("Finger frequencies")
         {
         }
 

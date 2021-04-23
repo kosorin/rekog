@@ -3,7 +3,8 @@
     internal abstract class BigramAnalyzer<T> : NgramAnalyzer<T>
         where T : notnull
     {
-        protected BigramAnalyzer(string description) : base(description)
+        protected BigramAnalyzer(string description)
+            : base(description)
         {
         }
 

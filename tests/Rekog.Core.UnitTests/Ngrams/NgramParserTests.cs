@@ -1,6 +1,6 @@
-﻿using Rekog.Core.Ngrams;
+﻿using System;
+using Rekog.Core.Ngrams;
 using Shouldly;
-using System;
 using Xunit;
 
 namespace Rekog.Core.UnitTests.Ngrams

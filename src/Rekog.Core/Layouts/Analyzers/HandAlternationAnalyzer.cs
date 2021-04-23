@@ -2,7 +2,8 @@
 {
     internal class HandAlternationAnalyzer : BigramAnalyzer<bool>
     {
-        public HandAlternationAnalyzer() : base("Hand alternation")
+        public HandAlternationAnalyzer()
+            : base("Hand alternation")
         {
         }
 

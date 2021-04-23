@@ -1,8 +1,8 @@
-﻿using Rekog.Core.Extensions;
-using Shouldly;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Rekog.Core.Extensions;
+using Shouldly;
 using Xunit;
 
 namespace Rekog.Core.UnitTests.Extensions
@@ -22,7 +22,7 @@ namespace Rekog.Core.UnitTests.Extensions
         [InlineData(Finger.RightThumb, Hand.Right)]
         public void GetHand(Finger finger, Hand expectedHand)
         {
-            var hand = FingerExtensions.GetHand(finger);
+            var hand = finger.GetHand();
 
             hand.ShouldBe(expectedHand);
         }
@@ -31,7 +31,7 @@ namespace Rekog.Core.UnitTests.Extensions
         [MemberData(nameof(NeighborFingerList), parameters: true)]
         public void IsNeighbor_True(Finger first, Finger second)
         {
-            var result = FingerExtensions.IsNeighbor(first, second);
+            var result = first.IsNeighbor(second);
 
             result.ShouldBeTrue();
         }
@@ -40,7 +40,7 @@ namespace Rekog.Core.UnitTests.Extensions
         [MemberData(nameof(NeighborFingerList), parameters: false)]
         public void IsNeighbor_False(Finger first, Finger second)
         {
-            var result = FingerExtensions.IsNeighbor(first, second);
+            var result = first.IsNeighbor(second);
 
             result.ShouldBeFalse();
         }
@@ -55,13 +55,13 @@ namespace Rekog.Core.UnitTests.Extensions
                 (Finger.RightPinky, Finger.RightRing),
                 (Finger.RightRing, Finger.RightMiddle),
                 (Finger.RightMiddle, Finger.RightIndex),
-            }.SelectMany(x => new[] { (x.Item1, x.Item2), (x.Item2, x.Item1) }));
+            }.SelectMany(x => new[] { (x.Item1, x.Item2), (x.Item2, x.Item1), }));
 
             if (isNeighbor)
             {
                 foreach (var neighbors in neighborsList)
                 {
-                    yield return new object[] { neighbors.Item1, neighbors.Item2 };
+                    yield return new object[] { neighbors.Item1, neighbors.Item2, };
                 }
             }
             else
@@ -73,7 +73,7 @@ namespace Rekog.Core.UnitTests.Extensions
                         var neighbors = (first, second);
                         if (!neighborsList.Contains(neighbors))
                         {
-                            yield return new object[] { neighbors.Item1, neighbors.Item2 };
+                            yield return new object[] { neighbors.Item1, neighbors.Item2, };
                         }
                     }
                 }
@@ -84,7 +84,7 @@ namespace Rekog.Core.UnitTests.Extensions
         [MemberData(nameof(RollFingerList), parameters: true)]
         public void GetRoll_True(Finger firstFinger, Finger secondFinger, Roll expectedRoll)
         {
-            var hand = FingerExtensions.GetRoll(firstFinger, secondFinger);
+            var hand = firstFinger.GetRoll(secondFinger);
 
             hand.ShouldBe(expectedRoll);
         }
@@ -93,7 +93,7 @@ namespace Rekog.Core.UnitTests.Extensions
         [MemberData(nameof(RollFingerList), parameters: false)]
         public void GetRoll_False(Finger firstFinger, Finger secondFinger, Roll expectedRoll)
         {
-            var hand = FingerExtensions.GetRoll(firstFinger, secondFinger);
+            var hand = firstFinger.GetRoll(secondFinger);
 
             hand.ShouldBe(expectedRoll);
         }
@@ -124,7 +124,7 @@ namespace Rekog.Core.UnitTests.Extensions
             {
                 foreach (var roll in rollList)
                 {
-                    yield return new object[] { roll.Item1, roll.Item2, roll.Item3 };
+                    yield return new object[] { roll.Item1, roll.Item2, roll.Item3, };
                 }
             }
             else
@@ -135,7 +135,7 @@ namespace Rekog.Core.UnitTests.Extensions
                     {
                         if (!rollList.Any(x => x.Item1 == first && x.Item2 == second))
                         {
-                            yield return new object[] { first, second, Roll.None };
+                            yield return new object[] { first, second, Roll.None, };
                         }
                     }
                 }

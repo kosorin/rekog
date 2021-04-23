@@ -8,22 +8,22 @@ namespace Rekog.Core.Extensions
         {
             switch (finger)
             {
-            case Finger.LeftPinky:
-            case Finger.RightPinky:
-                return FingerKind.Pinky;
-            case Finger.LeftRing:
-            case Finger.RightRing:
-                return FingerKind.Ring;
-            case Finger.LeftMiddle:
-            case Finger.RightMiddle:
-                return FingerKind.Middle;
-            case Finger.LeftIndex:
-            case Finger.RightIndex:
-                return FingerKind.Index;
-            case Finger.LeftThumb:
-            case Finger.RightThumb:
-                return FingerKind.Thumb;
-            default: throw new ArgumentOutOfRangeException(nameof(finger));
+                case Finger.LeftPinky:
+                case Finger.RightPinky:
+                    return FingerKind.Pinky;
+                case Finger.LeftRing:
+                case Finger.RightRing:
+                    return FingerKind.Ring;
+                case Finger.LeftMiddle:
+                case Finger.RightMiddle:
+                    return FingerKind.Middle;
+                case Finger.LeftIndex:
+                case Finger.RightIndex:
+                    return FingerKind.Index;
+                case Finger.LeftThumb:
+                case Finger.RightThumb:
+                    return FingerKind.Thumb;
+                default: throw new ArgumentOutOfRangeException(nameof(finger));
             }
         }
 
@@ -31,19 +31,19 @@ namespace Rekog.Core.Extensions
         {
             switch (finger)
             {
-            case Finger.LeftPinky:
-            case Finger.LeftRing:
-            case Finger.LeftMiddle:
-            case Finger.LeftIndex:
-            case Finger.LeftThumb:
-                return Hand.Left;
-            case Finger.RightPinky:
-            case Finger.RightRing:
-            case Finger.RightMiddle:
-            case Finger.RightIndex:
-            case Finger.RightThumb:
-                return Hand.Right;
-            default: throw new ArgumentOutOfRangeException(nameof(finger));
+                case Finger.LeftPinky:
+                case Finger.LeftRing:
+                case Finger.LeftMiddle:
+                case Finger.LeftIndex:
+                case Finger.LeftThumb:
+                    return Hand.Left;
+                case Finger.RightPinky:
+                case Finger.RightRing:
+                case Finger.RightMiddle:
+                case Finger.RightIndex:
+                case Finger.RightThumb:
+                    return Hand.Right;
+                default: throw new ArgumentOutOfRangeException(nameof(finger));
             }
         }
 

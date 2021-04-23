@@ -6,7 +6,8 @@ namespace Rekog.Core.Layouts.Analyzers
 {
     internal class SameHandLongRollAnalyzer : TrigramAnalyzer<(Hand hand, Roll roll)>
     {
-        public SameHandLongRollAnalyzer() : base("Same hand long roll")
+        public SameHandLongRollAnalyzer()
+            : base("Same hand long roll")
         {
         }
 
@@ -24,7 +25,7 @@ namespace Rekog.Core.Layouts.Analyzers
 
         protected override bool TryGetValue(Key firstKey, Key secondKey, Key thirdKey, out ((Hand, Roll), double?) value)
         {
-            if (firstKey.GetHandRoll(secondKey) is not Roll.None and Roll handRoll && handRoll == secondKey.GetHandRoll(thirdKey))
+            if (firstKey.GetHandRoll(secondKey) is not Roll.None and var handRoll && handRoll == secondKey.GetHandRoll(thirdKey))
             {
                 var effort = handRoll switch
                 {

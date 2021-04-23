@@ -12,7 +12,7 @@ namespace Rekog.Core.Layouts
             _keys = keys.ToDictionary(x => x.Key, x => x.Value);
         }
 
-        public Key[]? GetNgramKeys(string ngram)
+        public Key[] GetNgramKeys(string ngram)
         {
             return ngram
                 .Select(character => _keys.TryGetValue(character, out var key) ? key : null)

@@ -3,6 +3,6 @@
     public enum Hand
     {
         Left,
-        Right
+        Right,
     }
 }

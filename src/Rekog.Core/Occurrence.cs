@@ -10,7 +10,8 @@ namespace Rekog.Core
             Value = value;
         }
 
-        public Occurrence(TValue value, ulong count) : this(value)
+        public Occurrence(TValue value, ulong count)
+            : this(value)
         {
             Count = count;
         }

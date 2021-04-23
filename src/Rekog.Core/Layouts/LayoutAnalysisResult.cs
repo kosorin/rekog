@@ -5,7 +5,8 @@ namespace Rekog.Core.Layouts
 {
     public class LayoutAnalysisResult
     {
-        public LayoutAnalysisResult(string description) : this(description, new())
+        public LayoutAnalysisResult(string description)
+            : this(description, new List<LayoutAnalysisResult>())
         {
         }
 
