@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "Rekog": {
-      "commandName": "Project",
-      "commandLineArgs": "-c norvig -a en -l standard -k colemak_dh",
-      "workingDirectory": "..\\..\\data\\"
-    }
-  }
-}
