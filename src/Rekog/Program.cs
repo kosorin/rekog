@@ -19,6 +19,7 @@ namespace Rekog
 {
     internal class Program
     {
+        private static readonly string DefaultConfigPath = "config.yml";
         private readonly ILogger _logger;
         private readonly SystemConsole _console;
         private readonly FileSystem _fileSystem;
@@ -74,10 +75,11 @@ namespace Rekog
         {
             var command = new RootCommand();
 
-            command.AddOption(new Option<string>(new[] { "--alphabet", "-a", }) { IsRequired = true, });
-            command.AddOption(new Option<string>(new[] { "--corpus", "-c", }) { IsRequired = true, });
-            command.AddOption(new Option<string>(new[] { "--keymap", "-k", }) { IsRequired = true, });
-            command.AddOption(new Option<string>(new[] { "--layout", "-l", }) { IsRequired = true, });
+            command.AddArgument(new Argument<string>("config", () => DefaultConfigPath));
+            command.AddOption(new Option<string>(new[] { "--alphabet", "-a", }) { IsRequired = true, Argument = new Argument<string>("name"), });
+            command.AddOption(new Option<string>(new[] { "--corpus", "-c", }) { IsRequired = true, Argument = new Argument<string>("name"), });
+            command.AddOption(new Option<string>(new[] { "--keymap", "-k", }) { IsRequired = true, Argument = new Argument<string>("name"), });
+            command.AddOption(new Option<string>(new[] { "--layout", "-l", }) { IsRequired = true, Argument = new Argument<string>("name"), });
 
             command.Handler = CommandHandler.Create<Options, CancellationToken>(Handle);
 
@@ -87,7 +89,8 @@ namespace Rekog
         private void Handle(Options options, CancellationToken cancellationToken)
         {
             PrepareOptions(options);
-            var config = LoadConfig();
+
+            var config = LoadConfig(options.Config);
 
             var container = BuildContainer(options, config);
 
@@ -97,6 +100,7 @@ namespace Rekog
         [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
         private void PrepareOptions(Options options)
         {
+            options.Config ??= DefaultConfigPath;
             options.Corpus ??= string.Empty;
             options.Alphabet ??= string.Empty;
             options.Layout ??= string.Empty;
@@ -105,9 +109,9 @@ namespace Rekog
             _logger.Debug("Parsed command line options");
         }
 
-        private Config LoadConfig()
+        private Config LoadConfig(string path)
         {
-            var configFile = new DataFile(_fileSystem, "config.yml");
+            var configFile = new DataFile(_fileSystem, path);
             using var reader = configFile.GetReader();
             var config = new ConfigSerializer().Deserialize(reader);
 
