@@ -1,66 +1,39 @@
-﻿using Rekog.App.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Rekog.App.Extensions;
 
 namespace Rekog.App.View
 {
-    public partial class BoardView : UserControl
+    public partial class BoardView
     {
-        private SelectContext? _selectContext;
-        private class SelectContext
-        {
-            public Point InitialPosition { get; init; }
+        public static readonly DependencyProperty PlateCanvasOffsetProperty =
+            DependencyProperty.RegisterAttached("PlateCanvasOffset", typeof(Thickness), typeof(BoardView), new PropertyMetadata(new Thickness()));
 
-            public Point InitialCoords { get; init; }
+        public static readonly DependencyProperty BoundsProperty =
+            DependencyProperty.RegisterAttached("Bounds", typeof(Rect), typeof(BoardView), new PropertyMetadata(new Rect()));
 
-            public KeyContainer? InitialKey { get; init; }
+        public static readonly DependencyProperty IsPreviewSelectedProperty =
+            DependencyProperty.RegisterAttached("IsPreviewSelected", typeof(bool), typeof(BoardView), new PropertyMetadata(false));
 
-            public List<KeyContainer> Keys { get; init; } = new();
-        }
+        public static readonly DependencyProperty IsSelectedProperty =
+            DependencyProperty.RegisterAttached("IsSelected", typeof(bool), typeof(BoardView), new PropertyMetadata(false));
 
-        private DragContext? _dragContext;
-        private class DragContext
-        {
-            public Point InitialPosition { get; init; }
-        }
-
+        private static readonly DependencyProperty StateProperty =
+            DependencyProperty.Register(nameof(State), typeof(BoardState), typeof(BoardView), new PropertyMetadata(BoardState.None));
 
         private readonly double _selectionBoxInflateSize = 0.25;
 
+        private SelectContext? _selectContext;
+        private DragContext? _dragContext;
 
         public BoardView()
         {
             InitializeComponent();
         }
-
-
-        public static Thickness GetPlateCanvasOffset(DependencyObject obj) => (Thickness)obj.GetValue(PlateCanvasOffsetProperty);
-        public static void SetPlateCanvasOffset(DependencyObject obj, Thickness value) => obj.SetValue(PlateCanvasOffsetProperty, value);
-
-        public static readonly DependencyProperty PlateCanvasOffsetProperty =
-            DependencyProperty.RegisterAttached("PlateCanvasOffset", typeof(Thickness), typeof(BoardView), new PropertyMetadata(new Thickness()));
-
-        public static Rect GetBounds(DependencyObject obj) => (Rect)obj.GetValue(BoundsProperty);
-        public static void SetBounds(DependencyObject obj, Rect value) => obj.SetValue(BoundsProperty, value);
-
-        public static readonly DependencyProperty BoundsProperty =
-            DependencyProperty.RegisterAttached("Bounds", typeof(Rect), typeof(BoardView), new PropertyMetadata(new Rect()));
-
-        public static bool GetIsPreviewSelected(DependencyObject obj) => (bool)obj.GetValue(IsPreviewSelectedProperty);
-        public static void SetIsPreviewSelected(DependencyObject obj, bool value) => obj.SetValue(IsPreviewSelectedProperty, value);
-
-        public static readonly DependencyProperty IsPreviewSelectedProperty =
-            DependencyProperty.RegisterAttached("IsPreviewSelected", typeof(bool), typeof(BoardView), new PropertyMetadata(false));
-
-        public static bool GetIsSelected(DependencyObject obj) => (bool)obj.GetValue(IsSelectedProperty);
-        public static void SetIsSelected(DependencyObject obj, bool value) => obj.SetValue(IsSelectedProperty, value);
-
-        public static readonly DependencyProperty IsSelectedProperty =
-            DependencyProperty.RegisterAttached("IsSelected", typeof(bool), typeof(BoardView), new PropertyMetadata(false));
 
         public BoardState State
         {
@@ -68,13 +41,57 @@ namespace Rekog.App.View
             private set => SetValue(StateProperty, value);
         }
 
-        private static readonly DependencyProperty StateProperty =
-            DependencyProperty.Register(nameof(State), typeof(BoardState), typeof(BoardView), new PropertyMetadata(BoardState.None));
+
+        public static Thickness GetPlateCanvasOffset(DependencyObject obj)
+        {
+            return (Thickness)obj.GetValue(PlateCanvasOffsetProperty);
+        }
+
+        public static void SetPlateCanvasOffset(DependencyObject obj, Thickness value)
+        {
+            obj.SetValue(PlateCanvasOffsetProperty, value);
+        }
+
+        public static Rect GetBounds(DependencyObject obj)
+        {
+            return (Rect)obj.GetValue(BoundsProperty);
+        }
+
+        public static void SetBounds(DependencyObject obj, Rect value)
+        {
+            obj.SetValue(BoundsProperty, value);
+        }
+
+        public static bool GetIsPreviewSelected(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsPreviewSelectedProperty);
+        }
+
+        public static void SetIsPreviewSelected(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsPreviewSelectedProperty, value);
+        }
+
+        public static bool GetIsSelected(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsSelectedProperty);
+        }
+
+        public static void SetIsSelected(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsSelectedProperty, value);
+        }
 
 
-        private static bool IsShift() => Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
+        private static bool IsShift()
+        {
+            return Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
+        }
 
-        private static bool IsCtrl() => Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+        private static bool IsCtrl()
+        {
+            return Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+        }
 
         private List<KeyContainer> GetKeyContainers()
         {
@@ -89,7 +106,7 @@ namespace Rekog.App.View
                     container = PlateCanvasContainer.ItemContainerGenerator.ContainerFromItem(item);
                 }
 
-                if (container?.FindChild<Canvas>("Root") is Canvas canvas)
+                if (container?.FindChild<Canvas>("Root") is { } canvas)
                 {
                     list.Add(new KeyContainer(canvas));
                 }
@@ -100,7 +117,7 @@ namespace Rekog.App.View
 
         private KeyContainer? GetKeyContainer(MouseEventArgs args)
         {
-            if ((args.OriginalSource as DependencyObject)?.FindParent<Canvas>("Root") is Canvas canvas)
+            if ((args.OriginalSource as DependencyObject)?.FindParent<Canvas>("Root") is { } canvas)
             {
                 return new KeyContainer(canvas);
             }
@@ -119,8 +136,7 @@ namespace Rekog.App.View
         {
             var start = PlateContainer.TranslatePoint(new Point(0, 0), PlateCanvasContainer);
             var end = PlateContainer.TranslatePoint(new Point(PlateContainer.ActualWidth, PlateContainer.ActualHeight), PlateCanvasContainer);
-            return new Rect(
-                new Point(start.X / App.UnitSize, start.Y / App.UnitSize),
+            return new Rect(new Point(start.X / App.UnitSize, start.Y / App.UnitSize),
                 new Point(end.X / App.UnitSize, end.Y / App.UnitSize));
         }
 
@@ -217,25 +233,33 @@ namespace Rekog.App.View
             {
                 switch (args.Key)
                 {
-                case Key.Escape:
-                    Reset();
-                    break;
-                default:
-                    args.Handled = false;
-                    break;
+                    case Key.Escape:
+                        Reset();
+                        break;
+                    default:
+                        args.Handled = false;
+                        break;
                 }
             }
             else
             {
                 switch (args.Key)
                 {
-                case Key.Left: Move(Orientation.Horizontal, -1); break;
-                case Key.Right: Move(Orientation.Horizontal, 1); break;
-                case Key.Up: Move(Orientation.Vertical, -1); break;
-                case Key.Down: Move(Orientation.Vertical, 1); break;
-                default:
-                    args.Handled = false;
-                    break;
+                    case Key.Left:
+                        Move(Orientation.Horizontal, -1);
+                        break;
+                    case Key.Right:
+                        Move(Orientation.Horizontal, 1);
+                        break;
+                    case Key.Up:
+                        Move(Orientation.Vertical, -1);
+                        break;
+                    case Key.Down:
+                        Move(Orientation.Vertical, 1);
+                        break;
+                    default:
+                        args.Handled = false;
+                        break;
                 }
             }
         }
@@ -362,7 +386,7 @@ namespace Rekog.App.View
                 return;
             }
 
-            if (_selectContext.InitialKey is not KeyContainer initialKey || GetKeyContainer(args) is not KeyContainer key || initialKey.Container != key.Container)
+            if (_selectContext.InitialKey is not { } initialKey || GetKeyContainer(args) is not { } key || initialKey.Container != key.Container)
             {
                 return;
             }
@@ -439,11 +463,10 @@ namespace Rekog.App.View
 
             if (inflate != 0)
             {
-                selectionBox = new Rect(
-                    selectionBox.X - inflate,
+                selectionBox = new Rect(selectionBox.X - inflate,
                     selectionBox.Y - inflate,
-                    selectionBox.Width + (2 * inflate),
-                    selectionBox.Height + (2 * inflate));
+                    selectionBox.Width + 2 * inflate,
+                    selectionBox.Height + 2 * inflate);
             }
 
             return selectionBox;
@@ -470,7 +493,7 @@ namespace Rekog.App.View
 
             _dragContext = new DragContext
             {
-                InitialPosition = PlateMatrixTransform.Inverse.Transform(args.GetPosition(PlateContainer)),
+                InitialPosition = PlateMatrixTransform.Inverse!.Transform(args.GetPosition(PlateContainer)),
             };
 
             CaptureMouse();
@@ -504,7 +527,7 @@ namespace Rekog.App.View
 
             var matrix = PlateMatrixTransform.Matrix;
 
-            var position = PlateMatrixTransform.Inverse.Transform(args.GetPosition(PlateContainer));
+            var position = PlateMatrixTransform.Inverse!.Transform(args.GetPosition(PlateContainer));
             var delta = Point.Subtract(position, _dragContext.InitialPosition);
             matrix.TranslatePrepend(delta.X, delta.Y);
 
@@ -518,9 +541,9 @@ namespace Rekog.App.View
         {
             var matrix = PlateMatrixTransform.Matrix;
 
-            (var plateContainerBounds, var plateBounds, var plateOffset) = GetBounds();
-            matrix.OffsetX = ((plateContainerBounds.Width - plateBounds.Width) / 2) - plateOffset.X;
-            matrix.OffsetY = ((plateContainerBounds.Height - plateBounds.Height) / 2) - plateOffset.Y;
+            var (plateContainerBounds, plateBounds, plateOffset) = GetBounds();
+            matrix.OffsetX = (plateContainerBounds.Width - plateBounds.Width) / 2 - plateOffset.X;
+            matrix.OffsetY = (plateContainerBounds.Height - plateBounds.Height) / 2 - plateOffset.Y;
 
             PlateMatrixTransform.Matrix = matrix;
         }
@@ -537,12 +560,12 @@ namespace Rekog.App.View
             var delta = App.UnitSize * 0.5 * Math.Sign(sign) / matrix.M11;
             switch (orientation)
             {
-            case Orientation.Horizontal:
-                matrix.TranslatePrepend(delta, 0);
-                break;
-            case Orientation.Vertical:
-                matrix.TranslatePrepend(0, delta);
-                break;
+                case Orientation.Horizontal:
+                    matrix.TranslatePrepend(delta, 0);
+                    break;
+                case Orientation.Vertical:
+                    matrix.TranslatePrepend(0, delta);
+                    break;
             }
 
             PlateMatrixTransform.Matrix = matrix;
@@ -555,7 +578,7 @@ namespace Rekog.App.View
             var matrix = PlateMatrixTransform.Matrix;
 
             var factor = 1.2;
-            var scale = delta >= 0 ? factor : (1.0 / factor);
+            var scale = delta >= 0 ? factor : 1.0 / factor;
 
             matrix.ScaleAtPrepend(scale, scale, center.X, center.Y);
             if (matrix.M11 is < 0.2 or > 5.0)
@@ -573,10 +596,9 @@ namespace Rekog.App.View
             var coerced = false;
             var matrix = PlateMatrixTransform.Matrix;
 
-            (var plateContainerBounds, var plateBounds, var plateOffset) = GetBounds();
+            var (plateContainerBounds, plateBounds, plateOffset) = GetBounds();
 
-            var minVisibleSize = new Size(
-                Math.Min(plateBounds.Width, plateContainerBounds.Width),
+            var minVisibleSize = new Size(Math.Min(plateBounds.Width, plateContainerBounds.Width),
                 Math.Min(plateBounds.Height, plateContainerBounds.Height));
 
             if (plateContainerBounds.Left + minVisibleSize.Width > plateBounds.Right)
@@ -615,22 +637,33 @@ namespace Rekog.App.View
             var platePosition = new Point(0, 0);
             var plateContainerPosition = Plate.TranslatePoint(platePosition, PlateContainer);
 
-            var plateBounds = new Rect(
-                new Point(
-                    plateContainerPosition.X - (platePosition.X * scale),
-                    plateContainerPosition.Y - (platePosition.Y * scale)),
-                new Size(
-                    Plate.ActualWidth * scale,
+            var plateBounds = new Rect(new Point(plateContainerPosition.X - platePosition.X * scale,
+                    plateContainerPosition.Y - platePosition.Y * scale),
+                new Size(Plate.ActualWidth * scale,
                     Plate.ActualHeight * scale));
-            var plateContainerBounds = new Rect(
-                new Point(0, 0),
+            var plateContainerBounds = new Rect(new Point(0, 0),
                 new Size(PlateContainer.ActualWidth, PlateContainer.ActualHeight));
 
-            var plateOffset = new Point(
-                plateContainerPosition.X - ((platePosition.X * scale) + matrix.OffsetX),
-                plateContainerPosition.Y - ((platePosition.Y * scale) + matrix.OffsetY));
+            var plateOffset = new Point(plateContainerPosition.X - (platePosition.X * scale + matrix.OffsetX),
+                plateContainerPosition.Y - (platePosition.Y * scale + matrix.OffsetY));
 
             return (plateContainerBounds, plateBounds, plateOffset);
+        }
+
+        private class SelectContext
+        {
+            public Point InitialPosition { get; init; }
+
+            public Point InitialCoords { get; init; }
+
+            public KeyContainer? InitialKey { get; init; }
+
+            public List<KeyContainer> Keys { get; init; } = new List<KeyContainer>();
+        }
+
+        private class DragContext
+        {
+            public Point InitialPosition { get; init; }
         }
 
 

@@ -1,8 +1,8 @@
-﻿using Rekog.App.Extensions;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
+using Rekog.App.Extensions;
 
 namespace Rekog.App.Converters
 {
@@ -24,7 +24,7 @@ namespace Rekog.App.Converters
             return geometry.GetEnlargedPathGeometry(size, Round);
         }
 
-        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }

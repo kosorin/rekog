@@ -7,14 +7,14 @@ namespace Rekog.App.Converters
 {
     public class ContainsConverter : IMultiValueConverter
     {
-        public object? Convert(object?[] values, Type targetType, object? parameter, CultureInfo culture)
+        public object Convert(object?[] values, Type targetType, object? parameter, CultureInfo culture)
         {
             if (values.Length < 2)
             {
                 return false;
             }
 
-            if (values[0] is not object value)
+            if (values[0] is not { } value)
             {
                 return false;
             }
@@ -25,7 +25,7 @@ namespace Rekog.App.Converters
                 && values.Skip(1).Contains(values.First());
         }
 
-        public object?[] ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
+        public object[] ConvertBack(object? value, Type[] targetTypes, object? parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }

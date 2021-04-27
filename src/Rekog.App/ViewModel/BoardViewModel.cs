@@ -1,14 +1,19 @@
-﻿using Rekog.App.Model;
-using Rekog.App.ObjectModel;
-using System.Collections;
+﻿using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using Rekog.App.Model;
+using Rekog.App.ObjectModel;
 
 namespace Rekog.App.ViewModel
 {
     public class BoardViewModel : ViewModelBase<BoardModel>
     {
+        private ObservableObjectCollection<KeyViewModel> _keys = new ObservableObjectCollection<KeyViewModel>();
+        private ObservableObjectCollection<KeyViewModel> _selectedKeys = new ObservableObjectCollection<KeyViewModel>();
+        private Thickness _canvasOffset;
+        private Size _canvasSize;
+
         public BoardViewModel(BoardModel model)
             : base(model)
         {
@@ -16,7 +21,6 @@ namespace Rekog.App.ViewModel
             Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
         }
 
-        private ObservableObjectCollection<KeyViewModel> _keys = new();
         public ObservableObjectCollection<KeyViewModel> Keys
         {
             get => _keys;
@@ -29,21 +33,18 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private ObservableObjectCollection<KeyViewModel> _selectedKeys = new();
         public ObservableObjectCollection<KeyViewModel> SelectedKeys
         {
             get => _selectedKeys;
             private set => Set(ref _selectedKeys, value);
         }
 
-        private Thickness _canvasOffset;
         public Thickness CanvasOffset
         {
             get => _canvasOffset;
             private set => Set(ref _canvasOffset, value);
         }
 
-        private Size _canvasSize;
         public Size CanvasSize
         {
             get => _canvasSize;
@@ -56,9 +57,9 @@ namespace Rekog.App.ViewModel
 
             switch (args.PropertyName)
             {
-            case nameof(BoardModel.Keys):
-                Model.Keys.CollectionItemChanged -= ModelKeys_CollectionItemChanged;
-                break;
+                case nameof(BoardModel.Keys):
+                    Model.Keys.CollectionItemChanged -= ModelKeys_CollectionItemChanged;
+                    break;
             }
         }
 
@@ -68,16 +69,16 @@ namespace Rekog.App.ViewModel
 
             switch (args.PropertyName)
             {
-            case nameof(BoardModel.Keys):
-                UpdateKeys();
-                Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
-                break;
+                case nameof(BoardModel.Keys):
+                    UpdateKeys();
+                    Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
+                    break;
             }
         }
 
         private void UpdateKeys()
         {
-            Keys = new(Model.Keys.Select(x => new KeyViewModel(x)));
+            Keys = new ObservableObjectCollection<KeyViewModel>(Model.Keys.Select(x => new KeyViewModel(x)));
         }
 
         private void ModelKeys_CollectionItemChanged(IObservableObjectCollection collection, CollectionItemChangedEventArgs args)
@@ -108,25 +109,25 @@ namespace Rekog.App.ViewModel
         {
             switch (args.PropertyName)
             {
-            case nameof(KeyViewModel.ActualBounds):
-                UpdateCanvas();
-                break;
-            case nameof(KeyViewModel.IsSelected):
-                if (item is KeyViewModel key)
-                {
-                    if (key.IsSelected)
+                case nameof(KeyViewModel.ActualBounds):
+                    UpdateCanvas();
+                    break;
+                case nameof(KeyViewModel.IsSelected):
+                    if (item is KeyViewModel key)
                     {
-                        if (!SelectedKeys.Contains(key))
+                        if (key.IsSelected)
                         {
-                            SelectedKeys.Add(key);
+                            if (!SelectedKeys.Contains(key))
+                            {
+                                SelectedKeys.Add(key);
+                            }
+                        }
+                        else
+                        {
+                            SelectedKeys.Remove(key);
                         }
                     }
-                    else
-                    {
-                        SelectedKeys.Remove(key);
-                    }
-                }
-                break;
+                    break;
             }
         }
 

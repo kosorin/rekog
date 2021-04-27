@@ -1,9 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Rekog.App.View
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private bool _changingKleRawData;
 
@@ -52,7 +51,7 @@ namespace Rekog.App.View
             {
                 _changingKleRawData = true;
 
-                KleRawData.Text = KleRawDataList.SelectedItem is ComboBoxItem item && item.Tag is string text
+                KleRawData.Text = KleRawDataList.SelectedItem is ComboBoxItem { Tag: string text, }
                     ? text
                     : null;
                 if (KleParseButton.Command.CanExecute(KleParseButton.CommandParameter))

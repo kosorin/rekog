@@ -14,7 +14,7 @@ namespace Rekog.App.Converters
     [ContentWrapper(typeof(ValueConverterChainItemCollection))]
     public class ValueConverterChain : IValueConverter
     {
-        public ValueConverterChainItemCollection Converters { get; } = new();
+        public ValueConverterChainItemCollection Converters { get; } = new ValueConverterChainItemCollection();
 
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
@@ -36,23 +36,22 @@ namespace Rekog.App.Converters
 
     public class ValueConverterChainItem : DependencyObject
     {
+        public static readonly DependencyProperty ConverterProperty =
+            DependencyProperty.Register(nameof(Converter), typeof(IValueConverter), typeof(ValueConverterChainItem), new PropertyMetadata(null));
+
+        public static readonly DependencyProperty ConverterParameterProperty =
+            DependencyProperty.Register(nameof(ConverterParameter), typeof(object), typeof(ValueConverterChainItem), new PropertyMetadata(null));
+
         public IValueConverter? Converter
         {
             get => (IValueConverter?)GetValue(ConverterProperty);
             set => SetValue(ConverterProperty, value);
         }
 
-        public static readonly DependencyProperty ConverterProperty =
-            DependencyProperty.Register(nameof(Converter), typeof(IValueConverter), typeof(ValueConverterChainItem), new PropertyMetadata(null));
-
-
         public object? ConverterParameter
         {
             get => (object?)GetValue(ConverterParameterProperty);
             set => SetValue(ConverterParameterProperty, value);
         }
-
-        public static readonly DependencyProperty ConverterParameterProperty =
-            DependencyProperty.Register(nameof(ConverterParameter), typeof(object), typeof(ValueConverterChainItem), new PropertyMetadata(null));
     }
 }

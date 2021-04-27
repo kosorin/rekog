@@ -1,24 +1,25 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Rekog.App.Model.Kle
 {
     public static class KleParser
     {
-        private static readonly int ValueCount = 12;
+        private const int ValueCount = 12;
+
         private static readonly int?[,] ValueMap =
         {
-            { 0, 6, 2, 8, 9, 11, 3, 5, 1, 4, 7, 10 },
-            { 1, 7, null, null, 9, 11, 4, null, null, null, null, 10 },
-            { 3, null, 5, null, 9, 11, null, null, 4, null, null, 10 },
-            { 4, null, null, null, 9, 11, null, null, null, null, null, 10 },
-            { 0, 6, 2, 8, 10, null, 3, 5, 1, 4, 7, null },
-            { 1, 7, null, null, 10, null, 4, null, null, null, null, null },
-            { 3, null, 5, null, 10, null, null, null, 4, null, null, null },
-            { 4, null, null, null, 10, null, null, null, null, null, null, null },
+            { 0, 6, 2, 8, 9, 11, 3, 5, 1, 4, 7, 10, },
+            { 1, 7, null, null, 9, 11, 4, null, null, null, null, 10, },
+            { 3, null, 5, null, 9, 11, null, null, 4, null, null, 10, },
+            { 4, null, null, null, 9, 11, null, null, null, null, null, 10, },
+            { 0, 6, 2, 8, 10, null, 3, 5, 1, 4, 7, null, },
+            { 1, 7, null, null, 10, null, 4, null, null, null, null, null, },
+            { 3, null, 5, null, 10, null, null, null, 4, null, null, null, },
+            { 4, null, null, null, 10, null, null, null, null, null, null, null, },
         };
 
         public static List<KleKey> ParseRawData(string rawDataText)
@@ -54,11 +55,11 @@ namespace Rekog.App.Model.Kle
             var cluster = (x: 0d, y: 0d);
             var align = 4;
 
-            foreach (var (rowIndex, rowData) in rawData.Select((x, i) => (i, x)))
+            foreach (var (_, rowData) in rawData.Select((x, i) => (i, x)))
             {
                 if (rowData is JArray)
                 {
-                    foreach (var (keyIndex, keyData) in rowData.Select((x, i) => (i, x)))
+                    foreach (var (_, keyData) in rowData.Select((x, i) => (i, x)))
                     {
                         if (keyData is JObject properties)
                         {
@@ -98,10 +99,7 @@ namespace Rekog.App.Model.Kle
                                     currentKey.TextSizes[i] = value;
                                 }
                             });
-                            TryUse(properties, "fa", (int[] value) =>
-                            {
-                                currentKey.TextSizes = GetValues(value.Select(x => x > 0 ? x : (int?)null).ToArray());
-                            });
+                            TryUse(properties, "fa", (int[] value) => currentKey.TextSizes = GetValues(value.Select(x => x > 0 ? x : (int?)null).ToArray()));
 
                             TryUse(properties, "x", (double value) => currentKey.X += value);
                             TryUse(properties, "y", (double value) => currentKey.Y += value);
@@ -192,7 +190,7 @@ namespace Rekog.App.Model.Kle
             var result = new T[ValueCount];
             for (var i = 0; i < values.Length; ++i)
             {
-                if (ValueMap[align, i] is int index)
+                if (ValueMap[align, i] is { } index)
                 {
                     result[index] = values[i];
                 }

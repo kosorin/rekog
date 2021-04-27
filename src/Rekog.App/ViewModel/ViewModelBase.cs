@@ -1,6 +1,6 @@
-﻿using Rekog.App.Model;
+﻿using System.ComponentModel;
+using Rekog.App.Model;
 using Rekog.App.ObjectModel;
-using System.ComponentModel;
 
 namespace Rekog.App.ViewModel
 {

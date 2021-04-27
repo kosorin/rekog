@@ -6,9 +6,6 @@ namespace Rekog.App.ObjectModel
 {
     public abstract class ObservableObject : IObservableObject
     {
-        public event PropertyChangingEventHandler? PropertyChanging;
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         protected virtual void OnPropertyChanging(string? propertyName)
         {
             PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
@@ -38,47 +35,46 @@ namespace Rekog.App.ObjectModel
             CollectionItemChangedEventHandler? onCollectionItemChanged = null,
             CollectionItemPropertyChangedEventHandler? onCollectionItemPropertyChanged = null,
             [CallerMemberName] string? propertyName = null)
-            where T : class, IObservableObjectCollection?
+            where T : class, IObservableObjectCollection
         {
             if (EqualityComparer<T>.Default.Equals(field, value))
             {
                 return false;
             }
 
-            var oldValue = field;
-
             OnPropertyChanging(propertyName);
+            var oldValue = field;
             field = value;
+            var newValue = field;
             OnPropertyChanged(propertyName);
 
-            var newValue = field;
-
-            if (oldValue != null)
+            // Unregister events
+            if (onCollectionItemChanged != null)
             {
-                if (onCollectionItemChanged != null)
-                {
-                    oldValue.CollectionItemChanged -= onCollectionItemChanged;
-                }
-                if (onCollectionItemPropertyChanged != null)
-                {
-                    oldValue.CollectionItemPropertyChanged -= onCollectionItemPropertyChanged;
-                }
+                oldValue.CollectionItemChanged -= onCollectionItemChanged;
             }
-            if (newValue != null)
+            if (onCollectionItemPropertyChanged != null)
             {
-                if (onCollectionItemChanged != null)
-                {
-                    newValue.CollectionItemChanged -= onCollectionItemChanged;
-                    newValue.CollectionItemChanged += onCollectionItemChanged;
-                }
-                if (onCollectionItemPropertyChanged != null)
-                {
-                    newValue.CollectionItemPropertyChanged -= onCollectionItemPropertyChanged;
-                    newValue.CollectionItemPropertyChanged += onCollectionItemPropertyChanged;
-                }
+                oldValue.CollectionItemPropertyChanged -= onCollectionItemPropertyChanged;
+            }
+
+            // Register events
+            if (onCollectionItemChanged != null)
+            {
+                newValue.CollectionItemChanged -= onCollectionItemChanged;
+                newValue.CollectionItemChanged += onCollectionItemChanged;
+            }
+            if (onCollectionItemPropertyChanged != null)
+            {
+                newValue.CollectionItemPropertyChanged -= onCollectionItemPropertyChanged;
+                newValue.CollectionItemPropertyChanged += onCollectionItemPropertyChanged;
             }
 
             return true;
         }
+
+        public event PropertyChangingEventHandler? PropertyChanging;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
     }
 }

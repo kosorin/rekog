@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Rekog.App.Model.Kle
 {
@@ -21,6 +22,7 @@ namespace Rekog.App.Model.Kle
 
         public double Height2 { get; set; }
 
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         public bool IsSimple => X2 == 0 && Y2 == 0 && Width == Width2 && Height == Height2;
 
 

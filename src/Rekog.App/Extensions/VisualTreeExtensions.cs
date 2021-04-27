@@ -5,7 +5,7 @@ namespace Rekog.App.Extensions
 {
     public static class VisualTreeExtensions
     {
-        public static T? FindChild<T>(this DependencyObject parent, string? name = null) 
+        public static T? FindChild<T>(this DependencyObject parent, string? name = null)
             where T : FrameworkElement
         {
             T? child = null;
@@ -30,7 +30,7 @@ namespace Rekog.App.Extensions
             return child;
         }
 
-        public static T? FindParent<T>(this DependencyObject child, string? name = null) 
+        public static T? FindParent<T>(this DependencyObject child, string? name = null)
             where T : FrameworkElement
         {
             T? parent = null;
@@ -45,10 +45,8 @@ namespace Rekog.App.Extensions
                     {
                         break;
                     }
-                    else
-                    {
-                        parent = null;
-                    }
+
+                    parent = null;
                 }
 
                 current = current.Parent as FrameworkElement;

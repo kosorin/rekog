@@ -1,7 +1,7 @@
-﻿using Rekog.App.Model;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
+using Rekog.App.Model;
 
 namespace Rekog.App.ViewModel
 {
@@ -10,69 +10,70 @@ namespace Rekog.App.ViewModel
         private static readonly RotateTransform EmptyRotateTransform = new RotateTransform();
         private static readonly Geometry EmptyGeometry = new PathGeometry();
 
+        private bool _isSelected;
+        private Point _position;
+        private Size _size;
+        private RotateTransform _rotateTransform = EmptyRotateTransform;
+        private Rect _bounds;
+        private Geometry _shape = EmptyGeometry;
+        private Geometry _steppedShape = EmptyGeometry;
+        private Rect _actualBounds;
+        private Geometry _actualShape = EmptyGeometry;
+
         public KeyViewModel(KeyModel model)
             : base(model)
         {
             UpdateLayout();
         }
 
-        private bool _isSelected;
         public bool IsSelected
         {
             get => _isSelected;
             set => Set(ref _isSelected, value);
         }
 
-        private Point _position;
         public Point Position
         {
             get => _position;
             private set => Set(ref _position, value);
         }
 
-        private Size _size;
         public Size Size
         {
             get => _size;
             private set => Set(ref _size, value);
         }
 
-        private RotateTransform _rotateTransform = EmptyRotateTransform;
         public RotateTransform RotateTransform
         {
             get => _rotateTransform;
             private set => Set(ref _rotateTransform, value);
         }
 
-        private Rect _bounds;
         public Rect Bounds
         {
             get => _bounds;
             private set => Set(ref _bounds, value);
         }
 
-        private Geometry _shape = EmptyGeometry;
         public Geometry Shape
         {
             get => _shape;
             private set => Set(ref _shape, value);
         }
 
-        private Geometry _steppedShape = EmptyGeometry;
         public Geometry SteppedShape
         {
             get => _steppedShape;
             private set => Set(ref _steppedShape, value);
         }
 
-        private Rect _actualBounds;
         public Rect ActualBounds
         {
             get => _actualBounds;
             private set => Set(ref _actualBounds, value);
         }
 
-        private Geometry _actualShape = EmptyGeometry;
         public Geometry ActualShape
         {
             get => _actualShape;
@@ -85,18 +86,18 @@ namespace Rekog.App.ViewModel
 
             switch (args.PropertyName)
             {
-            case nameof(KeyModel.X):
-            case nameof(KeyModel.Y):
-            case nameof(KeyModel.Width):
-            case nameof(KeyModel.Height):
-            case nameof(KeyModel.RotationAngle):
-            case nameof(KeyModel.RotationOriginX):
-            case nameof(KeyModel.RotationOriginY):
-            case nameof(KeyModel.Shape):
-            case nameof(KeyModel.SteppedShape):
-            case nameof(KeyModel.IsStepped):
-                UpdateLayout();
-                break;
+                case nameof(KeyModel.X):
+                case nameof(KeyModel.Y):
+                case nameof(KeyModel.Width):
+                case nameof(KeyModel.Height):
+                case nameof(KeyModel.RotationAngle):
+                case nameof(KeyModel.RotationOriginX):
+                case nameof(KeyModel.RotationOriginY):
+                case nameof(KeyModel.Shape):
+                case nameof(KeyModel.SteppedShape):
+                case nameof(KeyModel.IsStepped):
+                    UpdateLayout();
+                    break;
             }
         }
 

@@ -1,5 +1,5 @@
-﻿using Rekog.App.ObjectModel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Rekog.App.ObjectModel;
 
 namespace Rekog.App.Model
 {

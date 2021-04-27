@@ -62,8 +62,6 @@ namespace Rekog.App.ObjectModel
             CommandManager.RequerySuggested += CommandManager_RequerySuggested;
         }
 
-        public event EventHandler? CanExecuteChanged;
-
         public void RaiseCanExecuteChanged()
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
@@ -93,5 +91,7 @@ namespace Rekog.App.ObjectModel
         {
             RaiseCanExecuteChanged();
         }
+
+        public event EventHandler? CanExecuteChanged;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -16,10 +17,6 @@ namespace Rekog.App.ObjectModel
         {
             Subscribe(Items);
         }
-
-        public event CollectionItemChangedEventHandler? CollectionItemChanged;
-
-        public event CollectionItemPropertyChangedEventHandler? CollectionItemPropertyChanged;
 
         protected override void InsertItem(int index, T item)
         {
@@ -64,18 +61,20 @@ namespace Rekog.App.ObjectModel
 
         private void Subscribe(T item)
         {
-            Subscribe(new[] { item });
+            Subscribe(new[] { item, });
         }
 
         private void Unsubscribe(T item)
         {
-            Unsubscribe(new[] { item });
+            Unsubscribe(new[] { item, });
         }
 
         private void Subscribe(IEnumerable<T> items)
         {
-            OnCollectionItemChanged(new CollectionItemChangedEventArgs(new List<T>(), items.ToList()));
-            foreach (var item in items)
+            var newItems = items.ToArray();
+
+            OnCollectionItemChanged(new CollectionItemChangedEventArgs(Array.Empty<T>(), newItems));
+            foreach (var item in newItems)
             {
                 item.PropertyChanged -= Item_PropertyChanged;
                 item.PropertyChanged += Item_PropertyChanged;
@@ -84,11 +83,13 @@ namespace Rekog.App.ObjectModel
 
         private void Unsubscribe(IEnumerable<T> items)
         {
-            foreach (var item in items)
+            var oldItems = items.ToArray();
+
+            foreach (var item in oldItems)
             {
                 item.PropertyChanged -= Item_PropertyChanged;
             }
-            OnCollectionItemChanged(new CollectionItemChangedEventArgs(items.ToList(), new List<T>()));
+            OnCollectionItemChanged(new CollectionItemChangedEventArgs(oldItems, Array.Empty<T>()));
         }
 
         private void Item_PropertyChanged(object? sender, PropertyChangedEventArgs args)
@@ -98,5 +99,9 @@ namespace Rekog.App.ObjectModel
                 OnCollectionItemPropertyChanged(item, new CollectionItemPropertyChangedEventArgs(args.PropertyName));
             }
         }
+
+        public event CollectionItemChangedEventHandler? CollectionItemChanged;
+
+        public event CollectionItemPropertyChangedEventHandler? CollectionItemPropertyChanged;
     }
 }

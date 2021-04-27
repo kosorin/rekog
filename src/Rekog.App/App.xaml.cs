@@ -1,8 +1,6 @@
-﻿using System.Windows;
-
-namespace Rekog.App
+﻿namespace Rekog.App
 {
-    public partial class App : Application
+    public partial class App
     {
         public static double UnitSize => (double)Current.Resources["UnitSize"];
     }

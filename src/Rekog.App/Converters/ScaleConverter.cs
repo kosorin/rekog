@@ -16,7 +16,7 @@ namespace Rekog.App.Converters
     {
         public double Size { get; init; }
 
-        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             var scale = parameter is double s ? s : 1d;
 
@@ -30,7 +30,7 @@ namespace Rekog.App.Converters
             };
         }
 
-        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotSupportedException();
         }
@@ -52,9 +52,7 @@ namespace Rekog.App.Converters
 
         private object ConvertPointCollection(PointCollection value, double scale, Type targetType)
         {
-            return new PointCollection(value
-                .Cast<Point>()
-                .Select(p => new Point(p.X * scale * Size, p.Y * scale * Size)));
+            return new PointCollection(value.Select(p => new Point(p.X * scale * Size, p.Y * scale * Size)));
         }
 
         private object ConvertGeometry(Geometry value, double scale, Type targetType)
@@ -62,7 +60,7 @@ namespace Rekog.App.Converters
             var scaleTransform = new ScaleTransform(scale * Size, scale * Size);
 
             var geometry = value.Clone();
-            if (geometry.Transform is Transform transform)
+            if (geometry.Transform is { } transform)
             {
                 var transformGroup = new TransformGroup();
                 transformGroup.Children.Add(transform);

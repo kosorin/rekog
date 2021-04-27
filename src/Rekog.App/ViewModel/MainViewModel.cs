@@ -1,19 +1,20 @@
-﻿using Rekog.App.Model;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Rekog.App.Model;
 using Rekog.App.Model.Kle;
 using Rekog.App.ObjectModel;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Rekog.App.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        private BoardViewModel _board = new BoardViewModel(new BoardModel());
+
         public MainViewModel()
         {
             ParseKleRawDataCommand = new DelegateCommand<string>(ParseKleRawData);
         }
 
-        private BoardViewModel _board = new(new());
         public BoardViewModel Board
         {
             get => _board;
@@ -38,18 +39,16 @@ namespace Rekog.App.ViewModel
             {
                 if (string.IsNullOrWhiteSpace(kleRawData))
                 {
-                    return new();
+                    return new List<KleKey>();
                 }
-                else
+
+                try
                 {
-                    try
-                    {
-                        return KleParser.ParseRawData(kleRawData);
-                    }
-                    catch
-                    {
-                        return null;
-                    }
+                    return KleParser.ParseRawData(kleRawData);
+                }
+                catch
+                {
+                    return null;
                 }
             }
         }
