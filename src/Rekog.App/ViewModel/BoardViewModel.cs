@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -11,15 +12,23 @@ namespace Rekog.App.ViewModel
     {
         private ObservableObjectCollection<KeyViewModel> _keys = new ObservableObjectCollection<KeyViewModel>();
         private ObservableObjectCollection<KeyViewModel> _selectedKeys = new ObservableObjectCollection<KeyViewModel>();
+        private ObservableObjectCollection<KeyModel> _selectedKeyModels = new ObservableObjectCollection<KeyModel>();
         private Thickness _canvasOffset;
         private Size _canvasSize;
 
         public BoardViewModel(BoardModel model)
             : base(model)
         {
+            AddKeyCommand = new DelegateCommand(AddKey);
+            DeleteKeyCommand = new DelegateCommand<KeyViewModel>(DeleteKey, CanDeleteKey);
+
             UpdateKeys();
             Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
         }
+
+        public DelegateCommand AddKeyCommand { get; }
+
+        public DelegateCommand<KeyViewModel> DeleteKeyCommand { get; }
 
         public ObservableObjectCollection<KeyViewModel> Keys
         {
@@ -36,7 +45,11 @@ namespace Rekog.App.ViewModel
         public ObservableObjectCollection<KeyViewModel> SelectedKeys
         {
             get => _selectedKeys;
-            private set => Set(ref _selectedKeys, value);
+        }
+
+        public ObservableObjectCollection<KeyModel> SelectedKeyModels
+        {
+            get => _selectedKeyModels;
         }
 
         public Thickness CanvasOffset
@@ -121,10 +134,18 @@ namespace Rekog.App.ViewModel
                             {
                                 SelectedKeys.Add(key);
                             }
+                            if (key.Model is { } keyModel && !SelectedKeyModels.Contains(keyModel))
+                            {
+                                SelectedKeyModels.Add(keyModel);
+                            }
                         }
                         else
                         {
                             SelectedKeys.Remove(key);
+                            if (key.Model is { } keyModel)
+                            {
+                                SelectedKeyModels.Remove(keyModel);
+                            }
                         }
                     }
                     break;
@@ -147,6 +168,24 @@ namespace Rekog.App.ViewModel
 
             CanvasOffset = new Thickness(-left, -top, left, top);
             CanvasSize = new Size(right - left, bottom - top);
+        }
+
+        private void AddKey()
+        {
+            Model.Keys.Add(new KeyModel
+            {
+                Y = Keys.OrderByDescending(x => x.ActualBounds.Bottom).FirstOrDefault()?.ActualBounds.Bottom ?? 0,
+            });
+        }
+
+        private void DeleteKey(KeyViewModel? obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool CanDeleteKey(KeyViewModel? arg)
+        {
+            throw new NotImplementedException();
         }
     }
 }

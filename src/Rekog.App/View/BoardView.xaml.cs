@@ -666,7 +666,6 @@ namespace Rekog.App.View
             public Point InitialPosition { get; init; }
         }
 
-
         private class KeyContainer
         {
             public KeyContainer(DependencyObject container)
