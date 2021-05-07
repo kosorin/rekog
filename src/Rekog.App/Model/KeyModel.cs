@@ -138,18 +138,35 @@ namespace Rekog.App.Model
         [Browsable(false)]
         public List<KeyLabelModel> Labels { get; set; } = new List<KeyLabelModel>();
 
-        public Geometry GetShapeGeometry()
+        public PathGeometry GetShapeGeometry()
         {
-            return string.IsNullOrWhiteSpace(Shape) ? GetDefaultShapeGeometry() : Geometry.Parse(Shape);
+            return GetShapeGeometry(Shape);
         }
 
-        public Geometry GetSteppedShapeGeometry()
+        public PathGeometry GetSteppedShapeGeometry()
         {
             if (!IsStepped)
             {
                 return GetShapeGeometry();
             }
-            return string.IsNullOrWhiteSpace(SteppedShape) ? GetDefaultShapeGeometry() : Geometry.Parse(SteppedShape);
+            return GetShapeGeometry(SteppedShape);
+        }
+
+        private PathGeometry GetShapeGeometry(string? shape)
+        {
+            var geometry = string.IsNullOrWhiteSpace(shape) ? GetDefaultShapeGeometry() : Geometry.Parse(shape);
+            var pathGeometry = geometry switch
+            {
+                PathGeometry pg => pg,
+                Geometry g => g.GetFlattenedPathGeometry(),
+            };
+
+            while (pathGeometry.Figures.Count > 1)
+            {
+                pathGeometry.Figures.RemoveAt(1);
+            }
+
+            return pathGeometry;
         }
 
         private Geometry GetDefaultShapeGeometry()
