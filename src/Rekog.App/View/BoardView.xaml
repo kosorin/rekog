@@ -241,6 +241,7 @@
                                       Width="{Binding Data.Bounds.Width, ElementName=SteppedPath}"
                                       Height="{Binding Data.Bounds.Height, ElementName=SteppedPath}"
                                       HorizontalAlignment="Stretch"
+                                      IsHitTestVisible="False"
                                       VerticalAlignment="Stretch"
                                       RenderTransform="{StaticResource KeySteppedTransform}">
                                     <ContentPresenter Content="{Binding}" Visibility="Collapsed" />
