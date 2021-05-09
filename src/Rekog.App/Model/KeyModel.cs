@@ -130,7 +130,7 @@ namespace Rekog.App.Model
             set => Set(ref _isGhosted, value);
         }
 
-        [Category("Legend")]
+        [Browsable(false)]
         public ObservableObjectCollection<KeyLabelModel> Labels { get; set; } = new ObservableObjectCollection<KeyLabelModel>();
 
         public PathGeometry GetShapeGeometry()

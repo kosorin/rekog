@@ -286,6 +286,10 @@
                                      SelectedObjects="{Binding Board.SelectedKeyModels}"
                                      TabVisibility="Collapsed" />
 
+                    <pt:PropertyGrid Margin="8"
+                                     SelectedObject="{Binding Board.SelectedKeyModels[0].Labels[0]}"
+                                     TabVisibility="Collapsed" />
+
                 </StackPanel>
             </ScrollViewer>
         </Grid>
