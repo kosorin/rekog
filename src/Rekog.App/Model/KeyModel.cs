@@ -24,7 +24,6 @@ namespace Rekog.App.Model
         private bool _isHoming;
         private bool _isDecal;
         private bool _isGhosted;
-        private bool _isStepped;
 
         [Spinnable(0.05, 0.25, -100, 100)]
         [Category("Position")]
@@ -131,13 +130,6 @@ namespace Rekog.App.Model
             set => Set(ref _isGhosted, value);
         }
 
-        [Category("Appearance")]
-        public bool IsStepped
-        {
-            get => _isStepped;
-            set => Set(ref _isStepped, value);
-        }
-
         [Category("Legend")]
         public ObservableObjectCollection<KeyLabelModel> Labels { get; set; } = new ObservableObjectCollection<KeyLabelModel>();
 
@@ -150,7 +142,7 @@ namespace Rekog.App.Model
         {
             var outerShapeGeometry = GetShapeGeometry();
 
-            if (!IsStepped)
+            if (string.IsNullOrWhiteSpace(SteppedShape))
             {
                 return outerShapeGeometry;
             }
@@ -200,13 +192,12 @@ namespace Rekog.App.Model
                 RotationOriginY = kleKey.RotationY,
 
                 Shape = kleKey.IsSimple ? null : GetShapePathGeometry(kleKey).ToString(CultureInfo.InvariantCulture),
-                SteppedShape = kleKey.IsSimple ? null : GetSteppedShapePathGeometry(kleKey).ToString(CultureInfo.InvariantCulture),
+                SteppedShape = kleKey.IsSimple || !kleKey.IsStepped ? null : GetSteppedShapePathGeometry(kleKey).ToString(CultureInfo.InvariantCulture),
 
                 Color = kleKey.Color,
                 IsHoming = kleKey.IsHoming,
                 IsDecal = kleKey.IsDecal,
                 IsGhosted = kleKey.IsGhosted,
-                IsStepped = kleKey.IsStepped,
             };
 
             for (var i = 0; i < 9; i++)
