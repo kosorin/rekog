@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rekog.App.Converters;
+using System;
 using System.Windows;
 
 namespace Rekog.App.Model
@@ -60,6 +61,7 @@ namespace Rekog.App.Model
             set => Set(ref _size, Math.Round(value, DoublePrecision));
         }
 
+        [PropertyTools.DataAnnotations.Converter(typeof(HexToColorConverter))]
         public string Color
         {
             get => _color;

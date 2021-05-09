@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 using PropertyTools.DataAnnotations;
+using Rekog.App.Converters;
 using Rekog.App.Model.Kle;
 using Rekog.App.ObjectModel;
 
@@ -19,7 +20,7 @@ namespace Rekog.App.Model
         private double _rotationOriginY;
         private string? _shape;
         private string? _steppedShape;
-        private string _color = string.Empty;
+        private string _color = "#FCFCFC";
         private bool _isHoming;
         private bool _isDecal;
         private bool _isGhosted;
@@ -99,6 +100,7 @@ namespace Rekog.App.Model
         }
 
         [Category("Appearance")]
+        [Converter(typeof(HexToColorConverter))]
         public string Color
         {
             get => _color;

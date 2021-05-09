@@ -17,9 +17,9 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*" />
             <ColumnDefinition Width="8" />
-            <ColumnDefinition Width="300"
+            <ColumnDefinition Width="400"
                               MinWidth="150"
-                              MaxWidth="1000" />
+                              MaxWidth="1200" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="2">
             <Grid.Resources>
@@ -279,12 +279,12 @@
                             Content="Add key" />
 
                     <pt:PropertyGrid Margin="8"
+                                     SelectedObject="{Binding Board.Model}"
+                                     TabVisibility="Collapsed" />
+
+                    <pt:PropertyGrid Margin="8"
                                      SelectedObjects="{Binding Board.SelectedKeyModels}"
-                                     TabVisibility="Collapsed">
-                        <pt:PropertyGrid.SelectedObject>
-                            <m:KeyModel />
-                        </pt:PropertyGrid.SelectedObject>
-                    </pt:PropertyGrid>
+                                     TabVisibility="Collapsed" />
 
                 </StackPanel>
             </ScrollViewer>
