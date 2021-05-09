@@ -11,8 +11,6 @@ namespace Rekog.App.ViewModel
     public class BoardViewModel : ViewModelBase<BoardModel>
     {
         private ObservableObjectCollection<KeyViewModel> _keys = new ObservableObjectCollection<KeyViewModel>();
-        private ObservableObjectCollection<KeyViewModel> _selectedKeys = new ObservableObjectCollection<KeyViewModel>();
-        private ObservableObjectCollection<KeyModel> _selectedKeyModels = new ObservableObjectCollection<KeyModel>();
         private Thickness _canvasOffset;
         private Size _canvasSize;
 
@@ -23,7 +21,6 @@ namespace Rekog.App.ViewModel
             DeleteKeyCommand = new DelegateCommand<KeyViewModel>(DeleteKey, CanDeleteKey);
 
             UpdateKeys();
-            Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
         }
 
         public DelegateCommand AddKeyCommand { get; }
@@ -42,15 +39,9 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        public ObservableObjectCollection<KeyViewModel> SelectedKeys
-        {
-            get => _selectedKeys;
-        }
+        public ObservableObjectCollection<KeyViewModel> SelectedKeys { get; } = new ObservableObjectCollection<KeyViewModel>();
 
-        public ObservableObjectCollection<KeyModel> SelectedKeyModels
-        {
-            get => _selectedKeyModels;
-        }
+        public ObservableObjectCollection<KeyModel> SelectedKeyModels { get; } = new ObservableObjectCollection<KeyModel>();
 
         public Thickness CanvasOffset
         {
@@ -84,14 +75,14 @@ namespace Rekog.App.ViewModel
             {
                 case nameof(BoardModel.Keys):
                     UpdateKeys();
-                    Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
                     break;
             }
         }
 
         private void UpdateKeys()
         {
-            Keys = new ObservableObjectCollection<KeyViewModel>(Model.Keys.Select(x => new KeyViewModel(x)));
+            Keys = new ObservableObjectCollection<KeyViewModel>(Model.Keys.Where(x => !x.IsDecal).Select(x => new KeyViewModel(x)));
+            Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
         }
 
         private void ModelKeys_CollectionItemChanged(IObservableObjectCollection collection, CollectionItemChangedEventArgs args)
@@ -120,32 +111,34 @@ namespace Rekog.App.ViewModel
 
         private void Keys_CollectionItemPropertyChanged(object item, CollectionItemPropertyChangedEventArgs args)
         {
+            if (item is not KeyViewModel key)
+            {
+                return;
+            }
+
             switch (args.PropertyName)
             {
                 case nameof(KeyViewModel.ActualBounds):
                     UpdateCanvas();
                     break;
                 case nameof(KeyViewModel.IsSelected):
-                    if (item is KeyViewModel key)
+                    if (key.IsSelected)
                     {
-                        if (key.IsSelected)
+                        if (!SelectedKeys.Contains(key))
                         {
-                            if (!SelectedKeys.Contains(key))
-                            {
-                                SelectedKeys.Add(key);
-                            }
-                            if (key.Model is { } keyModel && !SelectedKeyModels.Contains(keyModel))
-                            {
-                                SelectedKeyModels.Add(keyModel);
-                            }
+                            SelectedKeys.Add(key);
                         }
-                        else
+                        if (key.Model is { } keyModel && !SelectedKeyModels.Contains(keyModel))
                         {
-                            SelectedKeys.Remove(key);
-                            if (key.Model is { } keyModel)
-                            {
-                                SelectedKeyModels.Remove(keyModel);
-                            }
+                            SelectedKeyModels.Add(keyModel);
+                        }
+                    }
+                    else
+                    {
+                        SelectedKeys.Remove(key);
+                        if (key.Model is { } keyModel)
+                        {
+                            SelectedKeyModels.Remove(keyModel);
                         }
                     }
                     break;

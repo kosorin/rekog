@@ -8,18 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Fonts\FontAwesome.otf" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="PropertyTools.Wpf" Version="3.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Fonts\FontAwesome.otf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
   </ItemGroup>
 
 </Project>

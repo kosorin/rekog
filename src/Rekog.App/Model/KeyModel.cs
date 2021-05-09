@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 using PropertyTools.DataAnnotations;
 using Rekog.App.Model.Kle;
+using Rekog.App.ObjectModel;
 
 namespace Rekog.App.Model
 {
     public class KeyModel : ModelBase
     {
-        private const int DoublePrecision = 2;
-
         private double _x;
         private double _y;
         private double _width = 1;
@@ -108,6 +106,7 @@ namespace Rekog.App.Model
         }
 
         [Category("Misc")]
+        [Browsable(false)]
         public bool IsHoming
         {
             get => _isHoming;
@@ -115,6 +114,7 @@ namespace Rekog.App.Model
         }
 
         [Category("Misc")]
+        [Browsable(false)]
         public bool IsDecal
         {
             get => _isDecal;
@@ -122,6 +122,7 @@ namespace Rekog.App.Model
         }
 
         [Category("Misc")]
+        [Browsable(false)]
         public bool IsGhosted
         {
             get => _isGhosted;
@@ -135,26 +136,35 @@ namespace Rekog.App.Model
             set => Set(ref _isStepped, value);
         }
 
-        [Browsable(false)]
-        public List<KeyLabelModel> Labels { get; set; } = new List<KeyLabelModel>();
+        [Category("Legend")]
+        public ObservableObjectCollection<KeyLabelModel> Labels { get; set; } = new ObservableObjectCollection<KeyLabelModel>();
 
         public PathGeometry GetShapeGeometry()
         {
-            return GetShapeGeometry(Shape);
+            return GetShapeGeometryCore(Shape);
         }
 
         public PathGeometry GetSteppedShapeGeometry()
         {
+            var outerShapeGeometry = GetShapeGeometry();
+
             if (!IsStepped)
             {
-                return GetShapeGeometry();
+                return outerShapeGeometry;
             }
-            return GetShapeGeometry(SteppedShape);
+
+            return GetShapeGeometryCore(SteppedShape, outerShapeGeometry);
         }
 
-        private PathGeometry GetShapeGeometry(string? shape)
+        private PathGeometry GetShapeGeometryCore(string? shape, Geometry? outerShapeGeometry = null)
         {
             var geometry = string.IsNullOrWhiteSpace(shape) ? GetDefaultShapeGeometry() : Geometry.Parse(shape);
+
+            if (outerShapeGeometry != null)
+            {
+                geometry = new CombinedGeometry(GeometryCombineMode.Intersect, geometry, outerShapeGeometry);
+            }
+
             var pathGeometry = geometry switch
             {
                 PathGeometry pg => pg,
@@ -199,17 +209,13 @@ namespace Rekog.App.Model
 
             for (var i = 0; i < 9; i++)
             {
-                if (kleKey.Labels[i] is not { } text)
-                {
-                    continue;
-                }
-
                 var label = new KeyLabelModel
                 {
-                    Position = i,
-                    Size = kleKey.TextSizes[i] ?? kleKey.DefaultTextSize,
+                    HorizontalAlignment = (System.Windows.HorizontalAlignment)(i % 3),
+                    VerticalAlignment = (VerticalAlignment)(i / 3),
+                    Size = 1.4 * (6 + 3 * (kleKey.TextSizes[i] ?? kleKey.DefaultTextSize)),
                     Color = kleKey.TextColors[i] ?? kleKey.DefaultTextColor,
-                    Text = text,
+                    Value = kleKey.Labels[i] ?? string.Empty,
                 };
                 key.Labels.Add(label);
             }

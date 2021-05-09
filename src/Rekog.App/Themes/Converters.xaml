@@ -5,10 +5,13 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <cx:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
     <cx:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter" />
-
+    <cx:HorizontalAlignmentToTextAlignmentConverter x:Key="HorizontalAlignmentToTextAlignmentConverter" />
+    <cx:LightenConverter x:Key="LightenConverter" />
     <cx:MultConverter x:Key="MultConverter" />
     <cx:ContainsConverter x:Key="ContainsConverter" />
     <cx:EnlargedGeometryConverter x:Key="EnlargedGeometryConverter" Round="False" />
     <cx:EnlargedGeometryConverter x:Key="EnlargedRoundGeometryConverter" Round="True" />
+    <cx:BooleanToFontWeightConverter x:Key="BooleanToFontWeightConverter" />
+    <cx:BooleanToFontStyleConverter x:Key="BooleanToFontStyleConverter" />
 
 </ResourceDictionary>

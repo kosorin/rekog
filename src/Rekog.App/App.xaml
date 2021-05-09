@@ -9,7 +9,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/Converters.xaml" />
-                <ResourceDictionary Source="Themes/Icons.xaml" />
                 <ResourceDictionary>
                     <Style x:Key="GridSplitterBase" TargetType="{x:Type GridSplitter}">
                         <Setter Property="Background" Value="{x:Static SystemColors.ControlBrush}" />
