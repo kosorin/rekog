@@ -11,6 +11,15 @@ namespace Rekog.App.Extensions
 
         public static PathGeometry GetEnlargedPathGeometry(this Geometry geometry, double size, bool round)
         {
+            if (size == 0)
+            {
+                return geometry switch
+                {
+                    PathGeometry pg => pg,
+                    { } g => g.GetFlattenedPathGeometry(),
+                };
+            }
+
             var pen = new Pen(Brushes.Black, size * 2)
             {
                 LineJoin = round ? PenLineJoin.Round : PenLineJoin.Miter,
