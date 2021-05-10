@@ -245,6 +245,9 @@ namespace Rekog.App.View
             {
                 switch (args.Key)
                 {
+                    case Key.A when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
+                        SelectAll();
+                        break;
                     case Key.Left:
                         Move(Orientation.Horizontal, -1);
                         break;
@@ -414,14 +417,17 @@ namespace Rekog.App.View
             }
         }
 
+        private void SelectAll()
+        {
+            foreach (var keyContainer in GetKeyContainers())
+            {
+                keyContainer.IsSelected = true;
+            }
+        }
+
         private void UnselectAll()
         {
-            if (_selectContext == null)
-            {
-                return;
-            }
-
-            foreach (var keyContainer in _selectContext.Keys)
+            foreach (var keyContainer in GetKeyContainers())
             {
                 keyContainer.IsSelected = false;
             }
