@@ -460,6 +460,8 @@ namespace Rekog.App.View
             var selectionBox = new Rect(start, end);
 
             selectionBox.Intersect(bounds);
+            
+            // TODO: Fix bug when selectionBox is Empty after intersect
 
             if (inflate != 0)
             {
