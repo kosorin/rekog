@@ -48,7 +48,7 @@
 
             <clr:Double x:Key="UnitSize">96</clr:Double>
 
-            <cx:ScaleConverter x:Key="ScaleConverter" Size="{StaticResource UnitSize}" />
+            <cx:ScaleConverter x:Key="ScaleConverter" Scale="{StaticResource UnitSize}" />
 
         </ResourceDictionary>
     </Application.Resources>

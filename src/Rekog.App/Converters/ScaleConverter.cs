@@ -14,11 +14,11 @@ namespace Rekog.App.Converters
     [ValueConversion(typeof(Geometry), typeof(Geometry), ParameterType = typeof(double))]
     public class ScaleConverter : IValueConverter
     {
-        public double Size { get; init; }
+        public double Scale { get; init; }
 
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            var scale = parameter is double s ? s : 1d;
+            var scale = (parameter is double s ? s : 1d) * Scale;
 
             return value switch
             {
@@ -39,25 +39,25 @@ namespace Rekog.App.Converters
         {
             if (targetType == typeof(Thickness))
             {
-                return new Thickness(value * scale * Size);
+                return new Thickness(value * scale);
             }
 
-            return value * scale * Size;
+            return value * scale;
         }
 
         private object ConvertThickness(Thickness value, double scale, Type targetType)
         {
-            return new Thickness(value.Left * scale * Size, value.Top * scale * Size, value.Right * scale * Size, value.Bottom * scale * Size);
+            return new Thickness(value.Left * scale, value.Top * scale, value.Right * scale, value.Bottom * scale);
         }
 
         private object ConvertPointCollection(PointCollection value, double scale, Type targetType)
         {
-            return new PointCollection(value.Select(p => new Point(p.X * scale * Size, p.Y * scale * Size)));
+            return new PointCollection(value.Select(p => new Point(p.X * scale, p.Y * scale)));
         }
 
         private object ConvertGeometry(Geometry value, double scale, Type targetType)
         {
-            var scaleTransform = new ScaleTransform(scale * Size, scale * Size);
+            var scaleTransform = new ScaleTransform(scale, scale);
 
             var geometry = value.Clone();
             if (geometry.Transform is { } transform)
