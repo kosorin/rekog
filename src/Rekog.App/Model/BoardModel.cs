@@ -7,7 +7,7 @@ namespace Rekog.App.Model
     public class BoardModel : ModelBase
     {
         private ObservableObjectCollection<KeyModel> _keys = new ObservableObjectCollection<KeyModel>();
-        private string _background = "#D0D0D0";
+        private string _background = "#808080";
 
         [Browsable(false)]
         public ObservableObjectCollection<KeyModel> Keys
