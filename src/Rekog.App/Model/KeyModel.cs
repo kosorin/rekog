@@ -19,7 +19,13 @@ namespace Rekog.App.Model
         private double _rotationOriginX;
         private double _rotationOriginY;
         private string? _shape;
+        private double _roundness = 0.1;
+        private bool _roundConcaveCorner = true;
+        private double _margin = 0.02;
         private string? _steppedShape;
+        private double _steppedOffset = 0.045;
+        private double _steppedMargin = 0.095;
+        private double _steppedPadding = 0.05;
         private string _color = "#FCFCFC";
         private bool _isHoming;
         private bool _isDecal;
@@ -27,79 +33,144 @@ namespace Rekog.App.Model
 
         [Spinnable(0.05, 0.25, -100, 100)]
         [Category("Position")]
+        [SortIndex(1)]
         public double X
         {
             get => _x;
-            set => Set(ref _x, Math.Round(value, DoublePrecision));
+            set => Set(ref _x, Math.Round(value, Precision));
         }
 
         [Spinnable(0.05, 0.25, -100, 100)]
         [Category("Position")]
+        [SortIndex(2)]
         public double Y
         {
             get => _y;
-            set => Set(ref _y, Math.Round(value, DoublePrecision));
+            set => Set(ref _y, Math.Round(value, Precision));
         }
 
         [Spinnable(0.05, 0.25, 0.25, 10)]
         [Category("Size")]
+        [SortIndex(11)]
         public double Width
         {
             get => _width;
-            set => Set(ref _width, Math.Round(value, DoublePrecision));
+            set => Set(ref _width, Math.Round(value, Precision));
         }
 
         [Spinnable(0.05, 0.25, 0.25, 10)]
         [Category("Size")]
+        [SortIndex(12)]
         public double Height
         {
             get => _height;
-            set => Set(ref _height, Math.Round(value, DoublePrecision));
+            set => Set(ref _height, Math.Round(value, Precision));
         }
 
         [Spinnable(1, 10, -360, 360)]
         [Category("Rotation")]
         [DisplayName("Angle")]
+        [SortIndex(21)]
         public double RotationAngle
         {
             get => _rotationAngle;
-            set => Set(ref _rotationAngle, Math.Round(value, DoublePrecision));
+            set => Set(ref _rotationAngle, Math.Round(value, Precision));
         }
 
         [Spinnable(0.05, 0.25, -100, 100)]
         [Category("Rotation")]
         [DisplayName("Origin X")]
+        [SortIndex(22)]
         public double RotationOriginX
         {
             get => _rotationOriginX;
-            set => Set(ref _rotationOriginX, Math.Round(value, DoublePrecision));
+            set => Set(ref _rotationOriginX, Math.Round(value, Precision));
         }
 
         [Spinnable(0.05, 0.25, -100, 100)]
         [Category("Rotation")]
         [DisplayName("Origin Y")]
+        [SortIndex(23)]
         public double RotationOriginY
         {
             get => _rotationOriginY;
-            set => Set(ref _rotationOriginY, Math.Round(value, DoublePrecision));
+            set => Set(ref _rotationOriginY, Math.Round(value, Precision));
         }
 
-        [Category("Appearance")]
+        [Category("Shape")]
+        [SortIndex(41)]
         public string? Shape
         {
             get => _shape;
             set => Set(ref _shape, value);
         }
 
-        [Category("Appearance")]
+        [Spinnable(0.005, 0.025, 0, 0.2)]
+        [Category("Shape")]
+        [SortIndex(42)]
+        public double Roundness
+        {
+            get => _roundness;
+            set => Set(ref _roundness, Math.Round(value, HighPrecision));
+        }
+
+        [Category("Shape")]
+        [SortIndex(43)]
+        public bool RoundConcaveCorner
+        {
+            get => _roundConcaveCorner;
+            set => Set(ref _roundConcaveCorner, value);
+        }
+
+        [Spinnable(0.005, 0.025, 0, 0.2)]
+        [Category("Shape")]
+        [SortIndex(44)]
+        public double Margin
+        {
+            get => _margin;
+            set => Set(ref _margin, Math.Round(value, HighPrecision));
+        }
+
+        public bool IsStepped => !string.IsNullOrWhiteSpace(SteppedShape);
+
+        [Category("Stepped")]
+        [SortIndex(51)]
         public string? SteppedShape
         {
             get => _steppedShape;
             set => Set(ref _steppedShape, value);
         }
 
+        [Spinnable(0.005, 0.025, -0.1, 0.1)]
+        [Category("Stepped")]
+        [SortIndex(52)]
+        public double SteppedOffset
+        {
+            get => _steppedOffset;
+            set => Set(ref _steppedOffset, Math.Round(value, HighPrecision));
+        }
+
+        [Spinnable(0.005, 0.025, 0, 0.2)]
+        [Category("Stepped")]
+        [SortIndex(53)]
+        public double SteppedMargin
+        {
+            get => _steppedMargin;
+            set => Set(ref _steppedMargin, Math.Round(value, HighPrecision));
+        }
+
+        [Spinnable(0.005, 0.025, 0, 0.2)]
+        [Category("Stepped")]
+        [SortIndex(54)]
+        public double SteppedPadding
+        {
+            get => _steppedPadding;
+            set => Set(ref _steppedPadding, Math.Round(value, HighPrecision));
+        }
+
         [Category("Appearance")]
         [Converter(typeof(HexToColorConverter))]
+        [SortIndex(31)]
         public string Color
         {
             get => _color;
@@ -142,7 +213,7 @@ namespace Rekog.App.Model
         {
             var outerShapeGeometry = GetShapeGeometry();
 
-            if (string.IsNullOrWhiteSpace(SteppedShape))
+            if (!IsStepped)
             {
                 return outerShapeGeometry;
             }

@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using Rekog.App.Extensions;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel;
 
@@ -17,9 +19,10 @@ namespace Rekog.App.ViewModel
         private Point _position;
         private Size _size;
         private RotateTransform _rotateTransform = EmptyRotateTransform;
-        private Rect _bounds;
         private PathGeometry _shape = EmptyGeometry;
         private PathGeometry _steppedShape = EmptyGeometry;
+        private PathGeometry? _steppedOuterShape;
+        private Point _steppedOffset;
         private Rect _actualBounds;
         private Geometry _actualShape = EmptyGeometry;
         private Color _color = DefaultColor;
@@ -55,12 +58,6 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _rotateTransform, value);
         }
 
-        public Rect Bounds
-        {
-            get => _bounds;
-            private set => Set(ref _bounds, value);
-        }
-
         public PathGeometry Shape
         {
             get => _shape;
@@ -71,6 +68,18 @@ namespace Rekog.App.ViewModel
         {
             get => _steppedShape;
             private set => Set(ref _steppedShape, value);
+        }
+
+        public PathGeometry? SteppedOuterShape
+        {
+            get => _steppedOuterShape;
+            private set => Set(ref _steppedOuterShape, value);
+        }
+
+        public Point SteppedOffset
+        {
+            get => _steppedOffset;
+            private set => Set(ref _steppedOffset, value);
         }
 
         public Rect ActualBounds
@@ -123,7 +132,12 @@ namespace Rekog.App.ViewModel
                 case nameof(KeyModel.RotationOriginX):
                 case nameof(KeyModel.RotationOriginY):
                 case nameof(KeyModel.Shape):
+                case nameof(KeyModel.Roundness):
+                case nameof(KeyModel.RoundConcaveCorner):
+                case nameof(KeyModel.Margin):
                 case nameof(KeyModel.SteppedShape):
+                case nameof(KeyModel.SteppedOffset):
+                case nameof(KeyModel.SteppedMargin):
                     UpdateLayout();
                     break;
                 case nameof(KeyModel.Color):
@@ -148,9 +162,10 @@ namespace Rekog.App.ViewModel
             Size = new Size(Model.Width, Model.Height);
             RotateTransform = new RotateTransform(Model.RotationAngle, Model.RotationOriginX - Model.X, Model.RotationOriginY - Model.Y);
 
-            Shape = Model.GetShapeGeometry();
-            SteppedShape = Model.GetSteppedShapeGeometry();
-            Bounds = Shape.Bounds;
+            Shape = GetShapeConverter(Model.GetShapeGeometry());
+            SteppedShape = GetSteppedShapeConverter(Model.GetSteppedShapeGeometry());
+            SteppedOuterShape = Model.IsStepped ? GetShapeConverter(Model.GetSteppedShapeGeometry()) : null;
+            SteppedOffset = new Point(Model.SteppedOffset * -Math.Sin(Math.PI * Model.RotationAngle / 180d), Model.SteppedOffset * -Math.Cos(Math.PI * Model.RotationAngle / 180d));
 
             var actualShape = Model.GetShapeGeometry().Clone();
             var actualTransform = new TransformGroup();
@@ -196,6 +211,31 @@ namespace Rekog.App.ViewModel
             {
                 Labels.Add(new KeyLabelViewModel(newLabelModel));
             }
+        }
+
+        private PathGeometry GetShapeConverter(PathGeometry shape)
+        {
+            var scale = App.UnitSize;
+
+            shape = shape.Clone();
+            shape.Transform = new ScaleTransform(scale, scale);
+
+            return shape
+                .GetEnlargedPathGeometry(scale * -(Model.Roundness + Model.Margin), Model.RoundConcaveCorner)
+                .GetEnlargedPathGeometry(scale * Model.Roundness, true);
+        }
+
+        private PathGeometry GetSteppedShapeConverter(PathGeometry shape)
+        {
+            var scale = App.UnitSize;
+
+            shape = shape.Clone();
+            shape.Transform = new ScaleTransform(scale, scale);
+
+            return shape
+                .GetEnlargedPathGeometry(scale * -Model.SteppedMargin, false)
+                .GetEnlargedPathGeometry(scale * -(Model.Roundness + Model.Margin), Model.RoundConcaveCorner)
+                .GetEnlargedPathGeometry(scale * Model.Roundness, true);
         }
     }
 }

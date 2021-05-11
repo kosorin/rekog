@@ -286,8 +286,12 @@
                                      SelectedObjects="{Binding Board.SelectedKeyModels}"
                                      TabVisibility="Collapsed" />
 
+                    <ComboBox x:Name="LabelSelector"
+                              DisplayMemberPath="Value"
+                              ItemsSource="{Binding Board.SelectedKeyModels[0].Labels}" />
+
                     <pt:PropertyGrid Margin="8"
-                                     SelectedObject="{Binding Board.SelectedKeyModels[0].Labels[0]}"
+                                     SelectedObject="{Binding SelectedValue, ElementName=LabelSelector}"
                                      TabVisibility="Collapsed" />
 
                 </StackPanel>

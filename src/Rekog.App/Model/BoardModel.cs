@@ -18,6 +18,7 @@ namespace Rekog.App.Model
 
         [Category("Board")]
         [Converter(typeof(HexToColorConverter))]
+        [SortIndex(0)]
         public string Background
         {
             get => _background;
