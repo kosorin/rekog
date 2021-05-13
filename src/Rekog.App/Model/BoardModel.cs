@@ -16,6 +16,7 @@ namespace Rekog.App.Model
             set => Set(ref _keys, value);
         }
 
+        // TODO: Parse background from KLE json
         [Category("Board")]
         [Converter(typeof(StringToColorConverter))]
         [SortIndex(0)]
