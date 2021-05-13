@@ -221,6 +221,42 @@
                                         <SolidColorBrush Color="{Binding Color, Converter={StaticResource LightenConverter}, ConverterParameter={mx:Double 0.85}}" />
                                     </Path.Stroke>
                                 </Path>
+                                <ItemsControl Canvas.Left="{Binding Data.Bounds.X, ElementName=SteppedPath}"
+                                              Canvas.Top="{Binding Data.Bounds.Y, ElementName=SteppedPath}"
+                                              Width="{Binding Data.Bounds.Width, ElementName=SteppedPath}"
+                                              Height="{Binding Data.Bounds.Height, ElementName=SteppedPath}"
+                                              Padding="{Binding Model.SteppedPadding, Converter={StaticResource ScaleConverter}}"
+                                              HorizontalAlignment="Stretch"
+                                              VerticalAlignment="Stretch"
+                                              IsHitTestVisible="False"
+                                              ItemsSource="{Binding Labels}">
+                                    <ItemsControl.RenderTransform>
+                                        <TranslateTransform X="{Binding SteppedOffset.X, Converter={StaticResource ScaleConverter}}" Y="{Binding SteppedOffset.Y, Converter={StaticResource ScaleConverter}}" />
+                                    </ItemsControl.RenderTransform>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <Grid />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type vm:KeyLabelViewModel}">
+                                            <TextBlock Margin="{Binding Margin, Converter={StaticResource ScaleConverter}}"
+                                                       VerticalAlignment="{Binding Model.VerticalAlignment}"
+                                                       FontFamily="{Binding Font}"
+                                                       FontSize="{Binding Model.Size}"
+                                                       FontStyle="{Binding Model.Italic, Converter={StaticResource BooleanToFontStyleConverter}}"
+                                                       FontWeight="{Binding Model.Bold, Converter={StaticResource BooleanToFontWeightConverter}}"
+                                                       IsHitTestVisible="True"
+                                                       Text="{Binding Model.Value}"
+                                                       TextAlignment="{Binding Model.HorizontalAlignment, Converter={StaticResource HorizontalAlignmentToTextAlignmentConverter}}"
+                                                       TextWrapping="Wrap">
+                                                <TextBlock.Foreground>
+                                                    <SolidColorBrush Color="{Binding Color}" />
+                                                </TextBlock.Foreground>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                                 <Path x:Name="OverlayPath"
                                       Clip="{Binding Clip, ElementName=MainPath}"
                                       Data="{Binding Data, ElementName=MainPath}">
@@ -265,42 +301,6 @@
                                         </Style>
                                     </Path.Style>
                                 </Path>
-                                <ItemsControl Canvas.Left="{Binding Data.Bounds.X, ElementName=SteppedPath}"
-                                              Canvas.Top="{Binding Data.Bounds.Y, ElementName=SteppedPath}"
-                                              Width="{Binding Data.Bounds.Width, ElementName=SteppedPath}"
-                                              Height="{Binding Data.Bounds.Height, ElementName=SteppedPath}"
-                                              Padding="{Binding Model.SteppedPadding, Converter={StaticResource ScaleConverter}}"
-                                              HorizontalAlignment="Stretch"
-                                              VerticalAlignment="Stretch"
-                                              IsHitTestVisible="False"
-                                              ItemsSource="{Binding Labels}">
-                                    <ItemsControl.RenderTransform>
-                                        <TranslateTransform X="{Binding SteppedOffset.X, Converter={StaticResource ScaleConverter}}" Y="{Binding SteppedOffset.Y, Converter={StaticResource ScaleConverter}}" />
-                                    </ItemsControl.RenderTransform>
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <Grid />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type vm:KeyLabelViewModel}">
-                                            <TextBlock Margin="{Binding Margin, Converter={StaticResource ScaleConverter}}"
-                                                       VerticalAlignment="{Binding Model.VerticalAlignment}"
-                                                       FontFamily="{Binding Font}"
-                                                       FontSize="{Binding Model.Size}"
-                                                       FontStyle="{Binding Model.Italic, Converter={StaticResource BooleanToFontStyleConverter}}"
-                                                       FontWeight="{Binding Model.Bold, Converter={StaticResource BooleanToFontWeightConverter}}"
-                                                       IsHitTestVisible="True"
-                                                       Text="{Binding Model.Value}"
-                                                       TextAlignment="{Binding Model.HorizontalAlignment, Converter={StaticResource HorizontalAlignmentToTextAlignmentConverter}}"
-                                                       TextWrapping="Wrap">
-                                                <TextBlock.Foreground>
-                                                    <SolidColorBrush Color="{Binding Color}" />
-                                                </TextBlock.Foreground>
-                                            </TextBlock>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
                             </Canvas>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
