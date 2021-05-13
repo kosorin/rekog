@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rekog.App.Extensions;
+using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -6,14 +7,14 @@ using System.Windows.Media;
 namespace Rekog.App.Converters
 {
     [ValueConversion(typeof(string), typeof(Color))]
-    public class HexToColorConverter : IValueConverter
+    public class StringToColorConverter : IValueConverter
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             return value switch
             {
                 null => null,
-                string hex => (Color)ColorConverter.ConvertFromString(hex),
+                string s => s.ToColor(),
                 _ => throw new ArgumentException(null, nameof(value)),
             };
         }
@@ -23,14 +24,9 @@ namespace Rekog.App.Converters
             return value switch
             {
                 null => null,
-                Color color => ToHex(color),
+                Color c => c.ToHex(),
                 _ => throw new ArgumentException(null, nameof(value)),
             };
-
-            string ToHex(Color color)
-            {
-                return $"#{color.R:X2}{color.G:X2}{color.B:X2}";
-            }
         }
     }
 }

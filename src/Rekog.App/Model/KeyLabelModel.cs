@@ -81,7 +81,7 @@ namespace Rekog.App.Model
         }
 
         [PropertyTools.DataAnnotations.Category("Font")]
-        [PropertyTools.DataAnnotations.Converter(typeof(HexToColorConverter))]
+        [PropertyTools.DataAnnotations.Converter(typeof(StringToColorConverter))]
         [PropertyTools.DataAnnotations.SortIndex(5)]
         public string Color
         {

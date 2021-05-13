@@ -13,6 +13,6 @@
     <cx:EnlargedGeometryConverter x:Key="EnlargedRoundGeometryConverter" Round="True" />
     <cx:BooleanToFontWeightConverter x:Key="BooleanToFontWeightConverter" />
     <cx:BooleanToFontStyleConverter x:Key="BooleanToFontStyleConverter" />
-    <cx:HexToColorConverter x:Key="HexToColorConverter" />
+    <cx:StringToColorConverter x:Key="StringToColorConverter" />
 
 </ResourceDictionary>

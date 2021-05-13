@@ -180,7 +180,7 @@ namespace Rekog.App.ViewModel
         {
             try
             {
-                Color = (Color)ColorConverter.ConvertFromString(Model.Color);
+                Color = Model.Color.ToColor();
             }
             catch
             {

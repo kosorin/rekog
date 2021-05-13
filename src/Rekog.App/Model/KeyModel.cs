@@ -169,7 +169,7 @@ namespace Rekog.App.Model
         }
 
         [Category("Appearance")]
-        [Converter(typeof(HexToColorConverter))]
+        [Converter(typeof(StringToColorConverter))]
         [SortIndex(31)]
         public string Color
         {

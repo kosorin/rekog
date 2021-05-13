@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
+using Rekog.App.Extensions;
 using Rekog.App.Model;
 
 namespace Rekog.App.ViewModel
@@ -75,7 +76,7 @@ namespace Rekog.App.ViewModel
         {
             try
             {
-                Color = (Color)ColorConverter.ConvertFromString(Model.Color);
+                Color = Model.Color.ToColor();
             }
             catch
             {
