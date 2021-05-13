@@ -23,7 +23,7 @@ namespace Rekog.App.Model
         private bool _roundConcaveCorner = true;
         private double _margin = 0.02;
         private string? _steppedShape;
-        private double _steppedOffset = 0.045;
+        private double _steppedOffset = 0.055;
         private double _steppedMargin = 0.095;
         private double _steppedPadding = 0.05;
         private string _color = "#FCFCFC";
@@ -131,6 +131,7 @@ namespace Rekog.App.Model
             set => Set(ref _margin, Math.Round(value, HighPrecision));
         }
 
+        [Browsable(false)]
         public bool IsStepped => !string.IsNullOrWhiteSpace(SteppedShape);
 
         [Category("Stepped")]
