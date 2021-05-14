@@ -249,27 +249,41 @@
                                     </ComboBoxItem.Tag>
                                 </ComboBoxItem>
                             </ComboBox>
-                            <Label Content="Raw data" />
-                            <TextBox x:Name="KleRawData"
+                            <Label Content="Input" />
+                            <TextBox x:Name="KleInput"
                                      Height="100"
                                      AcceptsReturn="True"
                                      FontFamily="Fira Code,Consolas"
                                      HorizontalScrollBarVisibility="Auto"
-                                     TextChanged="KleRawData_TextChanged"
+                                     TextChanged="KleInput_TextChanged"
                                      VerticalScrollBarVisibility="Auto">
                                 <TextBox.InputBindings>
                                     <KeyBinding Key="Enter"
                                                 Command="{Binding ParseKleRawDataCommand}"
-                                                CommandParameter="{Binding Text, ElementName=KleRawData}"
+                                                CommandParameter="{Binding Text, ElementName=KleInput}"
                                                 Modifiers="Ctrl" />
                                 </TextBox.InputBindings>
                             </TextBox>
-                            <Button x:Name="KleParseButton"
-                                    DockPanel.Dock="Right"
-                                    Margin="0,4"
-                                    Command="{Binding ParseKleRawDataCommand}"
-                                    CommandParameter="{Binding Text, ElementName=KleRawData}"
-                                    Content="Parse" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="KleParseRawDataButton"
+                                        Grid.Column="0"
+                                        DockPanel.Dock="Right"
+                                        Margin="0,4"
+                                        Command="{Binding ParseKleRawDataCommand}"
+                                        CommandParameter="{Binding Text, ElementName=KleInput}"
+                                        Content="Parse raw data" />
+                                <Button Grid.Column="2"
+                                        DockPanel.Dock="Right"
+                                        Margin="0,4"
+                                        Command="{Binding ParseKleJsonCommand}"
+                                        CommandParameter="{Binding Text, ElementName=KleInput}"
+                                        Content="Parse json" />
+                            </Grid>
                         </StackPanel>
                     </GroupBox>
 

@@ -4,64 +4,64 @@ namespace Rekog.App.View
 {
     public partial class MainWindow
     {
-        private bool _changingKleRawData;
+        private bool _changingKleInput;
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void KleRawData_TextChanged(object sender, TextChangedEventArgs e)
+        private void KleInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (KleRawDataList == null)
             {
                 return;
             }
 
-            if (_changingKleRawData)
+            if (_changingKleInput)
             {
                 return;
             }
 
             try
             {
-                _changingKleRawData = true;
+                _changingKleInput = true;
 
                 KleRawDataList.SelectedIndex = 0;
             }
             finally
             {
-                _changingKleRawData = false;
+                _changingKleInput = false;
             }
         }
 
         private void KleRawDataList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (KleRawData == null)
+            if (KleInput == null)
             {
                 return;
             }
 
-            if (_changingKleRawData)
+            if (_changingKleInput)
             {
                 return;
             }
 
             try
             {
-                _changingKleRawData = true;
+                _changingKleInput = true;
 
-                KleRawData.Text = KleRawDataList.SelectedItem is ComboBoxItem { Tag: string text, }
+                KleInput.Text = KleRawDataList.SelectedItem is ComboBoxItem { Tag: string text, }
                     ? text
                     : null;
-                if (KleParseButton.Command.CanExecute(KleParseButton.CommandParameter))
+                if (KleParseRawDataButton.Command.CanExecute(KleParseRawDataButton.CommandParameter))
                 {
-                    KleParseButton.Command.Execute(KleParseButton.CommandParameter);
+                    KleParseRawDataButton.Command.Execute(KleParseRawDataButton.CommandParameter);
                 }
             }
             finally
             {
-                _changingKleRawData = false;
+                _changingKleInput = false;
             }
         }
     }

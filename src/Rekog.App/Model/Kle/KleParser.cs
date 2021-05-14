@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -22,11 +21,24 @@ namespace Rekog.App.Model.Kle
             { 4, null, null, null, 10, null, null, null, null, null, null, null, },
         };
 
-        public static List<KleKey> ParseRawData(string rawDataText)
+        public static KleBoard ParseJson(string json)
         {
-            var keys = new List<KleKey>();
+            return ParseCore(json);
+        }
 
-            var rawData = DeserializeRawData(rawDataText);
+        public static KleBoard ParseRawData(string rawData)
+        {
+            return ParseCore("[" + rawData + "]");
+        }
+
+        private static KleBoard ParseCore(string json)
+        {
+            var board = new KleBoard
+            {
+                Background = "#eeeeee",
+            };
+
+            var data = DeserializeJson(json);
             var currentKey = new KleKey
             {
                 X = 0d,
@@ -55,11 +67,25 @@ namespace Rekog.App.Model.Kle
             var cluster = (x: 0d, y: 0d);
             var align = 4;
 
-            foreach (var (_, rowData) in rawData.Select((x, i) => (i, x)))
+            bool expectMetadata = true;
+
+            foreach (var rowData in data)
             {
-                if (rowData is JArray)
+                if (rowData is JObject metadata)
                 {
-                    foreach (var (_, keyData) in rowData.Select((x, i) => (i, x)))
+                    if (!expectMetadata)
+                    {
+                        throw new FormatException();
+                    }
+
+                    TryUse(metadata, "backcolor", (string value) => board.Background = value);
+                    TryUse(metadata, "name", (string value) => board.Name = value);
+                    TryUse(metadata, "author", (string value) => board.Author = value);
+                    TryUse(metadata, "notes", (string value) => board.Notes = value);
+                }
+                else if (rowData is JArray)
+                {
+                    foreach (var keyData in rowData)
                     {
                         if (keyData is JObject properties)
                         {
@@ -154,7 +180,7 @@ namespace Rekog.App.Model.Kle
                                 TextSizes = ReorderValues(currentKey.TextSizes.ToArray(), align),
                                 Labels = ReorderValues(labels, align),
                             };
-                            keys.Add(key);
+                            board.Keys.Add(key);
 
                             currentKey.X += currentKey.Width;
                             currentKey.Width = 1;
@@ -173,9 +199,11 @@ namespace Rekog.App.Model.Kle
                     currentKey.Y++;
                 }
                 currentKey.X = currentKey.RotationX;
+
+                expectMetadata = false;
             }
 
-            return keys;
+            return board;
         }
 
         private static T[] GetValues<T>(T[] values)
@@ -214,9 +242,9 @@ namespace Rekog.App.Model.Kle
             }
         }
 
-        private static JArray DeserializeRawData(string rawDataText)
+        private static JArray DeserializeJson(string json)
         {
-            if (JsonConvert.DeserializeObject("[" + rawDataText + "]") is not JArray rawData)
+            if (JsonConvert.DeserializeObject(json) is not JArray rawData)
             {
                 throw new JsonException();
             }

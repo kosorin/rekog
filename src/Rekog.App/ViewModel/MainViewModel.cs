@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using Rekog.App.Model;
 using Rekog.App.Model.Kle;
 using Rekog.App.ObjectModel;
@@ -13,6 +12,7 @@ namespace Rekog.App.ViewModel
         public MainViewModel()
         {
             ParseKleRawDataCommand = new DelegateCommand<string>(ParseKleRawData);
+            ParseKleJsonCommand = new DelegateCommand<string>(ParseKleJson);
         }
 
         public BoardViewModel Board
@@ -23,33 +23,41 @@ namespace Rekog.App.ViewModel
 
         public DelegateCommand<string> ParseKleRawDataCommand { get; }
 
+        public DelegateCommand<string> ParseKleJsonCommand { get; }
+
         private void ParseKleRawData(string? kleRawData)
         {
-            var kleKeys = Parse(kleRawData);
-            if (kleKeys != null)
+            TrySetBoard(kleRawData, KleParser.ParseRawData);
+        }
+
+        private void ParseKleJson(string? kleJson)
+        {
+            TrySetBoard(kleJson, KleParser.ParseJson);
+        }
+
+        private void TrySetBoard(string? kleInput, Func<string, KleBoard> parser)
+        {
+            var kleBoard = ParseKle(kleInput, parser);
+            if (kleBoard != null)
             {
-                var boardModel = new BoardModel
-                {
-                    Keys = new ObservableObjectCollection<KeyModel>(kleKeys.Select(KeyModel.FromKle)),
-                };
-                Board = new BoardViewModel(boardModel);
+                Board = new BoardViewModel(BoardModel.FromKle(kleBoard));
+            }
+        }
+
+        private KleBoard? ParseKle(string? kleInput, Func<string, KleBoard> parser)
+        {
+            if (string.IsNullOrWhiteSpace(kleInput))
+            {
+                return new KleBoard();
             }
 
-            static List<KleKey>? Parse(string? kleRawData)
+            try
             {
-                if (string.IsNullOrWhiteSpace(kleRawData))
-                {
-                    return new List<KleKey>();
-                }
-
-                try
-                {
-                    return KleParser.ParseRawData(kleRawData);
-                }
-                catch
-                {
-                    return null;
-                }
+                return parser?.Invoke(kleInput);
+            }
+            catch
+            {
+                return null;
             }
         }
     }
