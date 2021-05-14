@@ -16,13 +16,11 @@ namespace Rekog.App.ViewModel
         private static readonly Color DefaultColor = Colors.White;
 
         private bool _isSelected;
-        private Point _position;
-        private Size _size;
-        private RotateTransform _rotateTransform = EmptyRotateTransform;
+        private RotateTransform _rotation = EmptyRotateTransform;
         private PathGeometry _shape = EmptyGeometry;
-        private PathGeometry _steppedShape = EmptyGeometry;
-        private PathGeometry? _steppedOuterShape;
-        private Point _steppedOffset;
+        private PathGeometry _innerShape = EmptyGeometry;
+        private PathGeometry? _steppedShape;
+        private Point _innerShapeOffset;
         private Rect _actualBounds;
         private Geometry _actualShape = EmptyGeometry;
         private Color _color = DefaultColor;
@@ -40,22 +38,10 @@ namespace Rekog.App.ViewModel
             set => Set(ref _isSelected, value);
         }
 
-        public Point Position
+        public RotateTransform Rotation
         {
-            get => _position;
-            private set => Set(ref _position, value);
-        }
-
-        public Size Size
-        {
-            get => _size;
-            private set => Set(ref _size, value);
-        }
-
-        public RotateTransform RotateTransform
-        {
-            get => _rotateTransform;
-            private set => Set(ref _rotateTransform, value);
+            get => _rotation;
+            private set => Set(ref _rotation, value);
         }
 
         public PathGeometry Shape
@@ -64,22 +50,22 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _shape, value);
         }
 
-        public PathGeometry SteppedShape
+        public PathGeometry? SteppedShape
         {
             get => _steppedShape;
             private set => Set(ref _steppedShape, value);
         }
 
-        public PathGeometry? SteppedOuterShape
+        public PathGeometry InnerShape
         {
-            get => _steppedOuterShape;
-            private set => Set(ref _steppedOuterShape, value);
+            get => _innerShape;
+            private set => Set(ref _innerShape, value);
         }
 
-        public Point SteppedOffset
+        public Point InnerShapeOffset
         {
-            get => _steppedOffset;
-            private set => Set(ref _steppedOffset, value);
+            get => _innerShapeOffset;
+            private set => Set(ref _innerShapeOffset, value);
         }
 
         public Rect ActualBounds
@@ -136,8 +122,8 @@ namespace Rekog.App.ViewModel
                 case nameof(KeyModel.RoundConcaveCorner):
                 case nameof(KeyModel.Margin):
                 case nameof(KeyModel.SteppedShape):
-                case nameof(KeyModel.SteppedOffset):
-                case nameof(KeyModel.SteppedMargin):
+                case nameof(KeyModel.InnerVerticalOffset):
+                case nameof(KeyModel.Padding):
                     UpdateLayout();
                     break;
                 case nameof(KeyModel.Color):
@@ -158,19 +144,18 @@ namespace Rekog.App.ViewModel
 
         private void UpdateLayout()
         {
-            Position = new Point(Model.X, Model.Y);
-            Size = new Size(Model.Width, Model.Height);
-            RotateTransform = new RotateTransform(Model.RotationAngle, Model.RotationOriginX - Model.X, Model.RotationOriginY - Model.Y);
+            Rotation = new RotateTransform(Model.RotationAngle, Model.RotationOriginX - Model.X, Model.RotationOriginY - Model.Y);
 
-            Shape = GetShapeConverter(Model.GetShapeGeometry());
-            SteppedShape = GetSteppedShapeConverter(Model.GetSteppedShapeGeometry());
-            SteppedOuterShape = Model.IsStepped ? GetShapeConverter(Model.GetSteppedShapeGeometry()) : null;
-            SteppedOffset = new Point(Model.SteppedOffset * -Math.Sin(Math.PI * Model.RotationAngle / 180d), Model.SteppedOffset * -Math.Cos(Math.PI * Model.RotationAngle / 180d));
+            Shape = GetShape(Model.GetShapeGeometry());
+            SteppedShape = Model.IsStepped ? GetShape(Model.GetSteppedShapeGeometry()) : null;
+
+            InnerShape = GetInnerShape(Model.GetSteppedShapeGeometry());
+            InnerShapeOffset = new Point(Model.InnerVerticalOffset * -Math.Sin(Math.PI * Model.RotationAngle / 180d), Model.InnerVerticalOffset * -Math.Cos(Math.PI * Model.RotationAngle / 180d));
 
             var actualShape = Model.GetShapeGeometry().Clone();
             var actualTransform = new TransformGroup();
-            actualTransform.Children.Add(RotateTransform);
-            actualTransform.Children.Add(new TranslateTransform(Position.X, Position.Y));
+            actualTransform.Children.Add(Rotation);
+            actualTransform.Children.Add(new TranslateTransform(Model.X, Model.Y));
             actualShape.Transform = actualTransform;
             ActualShape = actualShape;
             ActualBounds = ActualShape.Bounds;
@@ -213,7 +198,7 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private PathGeometry GetShapeConverter(PathGeometry shape)
+        private PathGeometry GetShape(PathGeometry shape)
         {
             var scale = App.UnitSize;
 
@@ -225,7 +210,7 @@ namespace Rekog.App.ViewModel
                 .GetEnlargedPathGeometry(scale * Model.Roundness, true);
         }
 
-        private PathGeometry GetSteppedShapeConverter(PathGeometry shape)
+        private PathGeometry GetInnerShape(PathGeometry shape)
         {
             var scale = App.UnitSize;
 
@@ -233,7 +218,7 @@ namespace Rekog.App.ViewModel
             shape.Transform = new ScaleTransform(scale, scale);
 
             return shape
-                .GetEnlargedPathGeometry(scale * -Model.SteppedMargin, false)
+                .GetEnlargedPathGeometry(scale * -Model.Padding, false)
                 .GetEnlargedPathGeometry(scale * -(Model.Roundness + Model.Margin), Model.RoundConcaveCorner)
                 .GetEnlargedPathGeometry(scale * Model.Roundness, true);
         }
