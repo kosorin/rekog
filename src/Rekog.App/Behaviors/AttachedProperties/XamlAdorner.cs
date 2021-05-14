@@ -5,7 +5,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace Rekog.App.Adorners
+namespace Rekog.App.Behaviors.AttachedProperties
 {
     // Source: https://www.codeproject.com/Articles/709266/Design-Adorners-in-XAML-with-Data-Binding-Support
     public class XamlAdorner : Adorner
@@ -24,7 +24,7 @@ namespace Rekog.App.Adorners
 
         private readonly ContentPresenter _presenter;
 
-        public XamlAdorner(FrameworkElement adornedElement)
+        private XamlAdorner(FrameworkElement adornedElement)
             : base(adornedElement)
         {
             _presenter = new ContentPresenter();
