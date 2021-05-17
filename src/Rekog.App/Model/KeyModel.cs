@@ -292,8 +292,7 @@ namespace Rekog.App.Model
                 {
                     Value = kleKey.Labels[i] ?? string.Empty,
 
-                    HorizontalAlignment = (System.Windows.HorizontalAlignment)(i % 3),
-                    VerticalAlignment = (VerticalAlignment)(i / 3),
+                    Alignment = (KeyLabelAlignment)i,
 
                     Size = 1.4 * (6 + 3 * (kleKey.TextSizes[i] ?? kleKey.DefaultTextSize)),
                     Color = kleKey.TextColors[i] ?? kleKey.DefaultTextColor,

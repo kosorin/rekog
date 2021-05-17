@@ -5,7 +5,7 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <cx:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
     <cx:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter" />
-    <cx:HorizontalAlignmentToTextAlignmentConverter x:Key="HorizontalAlignmentToTextAlignmentConverter" />
+    <cx:KeyLabelAlignmentConverter x:Key="KeyLabelAlignmentConverter" />
     <cx:LightenConverter x:Key="LightenConverter" />
     <cx:MultConverter x:Key="MultConverter" />
     <cx:ContainsConverter x:Key="ContainsConverter" />

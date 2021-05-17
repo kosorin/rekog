@@ -47,12 +47,10 @@
                         <m:KeyModel Y="1">
                             <m:KeyModel.Labels>
                                 <m:KeyLabelModelCollection>
-                                    <m:KeyLabelModel VerticalAlignment="Center" Value="A" />
-                                    <m:KeyLabelModel HorizontalAlignment="Left" Value="B" />
-                                    <m:KeyLabelModel HorizontalAlignment="Right" Value="Wow" />
-                                    <m:KeyLabelModel HorizontalAlignment="Right"
-                                                     VerticalAlignment="Bottom"
-                                                     Value="C" />
+                                    <m:KeyLabelModel Alignment="Center" Value="A" />
+                                    <m:KeyLabelModel Alignment="TopLeft" Value="B" />
+                                    <m:KeyLabelModel Alignment="TopRight" Value="Wow" />
+                                    <m:KeyLabelModel Alignment="BottomRight" Value="C" />
                                 </m:KeyLabelModelCollection>
                             </m:KeyModel.Labels>
                         </m:KeyModel>
@@ -238,14 +236,14 @@
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type vm:KeyLabelViewModel}">
                                             <TextBlock Margin="{Binding Margin, Converter={StaticResource ScaleConverter}}"
-                                                       VerticalAlignment="{Binding Model.VerticalAlignment}"
+                                                       HorizontalAlignment="{Binding Model.Alignment, ConverterParameter=H, Converter={StaticResource KeyLabelAlignmentConverter}}"
+                                                       VerticalAlignment="{Binding Model.Alignment, ConverterParameter=V, Converter={StaticResource KeyLabelAlignmentConverter}}"
                                                        FontFamily="{Binding Font}"
                                                        FontSize="{Binding Model.Size}"
                                                        FontStyle="{Binding Model.Italic, Converter={StaticResource BooleanToFontStyleConverter}}"
                                                        FontWeight="{Binding Model.Bold, Converter={StaticResource BooleanToFontWeightConverter}}"
                                                        IsHitTestVisible="True"
                                                        Text="{Binding Model.Value}"
-                                                       TextAlignment="{Binding Model.HorizontalAlignment, Converter={StaticResource HorizontalAlignmentToTextAlignmentConverter}}"
                                                        TextWrapping="Wrap">
                                                 <TextBlock.Foreground>
                                                     <SolidColorBrush Color="{Binding Color}" />

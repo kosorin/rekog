@@ -7,8 +7,7 @@ namespace Rekog.App.Model
     public class KeyLabelModel : ModelBase
     {
         private string _value = string.Empty;
-        private HorizontalAlignment _horizontalAlignment;
-        private VerticalAlignment _verticalAlignment;
+        private KeyLabelAlignment _alignment;
         private double _left;
         private double _top;
         private double _right;
@@ -29,18 +28,10 @@ namespace Rekog.App.Model
 
         [PropertyTools.DataAnnotations.Category("Alignment")]
         [PropertyTools.DataAnnotations.SortIndex(11)]
-        public HorizontalAlignment HorizontalAlignment
+        public KeyLabelAlignment Alignment
         {
-            get => _horizontalAlignment;
-            set => Set(ref _horizontalAlignment, value);
-        }
-
-        [PropertyTools.DataAnnotations.Category("Alignment")]
-        [PropertyTools.DataAnnotations.SortIndex(12)]
-        public VerticalAlignment VerticalAlignment
-        {
-            get => _verticalAlignment;
-            set => Set(ref _verticalAlignment, value);
+            get => _alignment;
+            set => Set(ref _alignment, value);
         }
 
         [PropertyTools.DataAnnotations.Spinnable(0.01, 0.1, -10, 10)]
