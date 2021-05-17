@@ -12,17 +12,17 @@ namespace Rekog.App.Converters
         {
             return (parameter, value) switch
             {
-                ("V", KeyLabelAlignment.TopLeft or KeyLabelAlignment.TopCenter or KeyLabelAlignment.TopRight) => VerticalAlignment.Top,
-                ("V", KeyLabelAlignment.CenterLeft or KeyLabelAlignment.Center or KeyLabelAlignment.CenterRight) => VerticalAlignment.Center,
-                ("V", KeyLabelAlignment.BottomLeft or KeyLabelAlignment.BottomCenter or KeyLabelAlignment.BottomRight) => VerticalAlignment.Bottom,
+                ("V", KeyLabelAlignment.TopLeft or KeyLabelAlignment.Top or KeyLabelAlignment.TopRight) => VerticalAlignment.Top,
+                ("V", KeyLabelAlignment.Left or KeyLabelAlignment.Center or KeyLabelAlignment.Right) => VerticalAlignment.Center,
+                ("V", KeyLabelAlignment.BottomLeft or KeyLabelAlignment.Bottom or KeyLabelAlignment.BottomRight) => VerticalAlignment.Bottom,
 
-                ("H", KeyLabelAlignment.TopLeft or KeyLabelAlignment.CenterLeft or KeyLabelAlignment.BottomLeft) => HorizontalAlignment.Left,
-                ("H", KeyLabelAlignment.TopCenter or KeyLabelAlignment.Center or KeyLabelAlignment.BottomCenter) => HorizontalAlignment.Center,
-                ("H", KeyLabelAlignment.TopRight or KeyLabelAlignment.CenterRight or KeyLabelAlignment.BottomRight) => HorizontalAlignment.Right,
+                ("H", KeyLabelAlignment.TopLeft or KeyLabelAlignment.Left or KeyLabelAlignment.BottomLeft) => HorizontalAlignment.Left,
+                ("H", KeyLabelAlignment.Top or KeyLabelAlignment.Center or KeyLabelAlignment.Bottom) => HorizontalAlignment.Center,
+                ("H", KeyLabelAlignment.TopRight or KeyLabelAlignment.Right or KeyLabelAlignment.BottomRight) => HorizontalAlignment.Right,
 
-                ("T", KeyLabelAlignment.TopLeft or KeyLabelAlignment.CenterLeft or KeyLabelAlignment.BottomLeft) => TextAlignment.Left,
-                ("T", KeyLabelAlignment.TopCenter or KeyLabelAlignment.Center or KeyLabelAlignment.BottomCenter) => TextAlignment.Center,
-                ("T", KeyLabelAlignment.TopRight or KeyLabelAlignment.CenterRight or KeyLabelAlignment.BottomRight) => TextAlignment.Right,
+                ("T", KeyLabelAlignment.TopLeft or KeyLabelAlignment.Left or KeyLabelAlignment.BottomLeft) => TextAlignment.Left,
+                ("T", KeyLabelAlignment.Top or KeyLabelAlignment.Center or KeyLabelAlignment.Bottom) => TextAlignment.Center,
+                ("T", KeyLabelAlignment.TopRight or KeyLabelAlignment.Right or KeyLabelAlignment.BottomRight) => TextAlignment.Right,
 
                 _ => throw new ArgumentException(null, nameof(value)),
             };

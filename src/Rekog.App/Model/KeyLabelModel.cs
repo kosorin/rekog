@@ -1,6 +1,5 @@
 ﻿using Rekog.App.Converters;
 using System;
-using System.Windows;
 
 namespace Rekog.App.Model
 {

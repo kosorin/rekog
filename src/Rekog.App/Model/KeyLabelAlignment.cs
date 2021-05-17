@@ -3,13 +3,13 @@
     public enum KeyLabelAlignment
     {
         TopLeft,
-        TopCenter,
+        Top,
         TopRight,
-        CenterLeft,
+        Left,
         Center,
-        CenterRight,
+        Right,
         BottomLeft,
-        BottomCenter,
+        Bottom,
         BottomRight,
     }
 }
