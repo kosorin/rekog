@@ -11,6 +11,7 @@ namespace Rekog.App.Model
 {
     public class KeyModel : ModelBase
     {
+        private string _group = string.Empty;
         private double _x;
         private double _y;
         private double _rotationAngle;
@@ -30,6 +31,14 @@ namespace Rekog.App.Model
         private bool _isHoming;
         private bool _isGhosted;
         private bool _isDecal;
+
+        [Category("Group")]
+        [SortIndex(0)]
+        public string Group
+        {
+            get => _group;
+            set => Set(ref _group, value);
+        }
 
         [Spinnable(0.05, 0.25, -100, 100)]
         [Category("Position")]
