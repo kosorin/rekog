@@ -10,6 +10,7 @@ namespace Rekog.Data
         public LayerConfig[] Layers { get; set; } = default!;
 
         [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier")]
+        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
         protected override void FixSelf()
         {
             Layers = Layers?.Where(x => x != null).ToArray() ?? Array.Empty<LayerConfig>();

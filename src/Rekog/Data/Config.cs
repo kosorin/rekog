@@ -23,24 +23,28 @@ namespace Rekog.Data
         }
 
         [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier")]
+        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
         private void FixLocationConfigs()
         {
             Corpora = Corpora?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<string, CorpusConfig>();
         }
 
         [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier")]
+        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
         private void FixAlphabetConfigs()
         {
             Alphabets = Alphabets?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<string, AlphabetConfig>();
         }
 
         [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier")]
+        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
         private void FixLayoutConfigs()
         {
             Layouts = Layouts?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<string, LayoutConfig>();
         }
 
         [SuppressMessage("ReSharper", "ConstantConditionalAccessQualifier")]
+        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
         private void FixKeymapConfigs()
         {
             Keymaps = Keymaps?.Where(x => x.Value != null).ToDictionary(x => x.Key, x => x.Value) ?? new Dictionary<string, KeymapConfig>();
