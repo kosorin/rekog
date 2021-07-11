@@ -1,5 +1,4 @@
 keyboard:
-
   frequency:
     rows:
       0: 0.19432
@@ -19,7 +18,6 @@ keyboard:
     hands:
       0: 0.50877
       1: 0.49123
-
   bigram:
     same-finger:
       0: 0.07594
@@ -59,7 +57,4 @@ keyboard:
     - n-gram: "IN"
       frequency: 0.02433
       fingers: [ 3, 4 ]
-  
   run length:
-
-

@@ -97,14 +97,15 @@ alphabets:
     characters: " \t\n"
 
 corpora:
-  norvig: ~
   test: D:\Projects\Rekog\data\corpus\test.txt
+  cs_volne_knihy: D:\corpus\cs\volne_knihy\
+  cs_wiki: D:\corpus\cs\wiki\
+  en_norvig: ~
+  # other
   projects:
     path: D:\Projects
     pattern: '\.cs$'
     recursive: yes
-  cs_wiki: D:\corpus\cs\wiki\
-  cs_volne_knihy: D:\corpus\cs\volne_knihy\
   cs_forum: D:\corpus\cs\forum\cs_forum_temnota.txt
   carpalx:
     path: D:\carpalx-0.12\corpus\books

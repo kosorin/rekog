@@ -49,7 +49,7 @@ namespace Rekog.Controllers
 
         private DataFile GetCorpusDataFile()
         {
-            return new DataFile(_fileSystem, "corpus", _options.Alphabet, _options.Corpus + ".yml");
+            return new DataFile(_fileSystem, "output", "corpora", _options.Alphabet, _options.Corpus + ".yml");
         }
 
         private bool TryLoadAnalysisData(DataFile analysisDatafile, [MaybeNullWhen(false)] out CorpusAnalysisData analysisData)
