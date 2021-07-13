@@ -2,7 +2,7 @@
 {
     public enum FingerKind
     {
-        Pinky,
+        Little,
         Ring,
         Middle,
         Index,

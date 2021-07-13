@@ -2,7 +2,7 @@
 {
     public enum Finger
     {
-        LeftPinky,
+        LeftLittle,
         LeftRing,
         LeftMiddle,
         LeftIndex,
@@ -11,6 +11,6 @@
         RightIndex,
         RightMiddle,
         RightRing,
-        RightPinky,
+        RightLittle,
     }
 }

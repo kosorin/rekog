@@ -8,9 +8,9 @@ namespace Rekog.Core.Extensions
         {
             switch (finger)
             {
-                case Finger.LeftPinky:
-                case Finger.RightPinky:
-                    return FingerKind.Pinky;
+                case Finger.LeftLittle:
+                case Finger.RightLittle:
+                    return FingerKind.Little;
                 case Finger.LeftRing:
                 case Finger.RightRing:
                     return FingerKind.Ring;
@@ -31,13 +31,13 @@ namespace Rekog.Core.Extensions
         {
             switch (finger)
             {
-                case Finger.LeftPinky:
+                case Finger.LeftLittle:
                 case Finger.LeftRing:
                 case Finger.LeftMiddle:
                 case Finger.LeftIndex:
                 case Finger.LeftThumb:
                     return Hand.Left;
-                case Finger.RightPinky:
+                case Finger.RightLittle:
                 case Finger.RightRing:
                 case Finger.RightMiddle:
                 case Finger.RightIndex:

@@ -32,7 +32,7 @@ namespace Rekog.Core.Layouts.Analyzers
                 var distance = firstKey.GetDistance(secondKey);
                 var effort = distance * (firstKey.Finger.GetKind(), secondKey.Finger.GetKind()) switch
                 {
-                    (FingerKind.Pinky, FingerKind.Ring) or (FingerKind.Ring, FingerKind.Pinky) => 0.5,
+                    (FingerKind.Little, FingerKind.Ring) or (FingerKind.Ring, FingerKind.Little) => 0.5,
                     (FingerKind.Ring, FingerKind.Middle) or (FingerKind.Middle, FingerKind.Ring) => 0.1,
                     _ => 0,
                 };

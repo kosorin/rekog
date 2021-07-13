@@ -10,12 +10,12 @@ namespace Rekog.Core.UnitTests.Extensions
     public class FingerExtensionsTests
     {
         [Theory]
-        [InlineData(Finger.LeftPinky, Hand.Left)]
+        [InlineData(Finger.LeftLittle, Hand.Left)]
         [InlineData(Finger.LeftRing, Hand.Left)]
         [InlineData(Finger.LeftMiddle, Hand.Left)]
         [InlineData(Finger.LeftIndex, Hand.Left)]
         [InlineData(Finger.LeftThumb, Hand.Left)]
-        [InlineData(Finger.RightPinky, Hand.Right)]
+        [InlineData(Finger.RightLittle, Hand.Right)]
         [InlineData(Finger.RightRing, Hand.Right)]
         [InlineData(Finger.RightMiddle, Hand.Right)]
         [InlineData(Finger.RightIndex, Hand.Right)]
@@ -49,10 +49,10 @@ namespace Rekog.Core.UnitTests.Extensions
         {
             var neighborsList = new HashSet<(Finger, Finger)>(new[]
             {
-                (Finger.LeftPinky, Finger.LeftRing),
+                (Finger.LeftLittle, Finger.LeftRing),
                 (Finger.LeftRing, Finger.LeftMiddle),
                 (Finger.LeftMiddle, Finger.LeftIndex),
-                (Finger.RightPinky, Finger.RightRing),
+                (Finger.RightLittle, Finger.RightRing),
                 (Finger.RightRing, Finger.RightMiddle),
                 (Finger.RightMiddle, Finger.RightIndex),
             }.SelectMany(x => new[] { (x.Item1, x.Item2), (x.Item2, x.Item1), }));
@@ -102,22 +102,22 @@ namespace Rekog.Core.UnitTests.Extensions
         {
             var rollList = new HashSet<(Finger, Finger, Roll)>(new[]
             {
-                (Finger.LeftPinky, Finger.LeftRing, Roll.Inward),
+                (Finger.LeftLittle, Finger.LeftRing, Roll.Inward),
                 (Finger.LeftRing, Finger.LeftMiddle, Roll.Inward),
                 (Finger.LeftMiddle, Finger.LeftIndex, Roll.Inward),
                 (Finger.LeftIndex, Finger.LeftThumb, Roll.Inward),
                 (Finger.LeftThumb, Finger.LeftIndex, Roll.Outward),
                 (Finger.LeftIndex, Finger.LeftMiddle, Roll.Outward),
                 (Finger.LeftMiddle, Finger.LeftRing, Roll.Outward),
-                (Finger.LeftRing, Finger.LeftPinky, Roll.Outward),
-                (Finger.RightPinky, Finger.RightRing, Roll.Inward),
+                (Finger.LeftRing, Finger.LeftLittle, Roll.Outward),
+                (Finger.RightLittle, Finger.RightRing, Roll.Inward),
                 (Finger.RightRing, Finger.RightMiddle, Roll.Inward),
                 (Finger.RightMiddle, Finger.RightIndex, Roll.Inward),
                 (Finger.RightIndex, Finger.RightThumb, Roll.Inward),
                 (Finger.RightThumb, Finger.RightIndex, Roll.Outward),
                 (Finger.RightIndex, Finger.RightMiddle, Roll.Outward),
                 (Finger.RightMiddle, Finger.RightRing, Roll.Outward),
-                (Finger.RightRing, Finger.RightPinky, Roll.Outward),
+                (Finger.RightRing, Finger.RightLittle, Roll.Outward),
             });
 
             if (isRoll)
