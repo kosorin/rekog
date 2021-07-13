@@ -10,11 +10,11 @@ namespace Rekog.Core.Corpora
 
         public Alphabet(IEnumerable<char> characters)
         {
-            characters = characters
+            _characters = characters
                 .Where(x => !char.IsSurrogate(x))
                 .SelectMany(x => new[] { char.ToLowerInvariant(x), char.ToUpperInvariant(x), })
-                .Distinct();
-            _characters = new HashSet<char>(characters);
+                .Distinct()
+                .ToHashSet();
         }
 
         public bool Contains(char character)

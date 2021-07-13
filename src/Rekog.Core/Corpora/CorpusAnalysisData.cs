@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Rekog.Core.Corpora
+﻿namespace Rekog.Core.Corpora
 {
     public class CorpusAnalysisData
     {
@@ -26,11 +24,6 @@ namespace Rekog.Core.Corpora
 
         public void Add(CorpusAnalysisData other)
         {
-            if (other == this)
-            {
-                throw new ArgumentException(null, nameof(other));
-            }
-
             UnigramOccurrences.Add(other.UnigramOccurrences);
             BigramOccurrences.Add(other.BigramOccurrences);
             TrigramOccurrences.Add(other.TrigramOccurrences);

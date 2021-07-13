@@ -1,9 +1,9 @@
 ﻿using System;
-using Rekog.Core.Ngrams;
+using Rekog.Core.Corpora;
 using Shouldly;
 using Xunit;
 
-namespace Rekog.Core.UnitTests.Ngrams
+namespace Rekog.Core.UnitTests.Corpora
 {
     public class NgramParserTests
     {

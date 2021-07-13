@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using Rekog.Core.Ngrams;
 
 namespace Rekog.Core.Corpora
 {
-    public class CorpusParser
+    public class CorpusAnalyzer
     {
         private readonly NgramCollector _unigramCollector;
         private readonly NgramCollector _bigramCollector;
@@ -16,7 +15,7 @@ namespace Rekog.Core.Corpora
         private readonly Alphabet _alphabet;
         private readonly bool _caseSensitive;
 
-        public CorpusParser(Alphabet alphabet)
+        public CorpusAnalyzer(Alphabet alphabet)
         {
             _alphabet = alphabet;
             _caseSensitive = false;
@@ -37,7 +36,7 @@ namespace Rekog.Core.Corpora
             return new CorpusAnalysisData(_unigramCollector.Occurrences, _bigramCollector.Occurrences, _trigramCollector.Occurrences);
         }
 
-        public void Parse(StreamReader reader, CancellationToken cancellationToken)
+        public void AnalyzeNext(StreamReader reader, CancellationToken cancellationToken)
         {
             Span<char> buffer = new char[4096];
             while (true)

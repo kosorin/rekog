@@ -54,8 +54,8 @@ namespace Rekog.Core.Extensions
                 return false;
             }
 
-            var distance = neighbor - finger;
-            return distance == 1 || distance == -1;
+            var distance = Math.Abs(neighbor - finger);
+            return distance == 1;
         }
 
         [Obsolete]

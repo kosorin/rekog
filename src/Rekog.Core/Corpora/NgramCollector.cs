@@ -1,4 +1,4 @@
-﻿namespace Rekog.Core.Ngrams
+﻿namespace Rekog.Core.Corpora
 {
     public class NgramCollector : ITokenCollector
     {

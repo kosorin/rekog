@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Rekog.Core.Corpora
 {
-    public record CorpusFile(string Path, Encoding Encoding)
+    public record CorpusFileInfo(string Path, Encoding Encoding)
     {
         public static Encoding DefaultEncoding { get; } = Encoding.UTF8;
 

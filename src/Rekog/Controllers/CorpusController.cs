@@ -37,7 +37,7 @@ namespace Rekog.Controllers
             var analysisDataFile = GetCorpusDataFile();
             if (!TryLoadAnalysisData(analysisDataFile, out var analysisData))
             {
-                analysisData = ParseCorpus(cancellationToken);
+                analysisData = AnalyzeCorpus(cancellationToken);
                 if (analysisData != null)
                 {
                     SaveAnalysisData(analysisDataFile, analysisData);
@@ -103,35 +103,54 @@ namespace Rekog.Controllers
             }
         }
 
-        private CorpusAnalysisData? ParseCorpus(CancellationToken cancellationToken)
+        private CorpusAnalysisData? AnalyzeCorpus(CancellationToken cancellationToken)
         {
-            var analysisData = new CorpusAnalysisData();
-
-            var files = GetCorpusFiles();
-            if (files.Count == 0)
+            var fileInfos = GetCorpusFileInfos();
+            if (fileInfos.Count == 0)
             {
-                return analysisData;
+                return new CorpusAnalysisData();
             }
 
             var alphabet = GetAlphabet();
 
-            _logger.Debug("Started parsing {FileCount} corpus file(s)", files.Count);
-
+            _logger.Debug("Started analyzing {FileCount} corpus file(s)", fileInfos.Count);
             var sw = Stopwatch.StartNew();
-            Parallel.ForEach(files, new ParallelOptions(),
-                () => new CorpusParser(alphabet),
-                (file, state, _, parser) =>
+
+            var analysisData = AnalyzeCorpusCore(fileInfos, alphabet, cancellationToken);
+            if (analysisData == null)
+            {
+                return null;
+            }
+
+            sw.Stop();
+            _logger.Information("Analyzed {FileCount} corpus file(s) in {ElapsedTime} ({MillisecondsPerFile} ms/file)",
+                fileInfos.Count,
+                sw.Elapsed,
+                fileInfos.Count > 0 ? (int)(sw.Elapsed.TotalMilliseconds / fileInfos.Count) : 0);
+
+            return analysisData;
+        }
+
+        private CorpusAnalysisData? AnalyzeCorpusCore(List<CorpusFileInfo> fileInfos, Alphabet alphabet, CancellationToken cancellationToken)
+        {
+            var analysisData = new CorpusAnalysisData();
+
+            var parallelLoopResult = Parallel.ForEach(fileInfos, new ParallelOptions(),
+                () => new CorpusAnalyzer(alphabet),
+                (fileInfo, state, _, analyzer) =>
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
                         state.Break();
                     }
+                    else
+                    {
+                        AnalyzeCorpusFile(fileInfo, analyzer, cancellationToken);
+                    }
 
-                    ParseCorpusFile(file, parser, cancellationToken);
-
-                    return parser;
+                    return analyzer;
                 },
-                parser =>
+                analyzer =>
                 {
                     if (cancellationToken.IsCancellationRequested)
                     {
@@ -140,31 +159,23 @@ namespace Rekog.Controllers
 
                     lock (analysisData)
                     {
-                        analysisData.Add(parser.GetAnalysisData());
+                        analysisData.Add(analyzer.GetAnalysisData());
                     }
                 });
-            sw.Stop();
 
-            if (cancellationToken.IsCancellationRequested)
-            {
-                return null;
-            }
-
-            _logger.Information("Parsed {FileCount} corpus file(s) in {ElapsedTime} ({MillisecondsPerFile} ms/file)",
-                files.Count,
-                sw.Elapsed,
-                files.Count > 0 ? (int)(sw.Elapsed.TotalMilliseconds / files.Count) : 0);
-            return analysisData;
+            return parallelLoopResult.IsCompleted && !cancellationToken.IsCancellationRequested
+                ? analysisData
+                : null;
         }
 
-        private void ParseCorpusFile(CorpusFile file, CorpusParser parser, CancellationToken cancellationToken)
+        private void AnalyzeCorpusFile(CorpusFileInfo fileInfo, CorpusAnalyzer analyzer, CancellationToken cancellationToken)
         {
-            using (var reader = file.Open(_fileSystem))
+            using (var reader = fileInfo.Open(_fileSystem))
             {
-                parser.Parse(reader, cancellationToken);
+                analyzer.AnalyzeNext(reader, cancellationToken);
             }
 
-            _logger.Information("Parsed corpus file {CorpusFile}", file.Path);
+            _logger.Information("Analyzed corpus file {CorpusFile}", fileInfo.Path);
         }
 
         private Alphabet GetAlphabet()
@@ -178,20 +189,20 @@ namespace Rekog.Controllers
             return new Alphabet(characters);
         }
 
-        private List<CorpusFile> GetCorpusFiles()
+        private List<CorpusFileInfo> GetCorpusFileInfos()
         {
             var corpusConfig = _config.Corpora[_options.Corpus];
 
             if (corpusConfig.Path == null)
             {
-                return new List<CorpusFile>();
+                return new List<CorpusFileInfo>();
             }
 
             return PathHelper
                 .GetPaths(_fileSystem, corpusConfig.Path, corpusConfig.Pattern, corpusConfig.Recursive)
                 .DistinctBy(x => x)
-                .Select(path => new CorpusFile(path, string.IsNullOrWhiteSpace(corpusConfig.Encoding)
-                    ? CorpusFile.DefaultEncoding
+                .Select(path => new CorpusFileInfo(path, string.IsNullOrWhiteSpace(corpusConfig.Encoding)
+                    ? CorpusFileInfo.DefaultEncoding
                     : Encoding.GetEncoding(corpusConfig.Encoding)))
                 .ToList();
         }

@@ -1,4 +1,4 @@
-﻿namespace Rekog.Core
+﻿namespace Rekog.Core.Corpora
 {
     public interface ITokenCollector
     {

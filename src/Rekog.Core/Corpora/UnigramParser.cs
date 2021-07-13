@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Rekog.Core.Ngrams
+namespace Rekog.Core.Corpora
 {
     public class UnigramParser : INgramParser
     {
