@@ -420,8 +420,8 @@ bigrams:
   DŮ: 3139
   PŮ: 3103
   KV: 3066
-  ŮV: 3034
   ZM: 3034
+  ŮV: 3034
   ŮS: 2958
   JO: 2918
   RS: 2899
@@ -516,8 +516,8 @@ bigrams:
   ZY: 1542
   RP: 1530
   HD: 1522
-  YČ: 1520
   RZ: 1520
+  YČ: 1520
   LM: 1506
   ŘA: 1504
   ŠŤ: 1470
@@ -569,8 +569,8 @@ bigrams:
   ÝB: 1048
   ČÁ: 1045
   YŘ: 1015
-  YZ: 1000
   AF: 1000
+  YZ: 1000
   ŘS: 999
   LC: 981
   FE: 964
@@ -596,11 +596,11 @@ bigrams:
   ÉD: 839
   ZJ: 835
   UĎ: 834
-  OŇ: 832
   GL: 832
+  OŇ: 832
   ŮR: 828
-  ÝK: 825
   ĎT: 825
+  ÝK: 825
   LČ: 824
   ÚT: 818
   ÝR: 809
@@ -636,8 +636,8 @@ bigrams:
   PC: 630
   BJ: 616
   EI: 609
-  LD: 602
   NB: 602
+  LD: 602
   ŮN: 601
   UE: 600
   DH: 594
@@ -719,8 +719,8 @@ bigrams:
   PÉ: 317
   ÝŘ: 316
   ÚK: 314
-  FU: 313
   JP: 313
+  FU: 313
   JZ: 308
   JH: 307
   ZÝ: 307
@@ -741,8 +741,8 @@ bigrams:
   XI: 275
   MH: 268
   JŮ: 267
-  GÁ: 266
   ÉŘ: 266
+  GÁ: 266
   JČ: 266
   NV: 262
   ŽC: 261
@@ -752,13 +752,13 @@ bigrams:
   ŤÁ: 256
   IĎ: 255
   ÚŽ: 243
-  NF: 238
-  UO: 238
   ZŠ: 238
+  UO: 238
+  NF: 238
   ÚR: 237
   IŇ: 236
-  DZ: 235
   OO: 235
+  DZ: 235
   ÉČ: 233
   ŘM: 231
   BT: 229
@@ -770,20 +770,20 @@ bigrams:
   EY: 221
   PJ: 220
   KH: 218
-  DJ: 213
   BV: 213
+  DJ: 213
   ŤT: 212
   ÚL: 210
   ÍŇ: 202
   LQ: 202
-  UŤ: 201
   ŠS: 201
+  UŤ: 201
   ÝH: 200
   ŽR: 199
   MŠ: 199
-  VB: 198
   CÉ: 198
   EŤ: 198
+  VB: 198
   ÚM: 196
   LŇ: 196
   YO: 195
@@ -797,19 +797,19 @@ bigrams:
   XE: 184
   XP: 183
   WA: 182
-  ÝP: 178
   ŤO: 178
+  ÝP: 178
   ŘV: 177
-  SÉ: 176
   KK: 176
-  FÉ: 172
-  ĎÁ: 172
+  SÉ: 176
   IÓ: 172
+  FÉ: 172
   ČŮ: 172
+  ĎÁ: 172
   OI: 170
   XA: 168
-  ŠŮ: 164
   BZ: 164
+  ŠŮ: 164
   WI: 163
   ĎM: 162
   ŽH: 160
@@ -817,8 +817,8 @@ bigrams:
   CP: 156
   ŮČ: 155
   TÓ: 153
-  CY: 152
   LÓ: 152
+  CY: 152
   ÚH: 149
   ĎA: 148
   ČM: 147
@@ -835,34 +835,34 @@ bigrams:
   YE: 133
   CC: 132
   PČ: 132
-  ZÚ: 131
   ŇŮ: 131
   EÚ: 131
-  VH: 130
+  ZÚ: 131
   ŠM: 130
+  VH: 130
   SČ: 128
   LF: 127
   ÚV: 126
   YU: 126
   SF: 124
-  UÁ: 124
   SŇ: 124
+  UÁ: 124
   TJ: 124
   NL: 123
   FF: 121
   ŤU: 117
   OW: 115
-  LG: 114
-  ÚN: 114
   ŮŘ: 114
+  ÚN: 114
+  LG: 114
   KP: 112
   XX: 112
   ŠC: 111
   ÝJ: 110
   HŤ: 110
   EW: 109
-  YŇ: 108
   GH: 108
+  YŇ: 108
   SJ: 107
   ŠŇ: 105
   CR: 103
@@ -874,8 +874,8 @@ bigrams:
   PŤ: 99
   LP: 98
   IÉ: 97
-  GM: 95
   MF: 95
+  GM: 95
   GÓ: 94
   ŘP: 93
   ÉŠ: 92
@@ -889,11 +889,11 @@ bigrams:
   OY: 83
   UŇ: 83
   ČP: 83
-  XV: 82
   AY: 82
   MČ: 82
   IX: 82
   RŇ: 82
+  XV: 82
   YA: 80
   LŤ: 80
   BŽ: 79
@@ -910,8 +910,8 @@ bigrams:
   FŮ: 71
   ŽM: 69
   ÓR: 68
-  RX: 67
   ZŽ: 67
+  RX: 67
   XC: 67
   ÍŤ: 66
   HB: 65
@@ -919,11 +919,11 @@ bigrams:
   PŇ: 63
   PÓ: 62
   ŠB: 62
-  BH: 61
   XO: 61
+  BH: 61
   ÓD: 60
-  VJ: 59
   ĚŇ: 59
+  VJ: 59
   TD: 58
   HČ: 58
   HŇ: 57
@@ -936,23 +936,23 @@ bigrams:
   ŠR: 54
   RJ: 54
   ČČ: 54
-  GŮ: 53
   BM: 53
+  GŮ: 53
   FJ: 52
   VM: 52
   EÍ: 51
   MZ: 50
   ŘC: 50
   ČS: 49
-  EŮ: 48
   ŮC: 48
+  EŮ: 48
   JF: 48
-  DŇ: 47
   MV: 47
+  DŇ: 47
   YG: 46
   KČ: 46
-  ĎO: 45
   HS: 45
+  ĎO: 45
   NR: 45
   DÓ: 44
   ÉF: 41
@@ -962,18 +962,18 @@ bigrams:
   AW: 39
   XU: 39
   ĚB: 39
-  ÁĎ: 38
   MÓ: 38
-  ŤM: 37
+  ÁĎ: 38
   KÓ: 37
   ZÉ: 37
+  ŤM: 37
   ŽP: 37
   YF: 36
   GÉ: 36
   KÍ: 36
+  ŘL: 35
   UU: 35
   ZF: 35
-  ŘL: 35
   ŇM: 35
   HÍ: 35
   ÁG: 34
@@ -985,18 +985,18 @@ bigrams:
   ÚB: 32
   LJ: 32
   ĎU: 32
-  IŮ: 31
   ÓL: 31
+  IŮ: 31
   TP: 31
   ĎS: 30
   ŽŇ: 30
   NĎ: 30
   SÚ: 30
-  FS: 29
   WH: 29
+  FS: 29
+  RŤ: 28
   ÓG: 28
   XL: 28
-  RŤ: 28
   RÚ: 28
   CZ: 28
   ÁU: 28
@@ -1011,18 +1011,18 @@ bigrams:
   ÍĎ: 25
   SG: 24
   RW: 24
-  ŮŠ: 24
   ÁF: 24
-  ŘŠ: 23
-  NÓ: 23
+  ŮŠ: 24
   WS: 23
+  NÓ: 23
   XN: 23
   ÁÁ: 23
+  ŘŠ: 23
   ÁŤ: 23
-  PF: 22
   ÓM: 22
   ĎK: 22
   BÓ: 22
+  PF: 22
   JÚ: 22
   ŠD: 22
   SŽ: 21
@@ -1044,12 +1044,12 @@ bigrams:
   ÉE: 19
   SŠ: 19
   MŇ: 19
-  ÉA: 18
   MJ: 18
+  ÉA: 18
   FĚ: 18
   ĎH: 18
-  AQ: 17
   TF: 17
+  AQ: 17
   PM: 17
   JŘ: 17
   RĎ: 16
@@ -1070,18 +1070,18 @@ bigrams:
   ŠČ: 13
   ÚŠ: 13
   XÍ: 13
-  ÓT: 12
   XF: 12
   GV: 12
   HW: 12
   DW: 12
   ÚJ: 12
+  ÓT: 12
   ČV: 12
   KŇ: 12
   JÉ: 12
   CJ: 12
-  HH: 11
   ČŤ: 11
+  HH: 11
   YÁ: 11
   GB: 11
   ŽÉ: 11
@@ -1094,10 +1094,10 @@ bigrams:
   ÓJ: 10
   ŇC: 10
   HP: 10
-  XŮ: 9
   DF: 9
   ŘH: 9
   UÍ: 9
+  XŮ: 9
   XY: 9
   BŇ: 9
   KF: 9
@@ -1114,15 +1114,15 @@ bigrams:
   RQ: 8
   FÓ: 8
   NŤ: 8
-  ÓF: 8
   ZG: 8
   MÚ: 8
-  ČD: 7
-  ÍI: 7
+  ÓF: 8
   TW: 7
   WR: 7
   GW: 7
   BW: 7
+  ČD: 7
+  ÍI: 7
   KJ: 7
   ŘY: 7
   CS: 7
@@ -1140,9 +1140,9 @@ bigrams:
   ŮW: 6
   SŘ: 6
   TG: 6
+  ÍF: 6
   OQ: 6
   ŽJ: 6
-  ÍF: 6
   ŤP: 6
   VV: 6
   IÚ: 6
@@ -1156,9 +1156,9 @@ bigrams:
   FM: 5
   EÓ: 5
   ĎJ: 5
-  ÉJ: 5
-  ŽG: 5
   CÚ: 5
+  ŽG: 5
+  ÉJ: 5
   WŮ: 5
   GÚ: 5
   XM: 5
@@ -1166,18 +1166,18 @@ bigrams:
   ÍO: 4
   GJ: 4
   YÚ: 4
-  ÍA: 4
   CB: 4
-  ĎC: 4
+  ÍA: 4
   FH: 4
   NÚ: 4
   ÚÚ: 4
   NQ: 4
-  RĚ: 3
+  ĎC: 4
   MW: 3
   CD: 3
   WM: 3
   NW: 3
+  RĚ: 3
   HJ: 3
   ĚG: 3
   UÚ: 3
@@ -1192,21 +1192,21 @@ bigrams:
   EÉ: 3
   OÓ: 3
   OÍ: 3
-  ÁÚ: 3
-  ŽČ: 3
   ŮŮ: 3
   ÍÍ: 3
   ÝŇ: 3
   ÉŇ: 3
+  ÁÚ: 3
+  ŽČ: 3
   ÉI: 3
   ÉY: 3
   MG: 3
-  FD: 2
-  CČ: 2
   YŮ: 2
   PB: 2
   WC: 2
   PW: 2
+  FD: 2
+  CČ: 2
   RŘ: 2
   NŘ: 2
   AÓ: 2
@@ -1219,32 +1219,32 @@ bigrams:
   GŠ: 2
   BF: 2
   KG: 2
+  ŤŽ: 2
+  FČ: 2
   ŽÚ: 2
   ŤC: 2
   ÝŤ: 2
-  ŤŽ: 2
-  FČ: 2
-  ÉĎ: 2
-  JG: 2
-  LX: 2
-  HF: 2
   ÝÝ: 2
   ŇI: 2
   ÓŇ: 2
+  HF: 2
   ŘÚ: 2
   CQ: 2
   ŠG: 2
   ČH: 2
+  ÉĎ: 2
+  JG: 2
+  LX: 2
+  ĎN: 2
+  VŤ: 2
+  ĎI: 2
+  XS: 2
+  ŠH: 2
   MQ: 2
   ÚA: 2
   ŠJ: 2
   ÓO: 2
-  ŠH: 2
   CG: 2
-  XS: 2
-  ĎN: 2
-  VŤ: 2
-  ĎI: 2
   UÓ: 1
   ČÉ: 1
   CW: 1
@@ -1262,20 +1262,15 @@ bigrams:
   WÝ: 1
   FÝ: 1
   ÝU: 1
+  ĎŮ: 1
+  ZĎ: 1
+  LÚ: 1
   ŇÍ: 1
   UÉ: 1
   ŇE: 1
   TX: 1
   ŽŘ: 1
   ÁI: 1
-  ĎŮ: 1
-  ZĎ: 1
-  LÚ: 1
-  SĎ: 1
-  PD: 1
-  ÝF: 1
-  BG: 1
-  ŠÓ: 1
   ÝÍ: 1
   ÉÉ: 1
   ÓH: 1
@@ -1283,8 +1278,21 @@ bigrams:
   ÓP: 1
   VÚ: 1
   YÉ: 1
+  SĎ: 1
+  PD: 1
+  ÝF: 1
+  BG: 1
+  ŠÓ: 1
   ĎZ: 1
   ÁO: 1
+  ĎŽ: 1
+  QN: 1
+  ŘZ: 1
+  TŽ: 1
+  ŇH: 1
+  ŤÍ: 1
+  ZĚ: 1
+  ĚA: 1
   ČJ: 1
   ŤB: 1
   ÉW: 1
@@ -1302,14 +1310,6 @@ bigrams:
   JŇ: 1
   ÉÍ: 1
   CŤ: 1
-  ĎŽ: 1
-  QN: 1
-  ŘZ: 1
-  TŽ: 1
-  ŇH: 1
-  ŤÍ: 1
-  ZĚ: 1
-  ĚA: 1
 trigrams:
   PRO: 24819
   OST: 24156
@@ -1526,8 +1526,8 @@ trigrams:
   ICK: 4078
   JIN: 4067
   DOV: 4066
-  TÍM: 4058
   OŽE: 4058
+  TÍM: 4058
   MIL: 4051
   NAL: 4036
   ŽIV: 4029
@@ -1641,8 +1641,8 @@ trigrams:
   KEM: 3107
   LIV: 3103
   YLA: 3096
-  OUP: 3091
   ÁTE: 3091
+  OUP: 3091
   SIL: 3086
   JDE: 3078
   ÁCH: 3076
@@ -1652,8 +1652,8 @@ trigrams:
   NĚM: 3058
   DCE: 3056
   EMI: 3054
-  JIM: 3051
   VŠA: 3051
+  JIM: 3051
   ĚLI: 3045
   KRA: 3042
   ŠAK: 3029
@@ -1665,8 +1665,8 @@ trigrams:
   JŠÍ: 2987
   ODL: 2983
   SVÝ: 2960
-  MAL: 2952
   JEŽ: 2952
+  MAL: 2952
   DRU: 2946
   IDĚ: 2941
   NIL: 2939
@@ -1692,8 +1692,8 @@ trigrams:
   INU: 2814
   ODE: 2806
   ENT: 2803
-  MOC: 2801
   ČIL: 2801
+  MOC: 2801
   HOR: 2792
   VIN: 2788
   EDY: 2775
@@ -1733,8 +1733,8 @@ trigrams:
   AVE: 2610
   OVÍ: 2599
   ATO: 2596
-  OHA: 2591
   VAN: 2591
+  OHA: 2591
   TŘÍ: 2585
   ENÉ: 2584
   AMA: 2574
@@ -1745,10 +1745,10 @@ trigrams:
   KÉH: 2545
   OUD: 2544
   EČE: 2542
-  EMO: 2531
   VOT: 2531
-  OBO: 2530
+  EMO: 2531
   MAT: 2530
+  OBO: 2530
   ROB: 2522
   MEZ: 2513
   VÍC: 2509
@@ -1758,16 +1758,16 @@ trigrams:
   KRO: 2502
   BRO: 2497
   ADN: 2487
-  ÍVA: 2486
-  VÍM: 2486
   YST: 2486
+  VÍM: 2486
+  ÍVA: 2486
   RAZ: 2483
   ASE: 2472
   JSI: 2472
-  ŘEN: 2471
   ĚJŠ: 2471
-  POČ: 2462
+  ŘEN: 2471
   ČEK: 2462
+  POČ: 2462
   JEM: 2460
   ŽIL: 2458
   VÁS: 2452
@@ -1775,8 +1775,8 @@ trigrams:
   BŮH: 2450
   DÁV: 2447
   NÍC: 2444
-  DEM: 2443
   ŘEC: 2443
+  DEM: 2443
   AVO: 2441
   EMĚ: 2439
   JTE: 2434
@@ -1793,8 +1793,8 @@ trigrams:
   KÝC: 2399
   UDO: 2394
   LOS: 2390
-  VÉM: 2389
   ÁVÁ: 2389
+  VÉM: 2389
   CHY: 2377
   ECK: 2376
   HOU: 2373
@@ -1814,8 +1814,8 @@ trigrams:
   VŽD: 2295
   ĚNÍ: 2294
   OTE: 2294
-  ŮŽE: 2293
   VYP: 2293
+  ŮŽE: 2293
   VIT: 2292
   OKU: 2291
   SEB: 2285
@@ -1839,8 +1839,8 @@ trigrams:
   LOŽ: 2229
   ČAS: 2221
   ABI: 2212
-  OZU: 2204
   OŘE: 2204
+  OZU: 2204
   ŠEN: 2198
   HNI: 2194
   ONI: 2191
@@ -1874,8 +1874,8 @@ trigrams:
   ŘÍC: 2120
   SKA: 2113
   NÁR: 2111
-  NUL: 2103
   ESE: 2103
+  NUL: 2103
   LNÍ: 2098
   TEK: 2088
   OCI: 2088
@@ -1883,8 +1883,8 @@ trigrams:
   BYS: 2085
   EŽÍ: 2084
   OMO: 2080
-  JIŽ: 2078
   HNO: 2078
+  JIŽ: 2078
   VŮJ: 2077
   EPO: 2076
   ŮST: 2076
@@ -1894,11 +1894,11 @@ trigrams:
   ANÍ: 2058
   ZAV: 2051
   ŠIC: 2048
-  ÁDN: 2047
   ŘIJ: 2047
+  ÁDN: 2047
   UŽE: 2046
-  ÁTI: 2036
   ŘIŠ: 2036
+  ÁTI: 2036
   ŽÁD: 2035
   TEC: 2034
   UŠE: 2034
@@ -1926,9 +1926,9 @@ trigrams:
   NAM: 1983
   NĚC: 1982
   BIL: 1981
+  PUS: 1980
   ARO: 1980
   ENI: 1980
-  PUS: 1980
   ZEL: 1979
   LÁS: 1975
   ERN: 1974
@@ -1948,8 +1948,8 @@ trigrams:
   KLE: 1940
   ENE: 1938
   BER: 1935
-  ORU: 1932
   ÁZE: 1932
+  ORU: 1932
   UČE: 1931
   ADI: 1927
   BÝT: 1926
@@ -1957,8 +1957,8 @@ trigrams:
   ĚJA: 1920
   RAL: 1916
   ADA: 1915
-  ATN: 1914
   ĚCO: 1914
+  ATN: 1914
   ÍME: 1912
   SKÁ: 1911
   ZAH: 1911
@@ -1984,17 +1984,17 @@ trigrams:
   VŠI: 1861
   DSK: 1860
   ERÁ: 1856
-  ODU: 1853
   ZAČ: 1853
+  ODU: 1853
   NĚN: 1852
   VYK: 1849
   EDA: 1847
-  ADO: 1840
   SLI: 1840
   ROC: 1840
+  ADO: 1840
   ECE: 1838
-  OVS: 1832
   ICI: 1832
+  OVS: 1832
   TIV: 1830
   OKR: 1826
   RÁD: 1826
@@ -2003,8 +2003,8 @@ trigrams:
   ELÉ: 1821
   VLÁ: 1818
   TĚC: 1815
-  BEN: 1814
   ÁZA: 1814
+  BEN: 1814
   LEK: 1812
   ČEL: 1808
   MÉN: 1797
@@ -2039,24 +2039,24 @@ trigrams:
   VAŠ: 1740
   ELN: 1733
   USE: 1731
-  OUS: 1729
   DNĚ: 1729
-  EVI: 1727
+  OUS: 1729
   AND: 1727
+  EVI: 1727
   EZN: 1712
   OUČ: 1710
   DEC: 1709
-  ODA: 1708
   DNÉ: 1708
+  ODA: 1708
   SÁM: 1707
   DEŠ: 1704
   ELK: 1700
   OLU: 1698
-  TEŘ: 1694
   KAT: 1694
+  TEŘ: 1694
   ATÍ: 1691
-  BOJ: 1690
   ŘIK: 1690
+  BOJ: 1690
   NOC: 1688
   SNĚ: 1687
   JIS: 1686
@@ -2066,16 +2066,16 @@ trigrams:
   SRD: 1679
   AVĚ: 1678
   YŠE: 1678
-  NEŠ: 1674
   BAB: 1674
+  NEŠ: 1674
   LEŽ: 1673
   SPR: 1670
   VĚŘ: 1669
   ENK: 1666
   NAJ: 1665
   JÍM: 1665
-  ÍCI: 1663
   OBL: 1663
+  ÍCI: 1663
   ÁSN: 1654
   KUD: 1652
   AVN: 1648
@@ -2088,9 +2088,9 @@ trigrams:
   HCE: 1637
   OŽI: 1634
   KOS: 1633
-  ÁKO: 1632
   POJ: 1632
   ŠLI: 1632
+  ÁKO: 1632
   MOD: 1630
   EBU: 1630
   PTA: 1630
@@ -2103,8 +2103,8 @@ trigrams:
   ANÉ: 1605
   OMA: 1602
   VRÁ: 1602
-  IČE: 1601
   ĚKD: 1601
+  IČE: 1601
   ÁLI: 1600
   OTC: 1600
   AVU: 1599
@@ -2117,8 +2117,8 @@ trigrams:
   MLO: 1591
   TIT: 1590
   RÁM: 1589
-  ADĚ: 1588
   UŽI: 1588
+  ADĚ: 1588
   IÁŠ: 1588
   RÁC: 1587
   CKÝ: 1584
@@ -2143,8 +2143,8 @@ trigrams:
   COV: 1552
   OZO: 1550
   ČNĚ: 1548
-  ŽDÝ: 1547
   NAV: 1547
+  ŽDÝ: 1547
   VZD: 1541
   JMÉ: 1541
   MAJ: 1540
@@ -2160,65 +2160,65 @@ trigrams:
   ŘÁD: 1511
   ŘIN: 1508
   KOM: 1506
-  TIS: 1504
   LON: 1504
+  TIS: 1504
   TIN: 1499
-  NST: 1496
   NEČ: 1496
+  NST: 1496
   NIM: 1495
   UDĚ: 1495
   ATA: 1493
   IMI: 1492
   UKO: 1491
   ŠLE: 1490
-  OVU: 1489
   NEO: 1489
+  OVU: 1489
   ĚLO: 1487
   ADE: 1483
-  INI: 1483
   ASI: 1483
-  ZAC: 1482
-  ÁNA: 1482
+  INI: 1483
   NÍH: 1482
   ŘIV: 1482
-  ZÁK: 1478
+  ZAC: 1482
+  ÁNA: 1482
   ÍLI: 1478
+  ZÁK: 1478
   KOR: 1474
   ENY: 1473
   ONO: 1472
   ÁHL: 1471
-  CKY: 1470
   ORN: 1470
+  CKY: 1470
   OBŘ: 1470
   HNY: 1467
   INÁ: 1465
   LIS: 1464
+  DRŽ: 1464
   OBN: 1464
   EJS: 1464
-  DRŽ: 1464
   VŘE: 1463
   PLÁ: 1463
   VAJ: 1461
   EVÍ: 1458
   REM: 1457
-  LNO: 1455
   ÁST: 1455
-  OŘI: 1454
-  DUŠ: 1454
+  LNO: 1455
   RVN: 1454
+  DUŠ: 1454
+  OŘI: 1454
   SKL: 1453
   NAK: 1452
-  ZDR: 1451
   ZLO: 1451
+  ZDR: 1451
   ZLA: 1450
   AŠI: 1447
   KOJ: 1446
-  IDE: 1445
   IKO: 1445
-  UCE: 1443
+  IDE: 1445
   TAD: 1443
-  RDC: 1441
+  UCE: 1443
   OŽN: 1441
+  RDC: 1441
   RNĚ: 1440
   NCI: 1440
   VNO: 1437
@@ -2237,15 +2237,15 @@ trigrams:
   BYT: 1421
   IŠE: 1420
   TÁT: 1420
-  VSK: 1416
   HDY: 1416
+  VSK: 1416
   ENŽ: 1416
   HAT: 1415
   LAM: 1414
-  OUŽ: 1413
   NKA: 1413
-  CÍC: 1410
+  OUŽ: 1413
   SMR: 1410
+  CÍC: 1410
   TEČ: 1407
   AKÝ: 1406
   ČNO: 1405
@@ -2255,15 +2255,15 @@ trigrams:
   SPA: 1401
   AMO: 1397
   UDU: 1395
-  ÍTI: 1392
   ČAL: 1392
+  ÍTI: 1392
   RCH: 1391
-  UHÉ: 1388
-  DNÝ: 1388
   ÍKÁ: 1388
+  DNÝ: 1388
+  UHÉ: 1388
   EDĚ: 1386
-  LEP: 1384
   MOŘ: 1384
+  LEP: 1384
   TKY: 1383
   TEH: 1382
   OBE: 1381
@@ -2271,21 +2271,21 @@ trigrams:
   TEB: 1381
   EDI: 1380
   UHO: 1380
-  ROP: 1378
   ŘEČ: 1378
   DOL: 1378
+  ROP: 1378
   ODV: 1376
   ELÝ: 1376
   EBN: 1375
   OPI: 1374
-  VOŘ: 1373
   EHD: 1373
+  VOŘ: 1373
   HOT: 1371
   ULI: 1370
-  SKY: 1370
   UPI: 1370
-  CEM: 1369
+  SKY: 1370
   EKN: 1369
+  CEM: 1369
   RAH: 1363
   ČEM: 1359
   HLI: 1357
@@ -2294,8 +2294,8 @@ trigrams:
   NAS: 1353
   MĚN: 1351
   ANÝ: 1350
-  MOV: 1349
   HAM: 1349
+  MOV: 1349
   VYŠ: 1347
   ĚLE: 1347
   UTN: 1345
@@ -2304,8 +2304,8 @@ trigrams:
   ĚTE: 1340
   KRY: 1337
   OUZ: 1335
-  EVĚ: 1334
   BAL: 1334
+  EVĚ: 1334
   OPR: 1332
   TOJ: 1332
   ANU: 1330
@@ -2325,28 +2325,28 @@ trigrams:
   TIŽ: 1309
   IVN: 1308
   EJD: 1307
-  DOP: 1306
   EMN: 1306
+  DOP: 1306
   ŘIT: 1305
   ENĚ: 1303
-  UMĚ: 1302
-  SMĚ: 1302
   DST: 1302
+  SMĚ: 1302
   INK: 1302
+  UMĚ: 1302
   JEV: 1301
-  IVE: 1301
   ĚLÁ: 1301
-  HLO: 1300
+  IVE: 1301
   EJE: 1300
+  HLO: 1300
   MÍR: 1298
   RVE: 1296
-  OMN: 1295
   LÍŽ: 1295
-  DÍL: 1294
+  OMN: 1295
   IDÉ: 1294
-  ATÝ: 1293
-  ÝVA: 1293
+  DÍL: 1294
   ŘEM: 1293
+  ÝVA: 1293
+  ATÝ: 1293
   CKO: 1292
   NĚL: 1291
   OVY: 1289
@@ -2361,14 +2361,14 @@ trigrams:
   ČIT: 1270
   JER: 1270
   ÍLE: 1269
+  TRU: 1267
   INÝ: 1267
   PAS: 1267
-  TRU: 1267
   ÁNI: 1265
   IVĚ: 1264
   ESM: 1263
-  ČNÍ: 1262
   DÁM: 1262
+  ČNÍ: 1262
   ETÍ: 1261
   LSK: 1259
   ÁBO: 1259
@@ -2384,8 +2384,8 @@ trigrams:
   HVÍ: 1249
   LÁN: 1248
   YNA: 1246
-  ÁŠE: 1243
   TEJ: 1243
+  ÁŠE: 1243
   UZA: 1242
   VÁL: 1241
   PIT: 1238
@@ -2394,19 +2394,19 @@ trigrams:
   UMÍ: 1232
   ĚHO: 1232
   LÍB: 1231
-  ELS: 1230
   RUC: 1230
+  ELS: 1230
   RES: 1228
   TKU: 1227
   ATÉ: 1226
-  INC: 1225
   ČKY: 1225
+  INC: 1225
   DÍM: 1223
   VZA: 1223
-  IKÁ: 1222
   ORE: 1222
-  KRI: 1221
+  IKÁ: 1222
   LOM: 1221
+  KRI: 1221
   RÁŽ: 1220
   AHA: 1219
   ZKO: 1217
@@ -2425,8 +2425,8 @@ trigrams:
   UTO: 1206
   PON: 1206
   KLÁ: 1204
-  BÝV: 1203
   MOŽ: 1203
+  BÝV: 1203
   BEC: 1200
   HNA: 1199
   OLÍ: 1198
@@ -2436,31 +2436,31 @@ trigrams:
   ROH: 1191
   LOK: 1186
   HNĚ: 1186
-  ETI: 1185
   ČET: 1185
+  ETI: 1185
   LOD: 1184
   VÍL: 1184
   EKO: 1182
   ĚTL: 1180
   ASN: 1179
-  VYT: 1178
   LÍM: 1178
+  VYT: 1178
   VER: 1171
   ETR: 1167
   STL: 1166
   AHR: 1165
   BLÍ: 1164
-  ÁCE: 1164
   HLÍ: 1164
+  ÁCE: 1164
   ERE: 1163
-  DÁN: 1162
   KÁM: 1162
+  DÁN: 1162
   LUJ: 1158
   AZI: 1157
   TÁN: 1156
   ÍDA: 1156
-  BAR: 1155
   UZE: 1155
+  BAR: 1155
   OKA: 1154
   EDM: 1154
   OLN: 1153
@@ -2469,43 +2469,43 @@ trigrams:
   ŠOV: 1150
   KUT: 1148
   OMĚ: 1147
-  NKU: 1146
-  DRO: 1146
   EJV: 1146
-  OPO: 1144
-  LIŠ: 1144
+  DRO: 1146
+  NKU: 1146
   ILY: 1144
+  LIŠ: 1144
+  OPO: 1144
   TNÝ: 1143
   EHN: 1143
   EZE: 1142
   ANÁ: 1141
   ONĚ: 1139
   NET: 1139
-  HNU: 1137
   ÁMI: 1137
+  HNU: 1137
   HAR: 1136
-  OKT: 1134
-  YŠL: 1134
   TÁH: 1134
+  YŠL: 1134
+  OKT: 1134
   SES: 1133
-  TÍN: 1131
   ÍŽE: 1131
+  TÍN: 1131
   ŘÍD: 1130
   UTÍ: 1130
   ČKO: 1129
-  OPU: 1125
-  SAL: 1125
   LEV: 1125
-  ZPO: 1124
+  SAL: 1125
+  OPU: 1125
   EDU: 1124
-  DŘÍ: 1122
+  ZPO: 1124
   ŘET: 1122
+  DŘÍ: 1122
   ANC: 1118
   DYŤ: 1118
   ODR: 1117
   OZV: 1117
-  ČIS: 1116
   OMI: 1116
+  ČIS: 1116
   ŠLA: 1115
   EDÁ: 1114
   EMÁ: 1113
@@ -2519,12 +2519,12 @@ trigrams:
   PIS: 1107
   ZDĚ: 1105
   NĚŽ: 1105
+  TLI: 1105
   OŘÁ: 1105
   ÁCT: 1105
-  TLI: 1105
   YLY: 1104
-  ERI: 1103
   TNÉ: 1103
+  ERI: 1103
   LUB: 1102
   NĚH: 1101
   OMÍ: 1100
@@ -2534,15 +2534,15 @@ trigrams:
   ČNÉ: 1088
   TVR: 1088
   ENU: 1088
-  TLA: 1087
   ŽDÉ: 1087
-  POP: 1085
+  TLA: 1087
   ILN: 1085
+  POP: 1085
   ESN: 1084
   IDS: 1082
   VEJ: 1082
-  VOS: 1081
   SKR: 1081
+  VOS: 1081
   ARE: 1080
   UHÝ: 1078
   UŠT: 1076
@@ -2570,12 +2570,12 @@ trigrams:
   ŠIL: 1044
   PÍŠ: 1042
   HLÉ: 1040
-  PLO: 1039
   LIČ: 1039
+  PLO: 1039
   HŘÍ: 1039
   DET: 1038
-  ONC: 1037
   VĚZ: 1037
+  ONC: 1037
   KAN: 1032
   KNE: 1032
   JÍT: 1031
@@ -2585,49 +2585,49 @@ trigrams:
   VĚR: 1027
   ĚTŠ: 1026
   ISK: 1025
-  TOS: 1022
   TRH: 1022
-  TVŮ: 1022
+  TOS: 1022
   CER: 1022
+  TVŮ: 1022
   TSK: 1019
   MON: 1018
   MET: 1017
   ŠEH: 1011
-  FIL: 1010
   SÍL: 1010
+  FIL: 1010
   BIT: 1009
   MÁT: 1008
   UCÍ: 1006
-  DAR: 1005
   ORY: 1005
+  DAR: 1005
   JUD: 1004
+  BOR: 1003
   MIS: 1003
-  ÍVÁ: 1003
   ZTR: 1003
   SUD: 1003
   VYV: 1003
-  BOR: 1003
+  ÍVÁ: 1003
   OBI: 1001
   AZE: 1000
   STÝ: 1000
   DNÁ: 999
   CTV: 999
+  ZNI: 997
   BLI: 997
   OCN: 997
-  ZNI: 997
   ÁŘE: 996
-  VZP: 994
   ŠKO: 994
-  EŘE: 993
+  VZP: 994
   VÁŽ: 993
+  EŘE: 993
   ŘEJ: 992
   AŽE: 992
   ĚKU: 990
-  UBO: 990
   IJE: 990
+  UBO: 990
   NAH: 989
-  SAŘ: 988
   VES: 988
+  SAŘ: 988
   ODÁ: 987
   VOV: 986
   UKÁ: 985
@@ -2638,56 +2638,56 @@ trigrams:
   OHY: 981
   KNI: 981
   IŠT: 980
-  OJN: 980
   TĚM: 980
+  OJN: 980
   OHR: 979
   ELM: 978
   RUČ: 978
   DNI: 977
-  VNA: 976
-  ANS: 976
   KUS: 976
+  ANS: 976
+  VNA: 976
   IŠL: 973
   VÍR: 972
   RUZ: 970
-  MRA: 968
   ZOV: 968
+  MRA: 968
   ALU: 968
   RAŽ: 967
-  ACÍ: 965
+  BLA: 965
   LUN: 965
   DVĚ: 965
-  BLA: 965
-  ZÁP: 963
+  ACÍ: 965
   UKU: 963
-  EVY: 962
+  ZÁP: 963
   OSU: 962
+  EVY: 962
   ÍKY: 958
   PRI: 958
   PER: 957
-  SPÍ: 956
   PÍS: 956
+  SPÍ: 956
   RÁZ: 955
-  IJD: 954
   LAK: 954
+  IJD: 954
   HEL: 953
-  LNÝ: 952
   ZPĚ: 952
-  SNÍ: 951
+  LNÝ: 952
   RŽE: 951
+  SNÍ: 951
   SVÍ: 951
   RNÝ: 950
   RNÉ: 950
   EVŘ: 949
   OZP: 948
   ČEJ: 948
-  YKO: 948
   OHN: 948
+  YKO: 948
   ZIL: 947
-  AVÉ: 946
   ZNĚ: 946
-  ŘÍL: 945
+  AVÉ: 946
   ZAJ: 945
+  ŘÍL: 945
   ŘIS: 943
   DVE: 941
   RST: 941
@@ -2701,105 +2701,105 @@ trigrams:
   VEŘ: 936
   ISÍ: 936
   LEZ: 934
-  HOM: 934
   OML: 934
+  HOM: 934
   TŠÍ: 932
   TVA: 931
   VIC: 931
   SMU: 930
-  ÁZÍ: 929
   ÁŠT: 929
-  ALÍ: 927
+  ÁZÍ: 929
   ĚKA: 927
+  ALÍ: 927
+  ZVE: 926
   APL: 926
   VEČ: 926
-  ZVE: 926
   ZHO: 925
   AKY: 924
   ATU: 923
   SPĚ: 923
   VNI: 922
   SAD: 921
-  NĚV: 920
   OKY: 920
+  NĚV: 920
   AVÝ: 919
   ZDA: 918
   MÁL: 918
   INĚ: 917
+  LAP: 916
   ZAM: 916
   OTR: 916
-  LAP: 916
   NÍŽ: 914
   ISM: 911
   ÁVN: 910
   RAB: 910
-  PRS: 908
   DNA: 908
+  PRS: 908
   MYŠ: 907
-  ASA: 906
   ZAR: 906
+  ASA: 906
   ÁSL: 903
   VYR: 903
-  IDU: 902
   CHI: 902
   LÁV: 902
+  IDU: 902
   JAN: 901
   BLE: 900
   TOB: 899
   USI: 898
   JSK: 897
-  TÁŘ: 896
   OBU: 896
+  TÁŘ: 896
   LIN: 895
   LEB: 895
-  EPT: 893
   AŘÍ: 893
+  EPT: 893
   OTN: 889
   PTÁ: 888
   OUB: 886
   EVE: 885
-  ÍTĚ: 885
   VEZ: 885
-  HYB: 884
+  ÍTĚ: 885
   KAJ: 884
+  HYB: 884
   ZVO: 883
-  OSO: 882
   ODS: 882
+  OSO: 882
   OJŽ: 882
-  ŠEK: 881
   RAŠ: 881
+  ŠEK: 881
   RTI: 881
   INN: 879
   DAJ: 879
   OLÁ: 879
-  ÁCI: 878
   ÁLN: 878
-  ZVA: 877
+  ÁCI: 878
   SLÁ: 877
-  RYC: 876
+  ZVA: 877
   AJI: 876
+  RYC: 876
   TRE: 874
   OND: 873
-  MOR: 871
   KAR: 871
-  NÁB: 871
+  MOR: 871
   ĚTA: 871
+  NÁB: 871
   JET: 870
   HUD: 870
   JŽÍ: 870
   SNÉ: 869
-  TEP: 867
-  HOP: 867
-  APR: 867
   CTI: 867
-  OHE: 865
+  APR: 867
+  HOP: 867
+  TEP: 867
   ĚŘI: 865
-  ŘEV: 864
+  OHE: 865
   AVY: 864
+  ŘEV: 864
   ADÍ: 864
-  ÁŘI: 863
-  ŘÁT: 863
   HON: 863
+  ŘÁT: 863
+  ÁŘI: 863
   OMŮ: 862
   CÍM: 862
   LÁT: 861
@@ -2807,13 +2807,13 @@ trigrams:
   SIT: 860
   RIN: 859
   OUV: 858
-  OBA: 857
+  ŽNO: 857
   NKY: 857
   LIB: 857
-  ŽNO: 857
+  OBA: 857
   ÍKŮ: 856
-  ÍSA: 856
   ACI: 856
+  ÍSA: 856
   TIK: 853
   NKO: 853
   ROR: 852
@@ -2822,29 +2822,29 @@ trigrams:
   ESÁ: 846
   TUR: 845
   OMY: 845
-  ÁNY: 844
+  ZVL: 844
   IMA: 844
   TLO: 844
-  ZVL: 844
+  ÁNY: 844
   POB: 843
   UDR: 842
   BOL: 842
-  SÁT: 841
-  ZNE: 841
-  BOD: 841
   ULO: 841
+  SÁT: 841
+  BOD: 841
+  ZNE: 841
   BÍL: 839
-  RTV: 838
   LNI: 838
+  RTV: 838
   ASY: 837
-  ČNÝ: 836
   ÍNA: 836
+  ČNÝ: 836
   OZK: 835
   ÍZE: 835
   ŽOV: 834
-  ŘAD: 832
   NYN: 832
   EZM: 832
+  ŘAD: 832
   YNÍ: 831
   PLE: 830
   PAM: 830
@@ -2858,40 +2858,40 @@ trigrams:
   ITÁ: 822
   MAS: 821
   IDO: 819
-  TVÝ: 818
   ĎTE: 818
+  TVÝ: 818
   EMŮ: 817
-  ÁLA: 816
   CIT: 816
-  ŘEH: 815
+  ÁLA: 816
   UPE: 815
+  ŘEH: 815
   EGY: 814
   ONU: 813
-  PŮS: 812
   MEČ: 812
+  PŮS: 812
   ČES: 811
   ŘEŠ: 810
-  ŘSK: 809
   ORI: 809
   AZY: 809
   NÁH: 809
+  ŘSK: 809
   MĚR: 808
   UHL: 807
   ÁČE: 806
-  ÚST: 805
   ČTY: 805
+  ÚST: 805
   SPÁ: 804
-  VAD: 803
   ARÝ: 803
-  EČI: 802
+  VAD: 803
   ĚŽÍ: 802
-  ĚDO: 801
+  EČI: 802
   TUJ: 801
+  ĚDO: 801
   GYP: 801
   YPT: 801
-  EDS: 799
-  VÁT: 799
   UVÍ: 799
+  VÁT: 799
+  EDS: 799
   KRE: 798
   OVŠ: 798
   POŽ: 797
@@ -2901,16 +2901,16 @@ trigrams:
   HAV: 792
   OSV: 792
   IDI: 791
-  KUL: 790
   PAR: 790
+  KUL: 790
   RŮZ: 789
-  NĚZ: 788
   ĚJE: 788
+  NĚZ: 788
   VDU: 787
-  SEK: 787
   APA: 787
-  IRO: 786
+  SEK: 787
   ETO: 786
+  IRO: 786
   ŽET: 785
   IND: 784
   ŮSO: 784
@@ -2929,41 +2929,41 @@ trigrams:
   RUB: 774
   LTÁ: 773
   AŠÍ: 772
-  NTI: 771
   IVI: 771
-  ŮLI: 770
+  NTI: 771
   EVO: 770
-  OTY: 770
-  VĚL: 770
   PÁT: 770
+  VĚL: 770
+  OTY: 770
+  ŮLI: 770
   DYC: 769
+  ÁDE: 768
   BĚH: 768
   AKA: 768
-  ÁDE: 768
   REV: 766
-  JAL: 765
   KOČ: 765
+  JAL: 765
   AŘE: 764
   ĚMU: 764
   ERT: 762
   ATY: 761
-  TĚS: 758
   CIZ: 758
+  TĚS: 758
   ZAK: 757
-  ZEJ: 757
   AZU: 757
+  ZEJ: 757
+  KOH: 756
   PRE: 756
   ONÁ: 756
-  KOH: 756
   ANG: 755
   CÍT: 754
+  NOT: 754
   KOB: 754
   INÍ: 754
-  NOT: 754
-  DŮV: 752
-  OTÁ: 752
   LÁM: 752
   OKÁ: 752
+  OTÁ: 752
+  DŮV: 752
   OTĚ: 751
   NAN: 751
   BUĎ: 750
@@ -2971,25 +2971,25 @@ trigrams:
   VYL: 749
   DĚD: 749
   YČE: 748
-  VÁŠ: 748
-  ZŘE: 748
   TYŘ: 748
+  ZŘE: 748
+  VÁŠ: 748
+  SAH: 745
   VAC: 745
   VRC: 745
-  SAH: 745
-  ŽAL: 744
   ZPR: 744
+  ŽAL: 744
   EHL: 743
   EŠL: 743
   SOV: 742
   MŘE: 742
   AKU: 741
   VĚS: 741
-  UJI: 740
   OTV: 740
+  UJI: 740
+  NIV: 739
   EKT: 739
   ŠÍC: 739
-  NIV: 739
   ŽEH: 739
   UŽÍ: 738
   UTK: 737
@@ -3000,26 +3000,26 @@ trigrams:
   EČK: 735
   NŽE: 734
   RÉH: 733
-  NAČ: 731
   ŘÍZ: 731
+  NAČ: 731
   POŠ: 731
   LÝM: 730
   ÍDL: 729
   BOT: 729
-  ESO: 728
-  PRÝ: 728
   KUP: 728
+  PRÝ: 728
+  ESO: 728
   LMI: 727
   ČÍT: 724
   API: 724
   ŘIČ: 722
+  ANY: 721
   KNO: 721
   NTE: 721
-  ANY: 721
   ŮBE: 721
-  ĚDE: 720
-  VÝŠ: 720
   ASL: 720
+  VÝŠ: 720
+  ĚDE: 720
   VÍŠ: 720
   ÍMI: 719
   SVÁ: 719
@@ -3029,65 +3029,65 @@ trigrams:
   ESA: 717
   PEV: 717
   VON: 717
-  ŠŤA: 716
   DEL: 716
-  OKN: 715
+  ŠŤA: 716
   FOR: 715
   LKA: 715
+  OKN: 715
   RTE: 713
   ŽNÍ: 712
   ÉNO: 712
   OUN: 711
   EKÁ: 711
-  DEV: 710
-  KNU: 710
   ZUJ: 710
   ĚKN: 710
+  DEV: 710
+  KNU: 710
   JEZ: 709
-  RŠÍ: 708
-  RÝM: 708
   AKÁ: 708
+  RÝM: 708
+  RŠÍ: 708
   ESP: 707
   TÝM: 707
+  ULE: 706
   ENN: 706
   OLT: 706
-  ULE: 706
+  EDÍ: 705
   IMO: 705
   RYT: 705
-  JDO: 705
-  EDÍ: 705
   ELY: 705
   RUN: 705
+  JDO: 705
   AHU: 704
   KVĚ: 704
-  HAJ: 703
   EJŠ: 703
-  ZAN: 702
+  HAJ: 703
   RYS: 702
   ILU: 702
+  ZAN: 702
   AČÍ: 701
   NAZ: 701
-  ZBO: 700
   IKL: 700
   PĚK: 700
+  ZBO: 700
   SIC: 699
   ABR: 698
-  HRD: 697
-  TRP: 697
-  ZKA: 697
   RÝC: 697
-  ORM: 696
+  TRP: 697
+  HRD: 697
+  ZKA: 697
   VÍŘ: 696
-  ĚŽK: 695
+  ORM: 696
   MÉH: 695
+  ĚŽK: 695
   ĚJÍ: 694
   ÍMA: 694
   NIS: 694
   HOŽ: 694
   TÉM: 693
   RUD: 693
-  IJÍ: 692
   OČK: 692
+  IJÍ: 692
   RVA: 691
   DŮM: 691
   ÍČK: 691
@@ -3098,44 +3098,44 @@ trigrams:
   JÁK: 688
   ION: 687
   ÁŽN: 687
-  ARŠ: 686
   ZVĚ: 686
+  ARŠ: 686
   OPE: 685
   PĚV: 685
   ÁTÍ: 683
-  AŘI: 682
   DIC: 682
-  DÁT: 682
+  AŘI: 682
   VŮB: 682
+  DÁT: 682
+  ÍŘE: 681
   TOP: 681
   ŠTI: 681
-  ÍŘE: 681
-  VRH: 680
   REJ: 680
+  VRH: 680
   TRŮ: 679
   YNŮ: 679
-  VIS: 678
   UČÍ: 678
-  NAB: 676
-  EŽE: 676
-  EZD: 676
-  CHŮ: 676
+  VIS: 678
   MER: 676
   UDY: 676
+  CHŮ: 676
+  EZD: 676
+  EŽE: 676
+  NAB: 676
   RIC: 675
-  ABÍ: 675
   VNÝ: 675
-  LKU: 673
+  ABÍ: 675
   ZAD: 673
   ŠIN: 673
   MUT: 673
-  ONÍ: 672
+  LKU: 673
   VÝS: 672
   KOŘ: 672
+  ONÍ: 672
   ÁŘÍ: 671
+  YTO: 670
   VYB: 670
   MEC: 670
-  YTO: 670
   EPA: 669
   ITU: 669
   KEJ: 668
@@ -3146,8 +3146,8 @@ trigrams:
   EMA: 664
   DNU: 664
   OTK: 663
-  UBI: 663
   ONS: 663
+  UBI: 663
   TNÁ: 662
   NÁD: 661
   NÁT: 661
@@ -3157,142 +3157,142 @@ trigrams:
   KÁV: 657
   PŮJ: 657
   BLO: 656
-  GRA: 656
   BAV: 656
+  GRA: 656
   IVÁ: 655
-  ARY: 654
   LKY: 654
-  ŠIM: 654
   IZE: 654
-  ŠLO: 653
+  ARY: 654
+  ŠIM: 654
   ÁHN: 653
+  ŠLO: 653
   YŘI: 653
+  ŽIJ: 652
   ASK: 652
   SNÝ: 652
-  ŽIJ: 652
-  APS: 651
-  KŮM: 651
-  NĚT: 651
   ÁSI: 651
-  DOD: 650
+  NĚT: 651
+  KŮM: 651
+  APS: 651
   ETĚ: 650
-  IKÝ: 649
+  DOD: 650
   OČE: 649
   DŘE: 649
-  ĚRN: 648
+  IKÝ: 649
+  LUK: 648
   ARC: 648
   ODŮ: 648
   LÍT: 648
-  LUK: 648
+  ĚRN: 648
   YDL: 647
-  OSA: 647
   ALL: 647
+  OSA: 647
   SAN: 646
   VŠÍ: 644
   BRÉ: 643
   NEL: 643
   IKÉ: 642
   ÁLK: 642
-  PĚL: 641
   TKO: 641
   ODD: 641
-  BNO: 639
+  PĚL: 641
   VUJ: 639
-  ZÁV: 639
   SMY: 639
-  BES: 638
+  BNO: 639
+  ZÁV: 639
   LIE: 638
+  BES: 638
   OKŮ: 638
   LÉD: 637
   TOČ: 637
   RIT: 636
-  IKU: 635
-  ŠÍH: 635
-  ÁNE: 635
-  LÍČ: 635
   ARÉ: 635
+  ŠÍH: 635
+  IKU: 635
   ÍRK: 635
+  LÍČ: 635
+  ÁNE: 635
+  ZVÍ: 634
   TOK: 634
   ÁDÁ: 634
-  ZVÍ: 634
-  RÉM: 633
   HVÁ: 633
-  ETA: 633
   ÍKU: 633
+  ETA: 633
+  RÉM: 633
+  ÍRÁ: 632
+  EMÍ: 632
+  ULA: 632
   KLÍ: 632
   OSM: 632
-  EMÍ: 632
-  ÍRÁ: 632
-  ULA: 632
   OZM: 631
   OŠT: 631
-  HÁN: 630
   OZL: 630
   EPŠ: 630
+  HÁN: 630
   DĚV: 629
-  ČOV: 628
-  LKO: 628
   VOB: 628
+  LKO: 628
+  ČOV: 628
   YPA: 627
   PET: 627
-  ÁMU: 626
   ORD: 626
+  ÁMU: 626
   TÝC: 625
   SOK: 625
   VYZ: 625
-  UKY: 624
   VÁZ: 624
+  UKY: 624
   UŠÍ: 623
   ÁNĚ: 622
   ELÍ: 622
   ÁVO: 621
   LAB: 620
   JDU: 619
-  KAV: 617
+  YŠÍ: 617
   ÁTN: 617
   UŠK: 617
-  YŠÍ: 617
+  KAV: 617
+  KŘE: 616
   ITĚ: 616
   YSO: 616
-  KŘE: 616
   UKR: 615
   IDL: 615
   ĚKT: 614
   ÍTÍ: 613
-  YHL: 613
   ÁNK: 613
-  TIŠ: 612
-  ĚŘÍ: 612
+  YHL: 613
   GEN: 612
-  ITA: 612
   ÉTO: 612
+  TIŠ: 612
+  ITA: 612
+  ĚŘÍ: 612
   DUJ: 611
-  STŮ: 610
   LIŽ: 610
+  STŮ: 610
   KUJ: 609
   ETN: 608
   AGO: 608
   ANN: 607
-  ZRO: 607
   LÁC: 607
+  ZRO: 607
   ĚLY: 607
   COP: 607
-  DOT: 606
   VĚN: 606
+  DOT: 606
   BUJ: 606
   YTE: 606
-  LAC: 605
-  LÉK: 605
-  MEM: 605
   PÁL: 605
+  LÉK: 605
+  LAC: 605
+  MEM: 605
   BYD: 604
   ODM: 604
   SEV: 603
   VOZ: 603
-  AVŘ: 602
-  ÁRN: 602
   NDY: 602
+  ÁRN: 602
   OUŘ: 602
+  AVŘ: 602
   VEŠ: 602
   LUŠ: 601
   JOV: 601
@@ -3301,20 +3301,20 @@ trigrams:
   LAH: 600
   PEK: 597
   DER: 596
-  ÍJE: 596
   PŠÍ: 596
+  ÍJE: 596
   ITÉ: 595
   ÍČE: 595
   DKU: 594
   VŮD: 594
-  ULT: 593
   UPA: 593
   HCI: 593
+  ULT: 593
   ELÁ: 591
-  ODK: 591
   BĚŽ: 591
-  OCT: 591
   BRU: 591
+  ODK: 591
+  OCT: 591
   ZNÍ: 590
   ÍBR: 590
   MĚŘ: 589
@@ -3323,14 +3323,14 @@ trigrams:
   KRV: 589
   AML: 588
   AVÁ: 587
-  ŮDC: 587
   RYB: 587
+  ŮDC: 587
   ÍSN: 586
-  EVR: 585
+  HUB: 585
   SNI: 585
   OŠE: 585
-  HUB: 585
   EBR: 585
+  EVR: 585
   ÁDK: 584
   OBC: 584
   KOT: 582
@@ -3339,60 +3339,60 @@ trigrams:
   YDA: 581
   USK: 580
   NOŽ: 579
-  MSK: 577
   ETL: 577
-  DEK: 577
   ŮVO: 577
-  COŽ: 576
+  DEK: 577
+  MSK: 577
   VĚJ: 576
-  BOK: 575
-  MNÉ: 575
+  COŽ: 576
   HEJ: 575
+  MNÉ: 575
+  BOK: 575
   RIE: 574
-  LOG: 574
   PÍV: 574
+  LOG: 574
   ŠPA: 573
-  ÍRO: 572
   OUF: 572
   ÁŽD: 572
+  ÍRO: 572
   DLÍ: 571
   OJĎ: 571
+  UBE: 570
   ÍBI: 570
   HYT: 570
-  UBE: 570
-  ĚDI: 569
   UČN: 569
   ZPÍ: 569
+  ĚDI: 569
   OBÍ: 568
   ŘÍP: 568
-  VYM: 566
   ORÁ: 566
   AKŽ: 566
+  VYM: 566
   REC: 565
-  ACO: 565
   ÁVI: 565
   OPĚ: 565
-  KÁN: 563
+  ACO: 565
   AMÁ: 563
+  KÁN: 563
   NNO: 562
   AZA: 562
   ŽID: 561
   ŘEZ: 561
   ÁJE: 561
-  EVA: 560
   TĚŠ: 560
+  EVA: 560
   RCE: 560
   NŮM: 560
   ŮJD: 559
-  EŠK: 558
   NÁL: 558
   DCI: 558
-  ČÍC: 557
+  EŠK: 558
   NGL: 557
+  ČÍC: 557
   MĚT: 556
-  ZJE: 556
   ZÁM: 556
   AMÍ: 556
+  ZJE: 556
   MST: 555
   ŠES: 555
   VYN: 554
@@ -3401,767 +3401,767 @@ trigrams:
   PRŮ: 553
   ZÁŘ: 553
   MÁŠ: 552
+  MNÝ: 551
   MLÁ: 551
   ÍLA: 551
-  MNÝ: 551
+  ŠTN: 550
+  BRŽ: 550
   SNO: 550
   ĚDA: 550
-  BRŽ: 550
-  ŠTN: 550
   MLČ: 549
-  VDA: 548
   DLN: 548
-  VAR: 547
+  VDA: 548
   OBJ: 547
-  NÍZ: 546
-  VZT: 546
+  VAR: 547
   ZER: 546
+  VZT: 546
+  NÍZ: 546
   ÝBR: 545
   NÝB: 544
   RZE: 544
-  ÁMO: 543
   ÍNÁ: 543
-  NÁŘ: 542
+  ÁMO: 543
   RDI: 542
+  NÁŘ: 542
   ZMI: 542
-  ARU: 541
-  ZBR: 541
   ALÝ: 541
-  EZP: 540
-  MEL: 540
-  TÁZ: 540
-  TES: 540
+  ZBR: 541
+  ARU: 541
   LŠÍ: 540
+  MEL: 540
+  EZP: 540
+  TES: 540
+  TÁZ: 540
   ŠŠÍ: 539
   OKE: 539
-  OZT: 538
   ÁKA: 538
-  NIN: 537
-  UŠN: 537
-  DOR: 537
+  OZT: 538
   ZÁN: 537
+  UŠN: 537
   RKA: 537
-  RNÁ: 536
+  NIN: 537
+  DOR: 537
   AHY: 536
+  RNÁ: 536
   REZ: 536
   APE: 535
-  SHR: 535
   NČI: 535
+  SHR: 535
   ZCE: 534
   ÍNE: 534
-  VRD: 534
   MAM: 534
+  VRD: 534
   HŘE: 534
-  BYČ: 533
   KVA: 533
   VCE: 533
   ASP: 533
-  ČTE: 532
+  BYČ: 533
   JNO: 532
+  ČTE: 532
+  ÍRN: 531
+  AČE: 531
+  JNÉ: 531
   RČI: 531
   ODT: 531
-  JNÉ: 531
-  AČE: 531
-  ÍRN: 531
-  ÁHA: 530
-  UZN: 530
   AVŠ: 530
   NDR: 530
+  UZN: 530
+  ÁHA: 530
   MTO: 529
   OSK: 529
   IČN: 529
   MLE: 529
-  DÍŠ: 528
-  ÍSK: 528
-  ĚDČ: 528
   GLI: 528
+  ÍSK: 528
   EOB: 528
+  DÍŠ: 528
+  ĚDČ: 528
   ARM: 527
-  REN: 526
-  NEŘ: 526
   PŮL: 526
+  NEŘ: 526
   TLU: 526
-  ZEP: 525
+  REN: 526
   ZOU: 525
   ZPŮ: 525
-  ZPL: 524
+  ZEP: 525
   ČEH: 524
+  ZPL: 524
+  ĚTO: 523
   ITŘ: 523
   ZBY: 523
-  ĚTO: 523
-  ĚNÝ: 522
   ABO: 522
   OCÍ: 522
   LÍK: 522
-  ZDU: 520
-  EZL: 520
+  ĚNÝ: 522
   AUL: 520
-  ŤAS: 519
+  EZL: 520
+  ZDU: 520
   DOC: 519
-  NKR: 519
   ICT: 519
+  ŤAS: 519
+  NKR: 519
   ASU: 518
-  RAS: 517
   URČ: 517
-  ZÍT: 517
+  RAS: 517
   CÍR: 517
+  ZÍT: 517
   UDS: 517
-  ŠAL: 516
-  ŠTE: 516
   TON: 516
-  GON: 516
   RPA: 516
+  GON: 516
+  ŠTE: 516
+  ŠAL: 516
   MNÍ: 515
-  VYJ: 515
-  UPÍ: 515
   FAR: 515
+  UPÍ: 515
+  VYJ: 515
   KVŮ: 515
   ĚTĚ: 514
   BRÝ: 514
   ANŽ: 514
-  BON: 513
   IPR: 513
+  BON: 513
   ŽEM: 513
-  YŠŠ: 512
   CKÁ: 512
-  APÍ: 512
+  YŠŠ: 512
   KOŠ: 512
+  APÍ: 512
   IHO: 511
   ĚMI: 511
   JDI: 511
-  LEG: 510
   ART: 510
   ÉST: 510
+  LEG: 510
   TÍT: 510
   YKL: 509
   ZMĚ: 509
   UPU: 508
   DOJ: 507
+  MŽI: 507
   LER: 507
   LÍD: 507
-  MŽI: 507
   PRU: 507
-  ARD: 506
-  LOB: 506
-  VAZ: 506
   OLŮ: 506
-  ŠIR: 505
+  ARD: 506
+  VAZ: 506
+  LOB: 506
   APŘ: 505
+  ŠIR: 505
   ZIM: 505
-  NTA: 504
-  ĚNO: 504
   OBS: 504
   IZÍ: 504
-  ŽDĚ: 503
-  LÍC: 503
+  NTA: 504
+  ĚNO: 504
   BÍR: 503
+  ŽDĚ: 503
   ILÝ: 503
-  OČN: 502
-  NŮV: 502
+  LÍC: 503
   KÁL: 502
   RKU: 502
+  OČN: 502
+  NŮV: 502
   LÁČ: 501
   KYN: 501
   MÝM: 501
-  DNY: 500
+  BET: 500
   ONČ: 500
   EJC: 500
-  BET: 500
-  ŠKA: 499
+  DNY: 500
   VYC: 499
-  ĚNÉ: 499
-  EVZ: 499
   LOZ: 499
+  ĚNÉ: 499
+  ŠKA: 499
+  EVZ: 499
   PSÁ: 499
+  ŠAT: 498
   SKV: 498
   KTI: 498
-  ŠAT: 498
-  RIA: 497
   URA: 497
-  ETK: 497
   VČE: 497
-  KÁŽ: 496
+  RIA: 497
+  ETK: 497
   ŘOV: 496
+  KÁŽ: 496
   UVA: 496
   YCK: 495
-  EŠI: 495
   BEM: 495
+  EŠI: 495
   ÁZK: 494
   DKY: 494
   ŘÍŽ: 493
   RUT: 492
   EŘI: 491
-  UNI: 491
   ATÁ: 491
+  UNI: 491
   BJE: 490
+  ZNÝ: 490
   MIT: 490
   ĚČE: 490
-  ZNÝ: 490
   IKR: 489
   INS: 488
   ÍRU: 488
-  OZB: 487
-  SAT: 487
   REK: 487
+  SAT: 487
   ÍTÁ: 487
+  OZB: 487
   ERS: 486
-  IKY: 485
   ILÍ: 485
-  ÍNK: 484
+  IKY: 485
   BLÁ: 484
-  OJS: 484
-  OŠL: 484
   PEC: 484
+  ÍNK: 484
+  OŠL: 484
+  OJS: 484
   KNÍ: 483
+  MIZ: 482
+  ZÁC: 482
   PÁS: 482
   HRN: 482
-  ZÁC: 482
-  MIZ: 482
   ZŘÍ: 482
   ARP: 482
-  ŠUD: 481
-  UPR: 481
-  LOT: 481
   ÍMÁ: 481
-  VŠU: 480
-  AŠL: 480
+  LOT: 481
+  UPR: 481
+  ŠUD: 481
   AKR: 480
   LAJ: 480
+  AŠL: 480
+  VŠU: 480
   LÍŘ: 479
   HAD: 479
-  KMI: 478
   KER: 478
+  KMI: 478
   LÉT: 478
-  ZDN: 477
   ALŠ: 477
+  ZDN: 477
   ANŮ: 477
-  RMO: 476
-  ŽUJ: 476
-  VEC: 476
   TLE: 476
+  ŽUJ: 476
+  RMO: 476
+  VEC: 476
   UJU: 476
   SÁH: 475
   TÉŽ: 475
+  OVC: 474
+  YNE: 474
   DÉM: 474
   AČI: 474
-  YNE: 474
-  ZLÉ: 474
   VÁD: 474
-  OVC: 474
-  EMS: 473
+  ZLÉ: 474
   EOD: 473
-  CÍH: 473
   IJA: 473
+  EMS: 473
+  CÍH: 473
   AZO: 472
   ALN: 472
   KAD: 471
   LUH: 471
   ÍPA: 471
+  ŘÍČ: 470
   NNÉ: 470
   ONY: 470
-  ŘÍČ: 470
   USM: 470
+  ÍŽÍ: 469
   NDĚ: 469
   NDE: 469
-  ÍŽÍ: 469
   YTÁ: 469
+  EBI: 468
+  OHÁ: 468
   ODB: 468
   ABE: 468
-  OHÁ: 468
-  EBI: 468
-  ÁDO: 467
   RUS: 467
+  ÁDO: 467
   PAG: 467
+  VAŽ: 466
   AKM: 466
   ÉNA: 466
-  VAŽ: 466
   VZÁ: 465
   TRY: 464
   CAR: 463
   ŽSK: 462
-  JAZ: 462
   ĚTÍ: 462
   PAP: 462
+  JAZ: 462
   ÁLY: 461
   ČTV: 461
   NIH: 461
-  AZN: 460
   ŤAN: 460
-  OPÍ: 459
+  AZN: 460
   ÁVE: 459
+  OPÍ: 459
   UVĚ: 459
-  LUP: 459
   IDA: 459
-  OKÉ: 458
+  LUP: 459
   AKL: 458
-  ĚŽN: 458
-  ÉMĚ: 458
   BÁS: 458
-  ONT: 457
-  TAČ: 457
+  ÉMĚ: 458
+  ĚŽN: 458
+  OKÉ: 458
   KOŽ: 457
+  ONT: 457
   MÁŽ: 457
   ÍDN: 457
   KME: 457
+  TAČ: 457
   VLE: 456
   LUC: 456
-  ZIN: 455
-  ČIM: 455
-  MĚJ: 455
   DON: 455
   HÁM: 455
-  ÍZK: 454
-  PÍR: 454
-  IME: 454
-  NUJ: 454
+  ČIM: 455
+  ZIN: 455
+  MĚJ: 455
   LÍN: 454
+  ÍZK: 454
   MAD: 454
+  NUJ: 454
+  IME: 454
+  PÍR: 454
   ÁZN: 453
   LZE: 453
   VÍN: 452
-  YVA: 451
-  UŽB: 451
-  OŠI: 451
-  OGI: 451
   UDÁ: 451
+  UŽB: 451
+  YVA: 451
   HNÁ: 451
+  OGI: 451
+  OŠI: 451
   UKL: 450
-  DAŘ: 448
-  ZDO: 448
-  ITÝ: 448
   AMĚ: 448
+  DAŘ: 448
   MÝŠ: 448
   ŠKE: 448
+  ZDO: 448
+  ITÝ: 448
   TKÁ: 447
-  ÝŠL: 447
   ŽLI: 447
+  ÝŠL: 447
   MÉM: 447
   VÁC: 446
   CHŽ: 446
+  ČÍN: 445
   EPL: 445
   UJT: 445
-  ČÍN: 445
-  SML: 444
-  RIM: 444
-  HRU: 444
   AMŽ: 444
-  EJL: 443
-  INT: 443
-  KOD: 443
-  RNU: 443
-  CIE: 443
+  HRU: 444
+  RIM: 444
+  SML: 444
   ÁNS: 443
+  KOD: 443
+  CIE: 443
+  RNU: 443
+  INT: 443
+  EJL: 443
   ÍŠO: 443
-  ĚVA: 442
   RNA: 442
+  ĚVA: 442
   ABA: 442
   ÍKE: 441
-  ELŮ: 441
-  YSA: 441
-  SON: 441
   ÁCÍ: 441
+  ELŮ: 441
+  SON: 441
+  YSA: 441
   ĚKY: 440
   HYN: 440
+  ÍTO: 440
   EDK: 440
   ESV: 440
-  ÍTO: 440
+  ORK: 439
   AZÍ: 439
   LAČ: 439
-  RÁČ: 439
-  ŮLE: 439
-  ÍLO: 439
   UČK: 439
-  ORK: 439
-  TAH: 439
   AMU: 439
-  MÁH: 438
+  ÍLO: 439
+  TAH: 439
+  ŮLE: 439
+  RÁČ: 439
   ÍNI: 438
-  ZÁL: 436
+  MÁH: 438
   SAR: 436
-  RSO: 436
   ŠKU: 436
-  UHU: 435
+  ZÁL: 436
+  RSO: 436
   BĚD: 435
-  ÍKO: 434
+  UHU: 435
   ZNÉ: 434
+  ÍKO: 434
   LCE: 434
-  ÍŽI: 433
-  DÉH: 433
   ITÍ: 433
+  DÉH: 433
+  ÍŽI: 433
   OKÝ: 432
-  RCI: 431
   SAU: 431
+  RCI: 431
   YNY: 431
-  SPL: 430
   JNÝ: 430
-  JAT: 430
-  MOS: 430
+  SPL: 430
   YNĚ: 430
-  IHL: 428
-  ÁTO: 428
-  DÝM: 428
+  MOS: 430
+  JAT: 430
   ZMA: 428
   AJD: 428
+  IHL: 428
+  DÝM: 428
+  ÁTO: 428
   EZK: 427
   UŽŮ: 427
+  ÁVU: 426
   ZYK: 426
   CŮM: 426
-  ÁVU: 426
-  ŠNÍ: 425
   CNO: 425
   ŠNĚ: 425
-  UNK: 425
-  ŘEP: 425
   KRZ: 425
   CNÝ: 425
+  ŠNÍ: 425
+  UNK: 425
+  ŘEP: 425
   ISA: 425
   MÁC: 424
+  AČK: 424
   LÍZ: 424
   ŘÍR: 424
-  AČK: 424
   LÉN: 424
   COS: 423
-  INŮ: 422
   LÁZ: 422
   ŽNÉ: 422
   JIT: 422
+  INŮ: 422
   PUJ: 421
-  ĚME: 421
-  OFI: 421
+  ĚVČ: 421
+  FAL: 421
+  DĚS: 421
   TIH: 421
   YTR: 421
   OLY: 421
-  FAL: 421
-  DĚS: 421
-  ĚVČ: 421
-  ČÁT: 420
-  CUJ: 420
+  ĚME: 421
+  OFI: 421
   AUT: 420
   BIN: 420
-  ŮZN: 420
-  ŽIK: 420
+  ČÁT: 420
+  CUJ: 420
   ÍDI: 420
-  IDN: 419
+  ŽIK: 420
+  ŮZN: 420
   LOC: 419
+  IDN: 419
   ZÁJ: 419
   OMT: 418
+  ŠED: 418
   UTA: 418
   VRO: 418
-  ŠED: 418
-  HUT: 417
   ZHL: 417
-  OJO: 417
   IVÍ: 417
   VIČ: 417
+  OJO: 417
+  HUT: 417
   OLK: 416
   AŠN: 415
-  YTÍ: 415
-  ZTE: 415
-  HUJ: 415
   ÁMA: 415
-  URÁ: 414
-  BÍD: 414
-  KRÝ: 414
-  KŽE: 414
+  YTÍ: 415
+  HUJ: 415
+  ZTE: 415
   DMI: 414
   ČKE: 414
-  ZPE: 413
+  BÍD: 414
+  URÁ: 414
+  KRÝ: 414
+  KŽE: 414
   ZÁH: 413
+  ZPE: 413
   PAV: 413
-  HEN: 412
   ŽÍT: 412
   ŽNĚ: 412
+  HEN: 412
   TÁB: 412
+  COU: 411
   ÁSA: 411
   OČA: 411
-  COU: 411
-  ÝTI: 410
-  ĚNI: 410
   CHÝ: 410
-  OZÍ: 409
+  ĚNI: 410
+  ÝTI: 410
   BAN: 409
-  TRI: 408
-  ÝMA: 408
-  IHN: 408
+  OZÍ: 409
   ĚZD: 408
+  ÝMA: 408
+  TRI: 408
   YSV: 408
   USL: 408
-  VDĚ: 407
+  IHN: 408
   DLÁ: 407
+  VDĚ: 407
   RUŽ: 406
   UBY: 406
   VNÁ: 404
-  ČÁS: 404
-  LOČ: 404
-  LNÁ: 404
   ZID: 404
   RVÁ: 404
+  ČÁS: 404
+  LNÁ: 404
+  LOČ: 404
+  SÁN: 403
   BNĚ: 403
   ÍTR: 403
-  SÁN: 403
-  EČÍ: 402
   DAM: 402
-  BOŘ: 400
-  ESU: 400
+  EČÍ: 402
+  IVU: 400
+  PÁR: 400
   LLE: 400
+  AVL: 400
   OJÁ: 400
   TÍK: 400
-  PÁR: 400
-  IVU: 400
-  AVL: 400
+  ESU: 400
+  BOŘ: 400
   ORT: 399
-  AHÁ: 399
   YTI: 399
-  UPŘ: 398
+  AHÁ: 399
   HRŮ: 398
+  UPŘ: 398
   CEZ: 398
-  ĚZE: 397
   UŘI: 397
+  ĚZE: 397
   DĚK: 397
   HÉH: 396
   ÁZÁ: 395
   ZLE: 394
-  ČUJ: 394
   OTL: 394
+  ČUJ: 394
   YSK: 394
+  IVA: 393
   IPO: 393
   ODC: 393
-  IVA: 393
   ARL: 392
   ARS: 392
   DTU: 392
   JIL: 392
-  LYN: 391
   ÁRU: 391
-  VÝR: 390
+  LYN: 391
   ZKR: 390
-  OPL: 390
-  LUT: 390
-  ÁDY: 390
+  VÝR: 390
   JOS: 390
-  PUŠ: 389
+  LUT: 390
+  OPL: 390
+  ÁDY: 390
   DIČ: 389
-  ETŘ: 388
-  KVE: 388
-  ISE: 388
-  SMÁ: 388
-  MAV: 388
-  BĚŤ: 388
+  PUŠ: 389
   PAC: 388
+  MAV: 388
+  KVE: 388
+  SMÁ: 388
+  ISE: 388
   RKE: 388
+  ETŘ: 388
+  BĚŤ: 388
   TĚZ: 387
   NUŽ: 386
   YDÁ: 386
-  TAŘ: 385
-  HAS: 385
-  NCO: 385
-  OŽS: 385
   REL: 385
+  OŽS: 385
+  NCO: 385
+  HAS: 385
+  TAŘ: 385
   ROL: 384
   ZVY: 383
   LUČ: 383
   OLÉ: 383
   BĚL: 383
   RHN: 383
-  SKE: 382
-  ÍKL: 382
-  ŠIT: 382
   SOL: 382
+  ÍKL: 382
   LKÉ: 382
-  SIN: 381
+  SKE: 382
+  ŠIT: 382
   AŽI: 381
-  YRO: 381
+  ŽST: 381
+  SIN: 381
   ASO: 381
   ČÍS: 381
+  YRO: 381
   RŽÍ: 381
-  ŽST: 381
-  OZS: 380
   SEF: 380
-  SOC: 379
+  OZS: 380
   ČAN: 379
-  SMA: 379
   ÝŠE: 379
+  SOC: 379
+  SMA: 379
   MÝC: 379
   NCŮ: 378
   NOŠ: 378
   ŽKO: 378
   NNÍ: 377
-  UHÁ: 377
   ZBU: 377
   ERY: 377
-  ÁVY: 376
+  UHÁ: 377
   URN: 376
+  ÁVY: 376
   AKS: 376
   IČÍ: 376
   ÁKL: 375
   ŇUJ: 375
-  ADR: 374
-  ANK: 374
-  ENŠ: 374
-  UDN: 374
   NOR: 374
-  EHU: 374
+  ANK: 374
   HÝM: 374
+  UDN: 374
   ÉMA: 374
   OFE: 374
-  SPI: 373
+  ADR: 374
+  ENŠ: 374
+  EHU: 374
   PEL: 373
+  SPI: 373
   URO: 373
   MNÁ: 373
   UDA: 373
   HIS: 372
-  BYV: 372
-  TNI: 372
   NÁP: 372
+  TNI: 372
   ZET: 372
+  BYV: 372
   SOT: 372
   USA: 371
   MÁN: 371
   DÉL: 371
-  ÍMO: 370
-  SIO: 370
-  ORL: 370
-  PĚC: 370
   MÍM: 370
   UPŮ: 370
   PUR: 370
+  PĚC: 370
+  ÍMO: 370
+  SIO: 370
   ÉDL: 370
   ZKÁ: 370
+  ORL: 370
   ADÝ: 369
   ÁŠO: 369
-  HUS: 368
-  NAŽ: 368
   LTU: 368
   KUŠ: 368
+  HUS: 368
+  NAŽ: 368
   BUR: 367
-  YHN: 367
+  ĚŽE: 367
   UBÍ: 367
+  MAC: 367
   ÁRA: 367
   ŽNÝ: 367
-  MAC: 367
-  ĚŽE: 367
-  KUB: 366
+  YHN: 367
   SLN: 366
   DLY: 366
   LEA: 366
+  KUB: 366
   PLU: 365
   LEĎ: 365
-  ÁMĚ: 364
   ŠNÉ: 364
   LUS: 364
+  ÁMĚ: 364
   EŽL: 364
-  ZLI: 363
-  ILÉ: 363
-  RET: 363
-  ŘEŽ: 363
   AHL: 363
-  CNÉ: 363
+  ZLI: 363
+  RET: 363
   DÍK: 363
-  RÁK: 362
+  ŘEŽ: 363
+  ILÉ: 363
+  CNÉ: 363
   ŽAS: 362
   BNÉ: 362
+  RÁK: 362
   ADK: 360
   ÍNĚ: 360
   ELU: 360
   KÉŽ: 360
-  SVI: 359
+  JVĚ: 359
   EKE: 359
   PIC: 359
-  HTO: 359
-  JVĚ: 359
+  TÁC: 359
+  SVI: 359
+  ŽDI: 359
   HÉM: 359
   ÍRY: 359
   YTK: 359
-  ŽDI: 359
-  TÁC: 359
+  HTO: 359
+  UBL: 358
+  ŮVĚ: 358
   AMY: 358
   ABU: 358
-  ŮVĚ: 358
-  UBL: 358
-  LOP: 357
   IKT: 357
+  LOP: 357
   ZUB: 357
+  RAP: 356
   RÝV: 356
   JÍS: 356
-  RAP: 356
+  AMÉ: 355
+  TMA: 355
+  NAC: 355
   ÁKŮ: 355
   EFO: 355
-  DCH: 355
-  AMÉ: 355
-  NAC: 355
-  TMA: 355
   PŮD: 355
+  DCH: 355
   ÝST: 354
   ROŠ: 354
-  BEL: 354
-  RVO: 354
   IŽN: 354
+  RVO: 354
   CEŠ: 354
-  LÉZ: 353
-  ÚPL: 353
-  ŘIB: 353
-  VDO: 353
+  BEL: 354
   ILÁ: 353
+  LÉZ: 353
   VĚŽ: 353
   LAZ: 353
+  VDO: 353
   SLZ: 353
-  ĚRU: 352
-  ÁTU: 352
+  ŘIB: 353
+  ÚPL: 353
   PÁC: 352
   NAŘ: 352
+  ĚRU: 352
+  ÁTU: 352
   SKŘ: 351
   MIM: 351
   MED: 351
   MEO: 351
-  ZVU: 350
-  EPI: 350
   APU: 350
-  IKN: 349
+  EPI: 350
+  ZVU: 350
   VŠT: 349
   NDA: 349
   MÍV: 349
   KÁT: 349
+  IKN: 349
   BCH: 348
-  CÍS: 348
   BLÉ: 348
-  MIC: 347
-  ĚŠE: 347
+  CÍS: 348
+  UBA: 347
+  RŮŽ: 347
   TUT: 347
   ALT: 347
+  ĚŠE: 347
+  MIC: 347
   VZK: 347
-  RŮŽ: 347
-  UBA: 347
-  ÁMK: 346
   ZÍM: 346
+  ÁMK: 346
   ÁZD: 345
-  DOŠ: 345
   NIŽ: 345
-  ÍLY: 345
   NNÝ: 345
+  DOŠ: 345
+  ÍLY: 345
   USN: 344
   KSI: 344
-  ADŠ: 343
-  DVR: 343
+  EKR: 343
   ŽŠÍ: 343
+  DVR: 343
   ING: 343
   UPN: 343
+  ADŠ: 343
   PRY: 343
-  EKR: 343
   OÁB: 343
+  RMA: 342
   IZI: 342
   TYT: 342
-  RMA: 342
   SÍT: 342
-  SEJ: 341
-  ÁKY: 341
-  ÁHO: 341
   TMI: 341
+  SEJ: 341
+  ÁHO: 341
   RYČ: 341
-  ODH: 340
-  ECT: 340
-  YRA: 340
+  ÁKY: 341
   LÁK: 340
   BAT: 340
+  ECT: 340
+  YRA: 340
+  ODH: 340
   ÍŘI: 340
   RLI: 339
   ÁCN: 339
@@ -4172,1071 +4172,1071 @@ trigrams:
   VKY: 337
   AJN: 336
   VLN: 336
+  IZO: 335
   JVY: 335
   MÍC: 335
-  IZO: 335
-  DMĚ: 334
-  PLY: 334
-  DEP: 334
   ŘID: 334
   RUJ: 334
+  PLY: 334
+  DMĚ: 334
+  DEP: 334
   KNA: 333
   ŽÍC: 333
   TÁM: 333
   ABÁ: 333
-  DKA: 332
-  UMA: 332
   ÚZK: 332
-  ĚVE: 332
-  TCO: 332
   MOK: 332
-  ÚTO: 331
-  RŮV: 331
-  YPL: 331
-  IBE: 331
+  ĚVE: 332
+  UMA: 332
+  DKA: 332
+  TCO: 332
   UFA: 331
-  ZÁR: 331
-  AMN: 331
+  LAŠ: 331
   AKE: 331
   SNE: 331
+  AMN: 331
+  RŮV: 331
+  IBE: 331
   TCI: 331
-  LAŠ: 331
-  ETU: 330
-  ATĚ: 330
-  ALM: 330
+  YPL: 331
+  ZÁR: 331
+  ÚTO: 331
   ANČ: 330
+  ETU: 330
+  ALM: 330
+  ATĚ: 330
   UDC: 330
   MEŠ: 330
   LÍŠ: 330
-  EMY: 329
   KLU: 329
   ZIT: 329
-  ČED: 328
-  EŠN: 328
-  ARV: 328
-  OPŘ: 328
-  UHY: 328
-  ŘÁS: 328
-  NAU: 328
+  EMY: 329
   LOR: 328
+  ŘÁS: 328
+  ARV: 328
+  UHY: 328
+  EŠN: 328
+  NAU: 328
+  OPŘ: 328
+  ČED: 328
+  ÍLÉ: 327
   SMI: 327
   UTÁ: 327
-  ÍLÉ: 327
+  ŠER: 326
+  KOZ: 326
   RIK: 326
   ÉNĚ: 326
-  ŠER: 326
-  YHR: 326
-  KOZ: 326
   BRN: 326
   ZAZ: 326
-  TYČ: 325
+  YHR: 326
   UŘE: 325
+  PYT: 325
   NČÍ: 325
   MÍŘ: 325
-  PYT: 325
+  TYČ: 325
   ŠNÝ: 324
   ÁDĚ: 324
-  ÁŘS: 323
-  VET: 323
-  ITY: 323
   RAF: 323
   ÍČI: 323
+  ÁŘS: 323
   TUH: 323
+  VET: 323
+  ITY: 323
   RÁP: 323
-  ŠKY: 322
   TŘÁ: 322
-  ZME: 322
-  ĚCE: 322
   ZOF: 322
+  ZME: 322
   ÁČK: 322
+  ĚCE: 322
+  ŠKY: 322
   VZH: 321
   RPĚ: 321
   RHA: 321
   JOR: 321
   OČÁ: 320
-  JNÍ: 320
   EML: 320
+  JNÍ: 320
   ROF: 319
-  ŇOV: 319
   ÍVK: 319
+  ŇOV: 319
   UME: 318
-  HAB: 318
   ZDI: 318
   YNI: 318
   ŽEŠ: 318
-  ÍHA: 317
+  HAB: 318
   END: 317
-  LŮM: 317
+  ÍHA: 317
   LOH: 317
+  LŮM: 317
   AŽÍ: 316
   VTO: 316
-  ZBA: 315
+  OUM: 315
   VAH: 315
   LČE: 315
   ÁDÍ: 315
-  OUM: 315
   JUL: 315
+  ZBA: 315
   MEJ: 315
-  NŠÍ: 314
-  HOC: 314
-  RDE: 314
-  ALK: 314
-  OTÉ: 314
   NÁZ: 314
+  ALK: 314
+  RDE: 314
+  HOC: 314
+  OTÉ: 314
+  NŠÍ: 314
   ZDY: 314
-  ĚHL: 313
   OBÁ: 313
-  TIČ: 312
-  VÁR: 312
-  VOK: 312
+  ĚHL: 313
   ZKY: 312
-  ŘNÍ: 312
-  TÍH: 312
-  ERG: 312
-  EJP: 312
   ARK: 312
+  EJP: 312
+  TIČ: 312
+  ŘNÍ: 312
+  VÁR: 312
   FES: 312
+  ERG: 312
+  VOK: 312
+  TÍH: 312
   RDÁ: 311
-  UHA: 311
   JÍD: 311
   TAŇ: 311
+  UHA: 311
   RAO: 310
-  ITR: 309
-  ŠTO: 309
   ÍSE: 309
-  ÍZN: 309
   URK: 309
   TRÝ: 309
+  ÍZN: 309
+  ŠTO: 309
+  ITR: 309
+  TIO: 308
   ZÁZ: 308
+  OHŘ: 308
   ŽÁR: 308
   AČO: 308
-  OHŘ: 308
-  TIO: 308
   KMO: 308
-  JÍŽ: 307
-  DPU: 307
-  UTĚ: 307
-  UCI: 307
-  ZDÍ: 307
-  DEŽ: 307
-  GAN: 307
   KVÍ: 307
+  JÍŽ: 307
+  ZDÍ: 307
   BÁL: 307
+  GAN: 307
+  UCI: 307
   VKA: 307
+  DEŽ: 307
   BIJ: 307
+  UTĚ: 307
   ITB: 307
+  DPU: 307
   AIM: 306
   MOZ: 305
-  ÉNE: 305
   MRZ: 305
+  ÉNE: 305
   ÍLU: 305
+  ŠÁL: 303
   ABS: 303
   ORŮ: 303
-  ŠÁL: 303
   AJA: 303
-  VTE: 302
-  DMÍ: 302
-  KYT: 302
-  GIC: 302
-  NNĚ: 302
   ÁDC: 302
+  GIC: 302
+  VTE: 302
+  NNĚ: 302
+  KYT: 302
+  DMÍ: 302
   VÝK: 301
-  VCH: 301
-  JLE: 301
   RŮN: 301
-  VZB: 300
+  JLE: 301
+  VCH: 301
   AŠT: 300
   KOK: 300
+  VZB: 300
   ÍBE: 300
   JDĚ: 300
   RIÁ: 299
   HTI: 299
-  TCŮ: 299
   DLU: 299
-  ZDV: 298
-  ŠEP: 298
+  TCŮ: 299
   ZPA: 298
   ETY: 298
   HEŇ: 298
+  ZDV: 298
+  ŠEP: 298
   REF: 297
-  ÍNO: 296
-  BRE: 296
   ZÝV: 296
+  ÍNO: 296
   ZPÁ: 296
+  BRE: 296
   ÁZR: 295
-  YBU: 295
-  MAZ: 295
-  BRZ: 295
-  HOJ: 295
-  CEJ: 295
-  ŠPI: 295
-  SIS: 295
   RKY: 295
-  IUS: 294
-  ŽÍV: 294
-  ÁŠÍ: 294
-  PUL: 294
+  HOJ: 295
+  SIS: 295
+  ŠPI: 295
+  CEJ: 295
+  MAZ: 295
+  YBU: 295
+  BRZ: 295
   RKO: 294
+  ŽÍV: 294
   ORG: 294
+  PUL: 294
   SEŠ: 294
+  IUS: 294
+  ÁŠÍ: 294
   ŮRU: 294
-  OVR: 293
-  NĚČ: 293
-  DOZ: 293
-  ŘIR: 293
+  SNU: 293
   RČE: 293
   ÁDU: 293
-  SNU: 293
+  NĚČ: 293
+  ŘIR: 293
   ĚTN: 293
-  LKÝ: 292
-  KTU: 292
+  DOZ: 293
+  OVR: 293
   NIE: 292
-  VÝB: 292
-  PIN: 292
+  LKÝ: 292
   IPA: 292
+  KTU: 292
+  PIN: 292
   IEL: 292
-  ROŽ: 291
-  UPÁ: 291
+  VÝB: 292
+  LII: 291
+  HÁD: 291
   TUS: 291
+  UPÁ: 291
+  ROŽ: 291
+  HLY: 291
   ÁDI: 291
   OHÝ: 291
-  HÁD: 291
-  LII: 291
-  HLY: 291
-  NTU: 290
-  BUZ: 290
   ĚSN: 290
+  NTU: 290
   SKN: 290
-  RTY: 289
-  ÁTÉ: 289
+  BUZ: 290
+  ÁSO: 289
   ČKÁ: 289
   ÁŽI: 289
-  DŮS: 289
-  ŘÍJ: 289
-  ÁSO: 289
   RČÍ: 289
-  KAŘ: 288
-  ŽKY: 288
-  ÍŠI: 288
-  CNĚ: 288
+  ŘÍJ: 289
+  DŮS: 289
+  ÁTÉ: 289
+  RTY: 289
   RYL: 288
+  ÍŠI: 288
+  ŽKY: 288
   HNÍ: 288
+  CNĚ: 288
   LOĎ: 288
-  IÁL: 287
+  KAŘ: 288
   ĚVU: 287
-  YVO: 287
   OUR: 287
+  IÁL: 287
+  YVO: 287
   ĚMŽ: 286
-  ZÍS: 286
   VOC: 286
+  ZÍS: 286
   KEV: 286
   IŽE: 286
   VLO: 285
-  NDI: 285
-  ORŠ: 285
-  PES: 285
   IZA: 285
+  NDI: 285
+  PES: 285
+  ORŠ: 285
   OŘS: 285
-  EZB: 284
-  DBA: 284
-  ÍLÍ: 284
-  DKO: 284
   BRI: 284
   ÍNY: 284
   AMP: 284
+  DKO: 284
+  DBA: 284
+  EZB: 284
+  ÍLÍ: 284
   UVE: 283
   ALC: 283
   ZLÍ: 283
   EUM: 282
-  OPÁ: 282
-  ĚNA: 282
-  VÁV: 282
-  TŮM: 282
   DVÁ: 282
+  TŮM: 282
+  OPÁ: 282
+  VÁV: 282
   UNA: 282
+  ĚNA: 282
   DYS: 281
-  SBÍ: 281
-  PRC: 281
   UZD: 281
+  PRC: 281
+  SBÍ: 281
   TĚH: 281
-  UPL: 280
   ÁMY: 280
-  DÝC: 279
-  UMN: 279
-  DŠÍ: 279
-  ÁSE: 279
+  UPL: 280
   BSA: 279
+  DÝC: 279
+  DŠÍ: 279
+  UMN: 279
   NIZ: 279
+  ÁSE: 279
   ÉKA: 278
   ÍMŽ: 278
-  ORS: 277
-  STK: 277
-  ŽTO: 277
-  UTÉ: 277
   MME: 277
+  ŽTO: 277
+  STK: 277
+  ORS: 277
+  UTÉ: 277
   ŇTE: 277
-  ÁLÍ: 276
-  EVŠ: 276
   HŘB: 276
-  ÁŽÍ: 276
+  EVŠ: 276
   EUS: 276
+  ÁLÍ: 276
+  ÁŽÍ: 276
   EPE: 275
-  EJŽ: 275
   ELC: 275
   KEL: 275
+  EJŽ: 275
   OBK: 274
-  IER: 274
   CÍL: 274
+  IER: 274
   YJE: 274
-  ŽKA: 273
+  ŠÍŘ: 273
   OZI: 273
   PCE: 273
-  ŠÍŘ: 273
+  ŽKA: 273
   LÉB: 273
-  TÍC: 272
-  ČNÁ: 272
-  TĚT: 272
   TĚK: 272
+  TÍC: 272
+  TĚT: 272
+  ČNÁ: 272
   ČEC: 272
-  FRO: 271
-  TNA: 271
-  DIS: 271
   ĚCÍ: 271
   OBČ: 271
-  ÁLŮ: 270
-  BNÝ: 270
-  TEO: 270
+  TNA: 271
+  FRO: 271
+  DIS: 271
   ŽNÁ: 270
   USY: 270
+  BNÝ: 270
   EMÝ: 270
   DEČ: 270
+  ÁLŮ: 270
   TÁK: 270
-  NDO: 269
-  OUL: 269
-  RMU: 269
-  ZEC: 269
+  TEO: 270
   ČNA: 269
-  ĚLÝ: 268
-  ĚNY: 268
+  RMU: 269
+  OUL: 269
+  NDO: 269
+  ZEC: 269
   YSI: 268
-  RAŇ: 268
-  ÍŠT: 268
-  ISL: 268
-  IMN: 268
-  OMS: 268
-  IBO: 268
   UPY: 268
   YVE: 268
   BÁT: 268
+  ĚNY: 268
+  ÍŠT: 268
+  RAŇ: 268
+  ISL: 268
+  IBO: 268
+  ĚLÝ: 268
+  IMN: 268
+  OMS: 268
   BUL: 267
-  ŽTE: 267
-  IAN: 267
-  ZES: 267
   RŠÁ: 267
+  ŽTE: 267
   VÍČ: 267
+  ZES: 267
+  IAN: 267
   UTR: 267
   LCI: 267
-  OPN: 266
-  OJA: 266
   VÁH: 266
+  OJA: 266
+  OPN: 266
   ĚLÉ: 266
-  ONN: 265
   DRÉ: 265
-  ERC: 265
   ONZ: 265
+  ONN: 265
+  ERC: 265
   HŮR: 265
-  TČE: 264
-  MAŘ: 264
-  MKU: 264
   EDV: 264
+  TČE: 264
+  MKU: 264
   YKA: 264
   AJÁ: 264
-  EZO: 263
+  MAŘ: 264
+  ÍZD: 263
   RNI: 263
   UTÝ: 263
-  ÍZD: 263
   ÉTA: 263
-  NÁČ: 262
-  LÉP: 262
+  EZO: 263
   MEK: 262
-  ADÉ: 262
   RGA: 262
-  RED: 261
-  SŤA: 261
-  ÍSM: 261
+  LÉP: 262
+  NÁČ: 262
+  ADÉ: 262
   LUD: 261
+  SŤA: 261
   ÚDO: 261
+  ÍSM: 261
+  RED: 261
   BČA: 260
   ĚMA: 260
-  ÝRO: 259
-  ZRU: 259
   PUD: 259
-  RYK: 259
-  ESŤ: 259
-  EKU: 259
   RKV: 259
+  ÝRO: 259
+  ESŤ: 259
   UKE: 259
-  RŮM: 258
-  LLA: 258
-  LKÁ: 258
+  EKU: 259
+  ZRU: 259
+  RYK: 259
   OPY: 258
+  LKÁ: 258
+  LLA: 258
+  RŮM: 258
   IBU: 258
   HÁJ: 258
-  ADŽ: 257
   ĚŠI: 257
-  ĚSI: 257
-  ESÍ: 257
-  ÍNU: 257
-  ČCE: 257
   ÍLÁ: 257
   LIZ: 257
+  ĚSI: 257
   TĚP: 257
+  ČCE: 257
+  ÍNU: 257
+  ESÍ: 257
+  ADŽ: 257
   MÍŠ: 257
   PÍT: 257
-  ÁČI: 256
   TOD: 256
   LÉV: 256
-  OBD: 255
+  ÁČI: 256
   LNA: 255
   ZKŘ: 255
   ÍMC: 255
-  IÁN: 254
-  RTÍ: 254
-  ANB: 254
+  OBD: 255
   ERM: 254
+  IÁN: 254
+  ANB: 254
+  RTÍ: 254
+  ŽDÁ: 253
   MES: 253
   PLI: 253
   DRÝ: 253
-  ŽDÁ: 253
   VÉS: 253
   ŠLY: 253
-  VIK: 252
-  TIM: 252
   ILL: 252
-  IČI: 252
-  TKE: 252
-  VKU: 252
   ILK: 252
   SOR: 252
+  TKE: 252
+  VIK: 252
+  VKU: 252
+  IČI: 252
   MCO: 252
-  ÉDN: 251
+  TIM: 252
   LÁŘ: 251
   YBN: 251
-  ÉNU: 251
   ĚNÁ: 251
+  ÉDN: 251
+  ÉNU: 251
   EDR: 250
   ONK: 250
+  ŠUJ: 249
   ÁCL: 249
   JVÍ: 249
   ÁRE: 249
-  JEK: 249
-  EHK: 249
-  ŠUJ: 249
   URY: 249
-  GIL: 249
   UVÁ: 249
-  PNO: 248
-  AUČ: 248
+  EHK: 249
+  JEK: 249
+  GIL: 249
   SHL: 248
-  TÍŠ: 248
   MŘÍ: 248
   UNO: 248
   ÍBÍ: 248
+  TÍŠ: 248
   EAN: 248
+  AUČ: 248
+  PNO: 248
   ÁPE: 248
   LIJ: 247
-  IEN: 247
-  RDO: 247
-  TÍŽ: 247
-  VŮR: 247
   HEZ: 247
+  RDO: 247
   RAŤ: 247
   LEŠ: 247
-  ŽDO: 246
-  UCN: 246
-  EKY: 246
-  HYS: 246
+  IEN: 247
+  TÍŽ: 247
+  VŮR: 247
   KRM: 246
+  EKY: 246
+  ŽDO: 246
   ÁŠŤ: 246
+  UCN: 246
+  HYS: 246
   ABĚ: 246
-  IMU: 245
   EKV: 245
+  IMU: 245
   PĚJ: 245
   ÝŠI: 245
   DUB: 244
   UŽK: 244
-  VYŘ: 244
   ABL: 244
+  VYŘ: 244
   VUK: 244
-  ÚŘA: 243
-  ÍDK: 243
   ŠEV: 243
-  OHÉ: 243
-  ÁTY: 243
-  TUL: 243
   HÁP: 243
   YTL: 243
   UIS: 243
+  ÍDK: 243
+  ÁTY: 243
+  OHÉ: 243
+  TUL: 243
+  ÚŘA: 243
   ALB: 243
   HUM: 242
+  NÉS: 242
   RNE: 242
-  QUI: 242
   ATS: 242
   TST: 242
-  NÉS: 242
+  QUI: 242
   HVI: 242
   YŠT: 242
-  ÁTÝ: 241
-  SUC: 241
-  JIŠ: 241
-  TKN: 241
-  BŘÍ: 241
   ERL: 241
+  TKN: 241
   PÍC: 241
   JAR: 241
+  JIŠ: 241
+  BŘÍ: 241
+  SUC: 241
+  ÁTÝ: 241
   JÁŠ: 241
-  ZEŇ: 240
-  TŘN: 240
-  VIH: 240
-  VĚŠ: 240
-  KAB: 240
-  JAM: 240
   KEN: 240
   VYČ: 240
   UNE: 240
+  KAB: 240
+  JAM: 240
+  TŘN: 240
   DÁK: 240
   PEŠ: 240
+  VIH: 240
+  ZEŇ: 240
+  VĚŠ: 240
   ĚČÍ: 239
   IUM: 239
   ZAŘ: 239
   DID: 239
-  ISO: 238
-  PŮV: 238
   SPE: 238
-  ALS: 237
-  ZVÁ: 237
+  PŮV: 238
+  ISO: 238
   SCE: 237
+  ALS: 237
   YHO: 237
   HAZ: 237
+  ZVÁ: 237
   AGI: 236
-  NGE: 236
   TVE: 236
-  SYP: 235
+  NGE: 236
+  EJK: 235
   ITV: 235
   UMO: 235
-  PĚS: 235
-  VAV: 235
-  DEB: 235
-  ÁŽK: 235
-  YTA: 235
-  OZR: 235
-  RMÁ: 235
-  GER: 235
-  EJK: 235
   TRČ: 235
   ÁBA: 235
+  DEB: 235
+  VAV: 235
+  RMÁ: 235
+  GER: 235
+  PĚS: 235
+  OZR: 235
   ÝKA: 235
+  YTA: 235
+  SYP: 235
+  ÁŽK: 235
   UEL: 235
-  ÁVR: 234
   RLA: 234
   ĚŘE: 234
   BEJ: 234
-  RUM: 233
-  ÁHY: 233
-  OŠÍ: 233
+  ÁVR: 234
   HMO: 233
-  NON: 233
-  ĚTU: 233
-  MĚŠ: 233
-  HVA: 233
   ŘIZ: 233
   ERK: 233
+  RUM: 233
+  OŠÍ: 233
   LAŽ: 233
+  ÁHY: 233
+  NON: 233
+  HVA: 233
+  MĚŠ: 233
+  ĚTU: 233
   ZEK: 232
   UKN: 232
-  TYD: 232
-  YZN: 232
   LMO: 232
   ÍLÝ: 232
   TKŮ: 232
+  YZN: 232
   PCI: 232
+  TYD: 232
+  UBN: 231
   YBÍ: 231
   ÉVA: 231
-  UBN: 231
   RIZ: 231
   ÍBY: 231
   ZPU: 231
-  EZT: 230
-  JAD: 230
-  ĚDÍ: 230
-  JMO: 230
   ŘAT: 230
   MKY: 230
+  EZT: 230
+  ĚDÍ: 230
+  JMO: 230
   JOZ: 230
-  CLA: 229
-  HÝC: 229
-  ITN: 229
-  DÁŠ: 229
-  YBA: 229
-  ÁDL: 229
+  JAD: 230
   ZUŘ: 229
+  ITN: 229
+  CLA: 229
+  ÁDL: 229
+  YBA: 229
   ČAT: 229
+  HÝC: 229
   TOŤ: 229
+  DÁŠ: 229
   TÝK: 229
-  TUŠ: 228
+  ŠKL: 228
   SEŇ: 228
   RTO: 228
-  ŠKL: 228
   TRŽ: 228
-  TAC: 227
-  OVZ: 227
+  TUŠ: 228
   ENŮ: 227
   TÁD: 227
   BED: 227
   ÉNK: 227
+  TAC: 227
+  OVZ: 227
   ZHŮ: 227
+  ZÁD: 226
   ČIV: 226
-  IBL: 226
+  ŽBĚ: 226
+  KRK: 226
+  SIR: 226
   BST: 226
   DBO: 226
-  KRK: 226
+  IBL: 226
   JON: 226
-  ZÁD: 226
-  ŽBĚ: 226
-  SIR: 226
-  EON: 225
-  ELL: 225
   ÚCT: 225
-  EJZ: 225
-  BRY: 225
-  REP: 225
   YLE: 225
+  EJZ: 225
   LIÁ: 225
+  ELL: 225
+  REP: 225
+  EON: 225
   TŮL: 225
   LUM: 225
   JOŠ: 225
-  UDÝ: 224
-  OMK: 224
-  ÝVO: 224
-  IMP: 224
+  BRY: 225
   VAP: 224
-  ŘIH: 224
+  OMK: 224
   LHA: 224
+  ÝVO: 224
   AJO: 224
+  IMP: 224
+  UDÝ: 224
   APC: 224
   ŠLÉ: 224
+  ŘIH: 224
   KTŮ: 224
   CÁT: 224
-  ECN: 223
+  ČNE: 223
+  STM: 223
+  PIJ: 223
   CHÉ: 223
   DBY: 223
-  PIJ: 223
-  STM: 223
   OVL: 223
-  ČNE: 223
   RTA: 223
-  ITK: 222
-  ŠNO: 222
-  ŘKA: 222
-  HŮV: 222
-  TÍR: 222
+  ECN: 223
   ĚRE: 222
+  ITK: 222
+  TÍR: 222
+  ŠNO: 222
+  HŮV: 222
+  ŘKA: 222
   ZLÝ: 222
+  LIA: 221
+  EJH: 221
+  RŮS: 221
   ORC: 221
   PSY: 221
-  EJH: 221
-  LIA: 221
-  RŮS: 221
   EFR: 221
   KVR: 220
-  PÁD: 220
   DVI: 220
   NÍT: 220
+  PÁD: 220
   CIO: 220
   DPL: 220
   ADB: 219
-  ÉPE: 219
-  USŤ: 219
   OSÁ: 219
-  SHO: 219
   BŘI: 219
   NOZ: 219
+  ÉPE: 219
   UPC: 219
+  USŤ: 219
+  SHO: 219
   TYN: 219
+  ĚTR: 218
   VÝV: 218
   YKU: 218
-  ĚTR: 218
   GEL: 218
-  PIČ: 217
-  ÉHA: 217
-  ŽCE: 217
-  ZAŠ: 217
-  YNÁ: 217
-  UŘÍ: 217
   LKE: 217
+  UŘÍ: 217
+  ŽCE: 217
+  PIČ: 217
+  YNÁ: 217
+  ÉHA: 217
   LHO: 217
-  OTČ: 216
-  DLÉ: 216
+  ZAŠ: 217
   ĚLÍ: 216
   HEB: 216
+  DLÉ: 216
+  OTČ: 216
+  FAN: 215
+  ÁLU: 215
+  ÝSL: 215
+  IČC: 215
+  CAP: 215
+  ĚLN: 215
   IHU: 215
+  DÁŘ: 215
+  CTN: 215
+  OZA: 215
   ĚRY: 215
   GIE: 215
-  ÝSL: 215
-  FAN: 215
   ŽKU: 215
-  ĚLN: 215
-  CTN: 215
   BOS: 215
-  OZA: 215
-  IČC: 215
-  ÁLU: 215
-  CAP: 215
-  DÁŘ: 215
+  ĚTS: 214
+  NIÁ: 214
+  DŮL: 214
+  CIÁ: 214
   SAZ: 214
   PÍN: 214
-  DŮL: 214
-  NIÁ: 214
   AŠK: 214
-  CIÁ: 214
   ÁBE: 214
-  ĚTS: 214
   RAI: 214
+  HÁV: 213
   APÁ: 213
   PTE: 213
-  HÁV: 213
   JCE: 213
   RZY: 213
-  ÍMN: 212
-  PJA: 212
-  ZVR: 212
-  ŤTE: 212
   NDU: 212
   ADV: 212
   RDL: 212
   VLÍ: 212
+  ŤTE: 212
+  PJA: 212
   UMŘ: 212
-  TAS: 211
+  ÍMN: 212
+  ZVR: 212
   REA: 211
-  ŽKÉ: 211
+  TAS: 211
   PĚŠ: 211
-  VRZ: 211
-  ÍŘÍ: 211
-  YTN: 211
   UŽS: 211
+  ÍŘÍ: 211
+  ŽKÉ: 211
   AHÝ: 211
+  YTN: 211
   ĚNĚ: 211
+  VRZ: 211
   UVU: 211
   ÍTK: 210
-  ASÍ: 210
-  IKE: 210
-  SRO: 210
-  OJD: 210
   BUS: 210
   OVK: 210
   IVY: 210
+  ASÍ: 210
   MAG: 210
-  TÍV: 209
-  HÝB: 209
+  SRO: 210
+  IKE: 210
+  OJD: 210
   YDĚ: 209
+  HÝB: 209
   OBV: 209
-  SÍN: 209
   ATC: 209
+  SÍN: 209
+  TÍV: 209
   BAA: 209
+  ÚŽA: 208
+  YPO: 208
   ZÍC: 208
   BÁC: 208
   VZÍ: 208
-  ÚŽA: 208
-  YPO: 208
-  TYL: 207
   ACU: 207
-  NÁK: 207
-  GOV: 207
   CHM: 207
+  NÁK: 207
+  TYL: 207
+  GOV: 207
   DYK: 207
+  ÚTĚ: 206
   IŽŠ: 206
   DOČ: 206
-  AFA: 206
-  ÚTĚ: 206
   SUL: 206
-  EZV: 205
-  VRŠ: 205
-  UMU: 205
-  ODZ: 205
-  FOV: 205
-  TOC: 205
-  TNE: 205
-  EDB: 205
+  AFA: 206
   ÍŘA: 205
-  ÁHÁ: 204
-  UDK: 204
+  ODZ: 205
+  EZV: 205
+  TNE: 205
+  VRŠ: 205
+  TOC: 205
+  EDB: 205
+  FOV: 205
+  UMU: 205
   MOL: 204
-  SÍŠ: 203
-  ŇAT: 203
-  DČI: 203
-  SLÝ: 203
-  ŘUJ: 203
+  UDK: 204
+  ÁHÁ: 204
   RVÉ: 203
   PAŽ: 203
+  ŇAT: 203
   ŽÍH: 203
   REB: 203
+  ŘUJ: 203
+  DČI: 203
+  SÍŠ: 203
+  SLÝ: 203
   FER: 203
-  OGR: 202
   ČÍV: 202
   THE: 202
+  OGR: 202
   EĎT: 202
   ALQ: 202
   LQU: 202
   LÍP: 202
-  STS: 201
-  ULÁ: 201
   ÝRA: 201
+  ULÁ: 201
   UND: 201
   EDT: 201
+  STS: 201
   YDR: 201
   ŠIK: 201
   MOÁ: 201
+  KUC: 200
+  DŘI: 200
+  OKŘ: 200
   ODŘ: 200
   EOR: 200
-  KUC: 200
-  OKŘ: 200
-  DŘI: 200
   JĎT: 200
   ÁČÍ: 200
   AON: 200
   OSR: 200
+  SPU: 199
+  ŠÍL: 199
+  ŽLU: 199
+  EŠŤ: 199
+  ZSK: 199
   DOŽ: 199
   UBĚ: 199
-  ZSK: 199
-  ŠÍL: 199
-  EŠŤ: 199
-  ŽLU: 199
-  SPU: 199
-  FIE: 198
-  UZL: 198
   ÁZO: 198
-  UĎT: 198
   DŮK: 198
   VNU: 198
+  UĎT: 198
   ČIŠ: 198
+  UZL: 198
+  FIE: 198
   BÍT: 198
   OHŮ: 198
   LIP: 198
   HIÁ: 198
-  VRN: 197
-  UVN: 197
-  IDŮ: 197
-  UVY: 197
-  EZÁ: 197
-  ÁNŮ: 197
-  ÁHU: 197
   UBU: 197
+  UVN: 197
   VEK: 197
   NĚD: 197
+  VRN: 197
   VAŘ: 197
+  ÁNŮ: 197
+  EZÁ: 197
+  IDŮ: 197
   AMÝ: 197
   UNU: 197
   ECÍ: 197
+  ÁHU: 197
+  UVY: 197
   YTU: 197
   RKR: 197
-  CTÍ: 196
-  VČA: 196
-  VÁK: 196
-  VZE: 196
   BLU: 196
+  VÁK: 196
   ŘÁL: 196
+  VČA: 196
   ŽDÍ: 196
   ŘÁN: 196
+  CTÍ: 196
+  VZE: 196
   JIŘ: 196
-  ESY: 195
+  FIC: 195
   IZN: 195
   LÍS: 195
-  FIC: 195
-  ISU: 195
   DÍC: 195
+  ISU: 195
+  ESY: 195
   TKL: 195
   BÝK: 195
   NJA: 195
-  VÝT: 194
-  MPR: 194
   AMB: 194
+  VÝT: 194
+  DHE: 194
   ELZ: 194
   TÝŘ: 194
-  DHE: 194
   RÁŠ: 194
-  DDA: 193
-  SYT: 193
-  CTÉ: 193
+  MPR: 194
   SUN: 193
+  SYT: 193
+  DDA: 193
   OŽÁ: 193
-  PLÝ: 192
-  BÍJ: 192
-  ÚRO: 192
-  VÍK: 192
-  PUK: 192
+  CTÉ: 193
   OTÍ: 192
   OŽT: 192
+  ÚRO: 192
+  BÍJ: 192
+  PLÝ: 192
   EHR: 192
-  MIK: 191
-  HLÝ: 191
-  UZI: 191
-  ŠEJ: 191
-  ĚZI: 191
-  RDÍ: 191
+  VÍK: 192
+  PUK: 192
   URI: 191
   ENZ: 191
   GAR: 191
   ČEP: 191
+  ŠEJ: 191
   DEŘ: 191
+  RDÍ: 191
+  MIK: 191
+  HLÝ: 191
+  UZI: 191
+  ĚZI: 191
   ENJ: 191
-  IAL: 190
-  YBR: 190
-  FIN: 190
-  DČE: 190
-  MHL: 190
-  CAL: 190
-  AKH: 190
   OJM: 190
   ECI: 190
+  IAL: 190
+  CAL: 190
+  YBR: 190
+  MHL: 190
   TVI: 190
+  FIN: 190
   TYS: 190
+  DČE: 190
+  AKH: 190
   AAL: 190
+  IRA: 189
   OČT: 189
-  DKE: 189
+  LTE: 189
   RLE: 189
   ŘST: 189
-  KHL: 189
   YBÁ: 189
-  NZO: 189
-  LTE: 189
-  IRA: 189
+  DKE: 189
   BÁŘ: 189
+  KHL: 189
+  NZO: 189
   ALD: 188
-  BAJ: 188
   ÝČE: 188
+  BAJ: 188
   UŽN: 188
   LŮV: 188
-  UCT: 187
-  RYZ: 187
-  BÁN: 187
-  MĚV: 187
-  VDY: 187
-  ATL: 187
-  EJB: 187
   KLY: 187
+  EJB: 187
   IDM: 187
+  MĚV: 187
+  BÁN: 187
+  ATL: 187
   EPU: 187
-  RŠE: 186
-  ÝZN: 186
+  RYZ: 187
+  UCT: 187
+  VDY: 187
+  REČ: 186
   TŠI: 186
   EPS: 186
+  RŠE: 186
   TĚR: 186
-  REČ: 186
-  HŮM: 185
-  SIE: 185
-  DRC: 185
-  EGO: 185
+  ÝZN: 186
   ČEŽ: 185
-  VEŇ: 185
+  DRC: 185
   LUL: 185
+  VEŇ: 185
+  SIE: 185
   UML: 185
-  ZTA: 184
-  VLI: 184
-  ÉŘE: 184
-  KRČ: 184
-  HET: 184
-  PUT: 184
-  KAŠ: 184
+  HŮM: 185
+  EGO: 185
   OLD: 184
+  VLI: 184
+  PUT: 184
   ÚKO: 184
+  ZTA: 184
   VAK: 184
+  KAŠ: 184
   PEM: 184
   YPU: 184
   VĚĎ: 184
+  HET: 184
+  KRČ: 184
+  ÉŘE: 184
+  AŽO: 183
+  JDŘ: 183
+  ARB: 183
+  EXP: 183
+  TLÉ: 183
   ŽEJ: 183
   CKA: 183
-  EXP: 183
-  JDŘ: 183
   ZBL: 183
   KŮV: 183
-  ARB: 183
-  AŽO: 183
-  TLÉ: 183
   IŘÍ: 183
   ÁVC: 183
   ĚDK: 183
-  ÍBU: 182
-  ZÍR: 182
-  EZÍ: 182
-  ČEŘ: 182
   ZÁB: 182
+  ČEŘ: 182
+  EZÍ: 182
+  ZÍR: 182
   TÝD: 182
+  ÍBU: 182
   BOÁ: 182
-  ZBĚ: 181
-  OPS: 181
-  EOP: 181
-  EČT: 181
-  EŽT: 181
-  BUC: 181
   VAČ: 181
+  EŽT: 181
+  OPS: 181
+  ZBĚ: 181
+  EOP: 181
+  BUC: 181
+  EČT: 181
   MIÁ: 181
   ČTU: 180
-  AHN: 180
   ZJI: 180
+  AHN: 180
   RKL: 180
-  VÝZ: 179
-  UZS: 179
-  EGA: 179
-  HTÍ: 179
   NÍČ: 179
+  EGA: 179
   EOL: 179
   ASÁ: 179
-  LIO: 179
-  EBÍ: 179
   ÁDV: 179
+  VÝZ: 179
+  LIO: 179
+  UZS: 179
+  EBÍ: 179
+  HTÍ: 179
   ZMÍ: 179
   DNŮ: 179
   DĚČ: 179
   OZŠ: 178
-  SYC: 178
-  ÁDR: 178
-  EVÁ: 178
   MĚK: 178
+  ÁDR: 178
   OŘA: 178
+  SYC: 178
+  EVÁ: 178
   ZBÝ: 178
   JÁS: 178
   TNU: 178
-  ŠTA: 177
-  ZKL: 177
-  MNI: 177
-  RBA: 177
-  CIN: 177
-  LAR: 177
   KÝV: 177
+  ZKL: 177
+  RBA: 177
+  LAR: 177
   ZAU: 177
+  MNI: 177
   ÍDE: 177
+  ŠTA: 177
   ĚZN: 177
   HÝL: 177
   ÁJM: 177
+  CIN: 177
   YKŘ: 177
   MDL: 177
-  DUK: 176
-  TET: 176
   EMP: 176
-  ABÝ: 176
   IRI: 176
+  ABÝ: 176
+  DUK: 176
   JMĚ: 176
   HTE: 176
+  TET: 176
+  ONŮ: 175
   ÁPI: 175
-  EDP: 175
+  ÁDH: 175
   SVE: 175
   KNÉ: 175
-  BSO: 175
-  JUJ: 175
-  ONŮ: 175
-  ÁDH: 175
   MTE: 175
   AZV: 175
+  BSO: 175
+  JUJ: 175
+  EDP: 175
   BÍH: 174
   RAG: 174
   ÁTA: 174
@@ -5245,999 +5245,999 @@ trigrams:
   ŠAF: 174
   ZTO: 174
   IZÁ: 174
+  ŘIŽ: 173
+  CII: 173
   ZEZ: 173
   OBT: 173
-  CII: 173
-  ŘIŽ: 173
   ÉLK: 173
   AŽU: 173
   JNÁ: 173
   KTA: 173
-  RII: 172
-  MEI: 172
-  ĚŠT: 172
-  DKÝ: 172
-  ÚSM: 172
   ÚŘE: 172
+  RII: 172
   NOČ: 172
   NBŮ: 172
   HOŠ: 172
+  ÚSM: 172
+  DKÝ: 172
+  MEI: 172
+  ĚŠT: 172
   ČÍH: 172
-  ODJ: 171
-  NČE: 171
   IŠŤ: 171
   SVR: 171
   OZČ: 171
   RBU: 171
+  ODJ: 171
   UHE: 171
-  AŘS: 170
-  AVB: 170
-  ČAR: 170
-  DIE: 170
+  NČE: 171
   POE: 170
-  UDÉ: 170
   LÁH: 170
+  DIE: 170
+  AVB: 170
   ZBI: 170
+  AŘS: 170
   ZČI: 170
+  ČAR: 170
+  UDÉ: 170
   ĚVÁ: 170
   EPÍ: 170
   LÁL: 170
-  KUR: 169
+  ADŮ: 169
   ĚHU: 169
+  KUR: 169
+  BKL: 169
   DIK: 169
-  USP: 169
   NKÁ: 169
   ZRÁ: 169
-  ADŮ: 169
-  BKL: 169
   VEĎ: 169
+  USP: 169
   TMĚ: 169
-  ZNU: 168
-  NTÁ: 168
   ERP: 168
   ÍNS: 168
+  NTÁ: 168
+  ZNU: 168
   JSP: 168
   DTÍ: 168
   DVÉ: 168
-  ÍŘS: 167
-  ÍMT: 167
-  TVU: 167
-  ZST: 167
-  RHÁ: 167
-  RIO: 167
   PÍM: 167
   DÁC: 167
-  BIS: 166
-  REG: 166
-  RVÍ: 166
-  ÁJI: 166
-  ĚŠÍ: 166
-  ÍNÍ: 166
-  ÁKU: 166
-  EDŮ: 166
-  ARŮ: 166
-  OMÝ: 166
+  RIO: 167
+  TVU: 167
+  ÍŘS: 167
+  RHÁ: 167
+  ÍMT: 167
+  ZST: 167
   ITS: 166
+  RVÍ: 166
+  ÁKU: 166
   SLÉ: 166
+  REG: 166
   ULK: 166
   YJD: 166
+  OMÝ: 166
   ŮVA: 166
+  ÍNÍ: 166
+  BIS: 166
+  ARŮ: 166
+  ÁJI: 166
+  EDŮ: 166
   HOK: 166
+  ĚŠÍ: 166
   MDE: 166
-  SER: 165
-  DHO: 165
-  JEČ: 165
-  ŽKÝ: 165
-  MCI: 165
-  MPA: 165
-  CIA: 165
   NDS: 165
+  CIA: 165
   ÍŠN: 165
+  ŽKÝ: 165
   VCI: 165
+  MPA: 165
+  JEČ: 165
+  DHO: 165
+  MCI: 165
+  SER: 165
   MUE: 165
-  PĚN: 164
-  OZŘ: 164
-  ESC: 164
   CAD: 164
-  ZKÉ: 164
-  ITŮ: 164
   RÁB: 164
+  ESC: 164
+  PĚN: 164
   TUZ: 164
+  ZKÉ: 164
   OJT: 164
+  OZŘ: 164
+  ITŮ: 164
   ASV: 164
   PTĚ: 164
   TÝL: 163
-  MIŽ: 163
-  BUK: 163
-  OSN: 163
-  ŽER: 163
-  SÁZ: 163
-  LČI: 163
-  LŠT: 163
-  AGN: 163
   ASM: 163
+  SÁZ: 163
+  LŠT: 163
+  BUK: 163
+  LČI: 163
+  OSN: 163
+  MIŽ: 163
+  ŽER: 163
+  AGN: 163
   ŽNA: 163
-  ÚČE: 162
-  RDA: 162
   KET: 162
   VÝH: 162
-  BŠÍ: 162
-  EFI: 162
-  ASŮ: 162
-  AMH: 162
-  KVI: 162
   BÁK: 162
+  EFI: 162
   TÁČ: 162
+  AMH: 162
+  BŠÍ: 162
+  ÚČE: 162
+  ASŮ: 162
+  RDA: 162
   EVU: 162
+  KVI: 162
+  JMU: 161
   LVA: 161
+  FEL: 161
+  RGE: 161
   TAŽ: 161
   OJU: 161
-  RGE: 161
-  JMU: 161
-  FEL: 161
   IŽK: 161
-  RÁH: 160
-  NÍV: 160
   DRE: 160
-  ÝBO: 160
-  BIC: 160
+  RÁH: 160
   ÚSP: 160
-  DČÍ: 160
-  RVI: 160
-  HRY: 160
-  KŮŽ: 160
-  ĎÁB: 160
   IÓN: 160
+  BIC: 160
   ULY: 160
+  KŮŽ: 160
+  ÝBO: 160
+  RVI: 160
   UOV: 160
+  HRY: 160
+  ĎÁB: 160
+  NÍV: 160
   VIZ: 160
+  DČÍ: 160
   EBÁ: 160
+  ÍMĚ: 159
+  KÁŘ: 159
+  EUV: 159
+  UŠL: 159
+  PTS: 159
+  TAB: 159
+  EBÝ: 159
   BEK: 159
   VŘÍ: 159
-  KÁŘ: 159
-  UŠL: 159
-  TAB: 159
-  EUV: 159
-  ÍMĚ: 159
-  PTS: 159
-  EBÝ: 159
   EZŮ: 159
   SÍD: 159
   OLB: 159
-  SID: 158
-  ŽNI: 158
-  HLT: 158
-  RŽO: 158
-  ÁSC: 158
   ÁTR: 158
   ČÍŠ: 158
+  RŽO: 158
   HRK: 158
   SEZ: 158
+  SID: 158
+  ŽNI: 158
   ILS: 158
+  HLT: 158
+  ÁSC: 158
   ÁMÝ: 158
-  LÝV: 157
-  PIŠ: 157
-  NOD: 157
-  NSE: 157
   GRE: 157
-  ŠSK: 157
   MRK: 157
   UJA: 157
+  ŠSK: 157
+  PIŠ: 157
+  NOD: 157
+  LÝV: 157
   YKY: 157
+  NSE: 157
   IJM: 157
   ĎME: 157
   BCE: 157
   IČT: 156
-  ÁŠN: 156
-  ÚMY: 156
-  ŽÍZ: 156
-  NAO: 156
-  ĚTY: 156
-  FAB: 156
   SUK: 156
+  ÚMY: 156
+  NAO: 156
   ĚPÁ: 156
   NKŮ: 156
+  ŽÍZ: 156
+  ÁŠN: 156
+  FAB: 156
+  ĚTY: 156
   PEŽ: 156
-  KCE: 155
-  YŠN: 155
-  OSS: 155
-  AOP: 155
   BUB: 155
   CIV: 155
+  OSS: 155
   OSY: 155
   RNY: 155
-  ĚTŘ: 154
-  KIL: 154
-  IHY: 154
-  ĚŠN: 154
+  YŠN: 155
+  KCE: 155
+  AOP: 155
   ÁKE: 154
   MÍL: 154
+  ĚŠN: 154
+  IHY: 154
+  KIL: 154
+  ĚTŘ: 154
   ŠAN: 154
-  UZÍ: 153
-  AVT: 153
-  DSO: 153
-  ASC: 153
-  ŘER: 153
-  SBO: 153
-  RMI: 153
   YDE: 153
+  DSO: 153
+  RMI: 153
+  ŘER: 153
+  ASC: 153
+  AVT: 153
+  SBO: 153
   SMO: 153
   YPÁ: 153
+  UZÍ: 153
   RYJ: 153
   ÚZE: 153
   JIZ: 153
   OÁM: 153
-  VPR: 152
-  ĚLS: 152
-  ÍHÁ: 152
   KÉS: 152
-  EAL: 152
-  NTN: 152
-  MUL: 152
-  ZRC: 152
-  OPT: 152
-  JPR: 152
-  MNA: 152
-  DRT: 152
-  TYK: 152
+  VPR: 152
   OŠA: 152
+  NTN: 152
+  MNA: 152
+  ÍHÁ: 152
+  EAL: 152
+  DRT: 152
+  ĚLS: 152
+  OPT: 152
   AZÝ: 152
+  ZRC: 152
+  MUL: 152
+  JPR: 152
+  TYK: 152
   BSK: 152
-  UFÁ: 151
-  ŽRA: 151
-  RGI: 151
-  ZHR: 151
   ZAŽ: 151
   RTU: 151
-  NTŮ: 151
+  UFÁ: 151
   AMM: 151
   VĚM: 151
+  ZHR: 151
   IDÁ: 151
+  ŽRA: 151
   LÁR: 151
   DIŽ: 151
+  RGI: 151
+  NTŮ: 151
   PIR: 150
-  ÍJÍ: 150
   PAŘ: 150
-  LTA: 150
-  FLE: 150
-  NNA: 150
+  ÍJÍ: 150
   ŠKR: 150
-  DIA: 150
+  FLE: 150
   KAS: 150
+  LTA: 150
+  NNA: 150
   ÝLÍ: 150
   SAC: 150
   ŤAL: 150
+  DIA: 150
   ŮŽK: 150
   SEP: 150
   USO: 150
-  SOF: 149
-  ÁTC: 149
-  ŘÍN: 149
   IVC: 149
-  AFI: 149
-  PUB: 149
   OCA: 149
   ŮLN: 149
+  AFI: 149
+  ŘÍN: 149
   LBA: 149
+  SOF: 149
+  ÁTC: 149
+  PUB: 149
   DKL: 149
-  LBE: 148
-  BKY: 148
   ÍŽD: 148
-  ŠNI: 148
-  RCA: 148
+  BKY: 148
   ŠLÍ: 148
   ITL: 148
   HÁT: 148
+  ŠNI: 148
+  RCA: 148
+  LBE: 148
   CED: 148
   NUS: 148
   ŘAN: 148
   ZUE: 148
-  NIU: 147
-  DDĚ: 147
-  DRY: 147
-  ADC: 147
-  PLŇ: 147
-  BOČ: 147
-  EJČ: 147
-  ÍDÍ: 147
   ŠPE: 147
   TYR: 147
+  DDĚ: 147
+  ÍDÍ: 147
   RLO: 147
   OTÝ: 147
   VŮN: 147
+  BOČ: 147
   VIĎ: 147
   ÍTL: 147
+  NIU: 147
+  EJČ: 147
+  PLŇ: 147
+  DRY: 147
+  ADC: 147
   RUP: 147
   AMS: 147
-  ASS: 146
-  AKV: 146
-  ÁVK: 146
-  KRÉ: 146
-  VLÉ: 146
   ETÁ: 146
+  AKV: 146
+  VLÉ: 146
+  ASS: 146
   EGR: 146
   COK: 146
+  ÁVK: 146
+  KRÉ: 146
   JOA: 146
+  ETÝ: 145
+  PAČ: 145
   EGE: 145
   ŠNÁ: 145
-  BAS: 145
-  ABŠ: 145
-  UTU: 145
-  PAČ: 145
-  ETÝ: 145
   CÉN: 145
   PYŠ: 145
   ZCH: 145
   TOŘ: 145
+  BAS: 145
+  UTU: 145
   ISY: 145
+  ABŠ: 145
   ŘÍH: 145
   LEÁ: 145
-  MÁD: 144
-  ZEV: 144
-  VYŽ: 144
-  ÝKL: 144
-  BYŤ: 144
-  DKŮ: 144
-  PSK: 144
-  DCO: 144
   JBL: 144
+  DKŮ: 144
+  ZEV: 144
+  PSK: 144
   ZKÝ: 144
-  TÝR: 143
-  RÁJ: 143
-  FON: 143
-  CEC: 143
-  PSI: 143
+  ÝKL: 144
+  MÁD: 144
+  VYŽ: 144
+  BYŤ: 144
+  DCO: 144
   NKE: 143
   LNY: 143
+  FON: 143
+  CEC: 143
+  RÁJ: 143
+  PSI: 143
   AVZ: 143
+  TÝR: 143
   ĚJT: 143
   VŮZ: 143
   ZTÁ: 143
   BDA: 143
   NOE: 143
-  LIM: 142
-  TBY: 142
-  BÁZ: 142
-  TOŠ: 142
-  ČTR: 142
-  SÁL: 142
   ÁMÉ: 142
-  ĚDN: 142
   USU: 142
   AMT: 142
+  SÁL: 142
   EZŘ: 142
+  LIM: 142
+  TOŠ: 142
   ERZ: 142
+  TBY: 142
+  ĚDN: 142
+  BÁZ: 142
+  ČTR: 142
   FAT: 142
   JOÁ: 142
   TĚV: 141
-  UMÁ: 141
-  JCŮ: 141
   ÁNC: 141
-  YKE: 141
-  ŮKA: 141
   ÝSK: 141
   TYP: 141
   RME: 141
   DAD: 141
+  UMÁ: 141
+  ŮKA: 141
+  YKE: 141
+  JCŮ: 141
   OSB: 141
   KŘT: 141
   ŽIŽ: 141
-  ORB: 140
   PTI: 140
-  RDĚ: 140
-  EHA: 140
-  NTY: 140
-  ZTY: 140
-  LDE: 140
-  VRŽ: 140
-  RAR: 140
   TRK: 140
+  NTY: 140
+  RDĚ: 140
   BÝČ: 140
+  RAR: 140
   HIE: 140
   DIÁ: 140
+  ZTY: 140
+  ORB: 140
+  EHA: 140
+  LDE: 140
+  VRŽ: 140
   AKŮ: 140
   KÁR: 140
   GNE: 140
-  ÁTŮ: 139
-  EGI: 139
-  TUA: 139
-  PNĚ: 139
-  MUD: 139
   NCÍ: 139
-  JCI: 139
   ELŠ: 139
   ÁŘK: 139
   LČÍ: 139
+  MUD: 139
   AHÉ: 139
+  JCI: 139
+  ÁTŮ: 139
+  TUA: 139
   DRI: 139
-  YBĚ: 138
-  MID: 138
-  EFE: 138
-  CAS: 138
-  CKU: 138
+  PNĚ: 139
+  EGI: 139
   NTR: 138
+  MID: 138
+  CKU: 138
   LIÓ: 138
+  CAS: 138
   SUŠ: 138
   ÝČK: 138
   HIR: 138
+  EFE: 138
   KÁŠ: 138
+  YBĚ: 138
   ATB: 138
   EJR: 137
-  AČU: 137
-  ŇSK: 137
-  GUI: 137
   MBO: 137
+  GUI: 137
   ŮNĚ: 137
-  IAT: 137
+  AČU: 137
   OZY: 137
+  ŇSK: 137
+  IAT: 137
   HOB: 137
   MKO: 137
   LÉČ: 137
   OPP: 137
   BNE: 137
   EFA: 137
-  JIH: 136
-  ÍRE: 136
-  ĚŽC: 136
-  TÓN: 136
-  HMA: 136
-  ŽIN: 136
-  NOŘ: 136
   KAK: 136
   ÁBL: 136
   ŤOV: 136
   ÍMS: 136
+  ÍRE: 136
+  JIH: 136
   ŽKÁ: 136
+  HMA: 136
   SEČ: 136
   PRŠ: 136
+  ĚŽC: 136
+  ŽIN: 136
+  TÓN: 136
   UMR: 136
   LZY: 136
   ĚRA: 136
+  NOŘ: 136
   IBA: 136
   SÁD: 136
   EÁD: 136
-  ŠUM: 135
+  AŠU: 135
+  OLS: 135
+  ALV: 135
   OŽK: 135
   VÝP: 135
-  OLS: 135
-  JHO: 135
-  AŠU: 135
-  ALV: 135
+  ŠUM: 135
   ĚNU: 135
   BÁŠ: 135
+  JHO: 135
   ONF: 135
   ALŽ: 135
-  MUK: 134
-  ŘIM: 134
-  JÍH: 134
-  ŠÍT: 134
-  DHA: 134
-  NUC: 134
-  OET: 134
-  VÍJ: 134
-  IŠA: 134
-  TÁR: 134
-  PIV: 134
   MLÝ: 134
   LÝN: 134
+  PIV: 134
   PAJ: 134
   ČKŮ: 134
+  TÁR: 134
+  NUC: 134
   JAB: 134
+  JÍH: 134
+  OET: 134
+  MUK: 134
+  DHA: 134
   IGE: 134
+  ŘIM: 134
   AŽT: 134
+  ŠÍT: 134
   OMC: 134
+  VÍJ: 134
+  IŠA: 134
   ACÁ: 134
-  ÁŘŮ: 133
-  DKÉ: 133
-  UDB: 133
   ÁSY: 133
-  CIP: 133
-  RÉT: 133
   ŠŤÁ: 133
   MAŠ: 133
   BAM: 133
-  MAH: 133
-  HOZ: 133
-  ČLI: 133
-  FÉR: 133
-  IŠI: 133
+  CIP: 133
   ATŮ: 133
+  RÉT: 133
+  ÁŘŮ: 133
+  IŠI: 133
   DSE: 133
+  HOZ: 133
+  UDB: 133
+  ČLI: 133
+  DKÉ: 133
+  MAH: 133
   ŽBU: 133
   LIU: 133
+  FÉR: 133
   BÍM: 133
   BEŠ: 133
   LŽB: 133
   GOT: 132
-  EOV: 132
-  TÍŘ: 132
-  AER: 132
-  IBY: 132
   KNÝ: 132
+  TÍŘ: 132
   HMU: 132
   OZŮ: 132
   NDÁ: 132
   EUD: 132
   ĚZT: 132
+  IBY: 132
+  EOV: 132
+  AER: 132
   SCÉ: 132
   BKA: 132
-  KÝS: 131
-  HÁC: 131
   ÉSI: 131
-  CIS: 131
+  HÁC: 131
   SEC: 131
-  ONÉ: 131
+  KÝS: 131
   DLÝ: 131
+  CIS: 131
   APN: 131
+  ONÉ: 131
   ÉVO: 131
-  ACK: 130
-  YČÍ: 130
-  RHU: 130
-  CNI: 130
   TLY: 130
+  YČÍ: 130
+  ACK: 130
+  CNI: 130
+  RHU: 130
   ZOL: 130
   JÁM: 130
-  UBK: 129
-  LTI: 129
-  MŽE: 129
-  MUJ: 129
-  KYP: 129
   AČÁ: 129
   JKR: 129
+  MŽE: 129
   RCU: 129
   RVY: 129
   CIB: 129
-  URS: 128
-  PLÉ: 128
-  MUN: 128
-  ZMN: 128
-  JAC: 128
-  AVK: 128
+  MUJ: 129
+  LTI: 129
+  UBK: 129
+  KYP: 129
   III: 128
-  ÁPO: 128
+  AVK: 128
   FRE: 128
+  ZMN: 128
+  MUN: 128
+  ÁPO: 128
+  JAC: 128
+  PLÉ: 128
+  URS: 128
   ŽIČ: 128
-  AZŮ: 127
-  VZR: 127
-  SYR: 127
   TBA: 127
   PÍK: 127
+  AZŮ: 127
   LIG: 127
+  SYR: 127
   HÁR: 127
   AŇT: 127
+  VZR: 127
   MÁV: 127
   LÍV: 127
-  LDA: 126
-  UHŮ: 126
-  OBÝ: 126
-  ŽBÁ: 126
-  LŽI: 126
   IBI: 126
-  TIP: 126
   YRÁ: 126
+  TIP: 126
   DUS: 126
   MAŽ: 126
+  ŽBÁ: 126
   NDŘ: 126
+  UHŮ: 126
   IHA: 126
   SUB: 126
   ŮRA: 126
   AČT: 126
   PAU: 126
+  LŽI: 126
+  OBÝ: 126
+  LDA: 126
   DKÁ: 126
   KIÁ: 126
-  MUČ: 125
   ÉZT: 125
-  MPO: 125
-  AKC: 125
-  PÝC: 125
-  ĚKE: 125
-  GED: 125
-  NIJ: 125
-  ÝLE: 125
-  IOV: 125
   PEŘ: 125
   VTI: 125
-  RPÍ: 125
-  APT: 125
-  ĚŽI: 125
-  ŽEK: 125
+  MUČ: 125
+  NIJ: 125
   LČK: 125
+  APT: 125
+  ĚKE: 125
   SLŮ: 125
+  ĚŽI: 125
+  RPÍ: 125
+  ŽEK: 125
   ZLÁ: 125
+  ÝLE: 125
+  AKC: 125
+  IOV: 125
+  MPO: 125
   MEŇ: 125
-  CNÍ: 124
-  RIU: 124
-  ÉZA: 124
-  ŮRC: 124
-  DÍR: 124
+  PÝC: 125
+  GED: 125
   RŽU: 124
+  ŮRC: 124
   NEÚ: 124
+  RIU: 124
+  DÍR: 124
   ÍVÍ: 124
   PEP: 124
   HTA: 124
+  CNÍ: 124
   AHE: 124
   TUC: 124
+  ÉZA: 124
   VÉV: 124
-  ŠÍJ: 123
-  HKO: 123
-  GOL: 123
   VZO: 123
+  GOL: 123
+  LLO: 123
+  ŠÍJ: 123
+  OBZ: 123
   ARR: 123
   YBO: 123
-  LLO: 123
-  OBZ: 123
+  HKO: 123
   ZED: 123
   DZI: 123
-  ZMÁ: 122
-  RLÍ: 122
-  VNY: 122
-  ZIV: 122
-  YTÉ: 122
   LAŤ: 122
+  VNY: 122
   ÁTĚ: 122
   BŘA: 122
   EDÉ: 122
+  YTÉ: 122
+  ZMÁ: 122
   NUV: 122
   UPĚ: 122
   ÍVĚ: 122
   GLO: 122
+  RLÍ: 122
+  ZIV: 122
   DMÉ: 122
-  CHŘ: 121
-  BUŠ: 121
   TÝČ: 121
-  RZO: 121
   NTS: 121
   ŠÍP: 121
+  RZO: 121
   OTŮ: 121
+  CHŘ: 121
+  BUŠ: 121
   ŘAS: 121
-  ERŠ: 120
-  CTĚ: 120
-  KLÉ: 120
-  EUR: 120
-  HIM: 120
   UNY: 120
-  FAK: 120
-  ĚTM: 120
   ŮŽO: 120
   HUR: 120
   UBÁ: 120
   UKT: 120
   AZP: 120
+  ERŠ: 120
   DŠE: 120
+  HIM: 120
+  CTĚ: 120
+  EUR: 120
+  FAK: 120
   ÍŠŤ: 120
   ČIČ: 120
+  ĚTM: 120
   ZHA: 120
+  KLÉ: 120
   ZLY: 120
-  BOZ: 119
-  TIE: 119
+  KLÝ: 119
+  ČÁR: 119
+  PLÍ: 119
   URU: 119
   RSN: 119
-  DCŮ: 119
-  KLÝ: 119
-  PLÍ: 119
-  SCA: 119
-  HOĎ: 119
-  ČÁR: 119
-  DRŮ: 119
   ZRN: 119
+  HOĎ: 119
   ZEŠ: 119
   EČL: 119
+  DRŮ: 119
+  SCA: 119
   ÁLC: 119
+  TIE: 119
+  DCŮ: 119
   ÁŽU: 119
   MÁR: 119
   ÝKÁ: 119
+  BOZ: 119
   EŽN: 119
   IAS: 119
-  ÝLI: 118
-  UNÁ: 118
-  SVL: 118
-  BOC: 118
-  AUR: 118
   EMŽ: 118
-  ÁRK: 118
   RTÁ: 118
-  TBU: 118
+  ÁRK: 118
+  ÝLI: 118
   KVO: 118
+  UNÁ: 118
   NEG: 118
   ŘMI: 118
+  AUR: 118
   YKR: 118
   EUC: 118
   DIU: 118
+  SVL: 118
+  BOC: 118
+  TBU: 118
   ZMU: 118
   MIH: 118
   ÉHÁ: 118
   LAE: 118
-  PNÍ: 117
-  YTV: 117
-  MUŠ: 117
   MBU: 117
+  MUŠ: 117
+  YTV: 117
+  PNÍ: 117
   ŽBY: 117
   JSA: 117
   TŮV: 117
   SÍČ: 117
   HŘI: 116
-  VHO: 116
-  ÁHR: 116
-  ĚHE: 116
   RKÁ: 116
+  ÁHR: 116
   ŠŤO: 116
   YKÁ: 116
   JÁC: 116
   LOŘ: 116
+  VHO: 116
+  ĚHE: 116
   MLH: 116
   RPU: 116
   HŮZ: 116
-  MLÉ: 115
-  ZTŘ: 115
-  AGR: 115
-  KCI: 115
-  DJE: 115
-  ŠKÁ: 115
-  EXI: 115
-  ŮZO: 115
-  IPE: 115
-  MYL: 115
-  ĚTV: 115
-  UÁL: 115
   IŽO: 115
+  MLÉ: 115
+  ŮZO: 115
   VAM: 115
   IGA: 115
+  ZTŘ: 115
   IŠK: 115
+  ŠKÁ: 115
+  EXI: 115
+  DJE: 115
+  UÁL: 115
+  MYL: 115
   EIE: 115
+  KCI: 115
+  ĚTV: 115
+  AGR: 115
+  IPE: 115
   OŘK: 115
   AŘO: 115
-  OFO: 114
-  ÝBA: 114
-  TÍS: 114
-  YČI: 114
-  TLÝ: 114
-  ČÍK: 114
-  LLI: 114
-  ŮZA: 114
-  ĚKŮ: 114
-  ÝHO: 114
-  SSE: 114
-  IML: 114
   IČA: 114
+  IML: 114
+  OFO: 114
   ÁSU: 114
+  ÝHO: 114
   MÝT: 114
+  SSE: 114
+  TÍS: 114
   HUČ: 114
+  LLI: 114
+  TLÝ: 114
+  YČI: 114
+  ÝBA: 114
+  ŮZA: 114
+  ČÍK: 114
+  ĚKŮ: 114
   VYU: 114
   UČA: 114
-  ÍZL: 113
-  HIT: 113
-  LMA: 113
-  OMP: 113
-  YZV: 113
-  DAK: 113
-  SUJ: 113
-  ONV: 113
-  MÍJ: 113
-  ENČ: 113
   BOB: 113
   YND: 113
+  ÍZL: 113
+  MÍJ: 113
   BÁM: 113
+  OMP: 113
   ŘTE: 113
+  HIT: 113
+  LMA: 113
+  SUJ: 113
   YBE: 113
   ÍCŮ: 113
   UMY: 113
+  YZV: 113
   KÁD: 113
   AZÁ: 113
   NÍŠ: 113
+  DAK: 113
+  ONV: 113
+  ENČ: 113
   SMÝ: 113
   JĎM: 113
   EHY: 113
   GIB: 113
   IIN: 113
-  NÝR: 112
-  ŠTU: 112
-  BÍZ: 112
-  YTÝ: 112
-  FOT: 112
-  AUS: 112
-  PNÉ: 112
   ADS: 112
   ČNI: 112
+  YTÝ: 112
   VOČ: 112
+  NÝR: 112
+  AUS: 112
   ODÉ: 112
   ÍNŮ: 112
   ÁVÍ: 112
   SEŽ: 112
+  FOT: 112
+  BÍZ: 112
   ŠÍŠ: 112
+  ŠTU: 112
+  PNÉ: 112
   VÉŘ: 112
   TJA: 112
-  AŽS: 111
-  UAC: 111
-  UNĚ: 111
-  NLI: 111
-  PÁV: 111
-  ÁSÍ: 111
-  NNÁ: 111
-  ČIC: 111
   ETÉ: 111
   EPÁ: 111
   LUZ: 111
+  UNĚ: 111
+  PÁV: 111
   ÉKL: 111
+  ČIC: 111
   TKÝ: 111
+  NNÁ: 111
+  UAC: 111
   YŘÍ: 111
   MLK: 111
   YJÍ: 111
-  GAT: 110
-  ÝSI: 110
-  ÁVŠ: 110
-  FUN: 110
-  CEK: 110
-  ŘBE: 110
-  BNI: 110
-  VÝJ: 110
-  EVS: 110
+  AŽS: 111
+  NLI: 111
+  ÁSÍ: 111
   VKO: 110
+  ŘBE: 110
   FYZ: 110
   YZI: 110
+  ÝSI: 110
+  FUN: 110
+  CEK: 110
+  ÁVŠ: 110
   LYK: 110
+  VÝJ: 110
+  BNI: 110
+  GAT: 110
+  EVS: 110
   ĚDY: 110
   CHŤ: 110
   FAJ: 110
   ŠAJ: 110
-  EOM: 109
-  EŠÍ: 109
-  ICO: 109
-  URE: 109
   IRS: 109
+  EOM: 109
   UPK: 109
   HRS: 109
   TEZ: 109
   BAŽ: 109
+  ICO: 109
+  URE: 109
+  EŠÍ: 109
   ŮNU: 109
   ŠŮV: 109
-  CVI: 108
-  UMI: 108
-  EPŮ: 108
-  GOG: 108
-  ZPŘ: 108
-  ĚHA: 108
-  SYM: 108
-  BEA: 108
-  HES: 108
-  ELB: 108
-  PIK: 108
-  ICA: 108
   UTY: 108
+  ELB: 108
+  ICA: 108
+  ZPŘ: 108
   PNE: 108
   ČLÁ: 108
   VCŮ: 108
+  UMI: 108
   ÝKO: 108
   SAK: 108
+  ĚHA: 108
+  EPŮ: 108
+  SYM: 108
   ŽAT: 108
+  PIK: 108
+  GOG: 108
+  HES: 108
   ŮDU: 108
   EZU: 108
   VÉD: 108
+  CVI: 108
+  BEA: 108
   DĚŠ: 108
   ZIK: 108
   ĚŽS: 108
-  ČTĚ: 107
   MUZ: 107
-  ZIC: 107
+  ČTĚ: 107
   FÁM: 107
-  ĚLU: 107
-  ĚZÍ: 107
-  ČEŠ: 107
-  ÁBY: 107
-  LŮN: 107
-  HTY: 107
   ZŠÍ: 107
+  ÁBY: 107
   OMB: 107
+  ĚZÍ: 107
   OZJ: 107
   ŘBI: 107
   OLŠ: 107
   MUR: 107
+  ZIC: 107
+  ĚLU: 107
   ŠVÉ: 107
+  ČEŠ: 107
+  LŮN: 107
+  HTY: 107
   JOB: 107
   NAÁ: 107
   SDĚ: 107
   PNU: 107
-  SSA: 106
-  UBŠ: 106
-  ŠEB: 106
-  EDÝ: 106
-  VDI: 106
-  INŽ: 106
   PKY: 106
   VÍZ: 106
+  SSA: 106
+  INŽ: 106
   NCH: 106
   AJS: 106
+  UBŠ: 106
+  EDÝ: 106
   UDL: 106
   RZI: 106
   TEI: 106
+  ŠEB: 106
+  VDI: 106
   ĚRO: 106
   ĚNE: 106
   SRA: 106
   AMR: 106
   NCV: 106
   BŠA: 106
-  VUČ: 105
-  ZML: 105
-  CNÁ: 105
-  RMY: 105
   DUM: 105
-  NŠT: 105
+  TUK: 105
   HŮŘ: 105
   TRÉ: 105
-  DSU: 105
-  HŮL: 105
-  DUT: 105
-  TUK: 105
+  RMY: 105
   ŽHA: 105
   AKP: 105
   KPA: 105
   MAK: 105
   ENH: 105
   RPE: 105
+  NŠT: 105
   AMK: 105
+  DSU: 105
+  CNÁ: 105
+  VUČ: 105
+  ZML: 105
+  HŮL: 105
+  DUT: 105
   YSY: 105
   DBÁ: 105
   EEL: 105
-  ČLE: 104
-  EÁL: 104
-  MPL: 104
-  NOB: 104
-  BÁJ: 104
-  IŠÍ: 104
-  YPI: 104
-  ŘKU: 104
   ŤÁK: 104
+  ČLE: 104
   ÉMS: 104
   UDŘ: 104
+  EÁL: 104
+  ŘKU: 104
+  YPI: 104
   EŘM: 104
   SŇA: 104
+  MPL: 104
+  NOB: 104
+  IŠÍ: 104
   NTÍ: 104
+  BÁJ: 104
   TCH: 104
   ŘKO: 104
   ĚRK: 104
-  VZL: 103
-  KTY: 103
-  ŽÁK: 103
-  YLU: 103
-  ĚZS: 103
   YSM: 103
   RIG: 103
+  YLU: 103
   PÁK: 103
+  KTY: 103
+  ŽÁK: 103
   ÍBA: 103
+  VZL: 103
   BLÝ: 103
   RIB: 103
   IĎT: 103
+  ĚZS: 103
   RŠT: 103
   LCŮ: 103
   LÁB: 103
   JZL: 103
-  DRN: 102
-  SAJ: 102
-  VÁB: 102
-  YMN: 102
-  IRK: 102
-  ZEB: 102
   AVŽ: 102
+  DRN: 102
+  YMN: 102
+  ZEB: 102
+  IRK: 102
+  VÁB: 102
   OVŮ: 102
+  SAJ: 102
   BDĚ: 102
   ÁRL: 102
-  ULÉ: 101
-  ÍVI: 101
-  RTÉ: 101
-  ÉLE: 101
   ÓNY: 101
-  LOŇ: 101
   VIŠ: 101
-  LZA: 101
-  ONG: 101
-  EDC: 101
-  IGN: 101
   EBĚ: 101
   DEZ: 101
+  ONG: 101
   AKI: 101
+  ULÉ: 101
+  LZA: 101
   ALH: 101
+  ÉLE: 101
   PUP: 101
   ÚČT: 101
   DCÍ: 101
+  ÍVI: 101
+  RTÉ: 101
+  LOŇ: 101
+  EDC: 101
+  IGN: 101
   KEŘ: 101
   ĚNK: 101
   PRK: 101
@@ -6246,26 +6246,26 @@ trigrams:
   ZHN: 101
   TCÍ: 101
   CVÍ: 101
+  CIH: 100
+  GRO: 100
+  NZE: 100
+  LOJ: 100
   OTT: 100
   OŠN: 100
+  RVU: 100
+  BAD: 100
+  JÍZ: 100
   MIE: 100
   IPL: 100
   AFR: 100
-  AGE: 100
-  KOŇ: 100
-  NZE: 100
   YTŘ: 100
-  RVU: 100
-  BAD: 100
-  EAR: 100
-  EJA: 100
-  CIH: 100
-  GRO: 100
-  LOJ: 100
-  JÍZ: 100
   AVS: 100
   ESŮ: 100
+  EAR: 100
   VSA: 100
+  KOŇ: 100
+  AGE: 100
+  EJA: 100
   UVO: 100
   DBĚ: 100
   OMR: 100
@@ -6275,13 +6275,13 @@ trigrams:
   ŠLU: 100
   ŘVA: 100
   EER: 100
+  VČÍ: 99
+  ŠVE: 99
+  EUK: 99
+  HIN: 99
+  SUM: 99
   BĚS: 99
   RHO: 99
-  SUM: 99
-  EUK: 99
-  ŠVE: 99
-  VČÍ: 99
-  HIN: 99
   AGA: 99
   LŮŽ: 99
   TUŽ: 99
@@ -6290,297 +6290,297 @@ trigrams:
   YPŤ: 99
   PŤA: 99
   ZDC: 99
-  BNÁ: 98
   ERB: 98
-  ADM: 98
-  NSI: 98
   ZIS: 98
+  NSI: 98
+  BNÁ: 98
   TVY: 98
   ÉMO: 98
   RDN: 98
   ISP: 98
   RSA: 98
+  ADM: 98
   BIM: 98
   ŮJČ: 98
   GÁD: 98
-  IRÉ: 97
   ÁSÁ: 97
-  DÁR: 97
-  TÁŽ: 97
-  ZTI: 97
   ĚDU: 97
-  IEM: 97
   CTO: 97
-  IMŽ: 97
-  JÁD: 97
-  YVR: 97
   KŽI: 97
   EPÝ: 97
+  IRÉ: 97
+  JÁD: 97
+  YVR: 97
   PKA: 97
   IMĚ: 97
+  IMŽ: 97
+  IEM: 97
+  DÁR: 97
   SRÁ: 97
+  TÁŽ: 97
+  ZTI: 97
   ÍČN: 97
   FTA: 97
   MNU: 97
   ŠAD: 97
   DAB: 97
   DDÍ: 97
-  EVL: 96
-  UDŮ: 96
-  RTĚ: 96
-  ĚMC: 96
-  ILD: 96
-  IKŮ: 96
-  CID: 96
-  TÉR: 96
   YPE: 96
+  EVL: 96
   EAT: 96
   YRS: 96
+  ILD: 96
   ZKV: 96
   BĚM: 96
   VLH: 96
+  TÉR: 96
   RKN: 96
+  RTĚ: 96
   RTÝ: 96
   ÝDN: 96
+  UDŮ: 96
+  ĚMC: 96
+  IKŮ: 96
+  CID: 96
   UNÍ: 96
   SAF: 96
-  NII: 95
   KIN: 95
-  ÉRI: 95
-  VII: 95
   DIŠ: 95
   TAZ: 95
+  ÉRI: 95
+  NII: 95
   ÝŘI: 95
   LKL: 95
+  VII: 95
   CTÝ: 95
+  TKR: 94
   LEO: 94
-  RÁR: 94
-  ÚČA: 94
-  VCO: 94
+  YMY: 94
+  CUT: 94
   KUM: 94
   EIN: 94
-  YMY: 94
-  LMU: 94
-  TKR: 94
-  CUT: 94
   CLE: 94
+  RÁR: 94
   EČO: 94
+  ÚČA: 94
   NBA: 94
+  VCO: 94
+  LMU: 94
   LBY: 94
   NBE: 94
   ABD: 94
-  USŮ: 93
-  VAS: 93
-  MĚC: 93
-  YLÉ: 93
-  ZMR: 93
-  AFO: 93
-  NCL: 93
-  MAE: 93
   RYŠ: 93
+  USŮ: 93
   EVÝ: 93
   FRI: 93
   OJŮ: 93
+  NCL: 93
+  YLÉ: 93
+  MAE: 93
   HKÉ: 93
+  AFO: 93
   RŽI: 93
   YDÍ: 93
   DMD: 93
+  VAS: 93
+  MĚC: 93
+  ZMR: 93
   ČLU: 93
   VÁČ: 93
   ZÍK: 93
   BĚR: 93
-  XAV: 92
-  SUR: 92
-  ÁCK: 92
-  OES: 92
-  XIS: 92
-  OMÉ: 92
-  SPŘ: 92
   DÝN: 92
   ÝNS: 92
+  SUR: 92
   ÁPĚ: 92
   ÁPR: 92
+  ÁCK: 92
+  XIS: 92
   EIS: 92
   TMY: 92
+  OMÉ: 92
+  XAV: 92
+  OES: 92
+  SPŘ: 92
   BIÁ: 92
   OZZ: 92
   MCE: 92
   ABN: 92
-  YVÁ: 91
-  TVĚ: 91
-  JNI: 91
-  FII: 91
   JMY: 91
   TUN: 91
   LHÁ: 91
+  JNI: 91
   DPA: 91
   TŘP: 91
   ŘPY: 91
   VŮM: 91
   ULÍ: 91
+  YVÁ: 91
+  TVĚ: 91
+  FII: 91
   ROG: 91
   TAF: 91
   FLO: 91
-  ZÍV: 90
-  UAL: 90
   IGU: 90
-  DÉŠ: 90
-  ÉŠŤ: 90
-  NIF: 90
-  DŽB: 90
   ETH: 90
-  ÁZU: 90
   ĚKK: 90
+  ÁZU: 90
   UFR: 90
   YŘE: 90
   ČKÉ: 90
+  NIF: 90
+  DŽB: 90
   LÁP: 90
+  DÉŠ: 90
+  ÉŠŤ: 90
   ÝDE: 90
+  UAL: 90
+  ZÍV: 90
   IVL: 90
-  LLÁ: 90
   FÍK: 90
-  UMP: 89
-  UZO: 89
-  COR: 89
-  AIN: 89
-  MÍŇ: 89
-  GOR: 89
-  ŮŽI: 89
+  LLÁ: 90
   IRE: 89
   DAI: 89
   RYN: 89
   ĚJN: 89
+  UMP: 89
   ŠAV: 89
+  ŮŽI: 89
+  UZO: 89
   LAŇ: 89
+  GOR: 89
   AVC: 89
   DŠT: 89
   LVI: 89
   ÁBN: 89
+  COR: 89
   BZO: 89
+  MÍŇ: 89
   SŤT: 89
+  AIN: 89
   DVŮ: 89
   YRY: 89
   YCE: 89
   ŠÍK: 89
-  RBE: 88
-  TIÁ: 88
-  KUK: 88
-  ÉTN: 88
-  EUT: 88
   OLL: 88
   IZU: 88
   YER: 88
+  RBE: 88
+  KUK: 88
   SÁR: 88
   ÉVÁ: 88
   ŠCE: 88
+  TIÁ: 88
+  ÉTN: 88
+  EUT: 88
   FLI: 88
   TÉN: 88
   IMM: 88
   PÍL: 88
   AŠO: 88
-  PÁČ: 87
-  UBÝ: 87
-  KTN: 87
-  ZPT: 87
-  BIŠ: 87
-  ÉZÁ: 87
-  DEO: 87
-  KŘO: 87
-  RGO: 87
-  NKÝ: 87
   ÁŽC: 87
   ÉZE: 87
   PNI: 87
+  ZPT: 87
+  KŘO: 87
   UBŮ: 87
   PSÍ: 87
   VRB: 87
+  NKÝ: 87
   KÉN: 87
   TIR: 87
+  ÉZÁ: 87
+  KTN: 87
+  BIŠ: 87
+  RGO: 87
   BNA: 87
+  UBÝ: 87
   KED: 87
   DYN: 87
+  PÁČ: 87
+  DEO: 87
   UČU: 87
   ZIÁ: 87
-  MYT: 86
-  DVÍ: 86
-  MOČ: 86
-  DUP: 86
-  DEŇ: 86
-  YKŮ: 86
-  ÚČI: 86
-  ŠIV: 86
-  ETV: 86
-  GII: 86
-  KAC: 86
-  ÝŘE: 86
-  DPI: 86
   ZIE: 86
   OCK: 86
+  KAC: 86
+  DUP: 86
+  ŠIV: 86
   ELH: 86
   OZÁ: 86
+  DVÍ: 86
+  ÝŘE: 86
+  ÚČI: 86
   ÉKO: 86
+  MOČ: 86
+  YKŮ: 86
+  GII: 86
   EZR: 86
+  DPI: 86
+  DEŇ: 86
+  MYT: 86
+  ETV: 86
   ŘIĎ: 86
   OBŮ: 86
   IMR: 86
   ČIŇ: 86
   ZHŘ: 86
-  ĚHN: 85
-  GMA: 85
-  ŽAD: 85
-  VUH: 85
-  ESS: 85
   NUD: 85
-  EJO: 85
   SÝR: 85
+  ĚHN: 85
   EBL: 85
   ŮČI: 85
+  EJO: 85
+  GMA: 85
+  ESS: 85
   DYH: 85
+  ŽAD: 85
+  VUH: 85
   AKZ: 85
   KZV: 85
   ČCI: 85
   ILM: 85
   ŠLÁ: 85
+  NDÝ: 84
+  ETB: 84
+  GEO: 84
+  REŠ: 84
+  VCÍ: 84
+  RDÉ: 84
+  YOV: 84
+  EHT: 84
   UČO: 84
   NSP: 84
   IRÁ: 84
-  RDÉ: 84
-  GEO: 84
-  ETB: 84
-  EHT: 84
-  NDÝ: 84
-  REŠ: 84
-  VCÍ: 84
-  YOV: 84
   ÍŘK: 84
   SIÁ: 84
-  ISN: 83
-  SÁC: 83
-  LŇU: 83
-  EXT: 83
-  JIR: 83
-  BDI: 83
-  RŠI: 83
-  NKÉ: 83
-  ČTÍ: 83
-  CIL: 83
-  PSE: 83
-  ZLU: 83
   EMB: 83
   ACT: 83
+  ZLU: 83
+  ČTÍ: 83
   TLÍ: 83
   UJN: 83
   EPN: 83
   BÍN: 83
   DAČ: 83
+  RŠI: 83
   NHL: 83
+  SÁC: 83
+  NKÉ: 83
   TYH: 83
+  CIL: 83
+  JIR: 83
   RZU: 83
   AŤT: 83
   DÍŽ: 83
   ŽES: 83
   PEJ: 83
+  EXT: 83
   BÁV: 83
+  LŇU: 83
+  ISN: 83
+  BDI: 83
+  PSE: 83
   TŘO: 83
   ÉDS: 83
   MÝL: 83
@@ -6588,21 +6588,21 @@ trigrams:
   EFT: 83
   OMŠ: 83
   FOU: 82
-  BEO: 82
-  ARG: 82
-  TÝŽ: 82
-  ISI: 82
-  MÍK: 82
-  HYL: 82
-  YŽE: 82
-  ÉLA: 82
-  IOT: 82
   ČKÝ: 82
   CKN: 82
+  IOT: 82
   VŮČ: 82
+  ÉLA: 82
+  TÝŽ: 82
   ULL: 82
   KŮŇ: 82
   ŮDĚ: 82
+  ISI: 82
+  ARG: 82
+  YŽE: 82
+  HYL: 82
+  BEO: 82
+  MÍK: 82
   ADŘ: 82
   ÚTR: 82
   MSO: 82
@@ -6610,27 +6610,27 @@ trigrams:
   HÁŠ: 82
   NVO: 82
   OLZ: 82
-  ZOS: 81
-  SAV: 81
   DMA: 81
-  BTÍ: 81
-  TOG: 81
-  SOP: 81
-  RCŮ: 81
-  ÍSI: 81
-  JHL: 81
-  DBU: 81
-  IVD: 81
   MPE: 81
   RTŮ: 81
+  RCŮ: 81
   RCO: 81
   KŮL: 81
   TŘA: 81
   ÁŠK: 81
+  TOG: 81
   ÍŽK: 81
+  SAV: 81
   KKO: 81
+  DBU: 81
   OPÝ: 81
+  JHL: 81
   YHÝ: 81
+  ZOS: 81
+  BTÍ: 81
+  SOP: 81
+  ÍSI: 81
+  IVD: 81
   VKR: 81
   FLA: 81
   APK: 81
@@ -6638,73 +6638,73 @@ trigrams:
   EČM: 81
   ENV: 81
   AÁM: 81
-  CUK: 80
-  SIV: 80
-  OHD: 80
-  UIL: 80
-  SIČ: 80
-  MPI: 80
   ČAP: 80
+  MPI: 80
   ERR: 80
   OŠŤ: 80
   CIG: 80
   TAP: 80
   YLÍ: 80
+  CUK: 80
+  UIL: 80
   ÍŠK: 80
+  SIV: 80
   ŠAR: 80
   RÉN: 80
   NŮŽ: 80
+  OHD: 80
+  SIČ: 80
   NFL: 80
   OFL: 80
   SJE: 80
   NTZ: 80
   ÁBS: 80
   TYB: 80
-  AŘŮ: 79
-  UTL: 79
-  DRS: 79
-  DDÁ: 79
-  IJI: 79
-  ÍŠÍ: 79
-  HUŤ: 79
   OTS: 79
   HIL: 79
   NEA: 79
   DEÁ: 79
+  ÍŠÍ: 79
   ŽTÍ: 79
+  DDÁ: 79
+  DRS: 79
   JVÝ: 79
   ENB: 79
   RDU: 79
   RZA: 79
+  IJI: 79
+  UTL: 79
   LEF: 79
   ISŮ: 79
   VDÁ: 79
   ÍČÍ: 79
+  AŘŮ: 79
+  HUŤ: 79
   PAH: 79
   DUN: 79
   USC: 79
   OBŽ: 79
   BŮV: 79
   HÁČ: 79
-  MKŮ: 78
-  YZÍ: 78
-  SSI: 78
-  DTA: 78
-  EVŮ: 78
-  TAI: 78
-  IŽU: 78
-  ŮDY: 78
   ENG: 78
   AIL: 78
+  IŽU: 78
+  SSI: 78
+  DTA: 78
   BVI: 78
   UZU: 78
+  MKŮ: 78
   KNÁ: 78
   ČNU: 78
   NZU: 78
   ZÁT: 78
+  EVŮ: 78
   LVE: 78
   AFY: 78
   EVÉ: 78
+  YZÍ: 78
+  TAI: 78
+  ŮDY: 78
   ÚPĚ: 78
   RÝZ: 78
   EŠU: 78
@@ -6712,22 +6712,22 @@ trigrams:
   ZNY: 78
   EUN: 78
   ZAI: 78
-  ŘÁH: 77
-  TUM: 77
-  ÝBU: 77
-  RŠO: 77
-  TRM: 77
-  ADP: 77
-  TUÁ: 77
   TKV: 77
   KUŘ: 77
+  ADP: 77
   PŠE: 77
+  TRM: 77
   OPC: 77
   VSI: 77
   ŇAL: 77
   MÁČ: 77
   ŤUJ: 77
+  TUÁ: 77
+  TUM: 77
   EHE: 77
+  ÝBU: 77
+  ŘÁH: 77
+  RŠO: 77
   PNÝ: 77
   SIG: 77
   NEF: 77
@@ -6735,22 +6735,22 @@ trigrams:
   ŠTV: 77
   YUČ: 77
   EAZ: 77
-  ÚSI: 76
-  YZD: 76
-  RDÝ: 76
-  VNE: 76
-  RID: 76
-  ATV: 76
-  APĚ: 76
-  ĚŽO: 76
-  DBE: 76
-  IOL: 76
-  SHA: 76
   MBR: 76
+  RID: 76
+  SHA: 76
+  ÚSI: 76
   JAP: 76
+  YZD: 76
   NDL: 76
+  APĚ: 76
   HVO: 76
+  IOL: 76
   DAC: 76
+  DBE: 76
+  VNE: 76
+  RDÝ: 76
+  ATV: 76
+  ĚŽO: 76
   YČN: 76
   ÉČI: 76
   DDE: 76
@@ -6761,23 +6761,23 @@ trigrams:
   IVŠ: 76
   NAŇ: 76
   BCI: 76
-  HAŘ: 75
-  INF: 75
-  THO: 75
-  ŮMY: 75
-  OŘN: 75
-  IRU: 75
-  NOP: 75
   ZVÝ: 75
-  HŮD: 75
-  YSE: 75
   CPA: 75
+  HŮD: 75
+  OŘN: 75
   OCO: 75
   GIN: 75
   GLE: 75
+  THO: 75
   LAU: 75
+  ŮMY: 75
   HAC: 75
+  HAŘ: 75
   OLÝ: 75
+  YSE: 75
+  IRU: 75
+  NOP: 75
+  INF: 75
   MŮV: 75
   EPĚ: 75
   NTÉ: 75
@@ -6788,25 +6788,25 @@ trigrams:
   LÝS: 75
   ŠVI: 75
   IDK: 75
-  RBY: 74
-  SOS: 74
-  QUE: 74
-  BEV: 74
-  RTN: 74
-  VIV: 74
-  ISÁ: 74
-  LAI: 74
-  NVE: 74
-  IDY: 74
-  CTA: 74
-  LBL: 74
   ÓNŮ: 74
+  LBL: 74
   ESČ: 74
+  ISÁ: 74
+  RTN: 74
+  IDY: 74
   PÉR: 74
   IČŮ: 74
+  RBY: 74
   TLÁ: 74
+  NVE: 74
+  LAI: 74
   LMY: 74
   ŠMA: 74
+  SOS: 74
+  BEV: 74
+  QUE: 74
+  VIV: 74
+  CTA: 74
   VPŘ: 74
   UKŘ: 74
   IFE: 74
@@ -6818,18 +6818,18 @@ trigrams:
   OLC: 74
   LAÁ: 74
   SÉL: 74
-  PTÝ: 73
-  MÁŘ: 73
-  ISC: 73
-  ÁŠŮ: 73
-  ÉKÁ: 73
-  ĚŽŠ: 73
-  YMP: 73
   SČÍ: 73
+  MÁŘ: 73
   MRŠ: 73
   POO: 73
+  ISC: 73
+  YMP: 73
+  ĚŽŠ: 73
+  ÉKÁ: 73
   NÍD: 73
   MIŇ: 73
+  PTÝ: 73
+  ÁŠŮ: 73
   KOC: 73
   VIE: 73
   IBĚ: 73
@@ -6839,71 +6839,71 @@ trigrams:
   SMN: 73
   ÚLI: 73
   RIH: 73
-  ÍDY: 72
-  JAŘ: 72
-  OKD: 72
-  AUD: 72
-  ERD: 72
-  EUB: 72
-  ĚŠŤ: 72
-  OLM: 72
-  ĚŘU: 72
   RRY: 72
+  OLM: 72
   OŇA: 72
   JNA: 72
   UDŠ: 72
+  OKD: 72
+  ÍDY: 72
   PCŮ: 72
   ĚVY: 72
   ZJA: 72
   OŘČ: 72
+  ERD: 72
+  ĚŘU: 72
   ÍŽA: 72
   XPE: 72
   ÉKN: 72
   ŇAN: 72
+  JAŘ: 72
+  AUD: 72
+  EUB: 72
+  ĚŠŤ: 72
   SMD: 72
   ZOD: 72
   RPÁ: 72
   JOJ: 72
   DKI: 72
-  RMĚ: 71
-  IPU: 71
   ISS: 71
-  NGO: 71
-  ABB: 71
-  SFÉ: 71
   ALŮ: 71
   KUF: 71
   ŘTI: 71
   SŮM: 71
   SÍŇ: 71
   ŘAV: 71
+  NGO: 71
   OUŤ: 71
   LHK: 71
   DIO: 71
   RRR: 71
   KTR: 71
   UZŘ: 71
+  RMĚ: 71
+  IPU: 71
+  ABB: 71
+  SFÉ: 71
   DVL: 71
   ZÚČ: 71
   UČC: 71
   ZIR: 71
   OAŠ: 71
-  NNY: 70
-  YRI: 70
-  NAI: 70
-  EZC: 70
-  EXA: 70
-  TTE: 70
-  ŠÍV: 70
-  SOD: 70
-  THA: 70
-  ÁLÉ: 70
   CLO: 70
+  NNY: 70
   ŠOU: 70
   DPŮ: 70
+  ŠÍV: 70
+  TTE: 70
+  EZC: 70
+  THA: 70
+  SOD: 70
+  YRI: 70
   MAČ: 70
+  ÁLÉ: 70
   ŽŮM: 70
   GIS: 70
+  NAI: 70
+  EXA: 70
   YJA: 70
   ŠEO: 70
   HEU: 70
@@ -6913,24 +6913,24 @@ trigrams:
   JŮR: 70
   ŠIÁ: 70
   TTI: 69
-  AUG: 69
-  ATH: 69
-  EZH: 69
-  ZSV: 69
-  ĚCU: 69
-  ŠIB: 69
-  UBR: 69
-  OZC: 69
-  RIÍ: 69
-  ISV: 69
-  ZÍH: 69
   ÍLN: 69
+  RIÍ: 69
   KAČ: 69
+  OZC: 69
   ČPA: 69
   TAŠ: 69
   NUN: 69
+  ATH: 69
   AKK: 69
+  ZÍH: 69
+  UBR: 69
+  ZSV: 69
   ÚLE: 69
+  EZH: 69
+  AUG: 69
+  ĚCU: 69
+  ŠIB: 69
+  ISV: 69
   ÍJI: 69
   ÍPR: 69
   IAD: 69
@@ -6942,21 +6942,21 @@ trigrams:
   VÍV: 69
   IJS: 69
   KIM: 69
-  KEP: 68
-  BJÍ: 68
-  BAH: 68
-  MBE: 68
-  NIÍ: 68
-  ÁZL: 68
-  NIA: 68
   IAM: 68
-  YMĚ: 68
   IFI: 68
   GNO: 68
   NÍN: 68
   ĚŠK: 68
+  NIÍ: 68
+  KEP: 68
   HED: 68
   TÉK: 68
+  NIA: 68
+  BJÍ: 68
+  BAH: 68
+  MBE: 68
+  ÁZL: 68
+  YMĚ: 68
   ICÁ: 68
   ATČ: 68
   ÍCN: 68
@@ -6970,23 +6970,23 @@ trigrams:
   IJĎ: 68
   OAC: 68
   JTM: 68
-  PÉČ: 67
-  NNE: 67
-  ERŮ: 67
-  LYS: 67
-  OSC: 67
-  NUM: 67
-  LCH: 67
-  HEO: 67
-  ÉRA: 67
-  IBÝ: 67
   RBO: 67
   CTU: 67
   REE: 67
+  NUM: 67
+  ERŮ: 67
+  LYS: 67
+  OSC: 67
   RYO: 67
   ÁPN: 67
   AGU: 67
   PÝT: 67
+  PÉČ: 67
+  NNE: 67
+  LCH: 67
+  HEO: 67
+  ÉRA: 67
+  IBÝ: 67
   UPÝ: 67
   JMI: 67
   SAŽ: 67
@@ -6994,21 +6994,21 @@ trigrams:
   OVD: 67
   OJV: 67
   IJT: 67
-  IET: 66
-  LEX: 66
-  EDČ: 66
   BNU: 66
   ŘŮM: 66
-  OŇS: 66
-  IŠN: 66
-  AFN: 66
-  MBI: 66
+  IET: 66
   ČTI: 66
+  IŠN: 66
   MTU: 66
   ŠID: 66
   EŘA: 66
+  AFN: 66
   HŘM: 66
+  OŇS: 66
   ŮZY: 66
+  EDČ: 66
+  LEX: 66
+  MBI: 66
   SEH: 66
   ZUT: 66
   EXC: 66
@@ -7030,29 +7030,29 @@ trigrams:
   JČÍ: 66
   ZSU: 66
   XPL: 66
-  RÉV: 66
   RLŠ: 66
-  SBU: 65
-  CON: 65
-  PIE: 65
-  EOS: 65
-  ŠVA: 65
-  GUR: 65
-  PED: 65
-  ATŠ: 65
+  RÉV: 66
   TUŘ: 65
-  GUS: 65
-  UTV: 65
   ŽOU: 65
   ÍŘŮ: 65
+  UTV: 65
+  CON: 65
+  GUR: 65
   ALÓ: 65
   AGÓ: 65
+  GUS: 65
+  PED: 65
   EHÁ: 65
+  SBU: 65
   HAH: 65
   EŠA: 65
+  EOS: 65
   ÁRM: 65
   DSÍ: 65
   JČI: 65
+  PIE: 65
+  ŠVA: 65
+  ATŠ: 65
   LAG: 65
   ÝNK: 65
   ELV: 65
@@ -7063,21 +7063,19 @@ trigrams:
   HZE: 65
   YMÝ: 65
   ŘOU: 65
-  ÁZI: 64
-  DUA: 64
   YTY: 64
-  GES: 64
-  SIM: 64
-  VRS: 64
-  RSE: 64
   GET: 64
-  AMŮ: 64
   NEY: 64
+  SIM: 64
   ETS: 64
   HIV: 64
   ŮHV: 64
+  VRS: 64
+  RSE: 64
   ETŮ: 64
   BAC: 64
+  DUA: 64
+  GES: 64
   RÝŠ: 64
   ASÝ: 64
   YBI: 64
@@ -7085,6 +7083,8 @@ trigrams:
   BEE: 64
   IÉR: 64
   OLČ: 64
+  ÁZI: 64
+  AMŮ: 64
   ŠŤU: 64
   KIR: 64
   NUK: 64
@@ -7093,24 +7093,24 @@ trigrams:
   RSC: 64
   YHU: 64
   ÍŠA: 64
-  ŮVK: 63
-  TIA: 63
-  IAR: 63
-  NTH: 63
-  IÍC: 63
-  HAŠ: 63
   ŮKL: 63
   YNK: 63
+  IÍC: 63
   ŽÍR: 63
   TRS: 63
+  IAR: 63
   LNU: 63
+  NTH: 63
   YZK: 63
   FOD: 63
+  ŮVK: 63
   ZMY: 63
   DOG: 63
   CEP: 63
   DŮR: 63
   VŘI: 63
+  TIA: 63
+  HAŠ: 63
   LZÁ: 63
   ÁRŮ: 63
   ŮRČ: 63
@@ -7119,12 +7119,28 @@ trigrams:
   MŠE: 63
   OAK: 63
   MYJ: 63
+  SBĚ: 62
+  NGU: 62
+  EJU: 62
+  ÝPR: 62
+  GUM: 62
   ÝTV: 62
+  RÝČ: 62
+  PKU: 62
+  DUR: 62
+  OGO: 62
+  ÉTĚ: 62
+  YLK: 62
+  SAĎ: 62
+  AZK: 62
+  UPÉ: 62
   RLY: 62
+  ĚTŮ: 62
+  URC: 62
+  ZRE: 62
+  UJM: 62
   UNŮ: 62
   HIC: 62
-  PKU: 62
-  ÝPR: 62
   PKO: 62
   ÉME: 62
   ÍDĚ: 62
@@ -7132,53 +7148,37 @@ trigrams:
   MKA: 62
   BVY: 62
   SKŮ: 62
-  NGU: 62
-  GUM: 62
-  OGO: 62
-  ĚTŮ: 62
-  SBĚ: 62
-  EJU: 62
-  RÝČ: 62
-  DUR: 62
-  ÉTĚ: 62
-  YLK: 62
-  SAĎ: 62
-  AZK: 62
-  UPÉ: 62
-  URC: 62
-  ZRE: 62
-  UJM: 62
   ÚDY: 62
   ITZ: 62
   LKN: 62
-  ÚVO: 61
-  UGU: 61
-  BĚJ: 61
-  UPŇ: 61
-  SCI: 61
-  LGA: 61
-  ÚNA: 61
-  NBU: 61
-  ĚLC: 61
-  HUŽ: 61
-  ÉRO: 61
-  RŮB: 61
-  ŠAM: 61
-  KRT: 61
-  JKO: 61
   AFF: 61
+  NBU: 61
   NTL: 61
+  UPŇ: 61
   SNY: 61
   ÁBĚ: 61
+  BĚJ: 61
   ÁŽL: 61
   ŠOF: 61
   CIF: 61
+  HUŽ: 61
+  ÚNA: 61
+  ŠAM: 61
   PUN: 61
   MÁS: 61
   SÍV: 61
+  ÉRO: 61
+  JKO: 61
   AZD: 61
   ZOT: 61
   ŮZE: 61
+  ÚVO: 61
+  UGU: 61
+  SCI: 61
+  LGA: 61
+  ĚLC: 61
+  RŮB: 61
+  KRT: 61
   ÁDŘ: 61
   IMÁ: 61
   BAG: 61
@@ -7186,30 +7186,30 @@ trigrams:
   UBJ: 61
   IHR: 61
   IPS: 61
-  ÉČE: 60
-  RPK: 60
-  NFO: 60
-  OŽU: 60
-  USS: 60
-  IFO: 60
-  ÉCI: 60
-  MUM: 60
   UŽA: 60
   URB: 60
   ÍŽO: 60
   SUP: 60
   ŮZU: 60
   ÝTE: 60
+  USS: 60
   ŽEC: 60
   EPÉ: 60
+  IFO: 60
   KVÉ: 60
   ŮNI: 60
   HÁL: 60
   YSU: 60
+  NFO: 60
+  MUM: 60
   EMT: 60
   ZVI: 60
   TÁŠ: 60
   EPJ: 60
+  ÉČE: 60
+  RPK: 60
+  OŽU: 60
+  ÉCI: 60
   YČK: 60
   CIK: 60
   EOK: 60
@@ -7217,61 +7217,61 @@ trigrams:
   RRI: 60
   ÝRI: 60
   ÁŠA: 60
-  ÍTN: 59
-  YZA: 59
-  COT: 59
-  ÁRÁ: 59
-  RNČ: 59
-  XVI: 59
-  OLF: 59
-  AJK: 59
-  LIÍ: 59
-  ÍLŮ: 59
-  DMÝ: 59
   TMO: 59
+  OLF: 59
+  RNČ: 59
   OFÉ: 59
   ÍVČ: 59
   EPY: 59
+  AJK: 59
   RMÍ: 59
+  COT: 59
+  ÍLŮ: 59
   RZÁ: 59
+  LIÍ: 59
   ÚKA: 59
   SSU: 59
   ĚJS: 59
   PUZ: 59
   YPÍ: 59
+  ÍTN: 59
+  YZA: 59
+  ÁRÁ: 59
+  XVI: 59
+  DMÝ: 59
   VČÁ: 59
   ÚHO: 59
   VĚŤ: 59
   JDA: 59
   IZB: 59
-  JUN: 58
-  ZHY: 58
-  LLY: 58
-  JŠK: 58
-  LÉŘ: 58
-  DII: 58
-  ULU: 58
-  MBA: 58
-  JŠI: 58
-  HAK: 58
   URG: 58
-  ÚVA: 58
+  LLY: 58
+  MBA: 58
   ÝBÁ: 58
   YMO: 58
   HEV: 58
+  DII: 58
   MSI: 58
+  ÚVA: 58
   KNY: 58
   HAG: 58
   OĎT: 58
+  LÉŘ: 58
   UMB: 58
   SUT: 58
+  HAK: 58
   HŘÁ: 58
   EŽR: 58
   ĚŘO: 58
   TYC: 58
   VIR: 58
+  ULU: 58
   UŠO: 58
   ĚTK: 58
+  JUN: 58
+  ZHY: 58
+  JŠK: 58
+  JŠI: 58
   ILC: 58
   VŘA: 58
   EBŮ: 58
@@ -7285,28 +7285,28 @@ trigrams:
   LKI: 58
   ÁŠI: 58
   ŠON: 58
-  EŘÁ: 57
-  DEF: 57
-  IHÁ: 57
-  STŠ: 57
-  ČTO: 57
-  BDÍ: 57
-  ŽVA: 57
   UNT: 57
-  YSP: 57
-  ÚLO: 57
-  OPŮ: 57
-  DMN: 57
-  SII: 57
   VEH: 57
   JPO: 57
   EBK: 57
   DUH: 57
+  ČTO: 57
   ÁMŮ: 57
+  DEF: 57
   YVI: 57
+  EŘÁ: 57
+  STŠ: 57
+  YSP: 57
   CTY: 57
   AĎT: 57
   IŇT: 57
+  ŽVA: 57
+  BDÍ: 57
+  IHÁ: 57
+  ÚLO: 57
+  OPŮ: 57
+  DMN: 57
+  SII: 57
   IŽÁ: 57
   GAM: 57
   ÁMÍ: 57
@@ -7321,33 +7321,33 @@ trigrams:
   EUF: 57
   CEŘ: 57
   JVO: 57
-  FIG: 56
-  ŮSL: 56
-  RNK: 56
-  PYR: 56
-  AIV: 56
-  ÍTŘ: 56
-  ÝJI: 56
-  ALZ: 56
-  HAČ: 56
-  ULÝ: 56
-  APJ: 56
-  UHD: 56
   LÓN: 56
   ŮDK: 56
   TÁP: 56
+  HAČ: 56
+  PYR: 56
   ÁRI: 56
+  FIG: 56
   SUZ: 56
   ÝTU: 56
+  ULÝ: 56
   TÝN: 56
   MÁK: 56
   ÍCK: 56
   CKR: 56
+  ÝJI: 56
   RIV: 56
   ŠAC: 56
   OLV: 56
   ĚŘT: 56
   OZŽ: 56
+  ŮSL: 56
+  RNK: 56
+  AIV: 56
+  ÍTŘ: 56
+  ALZ: 56
+  APJ: 56
+  UHD: 56
   NBO: 56
   EGÁ: 56
   LBO: 56
@@ -7361,20 +7361,20 @@ trigrams:
   ŤÁT: 56
   GAZ: 56
   AIÁ: 56
-  NCU: 55
-  HDE: 55
-  NKC: 55
-  HEC: 55
-  AKŘ: 55
-  RPN: 55
   HYP: 55
   KÁS: 55
+  NKC: 55
   VEP: 55
   IBR: 55
   ÉNY: 55
+  AKŘ: 55
+  HEC: 55
   DAŽ: 55
   ZDŮ: 55
   JÍŠ: 55
+  NCU: 55
+  HDE: 55
+  RPN: 55
   CÍP: 55
   RAX: 55
   GIÁ: 55
@@ -7388,28 +7388,28 @@ trigrams:
   ŇAD: 55
   ONŠ: 55
   ZEO: 55
-  RDY: 54
-  JRA: 54
-  EMR: 54
-  MYR: 54
-  TUČ: 54
-  EUZ: 54
-  RTR: 54
-  RÍN: 54
   LIF: 54
   LEŤ: 54
   ILB: 54
   EÁN: 54
+  RTR: 54
+  EMR: 54
   LKŮ: 54
+  RÍN: 54
   UIT: 54
   EOH: 54
+  TUČ: 54
   ÍDU: 54
+  RDY: 54
   EKŮ: 54
   FIS: 54
   FIA: 54
+  MYR: 54
+  EUZ: 54
   JOT: 54
   ÍŠU: 54
   MEA: 54
+  JRA: 54
   MIR: 54
   ÁMÁ: 54
   TMÍ: 54
@@ -7420,17 +7420,9 @@ trigrams:
   TÉC: 54
   AŘV: 54
   XER: 54
-  ÍJN: 53
-  BIV: 53
-  HTÁ: 53
-  IRŠ: 53
-  NKT: 53
-  ETT: 53
-  PIA: 53
-  ATD: 53
-  YMA: 53
-  ZŠT: 53
   ÝNA: 53
+  ETT: 53
+  ZŠT: 53
   REU: 53
   VAG: 53
   RKŮ: 53
@@ -7438,10 +7430,18 @@ trigrams:
   ÍTY: 53
   NÍR: 53
   ÍNC: 53
+  IRŠ: 53
+  PIA: 53
+  NKT: 53
   DEH: 53
+  ATD: 53
   VAA: 53
+  HTÁ: 53
   ĚNC: 53
   ZSE: 53
+  ÍJN: 53
+  BIV: 53
+  YMA: 53
   ŮTK: 53
   ŮNÍ: 53
   ĚDL: 53
@@ -7456,37 +7456,37 @@ trigrams:
   ČČI: 53
   VZÝ: 53
   FFT: 53
-  UNG: 52
-  DPŘ: 52
-  SNŮ: 52
-  ÝSO: 52
   IMB: 52
-  LYR: 52
-  UŠU: 52
-  RGU: 52
+  SNŮ: 52
   BEČ: 52
-  MĚŇ: 52
-  VKL: 52
-  DKR: 52
-  ESR: 52
-  DTR: 52
-  CTE: 52
-  GIK: 52
   YRU: 52
   OFA: 52
   RÝŽ: 52
   ŤAT: 52
   GÓN: 52
+  UNG: 52
   KRŮ: 52
   OČP: 52
   MYK: 52
+  VKL: 52
+  ESR: 52
   VÝL: 52
   ŮLK: 52
+  DPŘ: 52
   HÁŘ: 52
   EJJ: 52
   MOB: 52
   ÍZÍ: 52
+  DKR: 52
   EŇT: 52
+  ÝSO: 52
+  LYR: 52
+  UŠU: 52
+  RGU: 52
+  MĚŇ: 52
+  DTR: 52
+  CTE: 52
+  GIK: 52
   DPÍ: 52
   ŘČE: 52
   YRŮ: 52
@@ -7502,24 +7502,24 @@ trigrams:
   MŠI: 52
   YZB: 52
   ÝVK: 52
-  RÁŘ: 51
-  VBĚ: 51
-  MIČ: 51
-  DIÍ: 51
-  BIZ: 51
-  OCU: 51
-  AŇU: 51
-  NČN: 51
-  ZÁŠ: 51
   GLA: 51
   ÓNE: 51
   PUČ: 51
   ÚTL: 51
   CKE: 51
+  BIZ: 51
   UPT: 51
   OGA: 51
   JTÍ: 51
   UHR: 51
+  VBĚ: 51
+  RÁŘ: 51
+  MIČ: 51
+  DIÍ: 51
+  OCU: 51
+  AŇU: 51
+  NČN: 51
+  ZÁŠ: 51
   FIR: 51
   ŠEŘ: 51
   ÍHL: 51
@@ -7532,29 +7532,29 @@ trigrams:
   RÝN: 51
   AŠA: 51
   SÍŤ: 51
-  KEH: 51
   JOC: 51
-  ZBÍ: 50
-  VÝČ: 50
-  ÝHR: 50
-  TNY: 50
-  KTÁ: 50
-  ÉHL: 50
-  MAU: 50
-  DML: 50
-  REI: 50
-  ÁTÁ: 50
+  KEH: 51
   ÁHE: 50
   NIŠ: 50
+  ÝHR: 50
+  ÉHL: 50
   PŮR: 50
   AUJ: 50
   ĚKÝ: 50
+  ÁTÁ: 50
+  VÝČ: 50
   RKÝ: 50
   KÁČ: 50
+  REI: 50
+  MAU: 50
   IJÁ: 50
+  ZBÍ: 50
   MPU: 50
   AHV: 50
   EBŘ: 50
+  TNY: 50
+  KTÁ: 50
+  DML: 50
   EUŽ: 50
   HOH: 50
   HME: 50
@@ -7573,35 +7573,35 @@ trigrams:
   IČO: 50
   ICP: 50
   ZUO: 50
-  ATT: 49
-  EKC: 49
-  UIN: 49
-  ÉMY: 49
-  BOŠ: 49
-  GYM: 49
-  MĚŤ: 49
-  DIM: 49
-  ĚRŮ: 49
-  EZÚ: 49
-  YNT: 49
-  ČIR: 49
   ŠPL: 49
   ÓNU: 49
   CEÁ: 49
+  ČIR: 49
+  MĚŤ: 49
+  ATT: 49
   UKŮ: 49
   SYČ: 49
   ÍDO: 49
+  UIN: 49
   NGA: 49
+  EZÚ: 49
   VÉT: 49
+  BOŠ: 49
   IŇU: 49
   LŠE: 49
   TTO: 49
   ÉTÁ: 49
   AHŘ: 49
   RŠK: 49
+  ĚRŮ: 49
   EMK: 49
+  DIM: 49
   AAD: 49
+  YNT: 49
   IJU: 49
+  ÉMY: 49
+  EKC: 49
+  GYM: 49
   NZA: 49
   ÉNÁ: 49
   ŮRY: 49
@@ -7619,23 +7619,23 @@ trigrams:
   SHÁ: 49
   NÁJ: 49
   JAH: 49
-  DČA: 48
-  EŇS: 48
-  VAB: 48
-  ÚPA: 48
-  KAI: 48
-  ITT: 48
-  FAU: 48
   NZÍ: 48
   VEG: 48
   KEB: 48
   CVA: 48
+  ÚPA: 48
+  VAB: 48
+  ITT: 48
   MLY: 48
   FJO: 48
   LÁŽ: 48
   DDY: 48
   IRÝ: 48
+  DČA: 48
   ÚPR: 48
+  EŇS: 48
+  KAI: 48
+  FAU: 48
   SSO: 48
   YJÁ: 48
   AXE: 48
@@ -7651,33 +7651,33 @@ trigrams:
   ĚVO: 48
   BIG: 48
   VZŇ: 48
-  EMM: 48
   ŠIJ: 48
+  EMM: 48
   ŠUL: 48
   ERX: 48
-  ĚCN: 47
-  DZE: 47
-  ÝČI: 47
-  VBY: 47
   NNI: 47
-  AIS: 47
-  OŽA: 47
-  IOS: 47
-  PEA: 47
-  ZKE: 47
+  DZE: 47
   JZA: 47
   GÁN: 47
+  VBY: 47
   ŽUL: 47
   YZÝ: 47
   ŮČE: 47
+  IOS: 47
   VLT: 47
   ICM: 47
   CMÉ: 47
+  PEA: 47
   ÚTE: 47
+  ZKE: 47
   ÁTL: 47
   ŘCE: 47
   GIT: 47
   PŘA: 47
+  ĚCN: 47
+  ÝČI: 47
+  AIS: 47
+  OŽA: 47
   IVK: 47
   ĚPO: 47
   ÁBU: 47
@@ -7693,29 +7693,20 @@ trigrams:
   ĚŤÁ: 47
   BEY: 47
   DŠK: 47
+  AIE: 47
   NŠE: 47
   LDB: 47
-  AIE: 47
-  BDO: 46
-  JNU: 46
-  KCÍ: 46
-  UKC: 46
-  DČU: 46
-  JMŮ: 46
-  YMB: 46
-  DRZ: 46
-  RNC: 46
-  AHŮ: 46
-  ŠÍR: 46
-  THU: 46
   RRA: 46
   BUŘ: 46
   RBI: 46
   WIN: 46
   HRČ: 46
+  THU: 46
   ÁBR: 46
   ACA: 46
   OVČ: 46
+  UKC: 46
+  KCÍ: 46
   ÁLÁ: 46
   MAI: 46
   VPA: 46
@@ -7727,8 +7718,17 @@ trigrams:
   IMK: 46
   IRG: 46
   DEA: 46
+  JMŮ: 46
   ŘKY: 46
   ARJ: 46
+  JNU: 46
+  BDO: 46
+  DČU: 46
+  YMB: 46
+  DRZ: 46
+  RNC: 46
+  AHŮ: 46
+  ŠÍR: 46
   UFE: 46
   ÁVL: 46
   OZÝ: 46
@@ -7745,16 +7745,11 @@ trigrams:
   VČI: 46
   ŘNO: 46
   JEB: 46
-  GIÍ: 45
-  LTÍ: 45
-  HYM: 45
-  SIA: 45
-  ACP: 45
-  KES: 45
-  ĚMT: 45
-  ĚŽU: 45
   WAL: 45
+  KES: 45
+  ACP: 45
   WEL: 45
+  HYM: 45
   JSL: 45
   RIČ: 45
   AZB: 45
@@ -7767,6 +7762,11 @@ trigrams:
   MĚD: 45
   VBU: 45
   ORV: 45
+  GIÍ: 45
+  LTÍ: 45
+  SIA: 45
+  ĚMT: 45
+  ĚŽU: 45
   IŘI: 45
   ŮLÍ: 45
   TIB: 45
@@ -7777,29 +7777,29 @@ trigrams:
   YSC: 45
   ÍSP: 45
   MŠT: 45
-  ŽDU: 44
-  IAK: 44
-  IPI: 44
-  YŠI: 44
-  DTO: 44
-  FIK: 44
-  LCÍ: 44
-  AIR: 44
-  OBM: 44
-  IGO: 44
-  SMÉ: 44
   LEY: 44
   ŮŘE: 44
+  IGO: 44
   RGÁ: 44
   CÍŘ: 44
+  DTO: 44
   ĚHÁ: 44
   ÍVN: 44
+  FIK: 44
   MHO: 44
+  AIR: 44
   OGE: 44
   ZSÁ: 44
   ĚMÝ: 44
   RRO: 44
   HYŇ: 44
+  YŠI: 44
+  ŽDU: 44
+  IAK: 44
+  IPI: 44
+  LCÍ: 44
+  OBM: 44
+  SMÉ: 44
   TAU: 44
   ÝNO: 44
   KYR: 44
@@ -7818,23 +7818,16 @@ trigrams:
   CNU: 44
   ŮNA: 44
   DĚŤ: 44
-  KTÝ: 44
   JID: 44
+  KTÝ: 44
   EJÁ: 44
   EŠB: 44
-  ÝML: 43
-  VTĚ: 43
-  EVC: 43
-  EIL: 43
-  EŽÁ: 43
-  BTE: 43
-  EAK: 43
-  VRL: 43
   ÁPU: 43
   YTČ: 43
   EAP: 43
   CAJ: 43
   KVÁ: 43
+  EIL: 43
   AJU: 43
   TŮN: 43
   EPK: 43
@@ -7844,8 +7837,15 @@ trigrams:
   KYS: 43
   JOH: 43
   ZUL: 43
+  EAK: 43
   ZEH: 43
   UMF: 43
+  BTE: 43
+  ÝML: 43
+  VTĚ: 43
+  EVC: 43
+  EŽÁ: 43
+  VRL: 43
   KÉK: 43
   DOO: 43
   DĚP: 43
@@ -7864,34 +7864,34 @@ trigrams:
   MRI: 43
   HIŠ: 43
   AÚT: 43
-  DEU: 42
-  MRU: 42
-  YPĚ: 42
-  ÉRY: 42
-  FAS: 42
-  BIA: 42
-  MOM: 42
-  RYM: 42
-  UBÉ: 42
-  NSO: 42
-  AČL: 42
   FUJ: 42
+  MRU: 42
   CAT: 42
   LDO: 42
   OŽO: 42
   CÍN: 42
+  NSO: 42
   VLČ: 42
   AMV: 42
   MVA: 42
   KRB: 42
   ČAJ: 42
   ELF: 42
+  FAS: 42
   AOS: 42
   TÉZ: 42
   EHŘ: 42
   ŠST: 42
+  YPĚ: 42
   ÍSÍ: 42
+  UBÉ: 42
+  RYM: 42
   UVT: 42
+  DEU: 42
+  ÉRY: 42
+  BIA: 42
+  MOM: 42
+  AČL: 42
   HEK: 42
   ÍZA: 42
   UŘA: 42
@@ -7906,37 +7906,37 @@ trigrams:
   UMM: 42
   FAC: 42
   ÁDS: 42
+  GEB: 42
   CYP: 42
   ČEŤ: 42
-  GEB: 42
   ILG: 42
-  ÝRS: 41
-  BIB: 41
-  TEG: 41
-  LŇO: 41
-  SÍR: 41
-  LVÍ: 41
-  GOE: 41
-  ŠEŇ: 41
-  ZON: 41
-  RŮJ: 41
-  ORÉ: 41
   CAM: 41
   PTO: 41
   MKE: 41
   MAP: 41
   TÝS: 41
+  ÝRS: 41
   EAD: 41
   ŽED: 41
+  ZON: 41
   KSL: 41
   RSY: 41
+  SÍR: 41
   RŮČ: 41
   LEŇ: 41
+  BIB: 41
   JEĎ: 41
   GRU: 41
   SDÍ: 41
   VIA: 41
   NOL: 41
+  TEG: 41
+  LŇO: 41
+  LVÍ: 41
+  GOE: 41
+  ŠEŇ: 41
+  RŮJ: 41
+  ORÉ: 41
   UŽŠ: 41
   UNČ: 41
   ÍKR: 41
@@ -7951,24 +7951,10 @@ trigrams:
   AJF: 41
   GEV: 41
   XAN: 41
-  ZMŮ: 41
   BEŽ: 41
+  ZMŮ: 41
   AŤÁ: 41
   HEŠ: 41
-  VJE: 40
-  ŮMĚ: 40
-  JLÉ: 40
-  ÝKŘ: 40
-  FEM: 40
-  NYM: 40
-  YMI: 40
-  RZÍ: 40
-  GOM: 40
-  TMU: 40
-  JKA: 40
-  HRI: 40
-  BIR: 40
-  URD: 40
   LLU: 40
   APŮ: 40
   ÁZY: 40
@@ -7976,14 +7962,28 @@ trigrams:
   CHS: 40
   JCH: 40
   LTO: 40
+  URD: 40
   NEW: 40
+  JLÉ: 40
   CTL: 40
+  TMU: 40
+  BIR: 40
   ÝMU: 40
+  ŮMĚ: 40
   INZ: 40
   LŽE: 40
   LTĚ: 40
   ÓNI: 40
   ÉNI: 40
+  VJE: 40
+  ÝKŘ: 40
+  FEM: 40
+  NYM: 40
+  YMI: 40
+  RZÍ: 40
+  GOM: 40
+  JKA: 40
+  HRI: 40
   AŽA: 40
   ŽEŇ: 40
   ĚLK: 40
@@ -8006,39 +8006,39 @@ trigrams:
   KRH: 40
   ULC: 40
   ŠIŠ: 40
-  IZV: 40
   YŠK: 40
+  IZV: 40
   OJZ: 40
   RXE: 40
   SEÍ: 40
   EÍR: 40
-  ASB: 39
-  ZŮM: 39
-  ŮDN: 39
-  LOŠ: 39
-  OGY: 39
-  BTĚ: 39
-  ADT: 39
-  DÝŠ: 39
-  CUC: 39
-  BAU: 39
-  HIK: 39
-  CRO: 39
-  VOP: 39
   EAS: 39
+  HIK: 39
   IFT: 39
+  CRO: 39
+  CUC: 39
+  ZŮM: 39
   UGL: 39
   ŮCH: 39
+  LOŠ: 39
   BKO: 39
   RŇU: 39
   EOC: 39
   HUL: 39
   ZČE: 39
+  ADT: 39
   PTU: 39
   VSE: 39
   CVO: 39
   ŽDA: 39
+  VOP: 39
   PÁM: 39
+  ASB: 39
+  ŮDN: 39
+  OGY: 39
+  BTĚ: 39
+  DÝŠ: 39
+  BAU: 39
   IEW: 39
   RČM: 39
   MAĎ: 39
@@ -8053,30 +8053,30 @@ trigrams:
   MKL: 39
   EFU: 39
   HUŠ: 39
-  FRÁ: 38
-  ÝPO: 38
-  EXE: 38
-  UER: 38
-  UGA: 38
-  ONB: 38
-  GUE: 38
-  ANZ: 38
-  DJÍ: 38
-  AIK: 38
-  BIO: 38
-  RER: 38
-  DPR: 38
-  JPŘ: 38
   HRB: 38
   ŽÍK: 38
+  ANZ: 38
+  AIK: 38
   ŘEŘ: 38
   GRI: 38
+  EXE: 38
   ĚTÉ: 38
+  DJÍ: 38
   KTÉ: 38
   PSŮ: 38
   ČŮM: 38
   MZD: 38
+  FRÁ: 38
   ÁLČ: 38
+  BIO: 38
+  ÝPO: 38
+  UER: 38
+  UGA: 38
+  ONB: 38
+  GUE: 38
+  RER: 38
+  DPR: 38
+  JPŘ: 38
   ŽRÁ: 38
   AŽL: 38
   FEK: 38
@@ -8101,41 +8101,41 @@ trigrams:
   ĚRČ: 38
   IPP: 38
   AMC: 38
-  SÁŘ: 38
   YLD: 38
   TSL: 38
+  SÁŘ: 38
   ŠBO: 38
-  DĚR: 37
-  YŠU: 37
-  ČNY: 37
-  HRL: 37
-  ZTĚ: 37
-  WIL: 37
-  OKV: 37
-  ÍBĚ: 37
-  OIS: 37
-  RAU: 37
-  EAU: 37
-  IGR: 37
-  ZČÁ: 37
-  EID: 37
-  MŽÍ: 37
-  NAF: 37
-  SKI: 37
-  KÝT: 37
-  ÚTV: 37
-  OŠS: 37
   FFI: 37
+  MŽÍ: 37
   CIM: 37
   EKŘ: 37
+  IGR: 37
   ZEU: 37
+  EAU: 37
+  ČNY: 37
+  KÝT: 37
+  ZČÁ: 37
   ÁBI: 37
   AČŮ: 37
+  ÚTV: 37
+  HRL: 37
+  OKV: 37
   ŽUP: 37
+  OŠS: 37
   BUM: 37
   BÝC: 37
+  EID: 37
+  WIL: 37
+  SKI: 37
   NEE: 37
+  NAF: 37
   ĚDÉ: 37
+  OIS: 37
+  DĚR: 37
+  YŠU: 37
+  ZTĚ: 37
+  ÍBĚ: 37
+  RAU: 37
   RZK: 37
   ÝTO: 37
   AĎA: 37
@@ -8151,18 +8151,9 @@ trigrams:
   SRI: 37
   ŽPA: 37
   IŠM: 37
-  GÁR: 36
-  FYS: 36
-  ŠTB: 36
-  REŽ: 36
-  RTH: 36
-  YTM: 36
-  PID: 36
-  SIK: 36
-  BLB: 36
-  ÉRU: 36
   BAK: 36
   ÉŘI: 36
+  RTH: 36
   ÉTY: 36
   GIR: 36
   BSL: 36
@@ -8170,16 +8161,25 @@ trigrams:
   YŘM: 36
   UŠA: 36
   ÁBÍ: 36
+  SIK: 36
   INV: 36
   ĚDÁ: 36
   OEL: 36
   IMY: 36
   TID: 36
+  ÉRU: 36
   SBA: 36
   SBY: 36
+  REŽ: 36
   GEM: 36
   JMÍ: 36
   VÁP: 36
+  GÁR: 36
+  FYS: 36
+  ŠTB: 36
+  YTM: 36
+  PID: 36
+  BLB: 36
   AMČ: 36
   ÚKL: 36
   ZSÉ: 36
@@ -8198,33 +8198,26 @@ trigrams:
   ŮŽU: 36
   ÝTA: 36
   IFÁ: 36
-  MII: 35
-  AUM: 35
-  MŮM: 35
-  LOL: 35
-  ZKŮ: 35
-  ŤOU: 35
-  YŽA: 35
-  SEI: 35
-  AUK: 35
-  VKÁ: 35
-  UGO: 35
-  HYC: 35
   ISH: 35
   INB: 35
   ĚDÝ: 35
   OOK: 35
   ÓZN: 35
+  AUM: 35
   EAM: 35
   GGS: 35
+  VKÁ: 35
   BLK: 35
   HOA: 35
+  MII: 35
   EKÝ: 35
+  SEI: 35
   OOT: 35
   RŮH: 35
   BID: 35
   IGH: 35
   EŽA: 35
+  ŤOU: 35
   IKI: 35
   ZRY: 35
   HEI: 35
@@ -8238,6 +8231,13 @@ trigrams:
   ÍBÁ: 35
   ÁZC: 35
   BZU: 35
+  MŮM: 35
+  LOL: 35
+  ZKŮ: 35
+  YŽA: 35
+  AUK: 35
+  UGO: 35
+  HYC: 35
   EÚP: 35
   DŮT: 35
   YUŽ: 35
@@ -8257,29 +8257,17 @@ trigrams:
   AŠS: 35
   VIŽ: 35
   RAĎ: 35
-  UTC: 35
   ATM: 35
+  UTC: 35
   EČU: 35
   TÝV: 35
   ŠEA: 35
-  MPÁ: 34
-  RVÝ: 34
-  VYŇ: 34
-  YŇA: 34
-  TEX: 34
-  AXI: 34
-  NBĚ: 34
-  JKL: 34
-  RUĎ: 34
-  TEA: 34
-  NIO: 34
-  EKD: 34
-  HUG: 34
   FOL: 34
   LIR: 34
   TEU: 34
   BUN: 34
   ŘLI: 34
+  TEA: 34
   ĚMÉ: 34
   MÝV: 34
   ÝLK: 34
@@ -8287,7 +8275,9 @@ trigrams:
   DUD: 34
   ALP: 34
   ZŠA: 34
+  NIO: 34
   HAO: 34
+  NBĚ: 34
   UFŘ: 34
   FŘÍ: 34
   SRB: 34
@@ -8296,8 +8286,18 @@ trigrams:
   CIŤ: 34
   SAS: 34
   YCÍ: 34
+  AXI: 34
   ÍRŮ: 34
+  JKL: 34
   ROI: 34
+  VYŇ: 34
+  YŇA: 34
+  MPÁ: 34
+  RVÝ: 34
+  TEX: 34
+  RUĎ: 34
+  EKD: 34
+  HUG: 34
   DIP: 34
   PÁŠ: 34
   UBC: 34
@@ -8320,32 +8320,18 @@ trigrams:
   BIŘ: 34
   RLU: 34
   DRH: 34
-  DRB: 34
   CAK: 34
+  DRB: 34
   ŠTC: 34
   ZÚH: 34
   ZAE: 34
-  SŮV: 33
-  YMÁ: 33
-  COL: 33
-  VEB: 33
-  VKŮ: 33
-  RÝS: 33
-  VÝD: 33
-  ÁNL: 33
-  TIU: 33
-  NNU: 33
-  IES: 33
-  ÉMŽ: 33
-  ČÍŘ: 33
-  ÚRA: 33
-  SUS: 33
-  BÝM: 33
   IAC: 33
   PŇŮ: 33
   IHE: 33
   VEV: 33
   NUB: 33
+  BÝM: 33
+  COL: 33
   JÁŘ: 33
   ZUR: 33
   ŇAV: 33
@@ -8356,12 +8342,26 @@ trigrams:
   PCÍ: 33
   ISŤ: 33
   SČE: 33
+  IES: 33
   ETM: 33
   PÝŠ: 33
+  VEB: 33
   ŤUK: 33
+  ÚRA: 33
   ŽLO: 33
   ÁŠS: 33
   CEŇ: 33
+  SŮV: 33
+  YMÁ: 33
+  VKŮ: 33
+  RÝS: 33
+  VÝD: 33
+  ÁNL: 33
+  TIU: 33
+  NNU: 33
+  ÉMŽ: 33
+  ČÍŘ: 33
+  SUS: 33
   ÉČÍ: 33
   YMŘ: 33
   FAZ: 33
@@ -8377,41 +8377,41 @@ trigrams:
   JČE: 33
   UŇK: 33
   RRH: 33
+  JZÍ: 33
   ÝKU: 33
   ŘBÍ: 33
-  JZÍ: 33
   ŠUR: 33
   IEZ: 33
-  EUH: 32
-  VUL: 32
-  EGU: 32
-  PKÁ: 32
-  NBY: 32
-  ÍŽN: 32
-  ŽAB: 32
   HAU: 32
-  ÉŽE: 32
-  CVR: 32
-  GNA: 32
   MČI: 32
   JNY: 32
   TUB: 32
   ÍPU: 32
   AUE: 32
   OMŽ: 32
+  NBY: 32
   RŮC: 32
   UFF: 32
   ÍSY: 32
   RRE: 32
   ÝRE: 32
   ŮHL: 32
+  PKÁ: 32
   RÓN: 32
   BSÁ: 32
   IŠS: 32
   ZLŮ: 32
+  EGU: 32
   ZUČ: 32
   KAH: 32
   MYV: 32
+  EUH: 32
+  VUL: 32
+  ÍŽN: 32
+  ŽAB: 32
+  ÉŽE: 32
+  CVR: 32
+  GNA: 32
   ZAO: 32
   FLÁ: 32
   UCO: 32
@@ -8434,14 +8434,10 @@ trigrams:
   KUG: 32
   ĚBR: 32
   KEŠ: 32
-  UŽT: 32
   LTT: 32
-  CIR: 31
-  RIP: 31
-  WOL: 31
-  SÁV: 31
-  PÍD: 31
+  UŽT: 32
   BUT: 31
+  PÍD: 31
   ROA: 31
   NZI: 31
   PÝM: 31
@@ -8459,6 +8455,10 @@ trigrams:
   EŇO: 31
   UČT: 31
   MIŠ: 31
+  CIR: 31
+  RIP: 31
+  WOL: 31
+  SÁV: 31
   ÍSÁ: 31
   UID: 31
   JRŮ: 31
@@ -8482,38 +8482,38 @@ trigrams:
   ULH: 31
   ĚCK: 31
   ŮRK: 31
-  HŇA: 31
   DĚB: 31
   BUV: 31
+  HŇA: 31
   ŽOH: 31
-  ŠPÍ: 30
-  ADČ: 30
-  ZOH: 30
-  ĚVN: 30
-  ÚHL: 30
-  YZO: 30
-  RŽT: 30
-  ĚJŽ: 30
-  ČÁK: 30
-  DIB: 30
-  ZSI: 30
-  PŮM: 30
-  JVZ: 30
   YRR: 30
   OEZ: 30
   LME: 30
   ZČÍ: 30
+  PŮM: 30
   UŘL: 30
   BAZ: 30
   GUA: 30
+  ŠPÍ: 30
   SEX: 30
   YMR: 30
   UVŠ: 30
+  ÚHL: 30
   ÝBE: 30
   YZR: 30
+  ĚJŽ: 30
   RJÁ: 30
   ČMÁ: 30
   ŘVE: 30
+  RŽT: 30
+  ADČ: 30
+  ZOH: 30
+  ĚVN: 30
+  YZO: 30
+  ČÁK: 30
+  DIB: 30
+  ZSI: 30
+  JVZ: 30
   RIÉ: 30
   KÁP: 30
   UVÉ: 30
@@ -8530,25 +8530,16 @@ trigrams:
   ĚKC: 30
   ICU: 30
   GID: 30
-  OÁZ: 30
-  OŽP: 30
   WIT: 30
   STP: 30
   ŠAB: 30
+  OŽP: 30
+  OÁZ: 30
+  BUF: 30
   SÁP: 30
   KÝR: 30
-  BUF: 30
   ŠUA: 30
   VRŇ: 30
-  KÝŘ: 29
-  VBA: 29
-  SYK: 29
-  DOX: 29
-  ĚSE: 29
-  ŠUN: 29
-  MÉR: 29
-  UTŮ: 29
-  USV: 29
   CCA: 29
   UAR: 29
   SOM: 29
@@ -8558,14 +8549,18 @@ trigrams:
   EZČ: 29
   ŠUS: 29
   CLÉ: 29
+  ŠUN: 29
   RYH: 29
   ĚKÉ: 29
   EDH: 29
   TIG: 29
   ŘÁB: 29
+  MÉR: 29
   TÉL: 29
+  KÝŘ: 29
   YML: 29
   XTR: 29
+  DOX: 29
   ÚSE: 29
   AFT: 29
   AŘK: 29
@@ -8573,6 +8568,11 @@ trigrams:
   BOM: 29
   AŇK: 29
   ŇKA: 29
+  VBA: 29
+  SYK: 29
+  ĚSE: 29
+  UTŮ: 29
+  USV: 29
   CTK: 29
   ÍDC: 29
   ÁDŮ: 29
@@ -8601,42 +8601,42 @@ trigrams:
   OŠŮ: 29
   ÍHN: 29
   ANŠ: 29
-  CUD: 29
-  MÁJ: 29
   SŮL: 29
+  MÁJ: 29
+  CUD: 29
   AAK: 29
   EÁŠ: 29
   MŠO: 29
-  RDŮ: 28
-  THI: 28
-  CÉZ: 28
-  AJM: 28
-  JDŮ: 28
-  CCO: 28
   CYK: 28
-  DIR: 28
-  AŇO: 28
-  VPL: 28
-  MÓD: 28
-  ECO: 28
+  RDŮ: 28
   MLI: 28
-  HAE: 28
-  IEU: 28
-  OMŘ: 28
-  UTŘ: 28
-  TAG: 28
+  DIR: 28
   RTL: 28
   OUI: 28
   ŘVO: 28
   ARH: 28
   ZÍD: 28
   UŇA: 28
+  THI: 28
+  JDŮ: 28
   EFY: 28
   RPO: 28
+  TAG: 28
   NAE: 28
   HVE: 28
   NÁŽ: 28
+  IEU: 28
   EAG: 28
+  UTŘ: 28
+  ECO: 28
+  CÉZ: 28
+  AJM: 28
+  CCO: 28
+  AŇO: 28
+  VPL: 28
+  MÓD: 28
+  HAE: 28
+  OMŘ: 28
   AES: 28
   KČN: 28
   NID: 28
@@ -8676,25 +8676,19 @@ trigrams:
   UEZ: 28
   ZOP: 28
   HČÍ: 28
-  OŘC: 28
   DRV: 28
+  OŘC: 28
   VŘU: 28
   JÁB: 28
   FŮV: 28
   JIF: 28
-  GAU: 27
-  EŘS: 27
-  SAI: 27
-  VIÁ: 27
-  LAF: 27
-  ÉRS: 27
-  NOG: 27
   HYD: 27
   EHI: 27
   ŇUP: 27
   LÉR: 27
   YSÁ: 27
   ÍZY: 27
+  NOG: 27
   ÍBŘ: 27
   GUL: 27
   KRN: 27
@@ -8702,6 +8696,12 @@ trigrams:
   EJŤ: 27
   ÝZV: 27
   ŠTY: 27
+  GAU: 27
+  EŘS: 27
+  SAI: 27
+  VIÁ: 27
+  LAF: 27
+  ÉRS: 27
   JDR: 27
   DŘU: 27
   EVK: 27
@@ -8734,26 +8734,13 @@ trigrams:
   ŽEZ: 27
   ÁSP: 27
   MLÍ: 27
-  PÉH: 27
   ŽLA: 27
+  PÉH: 27
   MYE: 27
   KŮZ: 27
   ŮZL: 27
   HÍR: 27
   ÁBC: 27
-  ĎOV: 26
-  IPK: 26
-  RŮD: 26
-  COM: 26
-  TEŠ: 26
-  DÍN: 26
-  PÁJ: 26
-  LOE: 26
-  RDS: 26
-  VTÍ: 26
-  VRK: 26
-  IŠU: 26
-  VKE: 26
   SEU: 26
   LDU: 26
   ÓNS: 26
@@ -8764,16 +8751,29 @@ trigrams:
   ZIO: 26
   ÁZV: 26
   BNY: 26
+  RDS: 26
   LEI: 26
   BÁR: 26
+  ĎOV: 26
+  LOE: 26
   IJO: 26
   PIO: 26
+  VTÍ: 26
   YOU: 26
+  COM: 26
   ŠÉF: 26
   ŘMO: 26
   MEG: 26
   LZÍ: 26
   OSŤ: 26
+  TEŠ: 26
+  IPK: 26
+  RŮD: 26
+  DÍN: 26
+  PÁJ: 26
+  VRK: 26
+  IŠU: 26
+  VKE: 26
   DŘA: 26
   ÁČN: 26
   AŠP: 26
@@ -8816,42 +8816,24 @@ trigrams:
   ČUC: 26
   HRE: 26
   WAN: 26
-  GOY: 26
   CAE: 26
-  UŘK: 26
-  BŽI: 26
   IPN: 26
   YJI: 26
   AJC: 26
-  RIJ: 26
+  UŘK: 26
+  GOY: 26
+  BŽI: 26
   UZV: 26
-  NAA: 26
-  MŘU: 26
   AIZ: 26
+  RIJ: 26
+  MŘU: 26
+  NAA: 26
   MŘO: 26
   AAC: 26
   KÍŠ: 26
-  ÁNN: 25
-  JRY: 25
   ŠPR: 25
-  JŠE: 25
-  ÍŘO: 25
-  ČÁŘ: 25
-  CUS: 25
-  ESB: 25
-  OGŮ: 25
-  OLG: 25
-  DMU: 25
-  ČSK: 25
-  URM: 25
-  MTA: 25
-  ŠVÝ: 25
-  GIA: 25
-  RBĚ: 25
-  ÝTÁ: 25
-  UZŠ: 25
-  HUK: 25
   WES: 25
+  ESB: 25
   YBL: 25
   YHY: 25
   UTH: 25
@@ -8859,19 +8841,37 @@ trigrams:
   DŽI: 25
   ŽŠT: 25
   MTÉ: 25
+  UZŠ: 25
   DŽU: 25
   ERH: 25
   ÝNĚ: 25
   REY: 25
   EXU: 25
+  RBĚ: 25
   SAB: 25
   SHI: 25
   ORŇ: 25
   EAC: 25
+  ÍŘO: 25
+  JŠE: 25
+  HUK: 25
   ĎAS: 25
+  URM: 25
+  CUS: 25
   ÁČŮ: 25
+  JRY: 25
+  ÝTÁ: 25
   ŠEŠ: 25
   LŇT: 25
+  ÁNN: 25
+  ČÁŘ: 25
+  OGŮ: 25
+  OLG: 25
+  DMU: 25
+  ČSK: 25
+  MTA: 25
+  ŠVÝ: 25
+  GIA: 25
   NUZ: 25
   OMD: 25
   AAR: 25
@@ -8904,29 +8904,20 @@ trigrams:
   SRS: 25
   ZYC: 25
   URŮ: 25
-  ELŽ: 25
   TPA: 25
+  ELŽ: 25
   LÁĎ: 25
   ÁĎA: 25
-  ZTV: 24
-  GRÁ: 24
-  ADZ: 24
-  KŘK: 24
-  NÉR: 24
-  ÝCA: 24
-  LYT: 24
-  IOG: 24
-  ELČ: 24
-  DAG: 24
-  UCP: 24
   OYA: 24
   UMČ: 24
   RVÓ: 24
   TĚŘ: 24
+  GRÁ: 24
   TEŽ: 24
   OŘT: 24
   ŠKV: 24
   ORF: 24
+  IOG: 24
   VOŇ: 24
   IČU: 24
   LMĚ: 24
@@ -8946,6 +8937,15 @@ trigrams:
   ŘME: 24
   HRT: 24
   LAĎ: 24
+  ZTV: 24
+  ADZ: 24
+  KŘK: 24
+  NÉR: 24
+  ÝCA: 24
+  LYT: 24
+  ELČ: 24
+  DAG: 24
+  UCP: 24
   MČE: 24
   ŘNĚ: 24
   VÝN: 24
@@ -8980,46 +8980,46 @@ trigrams:
   GAI: 24
   BCŮ: 24
   AKB: 24
-  YLB: 24
-  ĚVK: 24
-  SÁB: 24
   SAŇ: 24
   ZIU: 24
+  ĚVK: 24
   ÍŠŮ: 24
-  ŘŠT: 23
-  TTA: 23
-  ODŇ: 23
-  NSA: 23
-  PŇO: 23
-  XEM: 23
-  DOE: 23
-  KYV: 23
-  NDH: 23
-  JKY: 23
-  DIG: 23
-  XIV: 23
-  OBŠ: 23
-  ÚSK: 23
+  SÁB: 24
+  YLB: 24
   ICC: 23
   ÝNY: 23
   EOČ: 23
   MRV: 23
   ITH: 23
+  TTA: 23
+  XEM: 23
   ZJÍ: 23
   ŠRO: 23
   DHŮ: 23
   AŽB: 23
   BIK: 23
+  JKY: 23
   UIC: 23
   ÝCI: 23
+  DIG: 23
   EŽV: 23
   KUČ: 23
+  NSA: 23
   SUV: 23
   SDR: 23
   JJE: 23
   ÉLI: 23
   DÁČ: 23
   HUC: 23
+  ŘŠT: 23
+  ODŇ: 23
+  PŇO: 23
+  DOE: 23
+  KYV: 23
+  NDH: 23
+  XIV: 23
+  OBŠ: 23
+  ÚSK: 23
   ÉVK: 23
   AUN: 23
   VME: 23
@@ -9061,50 +9061,43 @@ trigrams:
   OCC: 23
   JHŮ: 23
   OSF: 23
+  LUŇ: 23
   SRŠ: 23
   PAZ: 23
-  LUŇ: 23
   AUA: 23
-  ZOČ: 23
-  RÚT: 23
   ÝNI: 23
   OER: 23
   TTU: 23
+  ZOČ: 23
+  RÚT: 23
   ĎAT: 23
-  ŠOB: 23
   ČMI: 23
-  OFÁ: 22
-  ĚDV: 22
-  YRT: 22
-  ŤME: 22
-  ALF: 22
-  AUB: 22
-  HÓR: 22
-  NSU: 22
-  ŘAZ: 22
-  PLZ: 22
-  JHR: 22
-  IŘE: 22
+  ŠOB: 23
   HIB: 22
   CYL: 22
   JRO: 22
   ZÍN: 22
   CRE: 22
+  OFÁ: 22
   PTY: 22
   GUJ: 22
   ŮSV: 22
   FNÍ: 22
   NDT: 22
   NBI: 22
+  ALF: 22
   UVŇ: 22
   ÁKR: 22
   MĚP: 22
   OTH: 22
+  ĚDV: 22
+  HÓR: 22
   ŮČK: 22
   ÝŠT: 22
   BUČ: 22
   ZSA: 22
   BTI: 22
+  JHR: 22
   MRH: 22
   MFI: 22
   VIŤ: 22
@@ -9114,6 +9107,13 @@ trigrams:
   MĚM: 22
   UMÝ: 22
   YKV: 22
+  YRT: 22
+  ŤME: 22
+  AUB: 22
+  NSU: 22
+  ŘAZ: 22
+  PLZ: 22
+  IŘE: 22
   ŽIM: 22
   FUK: 22
   RSU: 22
@@ -9157,29 +9157,22 @@ trigrams:
   PÁŘ: 22
   ÉDA: 22
   AMF: 22
-  ÝKŮ: 22
-  EHŇ: 22
-  BOĎ: 22
-  NIŤ: 22
   RBS: 22
   AŠC: 22
   ZPI: 22
   YŽÁ: 22
-  VŘO: 22
+  ÝKŮ: 22
+  EHŇ: 22
+  BOĎ: 22
+  NIŤ: 22
   TÍZ: 22
-  NEÁ: 22
   EŠS: 22
+  NEÁ: 22
   ŠUB: 22
+  VŘO: 22
   AŠD: 22
   ŠDO: 22
   SÚS: 22
-  FÁN: 21
-  YGI: 21
-  YJM: 21
-  LVÁ: 21
-  JHA: 21
-  XPR: 21
-  ĚŇU: 21
   KÓN: 21
   ÁŽO: 21
   VÓZ: 21
@@ -9196,11 +9189,18 @@ trigrams:
   ŘČI: 21
   ULD: 21
   LŮZ: 21
+  LVÁ: 21
   ŠÁR: 21
   UCU: 21
   ÍŇA: 21
   JKU: 21
   ZCI: 21
+  FÁN: 21
+  YGI: 21
+  YJM: 21
+  JHA: 21
+  XPR: 21
+  ĚŇU: 21
   ŮBĚ: 21
   ORÝ: 21
   ÝŘŮ: 21
@@ -9242,31 +9242,21 @@ trigrams:
   ZZL: 21
   ŮRO: 21
   SUŇ: 21
-  CEF: 21
-  CPY: 21
   UJZ: 21
   YRH: 21
   ĚVÍ: 21
-  ŮŘÍ: 21
-  JOK: 21
+  CEF: 21
+  CPY: 21
   EÚM: 21
+  JOK: 21
   TCZ: 21
   CZI: 21
-  UČÁ: 20
-  KYK: 20
-  CKD: 20
-  ÝDĚ: 20
-  JČO: 20
-  LFA: 20
-  DME: 20
-  THÉ: 20
-  UNS: 20
-  UCA: 20
-  ZDM: 20
+  ŮŘÍ: 21
   OAD: 20
   IPY: 20
   EET: 20
   FÁL: 20
+  UCA: 20
   ŠŇU: 20
   FIT: 20
   URÍ: 20
@@ -9282,6 +9272,8 @@ trigrams:
   OIR: 20
   ÍČA: 20
   AVČ: 20
+  LFA: 20
+  ZDM: 20
   OOL: 20
   EEX: 20
   OWN: 20
@@ -9292,11 +9284,19 @@ trigrams:
   UŠŠ: 20
   ÝNE: 20
   LPÍ: 20
+  UČÁ: 20
   ÍPÁ: 20
   ZEŽ: 20
   TYĎ: 20
   LNE: 20
   PÍĎ: 20
+  KYK: 20
+  CKD: 20
+  ÝDĚ: 20
+  JČO: 20
+  DME: 20
+  THÉ: 20
+  UNS: 20
   ČOČ: 20
   ŘNÝ: 20
   ZTM: 20
@@ -9344,28 +9344,13 @@ trigrams:
   ZQU: 20
   SAE: 20
   LOX: 20
-  JEF: 20
-  ŠTM: 20
   BVA: 20
   BÍV: 20
+  ŠTM: 20
   NUČ: 20
-  MEF: 20
+  JEF: 20
   MTI: 20
-  ARX: 19
-  ODČ: 19
-  ČŇO: 19
-  ZNŮ: 19
-  ECC: 19
-  QUO: 19
-  ANL: 19
-  OFY: 19
-  ZOŘ: 19
-  OJK: 19
-  EDJ: 19
-  AČS: 19
-  YŘA: 19
-  ĚŇO: 19
-  LEU: 19
+  MEF: 20
   IDG: 19
   URT: 19
   ULN: 19
@@ -9388,11 +9373,26 @@ trigrams:
   ČKN: 19
   IED: 19
   XNÍ: 19
+  ZNŮ: 19
   EĎM: 19
   CPE: 19
   WHI: 19
   ČÍŇ: 19
   HUP: 19
+  ARX: 19
+  ODČ: 19
+  ČŇO: 19
+  ECC: 19
+  QUO: 19
+  ANL: 19
+  OFY: 19
+  ZOŘ: 19
+  OJK: 19
+  EDJ: 19
+  AČS: 19
+  YŘA: 19
+  ĚŇO: 19
+  LEU: 19
   MIŘ: 19
   IŮV: 19
   NFI: 19
@@ -9438,36 +9438,21 @@ trigrams:
   DÍŘ: 19
   GIM: 19
   JČU: 19
-  ÉŤA: 19
+  ĚMĚ: 19
+  KŠA: 19
   ĚPY: 19
+  ÉŤA: 19
   ŘKÝ: 19
   CAC: 19
   ÍZC: 19
   HDÁ: 19
-  ĚMĚ: 19
-  KŠA: 19
-  JČA: 19
-  CHŠ: 19
   RÉB: 19
-  ĚŤT: 19
+  JČA: 19
   IAŠ: 19
+  CHŠ: 19
+  ĚŤT: 19
   SUŽ: 19
   ÚSÁ: 19
-  JMA: 18
-  ÁSM: 18
-  ULP: 18
-  RCÍ: 18
-  OMM: 18
-  MAŇ: 18
-  ĚZO: 18
-  ZCU: 18
-  ČST: 18
-  EIT: 18
-  BÉH: 18
-  CYN: 18
-  VDÍ: 18
-  DŇU: 18
-  LÉC: 18
   OOR: 18
   LKÓ: 18
   NGS: 18
@@ -9481,6 +9466,8 @@ trigrams:
   CKH: 18
   WOR: 18
   ŠTÝ: 18
+  ZCU: 18
+  EIT: 18
   HÝŠ: 18
   AIC: 18
   GHI: 18
@@ -9490,13 +9477,26 @@ trigrams:
   UVK: 18
   RYV: 18
   IMH: 18
+  RCÍ: 18
   YPN: 18
+  OMM: 18
   ÚCH: 18
   UŠÁ: 18
   ŠÁH: 18
   RÝL: 18
   ŘAH: 18
+  MAŇ: 18
   ÍVC: 18
+  JMA: 18
+  ÁSM: 18
+  ULP: 18
+  ĚZO: 18
+  ČST: 18
+  BÉH: 18
+  CYN: 18
+  VDÍ: 18
+  DŇU: 18
+  LÉC: 18
   HCÍ: 18
   ÉTE: 18
   RDK: 18
@@ -9542,34 +9542,22 @@ trigrams:
   AAM: 18
   LÝZ: 18
   FLÓ: 18
-  IRY: 18
   NUE: 18
-  ÝČÍ: 18
   ĚNČ: 18
-  EFÍ: 18
   RPI: 18
-  JÁR: 18
-  ŘKL: 18
-  ŮPO: 18
-  LŠA: 18
-  ŘKÉ: 18
+  IRY: 18
+  ÝČÍ: 18
+  EFÍ: 18
   ZZA: 18
   ČÁP: 18
+  ŘKL: 18
+  JÁR: 18
+  ŘKÉ: 18
   ĎHÉ: 18
+  ŮPO: 18
+  LŠA: 18
   ŠUO: 18
   JAI: 18
-  OČU: 17
-  HYZ: 17
-  NEI: 17
-  ÍJM: 17
-  AQU: 17
-  ÝKY: 17
-  SÉR: 17
-  BSE: 17
-  BMĚ: 17
-  AEN: 17
-  ŮVT: 17
-  IZP: 17
   MPT: 17
   TČÍ: 17
   ĚPE: 17
@@ -9577,6 +9565,7 @@ trigrams:
   LBI: 17
   ELG: 17
   LGI: 17
+  NEI: 17
   ÝHL: 17
   OAN: 17
   YŠA: 17
@@ -9586,13 +9575,24 @@ trigrams:
   ŽUN: 17
   SČI: 17
   ŽVY: 17
+  AEN: 17
   OCL: 17
+  IZP: 17
+  SÉR: 17
   ÉRŮ: 17
   ŮDO: 17
   OXN: 17
   ÝZK: 17
   YZÁ: 17
   BÍČ: 17
+  OČU: 17
+  HYZ: 17
+  ÍJM: 17
+  AQU: 17
+  ÝKY: 17
+  BSE: 17
+  BMĚ: 17
+  ŮVT: 17
   JJA: 17
   REH: 17
   NJE: 17
@@ -9646,51 +9646,32 @@ trigrams:
   IDŠ: 17
   ÉMK: 17
   ÍNŠ: 17
+  LAO: 17
+  PRZ: 17
+  NŮŠ: 17
   FRY: 17
   VYF: 17
   EPČ: 17
   EUL: 17
-  NŮŠ: 17
   ŘVÁ: 17
   ČMÍ: 17
-  LAO: 17
-  PRZ: 17
   ŘMA: 17
   KOA: 17
   GOZ: 17
   BIH: 17
-  UZR: 16
-  ULV: 16
-  ETZ: 16
-  TZS: 16
-  ZSC: 16
-  MAX: 16
-  ĚRC: 16
-  MFO: 16
-  NŠI: 16
-  KLN: 16
-  ZTÝ: 16
-  ŠPÁ: 16
-  RLÁ: 16
-  IBS: 16
-  AŘA: 16
-  GOS: 16
-  LÝT: 16
-  AEC: 16
-  ŽÁC: 16
-  ÉNS: 16
-  RBL: 16
-  STH: 16
-  ČEB: 16
   ÝMO: 16
   GTO: 16
+  RBL: 16
   ŽÍČ: 16
+  ÉNS: 16
   FID: 16
+  MFO: 16
   HSI: 16
   XOT: 16
   ZII: 16
   ŘAL: 16
   ĚŽT: 16
+  ŽÁC: 16
   OCÁ: 16
   ÍSČ: 16
   WAS: 16
@@ -9699,6 +9680,7 @@ trigrams:
   LOA: 16
   GAB: 16
   ŇŮM: 16
+  MAX: 16
   FIČ: 16
   HRC: 16
   HMÝ: 16
@@ -9709,6 +9691,24 @@ trigrams:
   BÁČ: 16
   YMU: 16
   OŠC: 16
+  UZR: 16
+  ULV: 16
+  ETZ: 16
+  TZS: 16
+  ZSC: 16
+  ĚRC: 16
+  NŠI: 16
+  KLN: 16
+  ZTÝ: 16
+  ŠPÁ: 16
+  RLÁ: 16
+  IBS: 16
+  AŘA: 16
+  GOS: 16
+  LÝT: 16
+  AEC: 16
+  STH: 16
+  ČEB: 16
   RFI: 16
   OKI: 16
   RUL: 16
@@ -9759,37 +9759,25 @@ trigrams:
   UZÁ: 16
   SEŘ: 16
   PEO: 16
-  FAM: 16
-  HŘT: 16
-  ŘTÁ: 16
-  DÍČ: 16
-  PÍČ: 16
-  YVY: 16
+  ŮŽT: 16
   ĎOU: 16
   DKV: 16
-  BÝL: 16
   CTÁ: 16
+  YVY: 16
+  FAM: 16
+  PÍČ: 16
   LHŮ: 16
   HŮT: 16
+  DÍČ: 16
+  HŘT: 16
+  ŘTÁ: 16
+  BÝL: 16
   ÉCT: 16
-  ŮŽT: 16
-  HVY: 16
   ÝSM: 16
-  ZIF: 16
   ČIA: 16
+  ZIF: 16
+  HVY: 16
   ZNB: 16
-  HYG: 15
-  ÝMY: 15
-  LOI: 15
-  IQU: 15
-  DŇA: 15
-  ILŇ: 15
-  IČS: 15
-  JOD: 15
-  CYR: 15
-  SÝC: 15
-  ZVŮ: 15
-  LUR: 15
   MBL: 15
   DÓM: 15
   YCP: 15
@@ -9810,16 +9798,28 @@ trigrams:
   ĚLČ: 15
   YSÉ: 15
   RSL: 15
+  SÝC: 15
   AIG: 15
   ADH: 15
   HEF: 15
   LHL: 15
   ÁBŮ: 15
   ROO: 15
+  LOI: 15
   ĚRÁ: 15
   KÉP: 15
   ĚKL: 15
   ÉHE: 15
+  HYG: 15
+  ÝMY: 15
+  IQU: 15
+  DŇA: 15
+  ILŇ: 15
+  IČS: 15
+  JOD: 15
+  CYR: 15
+  ZVŮ: 15
+  LUR: 15
   YVÉ: 15
   EGŮ: 15
   ÉKU: 15
@@ -9890,44 +9890,35 @@ trigrams:
   KUA: 15
   NOI: 15
   JNS: 15
-  IEG: 15
-  PÓN: 15
-  ŠÍČ: 15
   RPY: 15
+  ŠÍČ: 15
   EMŠ: 15
   ŮJT: 15
+  IEG: 15
+  PÓN: 15
+  RIŠ: 15
   OJČ: 15
   SOŠ: 15
-  NRE: 15
-  LVŮ: 15
-  ŠIF: 15
-  ĚSL: 15
-  RIŠ: 15
   JAF: 15
+  ŠIF: 15
+  NRE: 15
   LYD: 15
+  LVŮ: 15
+  ĚSL: 15
   IMŠ: 15
   GOŠ: 15
   ELJ: 15
   ŠCH: 15
-  ČUM: 14
-  LPĚ: 14
-  IOD: 14
-  ÝMÁ: 14
-  PÍŘ: 14
-  ÓZE: 14
-  SFO: 14
-  VLŮ: 14
-  CLI: 14
-  ĚMÍ: 14
-  IPC: 14
-  SCV: 14
   ZEA: 14
   UBS: 14
   ROY: 14
   YŘN: 14
+  IPC: 14
   FIÁ: 14
   IÉF: 14
+  SFO: 14
   SFA: 14
+  ÝMÁ: 14
   UŤA: 14
   GHE: 14
   ŮSM: 14
@@ -9942,6 +9933,15 @@ trigrams:
   UĎM: 14
   GÉN: 14
   ZŽA: 14
+  ČUM: 14
+  LPĚ: 14
+  IOD: 14
+  PÍŘ: 14
+  ÓZE: 14
+  VLŮ: 14
+  CLI: 14
+  ĚMÍ: 14
+  SCV: 14
   EÚS: 14
   INJ: 14
   ŽŇO: 14
@@ -10005,49 +10005,35 @@ trigrams:
   OIM: 14
   ÉBÁ: 14
   OŇM: 14
+  ĚJU: 14
+  JTN: 14
+  ÁBK: 14
   VSÁ: 14
+  RVĚ: 14
+  DLŇ: 14
   DRL: 14
   JDÁ: 14
   UKV: 14
   BČE: 14
-  ĚJU: 14
-  JTN: 14
-  ÁBK: 14
-  RVĚ: 14
-  DLŇ: 14
+  UAK: 14
+  IČÁ: 14
+  MHA: 14
+  AZŇ: 14
+  ZTÍ: 14
+  SHN: 14
   YŘK: 14
   ĚŠC: 14
-  SHN: 14
-  AZŇ: 14
-  IČÁ: 14
-  UAK: 14
-  MHA: 14
-  ZTÍ: 14
+  XES: 14
+  GAG: 14
+  AZQ: 14
   NÉŘ: 14
   IGD: 14
   LÓW: 14
   LÉA: 14
-  GAG: 14
   ÓBY: 14
   CÍB: 14
   ŠIH: 14
-  XES: 14
   OGÁ: 14
-  AZQ: 14
-  DŇO: 13
-  YŽÍ: 13
-  BĚŠ: 13
-  ÉMŮ: 13
-  BYZ: 13
-  UOD: 13
-  ÁCO: 13
-  REO: 13
-  ÓGY: 13
-  MIÍ: 13
-  YSS: 13
-  ÝŘS: 13
-  ĚSK: 13
-  BEŘ: 13
   CLU: 13
   RTM: 13
   YLÓ: 13
@@ -10076,6 +10062,7 @@ trigrams:
   ĚŇA: 13
   RUG: 13
   KÁJ: 13
+  MIÍ: 13
   RSŮ: 13
   UMŮ: 13
   ELP: 13
@@ -10083,7 +10070,20 @@ trigrams:
   EMF: 13
   ŽDE: 13
   ÍDM: 13
+  ÝŘS: 13
   LZI: 13
+  DŇO: 13
+  YŽÍ: 13
+  BĚŠ: 13
+  ÉMŮ: 13
+  BYZ: 13
+  UOD: 13
+  ÁCO: 13
+  REO: 13
+  ÓGY: 13
+  YSS: 13
+  ĚSK: 13
+  BEŘ: 13
   JUB: 13
   EŘN: 13
   ZEE: 13
@@ -10140,12 +10140,6 @@ trigrams:
   KOŤ: 13
   HAŤ: 13
   ŇMI: 13
-  BUE: 13
-  BSB: 13
-  FUC: 13
-  ÝKE: 13
-  FÁB: 13
-  KBY: 13
   ŽTK: 13
   NÝN: 13
   PYS: 13
@@ -10153,18 +10147,25 @@ trigrams:
   EMJ: 13
   BŮM: 13
   RČO: 13
-  ÍNÉ: 13
-  ŮTA: 13
-  IPÉ: 13
-  LFT: 13
-  ZŇO: 13
+  FUC: 13
+  BUE: 13
+  BSB: 13
+  ÝKE: 13
+  FÁB: 13
+  KBY: 13
   ŽHÁ: 13
-  IŤÁ: 13
   BÍŘ: 13
   RXO: 13
+  ZŇO: 13
   ÁFE: 13
+  ŮTA: 13
   UPČ: 13
+  IPÉ: 13
   EOI: 13
+  ÍNÉ: 13
+  LFT: 13
+  IŤÁ: 13
+  ČLA: 13
   ŠBE: 13
   HŠO: 13
   ÉBU: 13
@@ -10173,30 +10174,11 @@ trigrams:
   HUO: 13
   CÓB: 13
   AAZ: 13
-  ČLA: 13
-  ÚMĚ: 12
-  TYŠ: 12
-  ULG: 12
-  LGÁ: 12
-  AŽK: 12
-  YMF: 12
-  IKC: 12
-  ŤÁR: 12
-  BTY: 12
-  ŠVÁ: 12
-  ÓDN: 12
-  LYŽ: 12
-  BÉR: 12
-  JKÁ: 12
-  ŤÁC: 12
-  DIH: 12
-  TRÍ: 12
-  COC: 12
-  ČRT: 12
   DGE: 12
   OXF: 12
   XFO: 12
   NUR: 12
+  COC: 12
   CIČ: 12
   UKÉ: 12
   YHŘ: 12
@@ -10228,6 +10210,24 @@ trigrams:
   LČT: 12
   ÁJO: 12
   EBT: 12
+  ÚMĚ: 12
+  TYŠ: 12
+  ULG: 12
+  LGÁ: 12
+  AŽK: 12
+  YMF: 12
+  IKC: 12
+  ŤÁR: 12
+  BTY: 12
+  ŠVÁ: 12
+  ÓDN: 12
+  LYŽ: 12
+  BÉR: 12
+  JKÁ: 12
+  ŤÁC: 12
+  DIH: 12
+  TRÍ: 12
+  ČRT: 12
   ĚTC: 12
   VŘT: 12
   DRŤ: 12
@@ -10288,42 +10288,43 @@ trigrams:
   ORČ: 12
   AŽR: 12
   ERÍ: 12
-  RÉŤ: 12
-  RŽÁ: 12
-  ÝZE: 12
-  FLÉ: 12
-  NVÍ: 12
-  VIJ: 12
-  HYA: 12
-  CRČ: 12
-  ÓRA: 12
-  CAV: 12
-  VÍŽ: 12
-  ÁVS: 12
   KMÍ: 12
   UŘN: 12
   ŘNÉ: 12
+  ÝZE: 12
+  VÍŽ: 12
+  RŽÁ: 12
   ĚSŤ: 12
   MJD: 12
   ŠOS: 12
   OŽM: 12
   ŮPE: 12
   MŽO: 12
+  NVÍ: 12
   TYO: 12
   ŇKE: 12
-  PAĎ: 12
-  ŘKŮ: 12
-  CÉS: 12
-  UPÓ: 12
-  NZÁ: 12
+  RÉŤ: 12
+  FLÉ: 12
+  VIJ: 12
+  HYA: 12
+  CRČ: 12
+  ÓRA: 12
+  CAV: 12
+  ÁVS: 12
   BŠT: 12
   MÁG: 12
   HEG: 12
+  CÉS: 12
   TAO: 12
   ÉVU: 12
   JEU: 12
   XIL: 12
+  NZÁ: 12
   CUP: 12
+  PAĎ: 12
+  ŘKŮ: 12
+  UPÓ: 12
+  YRL: 12
   UFY: 12
   NYX: 12
   JÁF: 12
@@ -10331,36 +10332,19 @@ trigrams:
   ŠAA: 12
   DÁG: 12
   LJO: 12
-  YRL: 12
-  VÍH: 11
-  OGH: 11
-  DAU: 11
-  ÍZV: 11
-  RDŠ: 11
-  RUE: 11
-  CHH: 11
-  UES: 11
-  ČID: 11
-  ÝTR: 11
-  GOI: 11
-  SIU: 11
-  ÝKV: 11
-  CHÓ: 11
-  DYL: 11
-  BEU: 11
-  PIG: 11
-  MŘI: 11
   YAN: 11
-  KÝH: 11
-  SSÁ: 11
   OFU: 11
   EČŤ: 11
   ČŤA: 11
+  ÝKV: 11
   YNN: 11
+  DAU: 11
   AWA: 11
   ŠÁC: 11
   ŮNY: 11
   LOW: 11
+  CHÓ: 11
+  RDŠ: 11
   CÁS: 11
   CHB: 11
   ZEŘ: 11
@@ -10374,9 +10358,25 @@ trigrams:
   OAL: 11
   VŇU: 11
   SSS: 11
+  KÝH: 11
   PŠO: 11
   DYP: 11
   SLŇ: 11
+  CHH: 11
+  VÍH: 11
+  OGH: 11
+  ÍZV: 11
+  RUE: 11
+  UES: 11
+  ČID: 11
+  ÝTR: 11
+  GOI: 11
+  SIU: 11
+  DYL: 11
+  BEU: 11
+  PIG: 11
+  MŘI: 11
+  SSÁ: 11
   ÍJA: 11
   CTC: 11
   SŤÁ: 11
@@ -10446,44 +10446,44 @@ trigrams:
   LCA: 11
   ÍRC: 11
   ÚTI: 11
-  LCÁ: 11
-  ŇOR: 11
-  PÉC: 11
-  CVÁ: 11
-  PŘO: 11
-  HNŮ: 11
-  NŮJ: 11
-  MYD: 11
-  UHŘ: 11
-  CNŮ: 11
-  ÍTÉ: 11
-  VRR: 11
   ÁČC: 11
   RÉD: 11
   YDN: 11
+  CVÁ: 11
   AZR: 11
+  MYD: 11
   DMR: 11
+  PŘO: 11
   ADD: 11
   NČU: 11
   ÍBL: 11
   KŘÁ: 11
-  ZRÝ: 11
-  EMŇ: 11
+  HNŮ: 11
+  NŮJ: 11
+  LCÁ: 11
+  ŇOR: 11
+  PÉC: 11
+  UHŘ: 11
+  CNŮ: 11
+  ÍTÉ: 11
+  VRR: 11
   JDÍ: 11
-  PÍŽ: 11
-  SYŘ: 11
-  YJT: 11
-  LÁJ: 11
-  TÁS: 11
-  ÁJC: 11
   DAŠ: 11
+  YJT: 11
   MRE: 11
+  ÁJC: 11
+  LÁJ: 11
   ÉSA: 11
   ILJ: 11
   CAF: 11
   EIA: 11
   XLI: 11
+  EMŇ: 11
+  ZRÝ: 11
   GEU: 11
+  PÍŽ: 11
+  SYŘ: 11
+  TÁS: 11
   IGL: 11
   AKŠ: 11
   IBC: 11
@@ -10491,25 +10491,15 @@ trigrams:
   OFS: 11
   EBÓ: 11
   BÉD: 11
-  SSB: 10
-  ZŠK: 10
-  RZD: 10
-  ZŠL: 10
-  UZŮ: 10
-  YLŮ: 10
-  XTU: 10
-  KLŮ: 10
-  HÉN: 10
-  ŮJC: 10
-  UTS: 10
-  HYŤ: 10
   MOO: 10
   SBL: 10
+  KLŮ: 10
   FTY: 10
   UDD: 10
   ACÉ: 10
   OWE: 10
   URZ: 10
+  YLŮ: 10
   URR: 10
   ŘAP: 10
   LDŠ: 10
@@ -10531,6 +10521,16 @@ trigrams:
   DŽE: 10
   ÁÁÁ: 10
   VPO: 10
+  SSB: 10
+  ZŠK: 10
+  RZD: 10
+  ZŠL: 10
+  UZŮ: 10
+  XTU: 10
+  HÉN: 10
+  ŮJC: 10
+  UTS: 10
+  HYŤ: 10
   VÉR: 10
   ÉRÁ: 10
   PIÍ: 10
@@ -10615,47 +10615,49 @@ trigrams:
   PAŇ: 10
   ŮVY: 10
   EOU: 10
-  KYŘ: 10
-  TČA: 10
-  LJA: 10
-  ÝRY: 10
-  BVE: 10
-  GNU: 10
-  ŤÁČ: 10
-  ÍNÝ: 10
-  AMZ: 10
-  ÍŽT: 10
-  AĎO: 10
-  ŘÁV: 10
-  ŽEŤ: 10
-  UŽC: 10
-  ŠIP: 10
-  AOR: 10
   LŠI: 10
+  AĎO: 10
   BRK: 10
+  ŠIP: 10
+  ÍNÝ: 10
   RŠŮ: 10
+  ÍŽT: 10
+  ŽEŤ: 10
   LDÝ: 10
+  BVE: 10
   ŘKÁ: 10
   ČLY: 10
   JŘÍ: 10
   ŮŠE: 10
   ZBE: 10
   IŠP: 10
-  HRZ: 10
-  UOB: 10
-  JDY: 10
-  ÉMŠ: 10
-  ŽMB: 10
-  ÚJE: 10
-  BEB: 10
+  KYŘ: 10
+  TČA: 10
+  LJA: 10
+  ÝRY: 10
+  GNU: 10
+  ŤÁČ: 10
+  AMZ: 10
+  ŘÁV: 10
+  UŽC: 10
+  AOR: 10
   EBS: 10
+  ŽMB: 10
   JUK: 10
+  JDY: 10
+  BEB: 10
+  UOB: 10
   TEF: 10
   HLC: 10
   SUW: 10
   UWA: 10
   OGL: 10
+  HRZ: 10
+  ÉMŠ: 10
+  ÚJE: 10
   CEB: 10
+  MEU: 10
+  HTÝ: 10
   ŠAE: 10
   COA: 10
   IŠB: 10
@@ -10666,27 +10668,15 @@ trigrams:
   ŠUY: 10
   ŠUU: 10
   EIH: 10
-  MEU: 10
   ZRI: 10
-  HTÝ: 10
-  XIM: 9
-  HHL: 9
-  LŠO: 9
-  LFO: 9
-  WER: 9
-  FNI: 9
-  BEI: 9
-  FÁD: 9
-  LFR: 9
-  ACR: 9
-  YSÝ: 9
-  EŘK: 9
-  DSM: 9
   WEM: 9
+  FÁD: 9
   ÉŘO: 9
   FIX: 9
   MAB: 9
   DÓZ: 9
+  WER: 9
+  LFO: 9
   IGG: 9
   GSK: 9
   ŠMI: 9
@@ -10701,8 +10691,10 @@ trigrams:
   ÝSP: 9
   INL: 9
   ÁNŠ: 9
+  YSÝ: 9
   ÍTŮ: 9
   EIG: 9
+  BEI: 9
   SGY: 9
   NGY: 9
   CHW: 9
@@ -10713,8 +10705,16 @@ trigrams:
   IRC: 9
   MOP: 9
   EÚČ: 9
+  XIM: 9
   ŽÍŽ: 9
   ABT: 9
+  HHL: 9
+  LŠO: 9
+  FNI: 9
+  LFR: 9
+  ACR: 9
+  EŘK: 9
+  DSM: 9
   MBÁ: 9
   FÁČ: 9
   ŽAŽ: 9
@@ -10799,27 +10799,13 @@ trigrams:
   SAG: 9
   ŮLH: 9
   RXI: 9
-  ĚSU: 9
-  AČC: 9
-  ÁŽT: 9
-  KŠT: 9
-  RSŤ: 9
-  RZÝ: 9
-  KŘU: 9
-  ŘUP: 9
-  AHI: 9
-  ÉGR: 9
-  ÉVE: 9
-  MÁŤ: 9
-  ÍTÝ: 9
-  DÁŽ: 9
-  DSL: 9
-  ŘBŮ: 9
   YŇC: 9
   ASR: 9
   PTN: 9
   ZSÍ: 9
+  AČC: 9
   KŇU: 9
+  AHI: 9
   OTÓ: 9
   IJN: 9
   VPI: 9
@@ -10829,18 +10815,24 @@ trigrams:
   LČU: 9
   ŘAĎ: 9
   HLS: 9
+  ĚSU: 9
+  ÁŽT: 9
+  KŠT: 9
+  RSŤ: 9
+  RZÝ: 9
+  KŘU: 9
+  ŘUP: 9
+  ÉGR: 9
+  ÉVE: 9
+  MÁŤ: 9
+  ÍTÝ: 9
+  DÁŽ: 9
+  DSL: 9
+  ŘBŮ: 9
   FNO: 9
-  ZOŠ: 9
-  HUĎ: 9
-  UĎA: 9
-  NIŮ: 9
-  ŘEU: 9
-  CHŇ: 9
-  CNE: 9
   DPY: 9
-  ÍPO: 9
-  HTR: 9
   VYŤ: 9
+  CNE: 9
   XTE: 9
   JŠO: 9
   OPČ: 9
@@ -10848,51 +10840,37 @@ trigrams:
   JMÁ: 9
   YNS: 9
   RÉG: 9
+  HTR: 9
   EFÁ: 9
   SIF: 9
+  NIŮ: 9
   ZZO: 9
+  ŘEU: 9
   XLV: 9
+  CHŇ: 9
   RLW: 9
   LWI: 9
   TŘM: 9
   SFE: 9
+  ZOŠ: 9
+  HUĎ: 9
+  UĎA: 9
+  ÍPO: 9
   AOD: 9
   HRŇ: 9
+  FĚR: 9
+  ĚRT: 9
   LÝČ: 9
-  EFŮ: 9
+  VAI: 9
+  EIO: 9
   LŮČ: 9
+  EFŮ: 9
   AHC: 9
   ÁBŠ: 9
   FCH: 9
   ŠUC: 9
   JIB: 9
-  VAI: 9
-  EIO: 9
   AIF: 9
-  FĚR: 9
-  ĚRT: 9
-  VČL: 8
-  NDŽ: 8
-  UČŇ: 8
-  ÚPO: 8
-  ZÚŽ: 8
-  ÚŽE: 8
-  VUS: 8
-  SAP: 8
-  OXE: 8
-  AUV: 8
-  YČU: 8
-  JZB: 8
-  EGM: 8
-  ČIP: 8
-  NŽI: 8
-  ĚDŮ: 8
-  DAF: 8
-  RÉS: 8
-  LZL: 8
-  OXI: 8
-  YCU: 8
-  MŮC: 8
   PIM: 8
   NCÉ: 8
   CÉŘ: 8
@@ -10904,6 +10882,7 @@ trigrams:
   BKÁ: 8
   AFÁ: 8
   AŘÁ: 8
+  OXE: 8
   ZÉL: 8
   LYO: 8
   UZY: 8
@@ -10934,6 +10913,27 @@ trigrams:
   VIM: 8
   AKN: 8
   TRB: 8
+  JZB: 8
+  VČL: 8
+  NDŽ: 8
+  UČŇ: 8
+  ÚPO: 8
+  ZÚŽ: 8
+  ÚŽE: 8
+  VUS: 8
+  SAP: 8
+  AUV: 8
+  YČU: 8
+  EGM: 8
+  ČIP: 8
+  NŽI: 8
+  ĚDŮ: 8
+  DAF: 8
+  RÉS: 8
+  LZL: 8
+  OXI: 8
+  YCU: 8
+  MŮC: 8
   ÍHU: 8
   UÁN: 8
   LIŮ: 8
@@ -11024,55 +11024,57 @@ trigrams:
   ENR: 8
   ÉES: 8
   ÉŽT: 8
-  HIJ: 8
-  BŽE: 8
-  ZIÍ: 8
-  PÉM: 8
-  MČA: 8
-  ÚNI: 8
-  ÍTU: 8
-  WAH: 8
-  ŽKN: 8
-  ŽNE: 8
-  IGM: 8
   RLÉ: 8
-  NIR: 8
-  ROŇ: 8
-  IŇÁ: 8
-  ÉBC: 8
-  AŘB: 8
+  WAH: 8
   KAŇ: 8
   TZI: 8
   ELŤ: 8
   ZÉR: 8
   DDO: 8
   FIM: 8
+  ÍTU: 8
   ŘEF: 8
+  PÉM: 8
   AMŠ: 8
   OČC: 8
   ĚVC: 8
   YJU: 8
   EVM: 8
   DVY: 8
-  ÉTU: 8
-  ÝCO: 8
-  BSY: 8
-  BHL: 8
-  AIA: 8
-  CRA: 8
-  JSC: 8
-  HÉB: 8
+  ROŇ: 8
+  HIJ: 8
+  BŽE: 8
+  ZIÍ: 8
+  MČA: 8
+  ÚNI: 8
+  ŽKN: 8
+  ŽNE: 8
+  IGM: 8
+  NIR: 8
+  IŇÁ: 8
+  ÉBC: 8
+  AŘB: 8
   YVL: 8
   KIT: 8
   PČA: 8
   GLY: 8
+  JSC: 8
   GAŠ: 8
+  CRA: 8
   ZIZ: 8
   ĚPU: 8
+  ÝCO: 8
   VIU: 8
+  AIA: 8
   SÉE: 8
   ÚDU: 8
+  ÉTU: 8
+  BSY: 8
+  BHL: 8
+  HÉB: 8
   HŇU: 8
+  ÁSŤ: 8
+  EŮM: 8
   ŽBE: 8
   HSK: 8
   UŮV: 8
@@ -11081,38 +11083,17 @@ trigrams:
   EKÓ: 8
   ŠAS: 8
   ZEÁ: 8
-  EŮM: 8
   HVS: 8
-  ÁSŤ: 8
-  VUZ: 7
-  NGM: 7
-  YTH: 7
-  TRL: 7
-  ČAŘ: 7
-  EOG: 7
-  SBI: 7
-  JPU: 7
-  OEV: 7
-  INŠ: 7
-  ZOK: 7
-  SOI: 7
-  MOI: 7
-  THŮ: 7
-  WED: 7
-  FOK: 7
-  NÉV: 7
-  ÉVR: 7
-  DAP: 7
-  CRY: 7
-  YDI: 7
   RGH: 7
   TAY: 7
   IŠŠ: 7
+  THŮ: 7
   IČL: 7
   RÝH: 7
   ÍPŮ: 7
   TSU: 7
   BOX: 7
+  YTH: 7
   NSF: 7
   FIZ: 7
   LÝK: 7
@@ -11132,6 +11113,7 @@ trigrams:
   ÁBŘ: 7
   WEN: 7
   WIC: 7
+  WED: 7
   EWI: 7
   MNŮ: 7
   PAE: 7
@@ -11153,6 +11135,24 @@ trigrams:
   VTL: 7
   BAŇ: 7
   YĎT: 7
+  VUZ: 7
+  NGM: 7
+  TRL: 7
+  ČAŘ: 7
+  EOG: 7
+  SBI: 7
+  JPU: 7
+  OEV: 7
+  INŠ: 7
+  ZOK: 7
+  SOI: 7
+  MOI: 7
+  FOK: 7
+  NÉV: 7
+  ÉVR: 7
+  DAP: 7
+  CRY: 7
+  YDI: 7
   JPI: 7
   DLŮ: 7
   NFR: 7
@@ -11266,6 +11266,28 @@ trigrams:
   YŠS: 7
   HTL: 7
   JÍR: 7
+  OŤÁ: 7
+  ŠNA: 7
+  SŽE: 7
+  DÉČ: 7
+  ŇUČ: 7
+  ÝDA: 7
+  IŇM: 7
+  IZÉ: 7
+  LZU: 7
+  FNU: 7
+  OFN: 7
+  JZY: 7
+  ŮPK: 7
+  PKŮ: 7
+  ŘÁK: 7
+  PÍP: 7
+  ABČ: 7
+  EČS: 7
+  ŤSI: 7
+  ZÍČ: 7
+  VMA: 7
+  HSB: 7
   ŠUT: 7
   VTÁ: 7
   AZC: 7
@@ -11284,51 +11306,17 @@ trigrams:
   ÍRÉ: 7
   ZAŇ: 7
   HÁB: 7
-  DÉČ: 7
   ÚML: 7
   DÁS: 7
-  ŤSI: 7
-  OŤÁ: 7
-  ŠNA: 7
-  SŽE: 7
-  ŇUČ: 7
-  ÝDA: 7
-  IŇM: 7
-  IZÉ: 7
-  LZU: 7
-  FNU: 7
-  OFN: 7
-  JZY: 7
-  ŮPK: 7
-  PKŮ: 7
-  ŘÁK: 7
-  PÍP: 7
-  ABČ: 7
-  EČS: 7
-  ZÍČ: 7
-  VMA: 7
-  HSB: 7
-  OŠP: 7
-  YČA: 7
-  ÁHZ: 7
-  ISR: 7
-  MSY: 7
-  ŽCO: 7
-  ÍHE: 7
-  MAF: 7
-  DSA: 7
-  FUS: 7
-  EŤT: 7
-  RÓF: 7
-  ÓFI: 7
-  NBÍ: 7
-  IRB: 7
-  BDU: 7
   LPY: 7
+  DSA: 7
   SŇU: 7
   ĚDM: 7
   YŤA: 7
+  IRB: 7
+  YČA: 7
   FED: 7
+  FUS: 7
   YRŠ: 7
   RIÓ: 7
   VÉP: 7
@@ -11337,19 +11325,32 @@ trigrams:
   UEG: 7
   FYL: 7
   ĚJM: 7
+  ŽCO: 7
   PPY: 7
+  NBÍ: 7
+  MSY: 7
   UOR: 7
   BUO: 7
+  MAF: 7
+  OŠP: 7
+  ÁHZ: 7
+  ISR: 7
+  ÍHE: 7
+  EŤT: 7
+  RÓF: 7
+  ÓFI: 7
+  BDU: 7
   MEŮ: 7
+  ÚBY: 7
+  AIO: 7
+  KMÁ: 7
   ŠÉM: 7
   ĚZŇ: 7
   LÉU: 7
   ILP: 7
   IŠV: 7
   CEE: 7
-  ÚBY: 7
   CJO: 7
-  KMÁ: 7
   OFŘ: 7
   FŘE: 7
   LÉŤ: 7
@@ -11357,23 +11358,6 @@ trigrams:
   OHÓ: 7
   TSA: 7
   YRÉ: 7
-  AIO: 7
-  ÁŘŠ: 6
-  JTV: 6
-  ÚVĚ: 6
-  HUZ: 6
-  FUG: 6
-  JTU: 6
-  SUA: 6
-  PÓZ: 6
-  ŽIS: 6
-  ÚSO: 6
-  ČAD: 6
-  VIG: 6
-  ZÚT: 6
-  ŠEZ: 6
-  ŮCK: 6
-  OÁR: 6
   VRŤ: 6
   SQU: 6
   EEN: 6
@@ -11384,6 +11368,7 @@ trigrams:
   NGK: 6
   UAY: 6
   AŠM: 6
+  ZÚT: 6
   ASF: 6
   JKS: 6
   ÍČC: 6
@@ -11401,9 +11386,11 @@ trigrams:
   YLL: 6
   ESŇ: 6
   JTL: 6
+  ŽIS: 6
   JVE: 6
   IOK: 6
   PÉK: 6
+  ČAD: 6
   BTL: 6
   UÍN: 6
   LEŘ: 6
@@ -11418,6 +11405,19 @@ trigrams:
   OČM: 6
   LPE: 6
   ŽÁČ: 6
+  ÁŘŠ: 6
+  JTV: 6
+  ÚVĚ: 6
+  HUZ: 6
+  FUG: 6
+  JTU: 6
+  SUA: 6
+  PÓZ: 6
+  ÚSO: 6
+  VIG: 6
+  ŠEZ: 6
+  ŮCK: 6
+  OÁR: 6
   MŽT: 6
   ÁVŮ: 6
   RYÁ: 6
@@ -11543,6 +11543,32 @@ trigrams:
   ÍŽC: 6
   IJK: 6
   ĚHŮ: 6
+  ACV: 6
+  ČCÍ: 6
+  FRÉ: 6
+  BVÁ: 6
+  CKT: 6
+  UCL: 6
+  EUI: 6
+  ŽÁT: 6
+  PČO: 6
+  AŇÁ: 6
+  VEŽ: 6
+  ŤOP: 6
+  ÉCE: 6
+  ĚJK: 6
+  UHM: 6
+  OŇK: 6
+  VPÍ: 6
+  ŠUK: 6
+  ČMO: 6
+  LYŤ: 6
+  IBÍ: 6
+  ÚSL: 6
+  TYU: 6
+  CKV: 6
+  AŤS: 6
+  SÁŠ: 6
   EŇA: 6
   NIŇ: 6
   LPO: 6
@@ -11554,16 +11580,11 @@ trigrams:
   FŮR: 6
   ZUA: 6
   FRÝ: 6
-  VEŽ: 6
-  ACV: 6
-  ŽÁT: 6
   EÚT: 6
   YDU: 6
   CIJ: 6
   OQU: 6
   MZÍ: 6
-  VPÍ: 6
-  OŇK: 6
   FÓR: 6
   PSL: 6
   ŠŤK: 6
@@ -11571,112 +11592,73 @@ trigrams:
   DEŤ: 6
   HUH: 6
   NĚŤ: 6
-  AŤS: 6
   DLS: 6
-  ČCÍ: 6
-  FRÉ: 6
-  BVÁ: 6
-  CKT: 6
-  UCL: 6
-  EUI: 6
-  PČO: 6
-  AŇÁ: 6
-  ŤOP: 6
-  ÉCE: 6
-  ĚJK: 6
-  UHM: 6
-  ŠUK: 6
-  ČMO: 6
-  LYŤ: 6
-  IBÍ: 6
-  ÚSL: 6
-  TYU: 6
-  CKV: 6
-  SÁŠ: 6
-  AŘT: 6
-  KČÍ: 6
-  KČI: 6
-  ÉVĚ: 6
-  NRÁ: 6
-  ČMĚ: 6
-  RCT: 6
-  AFL: 6
-  EŽU: 6
-  AČM: 6
+  EŽP: 6
+  FFO: 6
   ÁDŽ: 6
+  EŽU: 6
+  MUP: 6
+  HEČ: 6
+  KČI: 6
+  KČÍ: 6
+  EEB: 6
+  ÍKD: 6
   AŤP: 6
   ŤPÁ: 6
-  MUP: 6
-  ČKL: 6
-  ÍKD: 6
   AJÓ: 6
-  JTY: 6
-  CPU: 6
-  IDC: 6
-  VRĎ: 6
-  MYČ: 6
-  FFO: 6
-  RŮŠ: 6
-  YDŘ: 6
-  EŽP: 6
-  HEČ: 6
-  EEB: 6
+  ČKL: 6
   LŽO: 6
   EŽD: 6
   ERŇ: 6
   ÉPR: 6
+  JTY: 6
   AVJ: 6
   VJA: 6
   ILŠ: 6
   ÝTY: 6
   NAX: 6
+  AČM: 6
   EWY: 6
   VÍP: 6
   VÝŘ: 6
+  AŘT: 6
   UON: 6
   UMK: 6
+  RCT: 6
+  MYČ: 6
   MŇU: 6
+  ÉVĚ: 6
+  NRÁ: 6
+  ČMĚ: 6
+  AFL: 6
+  CPU: 6
+  IDC: 6
+  VRĎ: 6
+  RŮŠ: 6
+  YDŘ: 6
+  IKŠ: 6
   ĎKY: 6
+  ZMD: 6
+  ESŠ: 6
+  MUA: 6
+  ŮNŮ: 6
+  PŘU: 6
+  TIÚ: 6
+  IÚT: 6
   ŠÁB: 6
   TYŇ: 6
   KPE: 6
   BCA: 6
   AŠB: 6
-  MUA: 6
   IMC: 6
   AIŠ: 6
   OEG: 6
-  TIÚ: 6
-  IÚT: 6
   ŠAG: 6
   KII: 6
   IGV: 6
   GVA: 6
-  ŮNŮ: 6
-  PŘU: 6
   PAF: 6
   NSÉ: 6
-  IKŠ: 6
-  ZMD: 6
-  ESŠ: 6
-  DŽÁ: 5
-  RYF: 5
-  OJC: 5
-  ZÚR: 5
-  ŠŮM: 5
-  SŤM: 5
-  ZFA: 5
-  IMÉ: 5
-  ISÉ: 5
-  ČLÍ: 5
-  ŘEO: 5
-  EKI: 5
-  NDB: 5
-  SFI: 5
-  ŽIE: 5
-  GNY: 5
-  VYA: 5
-  NSÍ: 5
   RRU: 5
   IXE: 5
   CIÉ: 5
@@ -11689,6 +11671,7 @@ trigrams:
   OZÉ: 5
   RAW: 5
   NŽÁ: 5
+  EKI: 5
   GHL: 5
   BČÍ: 5
   BÓJ: 5
@@ -11701,11 +11684,14 @@ trigrams:
   ATF: 5
   TFO: 5
   IHK: 5
+  IMÉ: 5
   XET: 5
   JHU: 5
   LFU: 5
   YŘS: 5
+  ISÉ: 5
   ČEČ: 5
+  NDB: 5
   EEF: 5
   KÉŘ: 5
   JPŮ: 5
@@ -11719,6 +11705,20 @@ trigrams:
   LLŮ: 5
   KUH: 5
   EVP: 5
+  DŽÁ: 5
+  RYF: 5
+  OJC: 5
+  ZÚR: 5
+  ŠŮM: 5
+  SŤM: 5
+  ZFA: 5
+  ČLÍ: 5
+  ŘEO: 5
+  SFI: 5
+  ŽIE: 5
+  GNY: 5
+  VYA: 5
+  NSÍ: 5
   FIU: 5
   TSH: 5
   NŠU: 5
@@ -11859,122 +11859,127 @@ trigrams:
   ÓRY: 5
   UIZ: 5
   IZY: 5
-  CÁZ: 5
-  NĚĎ: 5
-  LPT: 5
-  DUE: 5
-  UEŇ: 5
-  HIQ: 5
-  OJH: 5
-  AMŘ: 5
-  ZZE: 5
-  KÝČ: 5
-  LPI: 5
-  YUN: 5
-  ÉFY: 5
-  JUŠ: 5
-  VTA: 5
-  DRD: 5
-  IOB: 5
-  ŮLA: 5
-  AEO: 5
-  EÚR: 5
-  IŽÍ: 5
-  LCU: 5
-  ZUF: 5
-  ÝSE: 5
-  ÍŽŮ: 5
-  FIJ: 5
-  JDL: 5
-  SYŤ: 5
   JÁH: 5
   EŤM: 5
   ÁKÉ: 5
   JPÁ: 5
   ÉNC: 5
   TŠU: 5
+  VTA: 5
   AJL: 5
   ÝNČ: 5
+  FIJ: 5
   KKA: 5
   MÝŽ: 5
+  JDL: 5
   ÁFO: 5
+  ŮLA: 5
   YVU: 5
   FNÁ: 5
   HEP: 5
   RLC: 5
   EHV: 5
   PRL: 5
+  OJH: 5
+  YUN: 5
   ČUŇ: 5
   GTA: 5
+  ÝSE: 5
   FKO: 5
   UVČ: 5
-  ĚJŮ: 5
-  ŽGR: 5
-  TEŤ: 5
-  ĚSŮ: 5
-  ASŤ: 5
-  EDZ: 5
-  DVD: 5
-  EFN: 5
-  TPÁ: 5
-  DUČ: 5
-  KMÉ: 5
-  OBB: 5
-  CHP: 5
-  ŇAP: 5
-  ARŤ: 5
-  RŤA: 5
-  AGÁ: 5
-  YDY: 5
-  UŘV: 5
-  ŽII: 5
-  USŇ: 5
-  SŇÁ: 5
-  VSU: 5
-  ULÓ: 5
-  CCC: 5
-  ŮŠA: 5
-  RÁÁ: 5
+  CÁZ: 5
+  NĚĎ: 5
+  LPT: 5
+  DUE: 5
+  UEŇ: 5
+  HIQ: 5
+  AMŘ: 5
+  ZZE: 5
+  KÝČ: 5
+  LPI: 5
+  ÉFY: 5
+  JUŠ: 5
+  DRD: 5
+  IOB: 5
+  AEO: 5
+  EÚR: 5
+  IŽÍ: 5
+  LCU: 5
+  ZUF: 5
+  ÍŽŮ: 5
+  SYŤ: 5
   TRR: 5
   SSY: 5
   AŤU: 5
   FRN: 5
   JCÍ: 5
   FAŘ: 5
+  AGÁ: 5
   ČPĚ: 5
+  RÁÁ: 5
   ĚŠS: 5
+  EFN: 5
   ZIB: 5
+  ŽGR: 5
   SOJ: 5
   ÁDŠ: 5
   IPT: 5
   UMŠ: 5
+  DUČ: 5
   LRO: 5
   JNC: 5
   OUŇ: 5
+  DVD: 5
   ÁHŘ: 5
   RJE: 5
   IUD: 5
+  ĚJŮ: 5
   KEF: 5
   ŮZÁ: 5
   TIJ: 5
   EWU: 5
+  ŽII: 5
   NYJ: 5
+  KMÉ: 5
+  OBB: 5
   YBŠ: 5
   BŠM: 5
   XOZ: 5
+  ŇAP: 5
+  UŘV: 5
+  ASŤ: 5
+  VSU: 5
   VMÁ: 5
+  ARŤ: 5
+  RŤA: 5
+  TPÁ: 5
   ŘAB: 5
+  ULÓ: 5
+  TEŤ: 5
+  ĚSŮ: 5
+  EDZ: 5
+  CHP: 5
+  YDY: 5
+  USŇ: 5
+  SŇÁ: 5
+  CCC: 5
+  ŮŠA: 5
   RČT: 5
   ZYP: 5
+  LYŇ: 5
+  BŽÍ: 5
+  ARQ: 5
+  NŤA: 5
   KÉT: 5
+  SŠÁ: 5
+  KEC: 5
+  JUM: 5
   AXM: 5
   XMI: 5
-  JUM: 5
   GÓL: 5
   ÓLE: 5
   EPM: 5
   PMI: 5
-  ARQ: 5
   REÚ: 5
   AOM: 5
   YXO: 5
@@ -11983,7 +11988,6 @@ trigrams:
   IBM: 5
   GOJ: 5
   KSU: 5
-  KEC: 5
   KIŠ: 5
   BÉT: 5
   HBO: 5
@@ -11991,25 +11995,7 @@ trigrams:
   YJC: 5
   KBU: 5
   BYE: 5
-  LYŇ: 5
   CEŮ: 5
-  NŤA: 5
-  BŽÍ: 5
-  SŠÁ: 5
-  LDŮ: 4
-  DPE: 4
-  GHO: 4
-  KSE: 4
-  VAU: 4
-  POŤ: 4
-  ŠKI: 4
-  ŽAŘ: 4
-  RPR: 4
-  PHE: 4
-  SSN: 4
-  VRŮ: 4
-  ČIŘ: 4
-  JBY: 4
   EXH: 4
   URÉ: 4
   AUĎ: 4
@@ -12067,6 +12053,20 @@ trigrams:
   UŘC: 4
   EXY: 4
   TLM: 4
+  LDŮ: 4
+  DPE: 4
+  GHO: 4
+  KSE: 4
+  VAU: 4
+  POŤ: 4
+  ŠKI: 4
+  ŽAŘ: 4
+  RPR: 4
+  PHE: 4
+  SSN: 4
+  VRŮ: 4
+  ČIŘ: 4
+  JBY: 4
   YÁČ: 4
   LČO: 4
   KEG: 4
@@ -12218,21 +12218,62 @@ trigrams:
   WIJ: 4
   ŠÍD: 4
   TIŘ: 4
+  FRR: 4
+  ČÍP: 4
+  ŠČI: 4
+  ÝLC: 4
+  ÁJN: 4
+  ĚSY: 4
+  TYJ: 4
+  YTŮ: 4
+  VŮT: 4
+  HTN: 4
+  GEG: 4
+  FGA: 4
+  OŽL: 4
+  ČTŮ: 4
+  STČ: 4
+  JSÍ: 4
+  OJŠ: 4
+  AŇA: 4
+  RÁF: 4
+  DÉR: 4
+  ŘBY: 4
+  ICL: 4
+  ZÍF: 4
+  CJA: 4
+  NÍŤ: 4
+  ĎJÓ: 4
+  AJV: 4
+  AŠŤ: 4
+  OŠÁ: 4
+  FEČ: 4
+  ÍFK: 4
+  ÍMŤ: 4
+  MŠL: 4
+  IŠČ: 4
+  JUX: 4
   UŠŇ: 4
+  YŠŮ: 4
+  UBŘ: 4
+  ŮTU: 4
+  ADÓ: 4
+  ÝVC: 4
+  NEŤ: 4
+  CÁB: 4
+  ÝŠC: 4
   OIG: 4
   ŇAS: 4
   SEO: 4
   AZÓ: 4
   UKK: 4
   KKY: 4
-  YTŮ: 4
   JBU: 4
   ŇUE: 4
   BAI: 4
   ČAV: 4
   LVĚ: 4
   ŮŽA: 4
-  HTN: 4
   ŇKÁ: 4
   EMÓ: 4
   IFÉ: 4
@@ -12248,156 +12289,130 @@ trigrams:
   ŽJI: 4
   ŇÁD: 4
   ÍZI: 4
-  NÍŤ: 4
-  ŮTU: 4
   DTE: 4
   ŮHO: 4
   BEŇ: 4
   ISD: 4
-  FRR: 4
-  ČÍP: 4
-  ŠČI: 4
-  ÝLC: 4
-  ÁJN: 4
-  ĚSY: 4
-  TYJ: 4
-  VŮT: 4
-  GEG: 4
-  FGA: 4
-  OŽL: 4
-  ČTŮ: 4
-  STČ: 4
-  JSÍ: 4
-  OJŠ: 4
-  AŇA: 4
-  RÁF: 4
-  DÉR: 4
-  ŘBY: 4
-  ICL: 4
-  ZÍF: 4
-  CJA: 4
-  ĎJÓ: 4
-  AJV: 4
-  AŠŤ: 4
-  OŠÁ: 4
-  FEČ: 4
-  ÍFK: 4
-  ÍMŤ: 4
-  MŠL: 4
-  IŠČ: 4
-  JUX: 4
-  YŠŮ: 4
-  UBŘ: 4
-  ADÓ: 4
-  ÝVC: 4
-  NEŤ: 4
-  CÁB: 4
-  ÝŠC: 4
-  RŽG: 4
-  ÁDČ: 4
-  ÝZO: 4
-  RUŤ: 4
-  PĚŤ: 4
-  YŠŇ: 4
-  ŇOŘ: 4
-  ZDŇ: 4
-  RDT: 4
-  KRP: 4
-  BIQ: 4
-  ÝMT: 4
-  IZD: 4
-  UZT: 4
-  PUĎ: 4
-  JBÍ: 4
-  ŽAČ: 4
-  ŠÁM: 4
-  OŽV: 4
-  ÝVĚ: 4
-  HPE: 4
-  ČEŇ: 4
-  VOŽ: 4
-  JZV: 4
-  UNÝ: 4
-  NCÚ: 4
-  CÚT: 4
-  DÚR: 4
-  HŠT: 4
-  IÁK: 4
-  YŽV: 4
-  IŽT: 4
-  IŠŮ: 4
-  ČIK: 4
-  MRN: 4
-  DYD: 4
-  NCM: 4
-  ÉSU: 4
-  RTF: 4
-  TFE: 4
-  JZI: 4
-  PEU: 4
-  DTÉ: 4
-  ÉFE: 4
-  KÁŇ: 4
-  ŠVU: 4
-  UAV: 4
   UDP: 4
   ÝVY: 4
   IAV: 4
   AĎM: 4
+  UNÝ: 4
+  YŽV: 4
+  PĚŤ: 4
+  JBÍ: 4
+  IŽT: 4
+  OŽV: 4
   PÁP: 4
+  NCÚ: 4
+  CÚT: 4
+  RUŤ: 4
   ÁÁL: 4
   ZŽÍ: 4
+  DÚR: 4
   ŠŠŠ: 4
   ÁGY: 4
+  RŽG: 4
+  ÁDČ: 4
   GŮM: 4
+  VOŽ: 4
   DYŇ: 4
+  BIQ: 4
   TÉS: 4
+  ŽAČ: 4
+  ČEŇ: 4
   IEK: 4
+  RDT: 4
   GUO: 4
   LLR: 4
   RIX: 4
   ŮŠK: 4
   ODŽ: 4
+  YŠŇ: 4
+  ŇOŘ: 4
   HRV: 4
   HÍV: 4
+  RTF: 4
+  TFE: 4
+  ČIK: 4
+  ÝZO: 4
+  PEU: 4
   XAG: 4
   ÍMŠ: 4
   EWŮ: 4
+  IZD: 4
   NKČ: 4
   NNS: 4
   FUO: 4
   BUŇ: 4
   IXT: 4
+  ÉFE: 4
   MÚZ: 4
   DBŘ: 4
   FFA: 4
   PUF: 4
+  DTÉ: 4
+  ÝMT: 4
   IŠC: 4
   NQU: 4
+  ZDŇ: 4
+  KRP: 4
+  UZT: 4
+  PUĎ: 4
+  ŠÁM: 4
+  ÝVĚ: 4
+  HPE: 4
+  JZV: 4
+  HŠT: 4
+  IÁK: 4
+  IŠŮ: 4
+  MRN: 4
+  DYD: 4
+  NCM: 4
+  ÉSU: 4
+  JZI: 4
+  KÁŇ: 4
+  ŠVU: 4
+  UAV: 4
   PTV: 4
   IFL: 4
+  BRC: 4
+  ÁRT: 4
+  ÁPŮ: 4
+  KŠO: 4
+  PUŤ: 4
+  ÝŘK: 4
+  SŠI: 4
+  ENŤ: 4
+  MĚĎ: 4
+  RŠN: 4
+  ÚŽL: 4
+  FIO: 4
+  LKR: 4
+  COE: 4
+  MÍI: 4
+  FÁK: 4
+  ČUT: 4
+  DVŠ: 4
+  TTC: 4
+  LOQ: 4
   AGÚ: 4
   GÚŠ: 4
   RBČ: 4
-  LKR: 4
   ÉŘŮ: 4
   ČAK: 4
   LBÍ: 4
   ÉŘS: 4
   OKŠ: 4
-  ÝŘK: 4
   LÉE: 4
   SRY: 4
   KBO: 4
   PTŠ: 4
   FEG: 4
-  RŠN: 4
   KÚŠ: 4
   JIG: 4
   COF: 4
   HIH: 4
-  MĚĎ: 4
-  FIO: 4
   NÁF: 4
   FAA: 4
   HZI: 4
@@ -12409,48 +12424,15 @@ trigrams:
   EAJ: 4
   ZKI: 4
   BAE: 4
-  SŠI: 4
   AZG: 4
   ZGA: 4
   MŠA: 4
   ÝHE: 4
   RŇT: 4
   HEÁ: 4
-  DVŠ: 4
   EFĚ: 4
   ÉŘK: 4
   IAČ: 4
-  MÍI: 4
-  BRC: 4
-  ÁRT: 4
-  ÁPŮ: 4
-  KŠO: 4
-  PUŤ: 4
-  ENŤ: 4
-  ÚŽL: 4
-  COE: 4
-  FÁK: 4
-  ČUT: 4
-  TTC: 4
-  LOQ: 4
-  RXŮ: 3
-  XŮV: 3
-  YFE: 3
-  FEŮ: 3
-  VUR: 3
-  APF: 3
-  SÁŽ: 3
-  JÍV: 3
-  OŤO: 3
-  DZD: 3
-  CCL: 3
-  LBS: 3
-  JCO: 3
-  ŽBI: 3
-  CÉL: 3
-  AČR: 3
-  TOÁ: 3
-  XLE: 3
   LYF: 3
   IÉZ: 3
   ÉZN: 3
@@ -12505,6 +12487,24 @@ trigrams:
   KUŇ: 3
   BTÁ: 3
   VŠŠ: 3
+  RXŮ: 3
+  XŮV: 3
+  YFE: 3
+  FEŮ: 3
+  VUR: 3
+  APF: 3
+  SÁŽ: 3
+  JÍV: 3
+  OŤO: 3
+  DZD: 3
+  CCL: 3
+  LBS: 3
+  JCO: 3
+  ŽBI: 3
+  CÉL: 3
+  AČR: 3
+  TOÁ: 3
+  XLE: 3
   XPA: 3
   GAŽ: 3
   RUÁ: 3
@@ -12706,6 +12706,40 @@ trigrams:
   ČUK: 3
   ÍČO: 3
   BTR: 3
+  YŽS: 3
+  RČC: 3
+  ŽTC: 3
+  KEÁ: 3
+  ŇŮŘ: 3
+  KLS: 3
+  LNC: 3
+  ĚMY: 3
+  ZJÁ: 3
+  DSF: 3
+  SFR: 3
+  CAH: 3
+  ÝŽĎ: 3
+  ÉLN: 3
+  MFN: 3
+  SŘÍ: 3
+  VHA: 3
+  FEZ: 3
+  CŮP: 3
+  ZZV: 3
+  ČUH: 3
+  ÍMÍ: 3
+  TYX: 3
+  IDČ: 3
+  MPŘ: 3
+  ZEČ: 3
+  MLŮ: 3
+  MIU: 3
+  HTS: 3
+  AĎU: 3
+  FMI: 3
+  OFK: 3
+  KMÝ: 3
+  YMŮ: 3
   OUE: 3
   NJO: 3
   HČU: 3
@@ -12739,7 +12773,6 @@ trigrams:
   IEV: 3
   THL: 3
   PÓR: 3
-  ČUH: 3
   UKS: 3
   JKE: 3
   KYB: 3
@@ -12751,141 +12784,66 @@ trigrams:
   ŤKY: 3
   ÝŽÍ: 3
   OŇU: 3
-  ÉLN: 3
   SDI: 3
-  YŽS: 3
-  RČC: 3
-  ŽTC: 3
-  KEÁ: 3
-  ŇŮŘ: 3
-  KLS: 3
-  LNC: 3
-  ĚMY: 3
-  ZJÁ: 3
-  DSF: 3
-  SFR: 3
-  CAH: 3
-  ÝŽĎ: 3
-  MFN: 3
-  SŘÍ: 3
-  VHA: 3
-  FEZ: 3
-  CŮP: 3
-  ZZV: 3
-  ÍMÍ: 3
-  TYX: 3
-  IDČ: 3
-  MPŘ: 3
-  ZEČ: 3
-  MLŮ: 3
-  MIU: 3
-  HTS: 3
-  AĎU: 3
-  FMI: 3
-  OFK: 3
-  KMÝ: 3
-  YMŮ: 3
-  RÉE: 3
-  ŮŇO: 3
-  OĎC: 3
-  ĎCE: 3
-  GDU: 3
-  DČT: 3
-  ŮTY: 3
   GDY: 3
-  AJH: 3
-  CSL: 3
-  PTL: 3
-  ČMU: 3
-  YFI: 3
-  ÁSČ: 3
-  DÝŘ: 3
-  ECP: 3
-  LŠÁ: 3
-  LKM: 3
-  FRÍ: 3
-  RÍS: 3
-  ÉVŮ: 3
-  UBV: 3
-  CUY: 3
-  UYP: 3
-  HCA: 3
-  YNH: 3
-  ŤAŘ: 3
-  RŽL: 3
-  RFA: 3
-  IČM: 3
-  AJB: 3
-  JBI: 3
-  NUŘ: 3
-  MÁÚ: 3
-  ÁÚC: 3
-  ĚPL: 3
-  ŮDÁ: 3
-  IHÉ: 3
-  AYI: 3
-  RČS: 3
-  JBĚ: 3
-  ÉDU: 3
-  ČIH: 3
-  NFU: 3
-  DŽA: 3
-  UZÉ: 3
-  TÓL: 3
-  ČUB: 3
-  JBA: 3
-  DYJ: 3
-  DDD: 3
-  JLK: 3
-  AFH: 3
-  FHA: 3
-  LČÁ: 3
-  AAP: 3
-  RAŘ: 3
-  YČÁ: 3
-  ŤKA: 3
-  ĚMK: 3
-  IŠÁ: 3
-  ŠMÁ: 3
-  AXN: 3
-  ÁMH: 3
-  FCE: 3
   AFK: 3
+  YNH: 3
   SIŇ: 3
   ÝVŮ: 3
   KÁH: 3
+  DŽA: 3
+  YČÁ: 3
   YGŘ: 3
+  ÁMH: 3
   HYJ: 3
+  AFH: 3
+  FHA: 3
   BČÁ: 3
   IDB: 3
   JIK: 3
+  DÝŘ: 3
+  UZÉ: 3
   ZÉM: 3
   MBÍ: 3
+  ŮDÁ: 3
   NDÚ: 3
+  JBA: 3
   ŽIH: 3
+  IČM: 3
+  IŠÁ: 3
   LYW: 3
   ÝTŮ: 3
   ZGR: 3
   EÚC: 3
+  ĚMK: 3
   RRM: 3
   ÝŇA: 3
+  CSL: 3
   ŇÁC: 3
   AAO: 3
   HEY: 3
+  YFI: 3
   CEG: 3
   JNŮ: 3
   EWE: 3
   EFF: 3
+  AJH: 3
+  AXN: 3
   AEH: 3
   LSÍ: 3
   ÝRC: 3
+  RČS: 3
+  RÉE: 3
+  ŤKA: 3
   YAB: 3
   FOB: 3
+  ÉDU: 3
   TEÓ: 3
   EÓZ: 3
   HÉŇ: 3
   ÉŇA: 3
   YGL: 3
+  UBV: 3
   ÁJŮ: 3
   SČA: 3
   WOV: 3
@@ -12894,12 +12852,15 @@ trigrams:
   ÍPC: 3
   DÓR: 3
   ÓRS: 3
+  RAŘ: 3
   ANM: 3
   AEJ: 3
   SIX: 3
   BYK: 3
+  AYI: 3
   YŽR: 3
   DOI: 3
+  IHÉ: 3
   OVŘ: 3
   ŮHS: 3
   HSÁ: 3
@@ -12907,19 +12868,58 @@ trigrams:
   MVÍ: 3
   DOF: 3
   YČC: 3
+  PTL: 3
   USH: 3
+  NUŘ: 3
   ŠPY: 3
+  MÁÚ: 3
+  ÁÚC: 3
+  RŽL: 3
   BRS: 3
+  LČÁ: 3
   EHB: 3
   ŽÍŘ: 3
   TOY: 3
   IAZ: 3
   ŠVY: 3
+  NFU: 3
   ŽBL: 3
   ÍTC: 3
+  DDD: 3
   ĚPÍ: 3
   ZHV: 3
   DHU: 3
+  ÁSČ: 3
+  ŮŇO: 3
+  OĎC: 3
+  ĎCE: 3
+  GDU: 3
+  DČT: 3
+  ŮTY: 3
+  ČMU: 3
+  ECP: 3
+  LŠÁ: 3
+  LKM: 3
+  FRÍ: 3
+  RÍS: 3
+  ÉVŮ: 3
+  CUY: 3
+  UYP: 3
+  HCA: 3
+  ŤAŘ: 3
+  RFA: 3
+  AJB: 3
+  JBI: 3
+  ĚPL: 3
+  JBĚ: 3
+  ČIH: 3
+  TÓL: 3
+  ČUB: 3
+  DYJ: 3
+  JLK: 3
+  AAP: 3
+  ŠMÁ: 3
+  FCE: 3
   HÁS: 3
   ŮTC: 3
   UJC: 3
@@ -12927,6 +12927,26 @@ trigrams:
   ĚPŮ: 3
   LTŮ: 3
   ZPN: 3
+  JHÁ: 3
+  JČÁ: 3
+  ZMB: 3
+  ÝŘO: 3
+  ÚLU: 3
+  UFS: 3
+  GGH: 3
+  TRŇ: 3
+  ÁVD: 3
+  BZD: 3
+  YXE: 3
+  ZTÉ: 3
+  ŠCÍ: 3
+  MÚL: 3
+  ÚLL: 3
+  ÍIL: 3
+  ÝPÁ: 3
+  VÓS: 3
+  ÓSN: 3
+  ÁUS: 3
   BRH: 3
   ĚČA: 3
   DĚH: 3
@@ -12938,10 +12958,8 @@ trigrams:
   AZH: 3
   ŽĎÁ: 3
   ĎÁR: 3
-  BZD: 3
   ŠLS: 3
   ŮTĚ: 3
-  ZMB: 3
   ĚVS: 3
   SSK: 3
   EŠY: 3
@@ -12968,7 +12986,6 @@ trigrams:
   JAÍ: 3
   GUB: 3
   RÍT: 3
-  ZTÉ: 3
   HUŮ: 3
   EŠŮ: 3
   KÚT: 3
@@ -12982,16 +12999,11 @@ trigrams:
   KIH: 3
   EÁM: 3
   RUF: 3
-  UFS: 3
   UIH: 3
-  ŠCÍ: 3
   DSÁ: 3
-  YXE: 3
   YŇT: 3
   HYE: 3
-  TRŇ: 3
   SUÁ: 3
-  JČÁ: 3
   IŘT: 3
   MUŤ: 3
   ZÍŘ: 3
@@ -13000,51 +13012,6 @@ trigrams:
   FEO: 3
   PPĚ: 3
   KŮČ: 3
-  ÁVD: 3
-  JHÁ: 3
-  ÝŘO: 3
-  ÚLU: 3
-  GGH: 3
-  MÚL: 3
-  ÚLL: 3
-  ÍIL: 3
-  ÝPÁ: 3
-  VÓS: 3
-  ÓSN: 3
-  ÁUS: 3
-  ÁĎO: 2
-  SEÁ: 2
-  LCL: 2
-  PLV: 2
-  YBÝ: 2
-  ŽIO: 2
-  XEG: 2
-  LIQ: 2
-  DAX: 2
-  ŘBĚ: 2
-  AFS: 2
-  FST: 2
-  ÝMH: 2
-  TÓG: 2
-  RRĚ: 2
-  RĚS: 2
-  ĚSO: 2
-  IÁŘ: 2
-  IRŮ: 2
-  AKÓ: 2
-  NÓT: 2
-  HEX: 2
-  XAM: 2
-  ABH: 2
-  BBÉ: 2
-  CEV: 2
-  TSI: 2
-  ROX: 2
-  KYD: 2
-  RSH: 2
-  CČE: 2
-  YŤT: 2
-  LUA: 2
   XHI: 2
   GST: 2
   ÁCP: 2
@@ -13098,6 +13065,39 @@ trigrams:
   ÚJM: 2
   AÁÁ: 2
   KBE: 2
+  ÁĎO: 2
+  SEÁ: 2
+  LCL: 2
+  PLV: 2
+  YBÝ: 2
+  ŽIO: 2
+  XEG: 2
+  LIQ: 2
+  DAX: 2
+  ŘBĚ: 2
+  AFS: 2
+  FST: 2
+  ÝMH: 2
+  TÓG: 2
+  RRĚ: 2
+  RĚS: 2
+  ĚSO: 2
+  IÁŘ: 2
+  IRŮ: 2
+  AKÓ: 2
+  NÓT: 2
+  HEX: 2
+  XAM: 2
+  ABH: 2
+  BBÉ: 2
+  CEV: 2
+  TSI: 2
+  ROX: 2
+  KYD: 2
+  RSH: 2
+  CČE: 2
+  YŤT: 2
+  LUA: 2
   KIU: 2
   PTŮ: 2
   TÓZ: 2
@@ -13354,6 +13354,63 @@ trigrams:
   GDÁ: 2
   DÁD: 2
   PIÁ: 2
+  CÍD: 2
+  ŤŽE: 2
+  BŮR: 2
+  AŘC: 2
+  ČÁN: 2
+  IŤT: 2
+  HŽT: 2
+  NŮT: 2
+  SOH: 2
+  OSZ: 2
+  DSC: 2
+  IRD: 2
+  MFA: 2
+  LDK: 2
+  LFG: 2
+  RCN: 2
+  ŽÁŘ: 2
+  ÉTH: 2
+  ŮLČ: 2
+  NUP: 2
+  ÝŽD: 2
+  NČT: 2
+  MÓR: 2
+  TÍL: 2
+  ŮŇU: 2
+  ŮCE: 2
+  ÝHŘ: 2
+  YAD: 2
+  HVU: 2
+  ÍFE: 2
+  LDÁ: 2
+  VSY: 2
+  MMR: 2
+  LEÍ: 2
+  JRÁ: 2
+  AFČ: 2
+  LDS: 2
+  YSR: 2
+  SÍF: 2
+  DVČ: 2
+  HRP: 2
+  CÁM: 2
+  JDÝ: 2
+  FEŠ: 2
+  ÁGE: 2
+  ŽŮV: 2
+  KRL: 2
+  ÍŘČ: 2
+  LCB: 2
+  CBU: 2
+  BYŠ: 2
+  NĚŠ: 2
+  OFM: 2
+  VUC: 2
+  IEŤ: 2
+  MÓJ: 2
+  TRF: 2
   GIQ: 2
   YVŘ: 2
   IČR: 2
@@ -13366,11 +13423,9 @@ trigrams:
   SÚC: 2
   ÚCA: 2
   DOŇ: 2
-  ÁGE: 2
   LGY: 2
   AŽÚ: 2
   ŽÚR: 2
-  LEÍ: 2
   ZUŠ: 2
   UIV: 2
   IMČ: 2
@@ -13394,7 +13449,6 @@ trigrams:
   IĎO: 2
   OOČ: 2
   NAŤ: 2
-  MÓR: 2
   GUÁ: 2
   DUŇ: 2
   OXU: 2
@@ -13420,72 +13474,186 @@ trigrams:
   NČK: 2
   ČAZ: 2
   ĚĎM: 2
-  CÍD: 2
-  ŤŽE: 2
-  BŮR: 2
-  AŘC: 2
-  ČÁN: 2
-  IŤT: 2
-  HŽT: 2
-  NŮT: 2
-  SOH: 2
-  OSZ: 2
-  DSC: 2
-  IRD: 2
-  MFA: 2
-  LDK: 2
-  LFG: 2
-  RCN: 2
-  ŽÁŘ: 2
-  ÉTH: 2
-  ŮLČ: 2
-  NUP: 2
-  ÝŽD: 2
-  NČT: 2
-  TÍL: 2
-  ŮŇU: 2
-  ŮCE: 2
-  ÝHŘ: 2
-  YAD: 2
-  HVU: 2
-  ÍFE: 2
-  LDÁ: 2
-  VSY: 2
-  MMR: 2
-  JRÁ: 2
-  AFČ: 2
-  LDS: 2
-  YSR: 2
-  SÍF: 2
-  DVČ: 2
-  HRP: 2
-  CÁM: 2
-  JDÝ: 2
-  FEŠ: 2
-  ŽŮV: 2
-  KRL: 2
-  ÍŘČ: 2
-  LCB: 2
-  CBU: 2
-  BYŠ: 2
-  NĚŠ: 2
-  OFM: 2
-  VUC: 2
-  IEŤ: 2
-  MÓJ: 2
-  TRF: 2
-  ÉJA: 2
-  ZÝM: 2
-  JČC: 2
-  ĎAU: 2
-  JŘE: 2
-  OMČ: 2
+  JŮŘ: 2
+  ŤAF: 2
+  KRR: 2
+  FFF: 2
+  JŮŮ: 2
+  MYN: 2
+  USÉ: 2
+  JŽH: 2
+  ĎKÁ: 2
+  ZTJ: 2
+  ÝVU: 2
+  YŤU: 2
+  LTM: 2
+  JSÁ: 2
+  HÝT: 2
+  PČN: 2
+  ÝRŠ: 2
+  DIÉ: 2
+  ŽVÍ: 2
+  ČOŠ: 2
+  ETČ: 2
+  WEB: 2
+  NCÁ: 2
+  ÍMP: 2
+  IBŇ: 2
+  BŇA: 2
+  VÉN: 2
+  SKD: 2
+  ÉBO: 2
+  RŠR: 2
+  LHN: 2
+  VUŘ: 2
+  ŇÁS: 2
+  ŤUL: 2
+  ŽÍD: 2
+  ÝŠU: 2
+  LHŘ: 2
+  EKŇ: 2
+  ŇUB: 2
+  KTV: 2
+  MĚŽ: 2
+  ÉRC: 2
+  LCK: 2
+  ŘIF: 2
+  ZČL: 2
+  CÁH: 2
+  KOE: 2
+  OLJ: 2
+  JTH: 2
+  VJÁ: 2
+  OWO: 2
+  ÁŠU: 2
   SDO: 2
+  UOL: 2
+  HIČ: 2
+  VOF: 2
+  LLN: 2
+  LÓŇ: 2
+  ÓŇA: 2
+  VÝŇ: 2
+  ÁCS: 2
+  SZT: 2
+  GEW: 2
+  TDO: 2
+  YGA: 2
+  PNÓ: 2
+  NÓZ: 2
+  FŮM: 2
+  EYR: 2
+  AEA: 2
+  ŽEČ: 2
+  ČÍŽ: 2
+  IEŽ: 2
+  FKÁ: 2
+  ÚCE: 2
+  KWE: 2
+  FEF: 2
+  NŠP: 2
+  ADW: 2
+  SDE: 2
+  AJÉ: 2
+  JÉZ: 2
+  RIŽ: 2
+  GIJ: 2
+  XUL: 2
+  ŠOK: 2
+  JČC: 2
+  ČUL: 2
+  EIU: 2
+  ÚZC: 2
+  XPI: 2
+  ŤKO: 2
+  UIA: 2
+  YFY: 2
+  CHF: 2
+  EUG: 2
+  TŠŤ: 2
+  FEH: 2
+  TOO: 2
+  HIÍ: 2
+  VPŮ: 2
+  ÝHY: 2
+  HÍM: 2
+  WEC: 2
+  MPÍ: 2
+  BRT: 2
+  ZUÁ: 2
+  ÉFO: 2
+  ÝMN: 2
+  ÓMO: 2
+  LDH: 2
+  MKD: 2
+  ČUR: 2
+  ŠPÝ: 2
+  ŽIÍ: 2
+  ÓMĚ: 2
+  EŽŮ: 2
+  PUG: 2
+  CCY: 2
+  ÉFŮ: 2
+  RTČ: 2
+  RHÓ: 2
+  ÉFU: 2
+  IXI: 2
+  AOC: 2
+  PAQ: 2
+  YVN: 2
+  JCT: 2
+  TOE: 2
+  YŘÚ: 2
+  ŘÚH: 2
+  AEX: 2
+  ĎAU: 2
+  KÉR: 2
+  ROÓ: 2
+  OÓN: 2
+  ÓNT: 2
+  FOI: 2
+  YŠM: 2
+  KČU: 2
+  ĚDÚ: 2
+  DÚÚ: 2
+  ÚÚÚ: 2
+  MŠŮ: 2
+  EŽM: 2
+  ÓZY: 2
+  BSÍ: 2
+  SSR: 2
   KRŤ: 2
   RŤT: 2
+  VVV: 2
+  NNN: 2
+  ŇŮV: 2
+  DÉJ: 2
+  ÉJE: 2
+  ZŠR: 2
+  ÚZO: 2
+  CQU: 2
+  ČOR: 2
+  GIW: 2
+  IZŮ: 2
+  EIW: 2
+  IWU: 2
+  WUŠ: 2
+  AŠG: 2
+  ŠGA: 2
+  ABZ: 2
+  UGH: 2
+  ŇKL: 2
+  AAÁ: 2
+  UČH: 2
+  ČHU: 2
+  UKČ: 2
+  ZSL: 2
+  ÉJA: 2
+  ZÝM: 2
+  JŘE: 2
+  OMČ: 2
   ĚŠM: 2
   UNJ: 2
-  ŽEČ: 2
   DPÁ: 2
   ÁTD: 2
   TDE: 2
@@ -13500,8 +13668,6 @@ trigrams:
   ČÍL: 2
   ŮNN: 2
   MHÁ: 2
-  JCT: 2
-  BSÍ: 2
   OSH: 2
   HYR: 2
   LBÝ: 2
@@ -13514,35 +13680,19 @@ trigrams:
   ZŽI: 2
   REQ: 2
   EŘT: 2
-  SZT: 2
-  PAQ: 2
-  MPÍ: 2
   HUI: 2
   UWE: 2
-  EUG: 2
-  UGH: 2
   WOU: 2
-  MYN: 2
   NÝS: 2
-  ZŠR: 2
-  YVN: 2
-  MĚŽ: 2
   BYN: 2
   OŤT: 2
-  ŠOK: 2
   VLŇ: 2
   YGE: 2
-  EKŇ: 2
-  ŇUB: 2
   ZIP: 2
-  VUŘ: 2
-  ÚZC: 2
-  FKÁ: 2
   VAY: 2
   BUP: 2
   UPH: 2
   PHT: 2
-  ZSL: 2
   ÓDA: 2
   VUI: 2
   LŇA: 2
@@ -13554,30 +13704,20 @@ trigrams:
   PPR: 2
   ČOF: 2
   IRV: 2
-  RŠR: 2
   DIŤ: 2
-  ÉFO: 2
   ČŮR: 2
-  KÉR: 2
-  ÉBO: 2
   FÍM: 2
-  DIÉ: 2
   ĎUR: 2
   STT: 2
-  NŠP: 2
   NÓB: 2
   ÓBL: 2
   TÚŘ: 2
   ŠTÓ: 2
   XHU: 2
-  ÝVU: 2
-  FEF: 2
   LUŤ: 2
-  PUG: 2
   CAĎ: 2
   ÓNC: 2
   YSW: 2
-  ÍMP: 2
   KUV: 2
   USR: 2
   IOU: 2
@@ -13587,150 +13727,10 @@ trigrams:
   CLX: 2
   LXV: 2
   WOT: 2
-  CHF: 2
   ÚTA: 2
   ŮŽN: 2
-  ÝHY: 2
   RÝB: 2
   LDŘ: 2
-  AAÁ: 2
-  MKD: 2
-  JŮŘ: 2
-  ŤAF: 2
-  KRR: 2
-  FFF: 2
-  JŮŮ: 2
-  USÉ: 2
-  JŽH: 2
-  ĎKÁ: 2
-  ZTJ: 2
-  YŤU: 2
-  LTM: 2
-  JSÁ: 2
-  HÝT: 2
-  PČN: 2
-  ÝRŠ: 2
-  ŽVÍ: 2
-  ČOŠ: 2
-  ETČ: 2
-  WEB: 2
-  NCÁ: 2
-  IBŇ: 2
-  BŇA: 2
-  VÉN: 2
-  SKD: 2
-  LHN: 2
-  ŇÁS: 2
-  ŤUL: 2
-  ŽÍD: 2
-  ÝŠU: 2
-  LHŘ: 2
-  KTV: 2
-  ÉRC: 2
-  LCK: 2
-  ŘIF: 2
-  ZČL: 2
-  CÁH: 2
-  KOE: 2
-  OLJ: 2
-  JTH: 2
-  VJÁ: 2
-  OWO: 2
-  ÁŠU: 2
-  UOL: 2
-  HIČ: 2
-  VOF: 2
-  LLN: 2
-  LÓŇ: 2
-  ÓŇA: 2
-  VÝŇ: 2
-  ÁCS: 2
-  GEW: 2
-  TDO: 2
-  YGA: 2
-  PNÓ: 2
-  NÓZ: 2
-  FŮM: 2
-  EYR: 2
-  AEA: 2
-  ČÍŽ: 2
-  IEŽ: 2
-  ÚCE: 2
-  KWE: 2
-  ADW: 2
-  SDE: 2
-  AJÉ: 2
-  JÉZ: 2
-  RIŽ: 2
-  GIJ: 2
-  XUL: 2
-  ČUL: 2
-  EIU: 2
-  XPI: 2
-  ŤKO: 2
-  UIA: 2
-  YFY: 2
-  TŠŤ: 2
-  FEH: 2
-  TOO: 2
-  HIÍ: 2
-  VPŮ: 2
-  HÍM: 2
-  WEC: 2
-  BRT: 2
-  ZUÁ: 2
-  ÝMN: 2
-  ÓMO: 2
-  LDH: 2
-  ČUR: 2
-  ŠPÝ: 2
-  ŽIÍ: 2
-  ÓMĚ: 2
-  EŽŮ: 2
-  CCY: 2
-  ÉFŮ: 2
-  RTČ: 2
-  RHÓ: 2
-  ÉFU: 2
-  IXI: 2
-  AOC: 2
-  TOE: 2
-  YŘÚ: 2
-  ŘÚH: 2
-  AEX: 2
-  ROÓ: 2
-  OÓN: 2
-  ÓNT: 2
-  FOI: 2
-  YŠM: 2
-  KČU: 2
-  ĚDÚ: 2
-  DÚÚ: 2
-  ÚÚÚ: 2
-  MŠŮ: 2
-  EŽM: 2
-  ÓZY: 2
-  SSR: 2
-  VVV: 2
-  NNN: 2
-  ŇŮV: 2
-  DÉJ: 2
-  ÉJE: 2
-  ÚZO: 2
-  CQU: 2
-  ČOR: 2
-  GIW: 2
-  IZŮ: 2
-  EIW: 2
-  IWU: 2
-  WUŠ: 2
-  AŠG: 2
-  ŠGA: 2
-  ABZ: 2
-  ŇKL: 2
-  UČH: 2
-  ČHU: 2
-  UKČ: 2
   ÍBN: 2
   ŽLE: 2
   FUČ: 2
@@ -13739,18 +13739,81 @@ trigrams:
   ŽMA: 2
   TIŮ: 2
   IŤS: 2
+  RYŇ: 2
+  ANR: 2
+  CPI: 2
+  ŠŠA: 2
   JÁŤ: 2
+  ŮRŠ: 2
+  ITÚ: 2
+  JÓZ: 2
+  ŽEŽ: 2
+  UNŠ: 2
+  RPT: 2
+  IAI: 2
+  EĎN: 2
+  ĎNO: 2
+  FÚR: 2
+  ÚRI: 2
+  PYJ: 2
+  FAD: 2
+  VŤA: 2
+  SŠL: 2
+  ÚTK: 2
+  ESŽ: 2
+  PYL: 2
+  ÍŠL: 2
+  ÝŠŮ: 2
+  OKK: 2
+  UGG: 2
+  ILR: 2
+  UTŠ: 2
+  LJE: 2
+  OUA: 2
+  COG: 2
+  IUN: 2
+  IHV: 2
+  BĚŘ: 2
+  UĎI: 2
+  VTÉ: 2
+  GBI: 2
+  ÓLŮ: 2
+  OČL: 2
+  LHČ: 2
+  IBŘ: 2
+  ČÍB: 2
+  VIB: 2
+  OGÉ: 2
+  EŠÁ: 2
+  ÝKN: 2
+  EĎK: 2
+  ŘVU: 2
+  ŠIA: 2
+  LDV: 2
+  VUM: 2
+  ŽIP: 2
+  ŤAR: 2
+  TTÁ: 2
+  DUX: 2
+  SSL: 2
+  UFL: 2
+  JKŘ: 2
+  OIU: 2
+  ÓSU: 2
+  ĚŠŇ: 2
+  JÚP: 2
+  ÁZŇ: 2
+  GKI: 2
+  ĚTŇ: 2
+  SŤU: 2
   ÍHŘ: 2
   CPO: 2
-  VIB: 2
   UMC: 2
   UFŮ: 2
-  IBŘ: 2
   ÁRÓ: 2
   ŠOR: 2
   ÓWA: 2
   TÁF: 2
-  UNŠ: 2
   NŠO: 2
   HMB: 2
   BLŠ: 2
@@ -13758,19 +13821,16 @@ trigrams:
   EGÉ: 2
   GÉŘ: 2
   ZDŠ: 2
-  ŤAR: 2
   ŠOH: 2
   ŠIE: 2
   MQU: 2
   MŮN: 2
   ŮNS: 2
-  ŠIA: 2
   BTÉ: 2
   EÚA: 2
   LPU: 2
   GDI: 2
   ICR: 2
-  RPT: 2
   UKM: 2
   AŘČ: 2
   ÚŠA: 2
@@ -13786,8 +13846,6 @@ trigrams:
   CMO: 2
   UDG: 2
   DGO: 2
-  UFL: 2
-  SŤU: 2
   ZUY: 2
   ÍMŮ: 2
   HŠA: 2
@@ -13814,24 +13872,18 @@ trigrams:
   KBA: 2
   BEÁ: 2
   OŠB: 2
-  GBI: 2
   NAY: 2
   ÝČC: 2
   AOV: 2
-  FAD: 2
   RYD: 2
   RŮR: 2
   ŮRV: 2
   HOŇ: 2
-  ĚŠŇ: 2
   ÁNČ: 2
-  BĚŘ: 2
   RÓB: 2
-  CPI: 2
   BIÍ: 2
   OSŘ: 2
   ZŇŮ: 2
-  EŠÁ: 2
   ŘEŇ: 2
   ZČT: 2
   BBO: 2
@@ -13839,95 +13891,10 @@ trigrams:
   PÁF: 2
   ÁFU: 2
   AIU: 2
-  ÓSU: 2
-  ESŽ: 2
   IĎM: 2
   ICG: 2
   CGO: 2
   ZÚP: 2
-  RYŇ: 2
-  ANR: 2
-  ŠŠA: 2
-  ŮRŠ: 2
-  ITÚ: 2
-  JÓZ: 2
-  ŽEŽ: 2
-  IAI: 2
-  EĎN: 2
-  ĎNO: 2
-  FÚR: 2
-  ÚRI: 2
-  PYJ: 2
-  VŤA: 2
-  SŠL: 2
-  ÚTK: 2
-  PYL: 2
-  ÍŠL: 2
-  ÝŠŮ: 2
-  OKK: 2
-  UGG: 2
-  ILR: 2
-  UTŠ: 2
-  LJE: 2
-  OUA: 2
-  COG: 2
-  IUN: 2
-  IHV: 2
-  UĎI: 2
-  VTÉ: 2
-  ÓLŮ: 2
-  OČL: 2
-  LHČ: 2
-  ČÍB: 2
-  OGÉ: 2
-  ÝKN: 2
-  EĎK: 2
-  ŘVU: 2
-  LDV: 2
-  VUM: 2
-  ŽIP: 2
-  TTÁ: 2
-  DUX: 2
-  SSL: 2
-  JKŘ: 2
-  OIU: 2
-  JÚP: 2
-  ÁZŇ: 2
-  GKI: 2
-  ĚTŇ: 2
-  SLB: 1
-  LYL: 1
-  UUZ: 1
-  ŘÁĎ: 1
-  UVÝ: 1
-  TAQ: 1
-  MMU: 1
-  AIŮ: 1
-  FDO: 1
-  MÉŘ: 1
-  EAF: 1
-  VCC: 1
-  CLV: 1
-  ÁČT: 1
-  NTČ: 1
-  TČL: 1
-  ÝCL: 1
-  CPH: 1
-  ENÓ: 1
-  ÓTR: 1
-  BHÉ: 1
-  ŮBO: 1
-  RRÉ: 1
-  SVČ: 1
-  VČD: 1
-  ČDČ: 1
-  SÍI: 1
-  ÍIG: 1
-  RÉA: 1
-  URF: 1
-  RFÉ: 1
-  ECČ: 1
-  EXL: 1
   AWE: 1
   LTD: 1
   RSM: 1
@@ -14022,6 +13989,39 @@ trigrams:
   ÍCU: 1
   IKH: 1
   ÓÓÓ: 1
+  SLB: 1
+  LYL: 1
+  UUZ: 1
+  ŘÁĎ: 1
+  UVÝ: 1
+  TAQ: 1
+  MMU: 1
+  AIŮ: 1
+  FDO: 1
+  MÉŘ: 1
+  EAF: 1
+  VCC: 1
+  CLV: 1
+  ÁČT: 1
+  NTČ: 1
+  TČL: 1
+  ÝCL: 1
+  CPH: 1
+  ENÓ: 1
+  ÓTR: 1
+  BHÉ: 1
+  ŮBO: 1
+  RRÉ: 1
+  SVČ: 1
+  VČD: 1
+  ČDČ: 1
+  SÍI: 1
+  ÍIG: 1
+  RÉA: 1
+  URF: 1
+  RFÉ: 1
+  ECČ: 1
+  EXL: 1
   AOČ: 1
   YŘC: 1
   RČR: 1
@@ -14432,6 +14432,68 @@ trigrams:
   WÁD: 1
   VNŮ: 1
   UKD: 1
+  ŤAK: 1
+  IŤŽ: 1
+  ZOM: 1
+  YDÝ: 1
+  JŤŽ: 1
+  EÓN: 1
+  KYO: 1
+  VDR: 1
+  TYŽ: 1
+  LNN: 1
+  OMÓ: 1
+  JFÁ: 1
+  IBT: 1
+  ŽĎŮ: 1
+  NZL: 1
+  UMÓ: 1
+  LOÚ: 1
+  OÚŘ: 1
+  BMÍ: 1
+  LYV: 1
+  RPL: 1
+  DŠU: 1
+  BŠI: 1
+  OŮM: 1
+  NNŤ: 1
+  AIĎ: 1
+  AČČ: 1
+  ĚHK: 1
+  KŽP: 1
+  HLW: 1
+  LWE: 1
+  JPY: 1
+  JKN: 1
+  SRČ: 1
+  ŮČC: 1
+  IŽS: 1
+  ŽSÍ: 1
+  NBÁ: 1
+  ÁJU: 1
+  UGR: 1
+  JBD: 1
+  FČÍ: 1
+  ZĎO: 1
+  ĎOB: 1
+  CÍZ: 1
+  ZŽM: 1
+  ČÁČ: 1
+  JCÁ: 1
+  TWA: 1
+  ÍCÁ: 1
+  EĎJ: 1
+  ĎJE: 1
+  SEW: 1
+  CVU: 1
+  JLY: 1
+  LBÉ: 1
+  URQ: 1
+  RHC: 1
+  HCÁ: 1
+  SŠE: 1
+  SLÚ: 1
+  LÚŽ: 1
   THČ: 1
   HČN: 1
   FRŮ: 1
@@ -14553,267 +14615,6 @@ trigrams:
   AUH: 1
   TŘY: 1
   ŘYT: 1
-  ŤAK: 1
-  IŤŽ: 1
-  ZOM: 1
-  YDÝ: 1
-  JŤŽ: 1
-  EÓN: 1
-  KYO: 1
-  VDR: 1
-  TYŽ: 1
-  LNN: 1
-  OMÓ: 1
-  JFÁ: 1
-  IBT: 1
-  ŽĎŮ: 1
-  NZL: 1
-  UMÓ: 1
-  LOÚ: 1
-  OÚŘ: 1
-  BMÍ: 1
-  LYV: 1
-  RPL: 1
-  DŠU: 1
-  BŠI: 1
-  OŮM: 1
-  NNŤ: 1
-  AIĎ: 1
-  AČČ: 1
-  ĚHK: 1
-  KŽP: 1
-  HLW: 1
-  LWE: 1
-  JPY: 1
-  JKN: 1
-  SRČ: 1
-  ŮČC: 1
-  IŽS: 1
-  ŽSÍ: 1
-  NBÁ: 1
-  ÁJU: 1
-  UGR: 1
-  JBD: 1
-  FČÍ: 1
-  ZĎO: 1
-  ĎOB: 1
-  CÍZ: 1
-  ZŽM: 1
-  ČÁČ: 1
-  JCÁ: 1
-  TWA: 1
-  ÍCÁ: 1
-  EĎJ: 1
-  ĎJE: 1
-  SEW: 1
-  CVU: 1
-  JLY: 1
-  LBÉ: 1
-  URQ: 1
-  RHC: 1
-  HCÁ: 1
-  SŠE: 1
-  SLÚ: 1
-  LÚŽ: 1
-  POQ: 1
-  BÉJ: 1
-  ZÉH: 1
-  CLŮ: 1
-  ETP: 1
-  TPĚ: 1
-  CÉE: 1
-  ÝHA: 1
-  EMČ: 1
-  ÁVČ: 1
-  NŽŮ: 1
-  LÍĎ: 1
-  BYI: 1
-  ASĎ: 1
-  SĎA: 1
-  HÝV: 1
-  DCV: 1
-  SÍJ: 1
-  JJM: 1
-  AHJ: 1
-  HJM: 1
-  DCS: 1
-  CST: 1
-  HŤS: 1
-  ĚŇM: 1
-  ŠCŮ: 1
-  ZVT: 1
-  JRN: 1
-  UJJ: 1
-  PCS: 1
-  IHŮ: 1
-  MMŮ: 1
-  OŽĎ: 1
-  LSC: 1
-  TYZ: 1
-  SJI: 1
-  UMH: 1
-  JCU: 1
-  HČO: 1
-  RPV: 1
-  CLÁ: 1
-  LÉĎ: 1
-  ZČA: 1
-  FOE: 1
-  POÚ: 1
-  ÓSR: 1
-  ĚŤO: 1
-  RVT: 1
-  EZŽ: 1
-  ČAM: 1
-  THM: 1
-  JZP: 1
-  EYS: 1
-  NYI: 1
-  CRÉ: 1
-  ŽAR: 1
-  JNH: 1
-  GVI: 1
-  LTŘ: 1
-  EJG: 1
-  JGR: 1
-  GHŮ: 1
-  ESÝ: 1
-  RDW: 1
-  ĚŽŇ: 1
-  ŽŇŮ: 1
-  ČŇÁ: 1
-  MEV: 1
-  UWS: 1
-  ZWO: 1
-  KAŤ: 1
-  YEU: 1
-  LLD: 1
-  HUU: 1
-  UUR: 1
-  NRŮ: 1
-  OOG: 1
-  EMZ: 1
-  MZL: 1
-  NSZ: 1
-  OLW: 1
-  ČMA: 1
-  YRÓ: 1
-  LŇÁ: 1
-  CYO: 1
-  VUÍ: 1
-  AYG: 1
-  AÁL: 1
-  TZJ: 1
-  AKJ: 1
-  ŘTL: 1
-  ADÚ: 1
-  ÚRŮ: 1
-  IKÓ: 1
-  VÍB: 1
-  ŽÉŘ: 1
-  AWI: 1
-  ICS: 1
-  CSA: 1
-  AWÉ: 1
-  WÉH: 1
-  LFK: 1
-  GLÁ: 1
-  IOF: 1
-  ZIŘ: 1
-  ĚLŇ: 1
-  ÁNÁ: 1
-  YEA: 1
-  ÁFY: 1
-  IXK: 1
-  XKR: 1
-  EŤÁ: 1
-  ŤÁŘ: 1
-  RÉP: 1
-  ŘCO: 1
-  PHY: 1
-  ĚLP: 1
-  SČU: 1
-  EYM: 1
-  EFÚ: 1
-  RVC: 1
-  NDÉ: 1
-  DÉN: 1
-  KÝB: 1
-  JFŮ: 1
-  ČOP: 1
-  CHČ: 1
-  IHŘ: 1
-  ZFI: 1
-  ŠRÚ: 1
-  YLC: 1
-  AJG: 1
-  JGL: 1
-  CÁC: 1
-  CME: 1
-  MPN: 1
-  ASZ: 1
-  SZU: 1
-  YNV: 1
-  TÓT: 1
-  ÓTH: 1
-  IMŘ: 1
-  ÉRG: 1
-  TBC: 1
-  NTD: 1
-  TDI: 1
-  INR: 1
-  BRÓ: 1
-  YPÉ: 1
-  UCJ: 1
-  FRM: 1
-  YŽO: 1
-  KYH: 1
-  BHÚ: 1
-  HÚT: 1
-  ÚTÁ: 1
-  ČAF: 1
-  EPD: 1
-  PDE: 1
-  GOK: 1
-  PTK: 1
-  IVZ: 1
-  PHL: 1
-  UŤK: 1
-  UGÉ: 1
-  GÉT: 1
-  ÉMÁ: 1
-  RCL: 1
-  HTŘ: 1
-  SŮB: 1
-  ŮBK: 1
-  LŠU: 1
-  ÝZU: 1
-  ZVÉ: 1
-  OLŽ: 1
-  EŇK: 1
-  ONL: 1
-  NLY: 1
-  RĎÁ: 1
-  ĎÁS: 1
-  FÁS: 1
-  VÝF: 1
-  ÝFU: 1
-  YŘT: 1
-  ŘTA: 1
-  NRI: 1
-  ÁRJ: 1
-  HFE: 1
-  RIŇ: 1
-  WOM: 1
-  MRY: 1
-  ÁGL: 1
-  ŮŠU: 1
-  ZLK: 1
-  ŇOM: 1
-  UFÍ: 1
-  ČUN: 1
-  ŠÓF: 1
-  ÓFL: 1
   ÍČÁ: 1
   ÍCA: 1
   RRŤ: 1
@@ -15149,6 +14950,205 @@ trigrams:
   RRT: 1
   RNŠ: 1
   PŠŠ: 1
+  POQ: 1
+  BÉJ: 1
+  ZÉH: 1
+  CLŮ: 1
+  ETP: 1
+  TPĚ: 1
+  CÉE: 1
+  ÝHA: 1
+  EMČ: 1
+  ÁVČ: 1
+  NŽŮ: 1
+  LÍĎ: 1
+  BYI: 1
+  ASĎ: 1
+  SĎA: 1
+  HÝV: 1
+  DCV: 1
+  SÍJ: 1
+  JJM: 1
+  AHJ: 1
+  HJM: 1
+  DCS: 1
+  CST: 1
+  HŤS: 1
+  ĚŇM: 1
+  ŠCŮ: 1
+  ZVT: 1
+  JRN: 1
+  UJJ: 1
+  PCS: 1
+  IHŮ: 1
+  MMŮ: 1
+  OŽĎ: 1
+  LSC: 1
+  TYZ: 1
+  SJI: 1
+  UMH: 1
+  JCU: 1
+  HČO: 1
+  RPV: 1
+  CLÁ: 1
+  LÉĎ: 1
+  ZČA: 1
+  FOE: 1
+  POÚ: 1
+  ÓSR: 1
+  ĚŤO: 1
+  RVT: 1
+  EZŽ: 1
+  ČAM: 1
+  THM: 1
+  JZP: 1
+  EYS: 1
+  NYI: 1
+  CRÉ: 1
+  ŽAR: 1
+  JNH: 1
+  GVI: 1
+  LTŘ: 1
+  EJG: 1
+  JGR: 1
+  GHŮ: 1
+  ESÝ: 1
+  RDW: 1
+  ĚŽŇ: 1
+  ŽŇŮ: 1
+  ČŇÁ: 1
+  MEV: 1
+  UWS: 1
+  ZWO: 1
+  KAŤ: 1
+  YEU: 1
+  LLD: 1
+  HUU: 1
+  UUR: 1
+  NRŮ: 1
+  OOG: 1
+  EMZ: 1
+  MZL: 1
+  NSZ: 1
+  OLW: 1
+  ČMA: 1
+  YRÓ: 1
+  LŇÁ: 1
+  CYO: 1
+  VUÍ: 1
+  AYG: 1
+  AÁL: 1
+  TZJ: 1
+  AKJ: 1
+  ŘTL: 1
+  ADÚ: 1
+  ÚRŮ: 1
+  IKÓ: 1
+  VÍB: 1
+  ŽÉŘ: 1
+  AWI: 1
+  ICS: 1
+  CSA: 1
+  AWÉ: 1
+  WÉH: 1
+  LFK: 1
+  GLÁ: 1
+  IOF: 1
+  ZIŘ: 1
+  ĚLŇ: 1
+  ÁNÁ: 1
+  YEA: 1
+  ÁFY: 1
+  IXK: 1
+  XKR: 1
+  EŤÁ: 1
+  ŤÁŘ: 1
+  RÉP: 1
+  ŘCO: 1
+  PHY: 1
+  ĚLP: 1
+  SČU: 1
+  EYM: 1
+  EFÚ: 1
+  RVC: 1
+  NDÉ: 1
+  DÉN: 1
+  KÝB: 1
+  JFŮ: 1
+  ČOP: 1
+  CHČ: 1
+  IHŘ: 1
+  ZFI: 1
+  ŠRÚ: 1
+  YLC: 1
+  AJG: 1
+  JGL: 1
+  CÁC: 1
+  CME: 1
+  MPN: 1
+  ASZ: 1
+  SZU: 1
+  YNV: 1
+  TÓT: 1
+  ÓTH: 1
+  IMŘ: 1
+  ÉRG: 1
+  TBC: 1
+  NTD: 1
+  TDI: 1
+  INR: 1
+  BRÓ: 1
+  YPÉ: 1
+  UCJ: 1
+  FRM: 1
+  YŽO: 1
+  KYH: 1
+  BHÚ: 1
+  HÚT: 1
+  ÚTÁ: 1
+  ČAF: 1
+  EPD: 1
+  PDE: 1
+  GOK: 1
+  PTK: 1
+  IVZ: 1
+  PHL: 1
+  UŤK: 1
+  UGÉ: 1
+  GÉT: 1
+  ÉMÁ: 1
+  RCL: 1
+  HTŘ: 1
+  SŮB: 1
+  ŮBK: 1
+  LŠU: 1
+  ÝZU: 1
+  ZVÉ: 1
+  OLŽ: 1
+  EŇK: 1
+  ONL: 1
+  NLY: 1
+  RĎÁ: 1
+  ĎÁS: 1
+  FÁS: 1
+  VÝF: 1
+  ÝFU: 1
+  YŘT: 1
+  ŘTA: 1
+  NRI: 1
+  ÁRJ: 1
+  HFE: 1
+  RIŇ: 1
+  WOM: 1
+  MRY: 1
+  ÁGL: 1
+  ŮŠU: 1
+  ZLK: 1
+  ŇOM: 1
+  UFÍ: 1
+  ČUN: 1
+  ŠÓF: 1
+  ÓFL: 1
   YŽL: 1
   AŤK: 1
   LFŮ: 1
@@ -15170,280 +15170,6 @@ trigrams:
   ÍKK: 1
   KKD: 1
   BTU: 1
-  ŇMO: 1
-  IHŠ: 1
-  HŠI: 1
-  ŽÍŤ: 1
-  ÁRČ: 1
-  ÚNĚ: 1
-  JKV: 1
-  ČJA: 1
-  ĚPT: 1
-  ÚŠI: 1
-  YPŠ: 1
-  ĚŤK: 1
-  ŤKL: 1
-  ÍSŮ: 1
-  RÝŇ: 1
-  RNB: 1
-  ÝPN: 1
-  AZS: 1
-  MIP: 1
-  PŘŮ: 1
-  ÁKM: 1
-  ÓGO: 1
-  ÓWŮ: 1
-  WŮV: 1
-  ÁFL: 1
-  MŮŘ: 1
-  TĚŤ: 1
-  ŽOF: 1
-  MÝŤ: 1
-  RŠŇ: 1
-  ICB: 1
-  CBE: 1
-  JŠU: 1
-  OŤB: 1
-  ŤBO: 1
-  BOŇ: 1
-  ČŮJ: 1
-  ÝČO: 1
-  ÚDN: 1
-  DNÚ: 1
-  YZM: 1
-  OTÚ: 1
-  TÚČ: 1
-  KEŽ: 1
-  ŠUH: 1
-  DSY: 1
-  OHÚ: 1
-  HÚC: 1
-  ÚCI: 1
-  MHE: 1
-  NYD: 1
-  UŇO: 1
-  BRŤ: 1
-  LIŇ: 1
-  WÉW: 1
-  ÉWO: 1
-  STW: 1
-  TWJ: 1
-  WZD: 1
-  MDC: 1
-  DCC: 1
-  CCX: 1
-  CXL: 1
-  PEŤ: 1
-  JÚR: 1
-  OIT: 1
-  AŽJ: 1
-  ŽJE: 1
-  EDŇ: 1
-  DŇÁ: 1
-  ÉNÍ: 1
-  IHP: 1
-  HPÍ: 1
-  DSB: 1
-  YFR: 1
-  OWR: 1
-  XOS: 1
-  ZCA: 1
-  ATQ: 1
-  TQU: 1
-  AMQ: 1
-  EMQ: 1
-  ÝTS: 1
-  ŠTŮ: 1
-  NÓD: 1
-  EÁB: 1
-  MEB: 1
-  ZOA: 1
-  DAÁ: 1
-  AÁH: 1
-  JEG: 1
-  OVM: 1
-  FNA: 1
-  ŮLŠ: 1
-  GEK: 1
-  ZŽV: 1
-  ÚŠS: 1
-  RIŮ: 1
-  FUŮ: 1
-  DIŮ: 1
-  KAE: 1
-  FSI: 1
-  KIŮ: 1
-  UŘM: 1
-  UFĚ: 1
-  UJS: 1
-  BMU: 1
-  MIŮ: 1
-  MZU: 1
-  MUF: 1
-  YČT: 1
-  EŠM: 1
-  VAO: 1
-  UMT: 1
-  KFA: 1
-  ŠIO: 1
-  AFĚ: 1
-  ZUŮ: 1
-  MÓA: 1
-  EEŠ: 1
-  ŤOC: 1
-  EIŘ: 1
-  PUY: 1
-  FMO: 1
-  TŠA: 1
-  ŠBI: 1
-  BDŮ: 1
-  ÁFA: 1
-  IFS: 1
-  FSA: 1
-  RCY: 1
-  MÉŠ: 1
-  ÉŠA: 1
-  IŠY: 1
-  CAÍ: 1
-  ÚTY: 1
-  ÁŤA: 1
-  EFC: 1
-  FCI: 1
-  DÁA: 1
-  OFŠ: 1
-  FŠT: 1
-  TJI: 1
-  ILZ: 1
-  AHK: 1
-  ŠOC: 1
-  IFH: 1
-  FHI: 1
-  HIŮ: 1
-  HDO: 1
-  OOV: 1
-  JEO: 1
-  ECB: 1
-  CBO: 1
-  IŠH: 1
-  ŠHO: 1
-  ŠÚU: 1
-  OHG: 1
-  HGA: 1
-  ICJ: 1
-  FUF: 1
-  IBJ: 1
-  BJU: 1
-  IFD: 1
-  FDE: 1
-  IMZ: 1
-  MZO: 1
-  OKH: 1
-  IAH: 1
-  EIŮ: 1
-  EKB: 1
-  ŠUÚ: 1
-  UÚV: 1
-  IAO: 1
-  ŠSI: 1
-  EŠC: 1
-  AGP: 1
-  GPI: 1
-  NUY: 1
-  ŠSA: 1
-  HZA: 1
-  GIŠ: 1
-  NJI: 1
-  UOU: 1
-  UVZ: 1
-  DUY: 1
-  AGT: 1
-  ŮŽC: 1
-  EZF: 1
-  IHÍ: 1
-  HÍÍ: 1
-  FÍŠ: 1
-  DFR: 1
-  ÚŠE: 1
-  LYŘ: 1
-  YSB: 1
-  ABÚ: 1
-  ROĎ: 1
-  ŮLC: 1
-  ŠAZ: 1
-  ÝDO: 1
-  UTČ: 1
-  OHV: 1
-  AMÚ: 1
-  PIŇ: 1
-  ŠOY: 1
-  BYB: 1
-  ÉBS: 1
-  CÁŠ: 1
-  ÁGA: 1
-  RPŮ: 1
-  AKÚ: 1
-  DEŮ: 1
-  VŇÁ: 1
-  RÉŠ: 1
-  ÉŠY: 1
-  EÚO: 1
-  ÚOV: 1
-  IMT: 1
-  KÉF: 1
-  DKD: 1
-  ŠVŮ: 1
-  FIP: 1
-  OIČ: 1
-  INŤ: 1
-  KÓS: 1
-  YTT: 1
-  YKI: 1
-  MYŘ: 1
-  FÉB: 1
-  YFÉ: 1
-  YFÓ: 1
-  FÓS: 1
-  SOZ: 1
-  LOÉ: 1
-  OJŇ: 1
-  JŇU: 1
-  IPŠ: 1
-  ÓBA: 1
-  FYG: 1
-  PFI: 1
-  UŽM: 1
-  KOĎ: 1
-  EŤU: 1
-  ŘÁČ: 1
-  WIK: 1
-  RGN: 1
-  ÉRÉ: 1
-  JÉS: 1
-  USQ: 1
-  EXS: 1
-  XSO: 1
-  ÍRT: 1
-  JHŘ: 1
-  BÉZ: 1
-  ABJ: 1
-  MÉÍ: 1
-  ÉÍI: 1
-  ÍIO: 1
-  BSC: 1
-  ÉDÍ: 1
-  VŠK: 1
-  UAE: 1
-  VMÝ: 1
-  UCŤ: 1
-  CŤU: 1
-  ÉCÍ: 1
-  OŘM: 1
-  VÉĎ: 1
-  PYD: 1
-  MYŤ: 1
-  FTI: 1
-  IÍS: 1
-  XCV: 1
   LŮC: 1
   VŘH: 1
   ŘHU: 1
@@ -15740,3 +15466,277 @@ trigrams:
   DDU: 1
   DDŽ: 1
   OPM: 1
+  ŇMO: 1
+  IHŠ: 1
+  HŠI: 1
+  ŽÍŤ: 1
+  ÁRČ: 1
+  ÚNĚ: 1
+  JKV: 1
+  ČJA: 1
+  ĚPT: 1
+  ÚŠI: 1
+  YPŠ: 1
+  ĚŤK: 1
+  ŤKL: 1
+  ÍSŮ: 1
+  RÝŇ: 1
+  RNB: 1
+  ÝPN: 1
+  AZS: 1
+  MIP: 1
+  PŘŮ: 1
+  ÁKM: 1
+  ÓGO: 1
+  ÓWŮ: 1
+  WŮV: 1
+  ÁFL: 1
+  MŮŘ: 1
+  TĚŤ: 1
+  ŽOF: 1
+  MÝŤ: 1
+  RŠŇ: 1
+  ICB: 1
+  CBE: 1
+  JŠU: 1
+  OŤB: 1
+  ŤBO: 1
+  BOŇ: 1
+  ČŮJ: 1
+  ÝČO: 1
+  ÚDN: 1
+  DNÚ: 1
+  YZM: 1
+  OTÚ: 1
+  TÚČ: 1
+  KEŽ: 1
+  ŠUH: 1
+  DSY: 1
+  OHÚ: 1
+  HÚC: 1
+  ÚCI: 1
+  MHE: 1
+  NYD: 1
+  UŇO: 1
+  BRŤ: 1
+  LIŇ: 1
+  WÉW: 1
+  ÉWO: 1
+  STW: 1
+  TWJ: 1
+  WZD: 1
+  MDC: 1
+  DCC: 1
+  CCX: 1
+  CXL: 1
+  PEŤ: 1
+  JÚR: 1
+  OIT: 1
+  AŽJ: 1
+  ŽJE: 1
+  EDŇ: 1
+  DŇÁ: 1
+  ÉNÍ: 1
+  IHP: 1
+  HPÍ: 1
+  DSB: 1
+  YFR: 1
+  OWR: 1
+  XOS: 1
+  ZCA: 1
+  ATQ: 1
+  TQU: 1
+  AMQ: 1
+  EMQ: 1
+  ÝTS: 1
+  ŠTŮ: 1
+  NÓD: 1
+  EÁB: 1
+  MEB: 1
+  ZOA: 1
+  DAÁ: 1
+  AÁH: 1
+  JEG: 1
+  OVM: 1
+  FNA: 1
+  ŮLŠ: 1
+  GEK: 1
+  ZŽV: 1
+  ÚŠS: 1
+  RIŮ: 1
+  FUŮ: 1
+  DIŮ: 1
+  KAE: 1
+  FSI: 1
+  KIŮ: 1
+  UŘM: 1
+  UFĚ: 1
+  UJS: 1
+  BMU: 1
+  MIŮ: 1
+  MZU: 1
+  MUF: 1
+  YČT: 1
+  EŠM: 1
+  VAO: 1
+  UMT: 1
+  KFA: 1
+  ŠIO: 1
+  AFĚ: 1
+  ZUŮ: 1
+  MÓA: 1
+  EEŠ: 1
+  ŤOC: 1
+  EIŘ: 1
+  PUY: 1
+  FMO: 1
+  TŠA: 1
+  ŠBI: 1
+  BDŮ: 1
+  ÁFA: 1
+  IFS: 1
+  FSA: 1
+  RCY: 1
+  MÉŠ: 1
+  ÉŠA: 1
+  IŠY: 1
+  CAÍ: 1
+  ÚTY: 1
+  ÁŤA: 1
+  EFC: 1
+  FCI: 1
+  DÁA: 1
+  OFŠ: 1
+  FŠT: 1
+  TJI: 1
+  ILZ: 1
+  AHK: 1
+  ŠOC: 1
+  IFH: 1
+  FHI: 1
+  HIŮ: 1
+  HDO: 1
+  OOV: 1
+  JEO: 1
+  ECB: 1
+  CBO: 1
+  IŠH: 1
+  ŠHO: 1
+  ŠÚU: 1
+  OHG: 1
+  HGA: 1
+  ICJ: 1
+  FUF: 1
+  IBJ: 1
+  BJU: 1
+  IFD: 1
+  FDE: 1
+  IMZ: 1
+  MZO: 1
+  OKH: 1
+  IAH: 1
+  EIŮ: 1
+  EKB: 1
+  ŠUÚ: 1
+  UÚV: 1
+  IAO: 1
+  ŠSI: 1
+  EŠC: 1
+  AGP: 1
+  GPI: 1
+  NUY: 1
+  ŠSA: 1
+  HZA: 1
+  GIŠ: 1
+  NJI: 1
+  UOU: 1
+  UVZ: 1
+  DUY: 1
+  AGT: 1
+  ŮŽC: 1
+  EZF: 1
+  IHÍ: 1
+  HÍÍ: 1
+  FÍŠ: 1
+  DFR: 1
+  ÚŠE: 1
+  LYŘ: 1
+  YSB: 1
+  ABÚ: 1
+  ROĎ: 1
+  ŮLC: 1
+  ŠAZ: 1
+  ÝDO: 1
+  UTČ: 1
+  OHV: 1
+  AMÚ: 1
+  PIŇ: 1
+  ŠOY: 1
+  BYB: 1
+  ÉBS: 1
+  CÁŠ: 1
+  ÁGA: 1
+  RPŮ: 1
+  AKÚ: 1
+  DEŮ: 1
+  VŇÁ: 1
+  RÉŠ: 1
+  ÉŠY: 1
+  EÚO: 1
+  ÚOV: 1
+  IMT: 1
+  KÉF: 1
+  DKD: 1
+  ŠVŮ: 1
+  FIP: 1
+  OIČ: 1
+  INŤ: 1
+  KÓS: 1
+  YTT: 1
+  YKI: 1
+  MYŘ: 1
+  FÉB: 1
+  YFÉ: 1
+  YFÓ: 1
+  FÓS: 1
+  SOZ: 1
+  LOÉ: 1
+  OJŇ: 1
+  JŇU: 1
+  IPŠ: 1
+  ÓBA: 1
+  FYG: 1
+  PFI: 1
+  UŽM: 1
+  KOĎ: 1
+  EŤU: 1
+  ŘÁČ: 1
+  WIK: 1
+  RGN: 1
+  ÉRÉ: 1
+  JÉS: 1
+  USQ: 1
+  EXS: 1
+  XSO: 1
+  ÍRT: 1
+  JHŘ: 1
+  BÉZ: 1
+  ABJ: 1
+  MÉÍ: 1
+  ÉÍI: 1
+  ÍIO: 1
+  BSC: 1
+  ÉDÍ: 1
+  VŠK: 1
+  UAE: 1
+  VMÝ: 1
+  UCŤ: 1
+  CŤU: 1
+  ÉCÍ: 1
+  OŘM: 1
+  VÉĎ: 1
+  PYD: 1
+  MYŤ: 1
+  FTI: 1
+  IÍS: 1
+  XCV: 1
