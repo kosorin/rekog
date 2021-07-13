@@ -28,9 +28,10 @@ namespace Rekog.Core.Layouts.Analyzers
             if (firstKey.Finger == secondKey.Finger && firstKey.Position != secondKey.Position)
             {
                 var finger = firstKey.Finger;
+                var isWeakFinger = finger.GetKind() is FingerKind.Little or FingerKind.Ring;
 
                 var distance = firstKey.GetDistance(secondKey);
-                var effort = distance + 1.5;
+                var effort = distance + (isWeakFinger ? 2.5 : 1.5);
 
                 value = (finger, effort);
                 return true;

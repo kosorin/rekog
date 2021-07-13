@@ -12,21 +12,29 @@ namespace Rekog.Core.Layouts
         {
             var ngramAnalyzers = new INgramAnalyzer[]
             {
-                new FingerFrequencyAnalyzer(),
-
+                // Ngram
                 new SameFingerBigramAnalyzer(),
                 new NeighborFingerBigramAnalyzer(),
 
+                // Roll
                 new SameHandRollAnalyzer(),
                 new SameHandLongRollAnalyzer(),
 
+                // Motion
                 new SameFingerMotionAnalyzer(),
 
+                // Row
                 new RowFrequencyAnalyzer(),
                 new SameHandJumpAnalyzer(),
+                
+                // Hand
                 new HandAlternationAnalyzer(),
+                
+                // Finger
+                new FingerFrequencyAnalyzer(),
+                
+                // Other
                 new HomingAnalyzer(),
-
                 new LayerSwitchAnalyzer(),
             };
 
