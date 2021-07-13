@@ -8,9 +8,9 @@
             Keys = keys;
         }
 
-        public string Value { get; set; }
+        public string Value { get; }
 
-        public Key[] Keys { get; set; }
+        public Key[] Keys { get; }
 
         public double Effort { get; set; }
     }

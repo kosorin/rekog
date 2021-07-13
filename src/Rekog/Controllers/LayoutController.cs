@@ -24,7 +24,8 @@ namespace Rekog.Controllers
 
         public void Analyze(CorpusAnalysisData corpusAnalysisData)
         {
-            var layout = GetLayout();
+            var characters = corpusAnalysisData.UnigramOccurrences.Select(x => x.Value[0]).ToArray();
+            var layout = BuildLayout(characters);
             if (layout == null)
             {
                 return;
@@ -34,7 +35,7 @@ namespace Rekog.Controllers
             layoutAnalyzer.Analyze(corpusAnalysisData, layout);
         }
 
-        private Layout? GetLayout()
+        private Layout? BuildLayout(char[] characters)
         {
             var keymapConfig = _config.Keymaps[_options.Keymap];
             var layoutConfig = _config.Layouts[_options.Layout];
@@ -66,10 +67,16 @@ namespace Rekog.Controllers
                         var key = new Key(char.ToUpperInvariant(character.Value), finger, isHoming, effort, layer, row, column);
                         if (!keys.TryAdd(key.Character, key))
                         {
-                            _logger.Warning("Multiple layout character {Character}", key.Character);
+                            _logger.Warning("Character {Character} is specified multiple times", key.Character);
                         }
                     }
                 }
+            }
+
+            var missingCharacters = characters.Except(keys.Select(x => x.Key)).ToList();
+            if (missingCharacters.Any())
+            {
+                _logger.Warning("Following characters cannot be written: {MissingCharacters}", missingCharacters);
             }
 
             var layout = new Layout(keys);

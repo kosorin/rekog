@@ -58,21 +58,6 @@ namespace Rekog.Core.Layouts
             };
         }
 
-        public Motion GetHandMotion(Key other)
-        {
-            if (other.Hand != Hand)
-            {
-                return Motion.None;
-            }
-
-            return (other.Row - Row) switch
-            {
-                > 0 => Motion.Curl,
-                < 0 => Motion.Stretch,
-                _ => Motion.None,
-            };
-        }
-
         public Motion GetFingerMotion(Key other)
         {
             if (other.Finger != Finger)

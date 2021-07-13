@@ -88,5 +88,11 @@ namespace Rekog.Core
             }
             return Count.CompareTo(other.Count);
         }
+
+        public void Deconstruct(out TValue value, out ulong count)
+        {
+            value = Value;
+            count = Count;
+        }
     }
 }
