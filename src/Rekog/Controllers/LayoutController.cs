@@ -64,7 +64,7 @@ namespace Rekog.Controllers
                             continue;
                         }
 
-                        var key = new Key(char.ToUpperInvariant(character.Value), finger, isHoming, effort, layer, row, column);
+                        var key = new Key(char.ToUpperInvariant(character.Value), finger, isHoming, layer, row, column, effort);
                         if (!keys.TryAdd(key.Character, key))
                         {
                             _logger.Warning("Character {Character} is specified multiple times", key.Character);

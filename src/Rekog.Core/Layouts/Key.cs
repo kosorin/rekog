@@ -5,17 +5,17 @@ namespace Rekog.Core.Layouts
 {
     public class Key
     {
-        public Key(char character, Finger finger, bool isHoming, double effort, int layer, int row, int column)
+        public Key(char character, Finger finger, bool isHoming, int layer, int row, int column, double effort)
         {
             Character = character;
             Finger = finger;
             Hand = finger.GetHand();
-            Effort = effort;
             Layer = layer;
             Row = row;
             Column = column;
             Position = (row, column);
             IsHoming = isHoming;
+            Effort = effort;
         }
 
         public char Character { get; }
@@ -26,8 +26,6 @@ namespace Rekog.Core.Layouts
 
         public bool IsHoming { get; }
 
-        public double Effort { get; }
-
         public int Layer { get; }
 
         public int Row { get; }
@@ -35,6 +33,8 @@ namespace Rekog.Core.Layouts
         public int Column { get; }
 
         public (int row, int column) Position { get; }
+
+        public double Effort { get; }
 
         public double GetDistance(Key other)
         {
