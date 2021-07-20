@@ -12,7 +12,7 @@ namespace Rekog.Data
 
         public SkippedToken(ulong count, string value, int codePoint)
         {
-            Value = new ReportToken(value.ToString());
+            Value = new ReportToken(value);
             Count = count;
             Category = CharUnicodeInfo.GetUnicodeCategory(codePoint);
             Dec = codePoint.ToString();

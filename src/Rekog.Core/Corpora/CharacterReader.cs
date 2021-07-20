@@ -26,11 +26,9 @@ namespace Rekog.Core.Corpora
                         _pendingHighSurrogate = null;
                         return true;
                     }
-                    else
-                    {
-                        _logger.Warning("Multiple high surrogates.");
-                        _pendingHighSurrogate = c;
-                    }
+
+                    _logger.Warning("Multiple high surrogates.");
+                    _pendingHighSurrogate = c;
                 }
                 else
                 {

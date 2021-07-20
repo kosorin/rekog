@@ -37,7 +37,7 @@ namespace Rekog.Core.UnitTests.Corpora
 
             ngramOccurrences.ShouldBe(expectedNgramOccurrences, ignoreOrder: true);
         }
-        
+
         [Fact]
         public void Occurrences_UnicodeCharacters()
         {

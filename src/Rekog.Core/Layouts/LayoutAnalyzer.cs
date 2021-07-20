@@ -26,13 +26,13 @@ namespace Rekog.Core.Layouts
                 // Row
                 new RowFrequencyAnalyzer(),
                 new SameHandJumpAnalyzer(),
-                
+
                 // Hand
                 new HandAlternationAnalyzer(),
-                
+
                 // Finger
                 new FingerFrequencyAnalyzer(),
-                
+
                 // Other
                 new HomingAnalyzer(),
                 new LayerSwitchAnalyzer(),

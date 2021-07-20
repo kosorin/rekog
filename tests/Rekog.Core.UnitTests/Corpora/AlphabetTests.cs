@@ -38,7 +38,7 @@ namespace Rekog.Core.UnitTests.Corpora
         public void Enumerable_UnicodeCharacters()
         {
             var alphabet = new Alphabet("a🚕🌄🎨𐑉");
-            
+
             alphabet.ToArray().ShouldBe("aA🚕🌄🎨𐑉𐐡".EnumerateRunes(), ignoreOrder: true);
         }
     }
