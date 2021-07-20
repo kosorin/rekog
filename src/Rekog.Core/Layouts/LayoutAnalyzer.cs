@@ -39,7 +39,7 @@ namespace Rekog.Core.Layouts
             };
 
             var unigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 1).ToArray();
-            var unigrams = layout.GetNgramOccurrences(corpusAnalysisData.UnigramOccurrences);
+            var unigrams = layout.GetNgramOccurrences(corpusAnalysisData.Unigrams);
             foreach (var unigram in unigrams)
             {
                 foreach (var analyzer in unigramAnalyzers)
@@ -53,7 +53,7 @@ namespace Rekog.Core.Layouts
             }
 
             var bigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 2).ToArray();
-            var bigrams = layout.GetNgramOccurrences(corpusAnalysisData.BigramOccurrences);
+            var bigrams = layout.GetNgramOccurrences(corpusAnalysisData.Bigrams);
             foreach (var bigram in bigrams)
             {
                 foreach (var analyzer in bigramAnalyzers)
@@ -67,7 +67,7 @@ namespace Rekog.Core.Layouts
             }
 
             var trigramAnalyzers = ngramAnalyzers.Where(x => x.Size == 3).ToArray();
-            var trigrams = layout.GetNgramOccurrences(corpusAnalysisData.TrigramOccurrences);
+            var trigrams = layout.GetNgramOccurrences(corpusAnalysisData.Trigrams);
             foreach (var trigram in trigrams)
             {
                 foreach (var analyzer in trigramAnalyzers)

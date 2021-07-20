@@ -1,0 +1,54 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using YamlDotNet.Core;
+using YamlDotNet.Core.Events;
+using YamlDotNet.Serialization;
+
+namespace Rekog.Data
+{
+    public record ReportToken : SerializationObject, IYamlConvertible
+    {
+        public ReportToken()
+        {
+            // Ctor for deserialization
+        }
+
+        public ReportToken(string value)
+        {
+            Value = value;
+        }
+
+        public string Value { get; private set; }
+
+        [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
+        protected override void FixSelf()
+        {
+            Value ??= string.Empty;
+        }
+
+        protected override IEnumerable<SerializationObject> CollectChildren()
+        {
+            yield break;
+        }
+
+        void IYamlConvertible.Read(IParser parser, Type expectedType, ObjectDeserializer nestedObjectDeserializer)
+        {
+            Value = (string?)nestedObjectDeserializer.Invoke(typeof(string)) ?? throw new InvalidOperationException();
+        }
+
+        void IYamlConvertible.Write(IEmitter emitter, ObjectSerializer nestedObjectSerializer)
+        {
+            if (Value.All(char.IsLetterOrDigit))
+            {
+                emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, Value, ScalarStyle.Plain, true, false));
+            }
+            else
+            {
+                var quoteStyle = Value.Any(char.IsWhiteSpace) ? ScalarStyle.DoubleQuoted : ScalarStyle.SingleQuoted;
+                emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, Value, quoteStyle, false, true));
+            }
+        }
+    }
+}

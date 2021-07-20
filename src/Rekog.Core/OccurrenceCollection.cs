@@ -77,9 +77,9 @@ namespace Rekog.Core
                 throw new ArgumentException(null, nameof(occurrences));
             }
 
-            foreach (var occurrence in occurrences)
+            foreach (var (value, count) in occurrences)
             {
-                Add(occurrence.Value, occurrence.Count);
+                Add(value, count);
             }
         }
 

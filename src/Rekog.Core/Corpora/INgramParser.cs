@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace Rekog.Core.Corpora
 {
@@ -6,6 +7,6 @@ namespace Rekog.Core.Corpora
     {
         void Skip();
 
-        bool Next(char character, [MaybeNullWhen(false)] out string ngramValue);
+        bool Next(Rune character, [MaybeNullWhen(false)] out string ngramValue);
     }
 }

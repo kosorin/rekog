@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace Rekog.Core.Corpora
 {
@@ -7,7 +8,7 @@ namespace Rekog.Core.Corpora
     {
         private int _position;
         private int _lastInvalidPosition;
-        private readonly char[] _characters;
+        private readonly Rune[] _characters;
         private readonly char[] _buffer;
 
         public NgramParser(int size)
@@ -21,8 +22,8 @@ namespace Rekog.Core.Corpora
 
             _position = 0;
             _lastInvalidPosition = 0;
-            _characters = new char[size];
-            _buffer = new char[size];
+            _characters = new Rune[size];
+            _buffer = new char[size * 2]; // * 2 because Rune can be 1 or 2 long
         }
 
         public int Size { get; }
@@ -33,7 +34,7 @@ namespace Rekog.Core.Corpora
             _lastInvalidPosition = _position;
         }
 
-        public bool Next(char character, [MaybeNullWhen(false)] out string ngramValue)
+        public bool Next(Rune character, [MaybeNullWhen(false)] out string ngramValue)
         {
             _position = GetNextPosition(_position);
             _characters[_position] = character;
@@ -43,11 +44,13 @@ namespace Rekog.Core.Corpora
                 _lastInvalidPosition = GetNextPosition(_position);
 
                 var nextPosition = _lastInvalidPosition;
+                var bufferLength = 0;
                 for (var i = 0; i < Size; i++)
                 {
-                    _buffer[i] = _characters[(nextPosition + i) % Size];
+                    var bufferCharacter = _characters[(nextPosition + i) % Size];
+                    bufferLength += bufferCharacter.EncodeToUtf16(_buffer.AsSpan(bufferLength));
                 }
-                ngramValue = new string(_buffer);
+                ngramValue = new string(_buffer, 0, bufferLength);
                 return true;
             }
 

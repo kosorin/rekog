@@ -1,4 +1,6 @@
-﻿namespace Rekog.Core.Corpora
+﻿using System.Text;
+
+namespace Rekog.Core.Corpora
 {
     public interface ITokenCollector
     {
@@ -6,6 +8,6 @@
 
         void Skip();
 
-        void Next(char character);
+        void Next(Rune character);
     }
 }

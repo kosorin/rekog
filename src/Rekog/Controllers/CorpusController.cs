@@ -64,7 +64,7 @@ namespace Rekog.Controllers
 
             using (reader)
             {
-                var report = new CorpusReportSerializer().Deserialize(reader);
+                var report = new CorpusAnalysisReportSerializer().Deserialize(reader);
                 _logger.Information("Loaded corpus analysis data {CorpusAnalysisDataFile}", analysisDatafile.Path);
 
                 analysisData = ReportToData(report);
@@ -73,7 +73,11 @@ namespace Rekog.Controllers
 
             static CorpusAnalysisData ReportToData(CorpusAnalysisReport report)
             {
-                return new CorpusAnalysisData(new OccurrenceCollection<string>(report.Unigrams), new OccurrenceCollection<string>(report.Bigrams), new OccurrenceCollection<string>(report.Trigrams));
+                return new CorpusAnalysisData(new OccurrenceCollection<string>(report.Unigrams.ToDictionary(x => x.Key.Value, x => x.Value)),
+                    new OccurrenceCollection<string>(report.Bigrams.ToDictionary(x => x.Key.Value, x => x.Value)),
+                    new OccurrenceCollection<string>(report.Trigrams.ToDictionary(x => x.Key.Value, x => x.Value)),
+                    new OccurrenceCollection<Rune>(report.Replaced.ToDictionary(x => x.Key.Value.EnumerateRunes().First(), x => x.Value)),
+                    new OccurrenceCollection<Rune>(report.Skipped.ToDictionary(x => x.Value.Value.EnumerateRunes().First(), x => x.Count)));
             }
         }
 
@@ -82,7 +86,7 @@ namespace Rekog.Controllers
             var report = DataToReport(analysisData);
             using (var writer = analysisDatafile.GetWriter())
             {
-                new CorpusReportSerializer().Serialize(writer, report);
+                new CorpusAnalysisReportSerializer().Serialize(writer, report);
             }
 
             _logger.Information("Saved corpus analysis data {CorpusAnalysisDataFile}", analysisDatafile.Path);
@@ -91,14 +95,18 @@ namespace Rekog.Controllers
             {
                 return new CorpusAnalysisReport
                 {
-                    Unigrams = GetRawCollection(data.UnigramOccurrences),
-                    Bigrams = GetRawCollection(data.BigramOccurrences),
-                    Trigrams = GetRawCollection(data.TrigramOccurrences),
+                    Unigrams = GetRawCollection(data.Unigrams),
+                    Bigrams = GetRawCollection(data.Bigrams),
+                    Trigrams = GetRawCollection(data.Trigrams),
+                    Replaced = data.ReplacedCharacters.OrderByDescending(x => x.Count).ToDictionary(x => new ReportToken(x.Value.ToString()), x => x.Count),
+                    Skipped = data.SkippedCharacters.Select(x => new SkippedToken(x.Count, x.Value.ToString(), x.Value.Value))
+                        .OrderByDescending(x => x.Count)
+                        .ToList(),
                 };
 
-                static Dictionary<string, ulong> GetRawCollection(OccurrenceCollection<string> ngramOccurrences)
+                static Dictionary<ReportToken, ulong> GetRawCollection(OccurrenceCollection<string> ngramOccurrences)
                 {
-                    return ngramOccurrences.OrderByDescending(x => x.Count).ToDictionary(x => x.Value, x => x.Count);
+                    return ngramOccurrences.OrderByDescending(x => x.Count).ToDictionary(x => new ReportToken(x.Value), x => x.Count);
                 }
             }
         }
@@ -136,7 +144,7 @@ namespace Rekog.Controllers
             var analysisData = new CorpusAnalysisData();
 
             var parallelLoopResult = Parallel.ForEach(fileInfos, new ParallelOptions(),
-                () => new CorpusAnalyzer(alphabet),
+                () => new CorpusAnalyzer(alphabet, _logger.ForContext<CorpusAnalyzer>()),
                 (fileInfo, state, _, analyzer) =>
                 {
                     if (cancellationToken.IsCancellationRequested)

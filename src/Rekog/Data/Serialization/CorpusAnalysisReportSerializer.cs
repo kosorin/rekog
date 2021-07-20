@@ -2,7 +2,7 @@
 
 namespace Rekog.Data.Serialization
 {
-    public class CorpusReportSerializer : SerializerBase<CorpusAnalysisReport>
+    public class CorpusAnalysisReportSerializer : SerializerBase<CorpusAnalysisReport>
     {
         protected override void ConfigureSerializerBuilder(SerializerBuilder builder)
         {

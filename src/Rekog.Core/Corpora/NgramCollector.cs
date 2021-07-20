@@ -1,4 +1,6 @@
-﻿namespace Rekog.Core.Corpora
+﻿using System.Text;
+
+namespace Rekog.Core.Corpora
 {
     public class NgramCollector : ITokenCollector
     {
@@ -16,7 +18,7 @@
             _parser.Skip();
         }
 
-        public void Next(char character)
+        public void Next(Rune character)
         {
             if (_parser.Next(character, out var ngramValue))
             {
