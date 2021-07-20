@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rekog.Core.UnitTests", "tes
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{5D1A83F2-8D02-41CB-839B-2D14436BC520}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rekog.App", "src\Rekog.App\Rekog.App.csproj", "{3F289182-32F4-4833-805A-44CABAEE15D0}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,10 +35,6 @@ Global
 		{BEACDB4F-8165-4963-B7D3-F137854B6007}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEACDB4F-8165-4963-B7D3-F137854B6007}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEACDB4F-8165-4963-B7D3-F137854B6007}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F289182-32F4-4833-805A-44CABAEE15D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F289182-32F4-4833-805A-44CABAEE15D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F289182-32F4-4833-805A-44CABAEE15D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F289182-32F4-4833-805A-44CABAEE15D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
