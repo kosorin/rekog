@@ -1,5 +1,5 @@
 keymaps:
-  klave_r1:
+  klave_r2:
     layers:
       - keys:
           - [ Q, W, M, D, F,   B, L, U, Y, ~ ]
@@ -9,12 +9,6 @@ keymaps:
           - [ ~, ~, ~, Ď, ~,   Ú, ~, Ů, Ý, ~ ]
           - [ Á, Ř, Š, Ť, ~,   É, Ň, Ě, Í, Ó ]
           - [ Ž, ~, Č, ~, ~,   ~, ~, ~, ~, ~ ]
-  klave_exp:
-    layers:
-      - keys:
-          - [ ~, F, L, V, W,   J, M, U, Y, K ]
-          - [ A, R, S, T, B,   P, N, E, I, O ]
-          - [ Z, X, C, D, Q,   ~, H, ~, G, ~ ]
   qwerty:
     layers:
       - keys:
@@ -45,7 +39,7 @@ keymaps:
           - [ ~, ~, ~, ~, ~,   Ú, ~, Ů, Ý, ~ ]
           - [ Á, Ř, Š, Ť, Ď,   É, Ň, Ě, Í, Ó ]
           - [ Ž, ~, Č, ~, ~,   ~, ~, ~, ~, ~ ]
-  colemak_dh:
+  colemak_dhm:
     layers:
       - keys:
           - [ Q, W, F, P, B,   J, L, U, Y, ~ ]
@@ -61,12 +55,6 @@ keymaps:
           - [ ~, ~, ~, P, Y,   F, G, C, R, L ]
           - [ A, O, E, U, I,   D, H, T, N, S ]
           - [ ~, Q, J, K, X,   B, M, W, V, Z ]
-  the_core:
-    layers:
-      - keys:
-          - [ P, U, ~, ~, Q,   G, C, L, M, F ]
-          - [ H, I, E, A, O,   D, T, R, N, S ]
-          - [ K, Y, ~, ~, X,   J, V, W, B, Z ]
   mtgap:
     layers:
       - keys:
