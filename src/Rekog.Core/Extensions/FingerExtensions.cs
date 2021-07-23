@@ -57,25 +57,5 @@ namespace Rekog.Core.Extensions
             var distance = Math.Abs(neighbor - finger);
             return distance == 1;
         }
-
-        [Obsolete]
-        public static Roll GetRoll(this Finger firstFinger, Finger secondFinger)
-        {
-            var hand = firstFinger.GetHand();
-            if (hand != secondFinger.GetHand())
-            {
-                return Roll.None;
-            }
-
-            var distance = secondFinger - firstFinger;
-            return (hand, distance) switch
-            {
-                (Hand.Left, 1) => Roll.Inward,
-                (Hand.Left, -1) => Roll.Outward,
-                (Hand.Right, 1) => Roll.Outward,
-                (Hand.Right, -1) => Roll.Inward,
-                _ => Roll.None,
-            };
-        }
     }
 }
