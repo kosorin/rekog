@@ -5,12 +5,12 @@ namespace Rekog.Data
 {
     public record LayerConfig : SerializationObject
     {
-        public Matrix<char?> Keys { get; set; } = default!;
+        public Matrix<string?> Keys { get; set; } = default!;
 
         [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
         protected override void FixSelf()
         {
-            Keys ??= new Matrix<char?>();
+            Keys ??= new Matrix<string?>();
             Keys.Fix();
         }
 

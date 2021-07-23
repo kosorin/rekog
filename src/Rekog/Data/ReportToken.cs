@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 using YamlDotNet.Core;
 using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
@@ -40,13 +41,13 @@ namespace Rekog.Data
 
         void IYamlConvertible.Write(IEmitter emitter, ObjectSerializer nestedObjectSerializer)
         {
-            if (Value.All(char.IsLetterOrDigit))
+            if (Value.EnumerateRunes().All(Rune.IsLetterOrDigit))
             {
                 emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, Value, ScalarStyle.Plain, true, false));
             }
             else
             {
-                var quoteStyle = Value.Any(char.IsWhiteSpace) ? ScalarStyle.DoubleQuoted : ScalarStyle.SingleQuoted;
+                var quoteStyle = Value.EnumerateRunes().Any(Rune.IsWhiteSpace) ? ScalarStyle.DoubleQuoted : ScalarStyle.SingleQuoted;
                 emitter.Emit(new Scalar(AnchorName.Empty, TagName.Empty, Value, quoteStyle, false, true));
             }
         }

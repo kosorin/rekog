@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Rekog.Core;
 using Rekog.Core.Corpora;
 using Rekog.Core.Layouts;
@@ -25,7 +26,7 @@ namespace Rekog.Controllers
         public void Analyze(CorpusAnalysisData corpusAnalysisData)
         {
             // TODO: Add layout unicode support
-            var characters = corpusAnalysisData.Unigrams.Select(x => x.Value[0]).ToArray();
+            var characters = corpusAnalysisData.Unigrams.Select(x => x.Value.EnumerateRunes().Single()).ToArray();
             var layout = BuildLayout(characters);
             if (layout == null)
             {
@@ -36,12 +37,12 @@ namespace Rekog.Controllers
             layoutAnalyzer.Analyze(corpusAnalysisData, layout);
         }
 
-        private Layout? BuildLayout(char[] characters)
+        private Layout? BuildLayout(Rune[] characters)
         {
             var keymapConfig = _config.Keymaps[_options.Keymap];
             var layoutConfig = _config.Layouts[_options.Layout];
 
-            var keys = new Dictionary<char, Key>();
+            var keys = new Dictionary<Rune, Key>();
             for (var row = 0; row < layoutConfig.Fingers.Count; row++)
             {
                 for (var column = 0; column < layoutConfig.Fingers[row].Count; column++)
@@ -59,25 +60,27 @@ namespace Rekog.Controllers
 
                     foreach (var (layerConfig, layer) in keymapConfig.Layers.Select((x, i) => (x, i)))
                     {
-                        var character = layerConfig.Keys[row][column];
-                        if (!character.HasValue)
+                        if (layerConfig.Keys[row][column] is not { } characterString)
                         {
                             continue;
                         }
 
-                        var key = new Key(char.ToUpperInvariant(character.Value), finger, isHoming, layer, row, column, effort);
-                        if (!keys.TryAdd(key.Character, key))
+                        foreach (var character in characterString.EnumerateRunes())
                         {
-                            _logger.Warning("Character {Character} is specified multiple times", key.Character);
+                            var key = new Key(Rune.ToUpperInvariant(character), finger, isHoming, layer, row, column, effort);
+                            if (!keys.TryAdd(key.Character, key))
+                            {
+                                _logger.Warning("Character {Character} is specified multiple times", key.Character);
+                            }
                         }
                     }
                 }
             }
 
-            var missingCharacters = characters.Except(keys.Select(x => x.Key)).ToList();
+            var missingCharacters = characters.Except(keys.Keys).ToList();
             if (missingCharacters.Any())
             {
-                _logger.Warning("Following characters cannot be written: {MissingCharacters}", missingCharacters);
+                _logger.Warning("Following characters are not specified in the layout: {MissingCharacters}", missingCharacters);
             }
 
             var layout = new Layout(keys);

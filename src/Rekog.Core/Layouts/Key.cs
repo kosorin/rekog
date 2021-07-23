@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Text;
 using Rekog.Core.Extensions;
 
 namespace Rekog.Core.Layouts
 {
     public class Key
     {
-        public Key(char character, Finger finger, bool isHoming, int layer, int row, int column, double effort)
+        public Key(Rune character, Finger finger, bool isHoming, int layer, int row, int column, double effort)
         {
             Character = character;
             Finger = finger;
@@ -18,7 +19,7 @@ namespace Rekog.Core.Layouts
             Effort = effort;
         }
 
-        public char Character { get; }
+        public Rune Character { get; }
 
         public Finger Finger { get; }
 

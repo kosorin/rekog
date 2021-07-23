@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Rekog.Core.Layouts
 {
     public class Layout
     {
-        private readonly Dictionary<char, Key> _keys;
+        private readonly Dictionary<Rune, Key> _keys;
 
-        public Layout(IReadOnlyDictionary<char, Key> keys)
+        public Layout(IReadOnlyDictionary<Rune, Key> keys)
         {
             _keys = keys.ToDictionary(x => x.Key, x => x.Value);
         }
@@ -33,6 +34,7 @@ namespace Rekog.Core.Layouts
         private Key[] GetNgramKeys(string ngram)
         {
             return ngram
+                .EnumerateRunes()
                 .Select(character => _keys.TryGetValue(character, out var key) ? key : null)
                 .Where(x => x != null)
                 .Select(x => x!)
