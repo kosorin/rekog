@@ -8,6 +8,7 @@ namespace Rekog.Data
     {
         public SkippedToken()
         {
+            // Ctor for deserialization
         }
 
         public SkippedToken(ulong count, string value, int codePoint)
