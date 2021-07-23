@@ -8,6 +8,8 @@ namespace Rekog.Core.Corpora
     {
         private static readonly ConcurrentDictionary<Rune, string> NgramValueCache = new ConcurrentDictionary<Rune, string>();
 
+        public int Size => 1;
+
         public void Skip()
         {
             // Nothing to do
