@@ -11,7 +11,7 @@
         {
             var isSwitch = firstKey.Layer != secondKey.Layer;
 
-            value = (isSwitch, isSwitch ? 0.5 : null);
+            value = (isSwitch, isSwitch ? 1 : 0);
             return true;
         }
     }
