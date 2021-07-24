@@ -25,7 +25,6 @@ namespace Rekog.Core.Layouts
 
                 // Row
                 new RowFrequencyAnalyzer(),
-                new SameHandJumpAnalyzer(),
 
                 // Hand
                 new HandAlternationAnalyzer(),
