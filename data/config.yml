@@ -155,6 +155,7 @@ corpora:
   cs_cbdb:
     path: D:\corpus\cs\cbdb
     pattern: '\.txt$'
+  cs_cnk: D:\corpus\cs\cnk\syn2020.txt
   cs_volne_knihy: D:\corpus\cs\volne_knihy\
   cs_wiki: D:\corpus\cs\wiki\
   en_norvig: ~
