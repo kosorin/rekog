@@ -95,11 +95,10 @@ namespace Rekog.Core.Layouts
                 sb.Append($"  {result.GetTotalEffort(),10:N5}");
                 Console.WriteLine(sb);
 
-                var items = result.Items.AsEnumerable();
-                if (indent == 0)
-                {
-                    items = items.OrderByDescending(x => x.Effort).ThenByDescending(x => x.Percentage).ThenByDescending(x => x.Description);
-                }
+                var items = result.Items
+                    .OrderByDescending(x => x.GetTotalEffort())
+                    .ThenByDescending(x => x.GetTotalPercentage())
+                    .ThenByDescending(x => x.Description);
                 foreach (var item in items)
                 {
                     Print(item, indent + 2);
