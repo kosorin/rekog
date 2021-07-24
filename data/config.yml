@@ -39,6 +39,16 @@ keymaps:
           - [ ~, ~, ~, ~, ~,   Ú, ~, Ů, Ý, ~ ]
           - [ Á, Ř, Š, Ť, Ď,   É, Ň, Ě, Í, Ó ]
           - [ Ž, ~, Č, ~, ~,   ~, ~, ~, ~, ~ ]
+  colemak_dhk:
+    layers:
+      - keys:
+          - [ Q, W, F, P, B,   J, L, U, Y, ~ ]
+          - [ A, R, S, T, G,   K, N, E, I, O ]
+          - [ Z, X, C, D, V,   M, H, ~, ~, ~ ]
+      - keys:
+          - [ ~, ~, ~, ~, ~,   Ú, ~, Ů, Ý, ~ ]
+          - [ Á, Ř, Š, Ť, ~,   É, Ň, Ě, Í, Ó ]
+          - [ Ž, ~, Č, Ď, ~,   ~, ~, ~, ~, ~ ]
   colemak_dhm:
     layers:
       - keys:
@@ -49,6 +59,12 @@ keymaps:
           - [ ~, ~, ~, ~, ~,   Ú, ~, Ů, Ý, ~ ]
           - [ Á, Ř, Š, Ť, ~,   É, Ň, Ě, Í, Ó ]
           - [ Ž, ~, Č, Ď, ~,   ~, ~, ~, ~, ~ ]
+  workman:
+    layers:
+      - keys:
+          - [ Q, D, R, W, B,   J, F, U, P, ~ ]
+          - [ A, S, H, T, G,   Y, N, E, O, I ]
+          - [ Z, X, M, C, V,   K, L, ~, ~, ~ ]
   dvorak:
     layers:
       - keys:
@@ -61,6 +77,12 @@ keymaps:
           - [ Y, P, O, U, J,   K, D, L, C, W ]
           - [ I, N, E, A, ~,   M, H, T, S, R ]
           - [ Q, Z, ~, ~, ~,   B, F, G, V, X ]
+  beakl_15:
+    layers:
+      - keys:
+          - [ Q, H, O, U, X,   G, C, R, F, Z ]
+          - [ Y, I, E, A, ~,   D, S, T, N, B ]
+          - [ J, ~, ~, K, ~,   W, L, M, P, V ]
 
 layouts:
   klave:
