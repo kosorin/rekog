@@ -25,7 +25,6 @@ namespace Rekog.Controllers
 
         public void Analyze(CorpusAnalysisData corpusAnalysisData)
         {
-            // TODO: Add layout unicode support
             var characters = corpusAnalysisData.Unigrams.Select(x => x.Value.EnumerateRunes().Single()).ToArray();
             var layout = BuildLayout(characters);
             if (layout == null)
