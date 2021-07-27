@@ -157,6 +157,7 @@ corpora:
     pattern: '\.txt$'
   cs_cnk: D:\corpus\cs\cnk\syn2020.txt
   cs_wiki: D:\corpus\cs\wiki\
+  cs_messenger:  D:\corpus\cs\messenger\messages.txt
   en_norvig: ~
   en_iweb: D:\corpus\en\iweb\iweb.txt
   # other
