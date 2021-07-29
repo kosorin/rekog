@@ -15,11 +15,12 @@ namespace Rekog.Core.Layouts.Analyzers
         {
             return items
                 .GroupBy(x => x.value.GetHand())
-                .Select(g => new LayoutAnalysisResult(g.Key.ToString(), g.Select(x => new LayoutAnalysisResult(x.value.GetKind().ToString())
-                {
-                    Percentage = x.result.Percentage,
-                    Effort = x.result.Effort,
-                }).ToList()))
+                .Select(g => new LayoutAnalysisResult(g.Key.ToString(), g
+                    .Select(x => new LayoutAnalysisResult(x.value.GetKind().ToString())
+                    {
+                        Percentage = x.result.Percentage,
+                        Effort = x.result.Effort,
+                    }).ToList()))
                 .ToList();
         }
 
