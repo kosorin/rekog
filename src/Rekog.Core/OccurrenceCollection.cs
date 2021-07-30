@@ -7,7 +7,7 @@ using System.Linq;
 namespace Rekog.Core
 {
     public class OccurrenceCollection<TValue> : IReadOnlyCollection<Occurrence<TValue>>
-        where TValue : notnull
+        where TValue : IEquatable<TValue>
     {
         private readonly Dictionary<TValue, Occurrence<TValue>> _occurrences;
 
@@ -85,7 +85,7 @@ namespace Rekog.Core
 
         // TODO: Add unit test
         public OccurrenceCollection<TGroupValue> Group<TGroupValue>(Func<Occurrence<TValue>, TGroupValue> groupValueSelector)
-            where TGroupValue : notnull
+            where TGroupValue : IEquatable<TGroupValue>
         {
             var groupedOccurrences = _occurrences.Values
                 .GroupBy(groupValueSelector)

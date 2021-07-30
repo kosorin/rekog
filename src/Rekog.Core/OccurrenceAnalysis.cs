@@ -1,7 +1,9 @@
-﻿namespace Rekog.Core
+﻿using System;
+
+namespace Rekog.Core
 {
-    public class OccurrenceAnalysis<TValue>
-        where TValue : notnull
+    public sealed class OccurrenceAnalysis<TValue>
+        where TValue : IEquatable<TValue>
     {
         internal OccurrenceAnalysis(TValue value, ulong count, int rank, double percentage)
         {

@@ -2,8 +2,8 @@
 
 namespace Rekog.Core
 {
-    public class Occurrence<TValue> : IEquatable<Occurrence<TValue>>, IComparable<Occurrence<TValue>>
-        where TValue : notnull
+    public sealed class Occurrence<TValue> : IEquatable<Occurrence<TValue>>, IComparable<Occurrence<TValue>>
+        where TValue : IEquatable<TValue>
     {
         public Occurrence(TValue value)
         {
@@ -65,7 +65,7 @@ namespace Rekog.Core
             return !(left == right);
         }
 
-        protected virtual bool EqualsCore(Occurrence<TValue> other)
+        private bool EqualsCore(Occurrence<TValue> other)
         {
             return Count.Equals(other.Count)
                 && Value.Equals(other.Value);

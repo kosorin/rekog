@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Rekog.Core
 {
     public class OccurrenceCollectionAnalysis<TValue>
-        where TValue : notnull
+        where TValue : IEquatable<TValue>
     {
         internal OccurrenceCollectionAnalysis(IReadOnlyDictionary<TValue, OccurrenceAnalysis<TValue>> occurrences, ulong total, ulong valueTotal, ulong nullTotal)
         {
