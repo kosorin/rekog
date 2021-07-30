@@ -42,20 +42,20 @@ namespace Rekog.Core.Layouts
             return Math.Ceiling(Math.Sqrt(Math.Pow(other.Row - Row, 2) + Math.Pow(other.Column - Column, 2)));
         }
 
-        public Roll GetHandRoll(Key other)
+        public Direction GetHandRoll(Key other)
         {
             if (Hand != other.Hand || Math.Abs(other.Row - Row) > 1)
             {
-                return Roll.None;
+                return Direction.None;
             }
 
             return (Hand, other.Finger - Finger) switch
             {
-                (Hand.Left, 1) => Roll.Inward,
-                (Hand.Left, -1) => Roll.Outward,
-                (Hand.Right, 1) => Roll.Outward,
-                (Hand.Right, -1) => Roll.Inward,
-                _ => Roll.None,
+                (Hand.Left, 1) => Direction.Inward,
+                (Hand.Left, -1) => Direction.Outward,
+                (Hand.Right, 1) => Direction.Outward,
+                (Hand.Right, -1) => Direction.Inward,
+                _ => Direction.None,
             };
         }
 

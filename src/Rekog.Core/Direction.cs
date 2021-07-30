@@ -1,6 +1,6 @@
 ﻿namespace Rekog.Core
 {
-    public enum Roll
+    public enum Direction
     {
         None,
         Inward,

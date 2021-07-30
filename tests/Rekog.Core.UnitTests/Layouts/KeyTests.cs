@@ -16,7 +16,7 @@ namespace Rekog.Core.UnitTests.Layouts
 
         [Theory]
         [MemberData(nameof(RollFingerList), parameters: true)]
-        public void GetRoll_True(Finger firstFinger, Finger secondFinger, Roll expectedRoll)
+        public void GetRoll_True(Finger firstFinger, Finger secondFinger, Direction expectedRoll)
         {
             var firstKey = FingerToKey(firstFinger);
             var secondKey = FingerToKey(secondFinger);
@@ -28,7 +28,7 @@ namespace Rekog.Core.UnitTests.Layouts
 
         [Theory]
         [MemberData(nameof(RollFingerList), parameters: false)]
-        public void GetRoll_False(Finger firstFinger, Finger secondFinger, Roll expectedRoll)
+        public void GetRoll_False(Finger firstFinger, Finger secondFinger, Direction expectedRoll)
         {
             var firstKey = FingerToKey(firstFinger);
             var secondKey = FingerToKey(secondFinger);
@@ -40,24 +40,24 @@ namespace Rekog.Core.UnitTests.Layouts
 
         public static IEnumerable<object[]> RollFingerList(bool isRoll)
         {
-            var rollList = new HashSet<(Finger, Finger, Roll)>(new[]
+            var rollList = new HashSet<(Finger, Finger, Direction)>(new[]
             {
-                (Finger.LeftLittle, Finger.LeftRing, Roll.Inward),
-                (Finger.LeftRing, Finger.LeftMiddle, Roll.Inward),
-                (Finger.LeftMiddle, Finger.LeftIndex, Roll.Inward),
-                (Finger.LeftIndex, Finger.LeftThumb, Roll.Inward),
-                (Finger.LeftThumb, Finger.LeftIndex, Roll.Outward),
-                (Finger.LeftIndex, Finger.LeftMiddle, Roll.Outward),
-                (Finger.LeftMiddle, Finger.LeftRing, Roll.Outward),
-                (Finger.LeftRing, Finger.LeftLittle, Roll.Outward),
-                (Finger.RightLittle, Finger.RightRing, Roll.Inward),
-                (Finger.RightRing, Finger.RightMiddle, Roll.Inward),
-                (Finger.RightMiddle, Finger.RightIndex, Roll.Inward),
-                (Finger.RightIndex, Finger.RightThumb, Roll.Inward),
-                (Finger.RightThumb, Finger.RightIndex, Roll.Outward),
-                (Finger.RightIndex, Finger.RightMiddle, Roll.Outward),
-                (Finger.RightMiddle, Finger.RightRing, Roll.Outward),
-                (Finger.RightRing, Finger.RightLittle, Roll.Outward),
+                (Finger.LeftLittle, Finger.LeftRing, Direction.Inward),
+                (Finger.LeftRing, Finger.LeftMiddle, Direction.Inward),
+                (Finger.LeftMiddle, Finger.LeftIndex, Direction.Inward),
+                (Finger.LeftIndex, Finger.LeftThumb, Direction.Inward),
+                (Finger.LeftThumb, Finger.LeftIndex, Direction.Outward),
+                (Finger.LeftIndex, Finger.LeftMiddle, Direction.Outward),
+                (Finger.LeftMiddle, Finger.LeftRing, Direction.Outward),
+                (Finger.LeftRing, Finger.LeftLittle, Direction.Outward),
+                (Finger.RightLittle, Finger.RightRing, Direction.Inward),
+                (Finger.RightRing, Finger.RightMiddle, Direction.Inward),
+                (Finger.RightMiddle, Finger.RightIndex, Direction.Inward),
+                (Finger.RightIndex, Finger.RightThumb, Direction.Inward),
+                (Finger.RightThumb, Finger.RightIndex, Direction.Outward),
+                (Finger.RightIndex, Finger.RightMiddle, Direction.Outward),
+                (Finger.RightMiddle, Finger.RightRing, Direction.Outward),
+                (Finger.RightRing, Finger.RightLittle, Direction.Outward),
             });
 
             if (isRoll)
@@ -75,7 +75,7 @@ namespace Rekog.Core.UnitTests.Layouts
                     {
                         if (!rollList.Any(x => x.Item1 == first && x.Item2 == second))
                         {
-                            yield return new object[] { first, second, Roll.None, };
+                            yield return new object[] { first, second, Direction.None, };
                         }
                     }
                 }

@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace Rekog.Core.Layouts.Analyzers
 {
-    internal class SameHandLongRollAnalyzer : TrigramAnalyzer<(Hand hand, Roll roll)>
+    internal class SameHandLongRollAnalyzer : TrigramAnalyzer<(Hand hand, Direction roll)>
     {
         public SameHandLongRollAnalyzer()
             : base("Same hand long roll")
         {
         }
 
-        protected override List<LayoutAnalysisNode> GroupChildren(List<((Hand hand, Roll roll) value, LayoutAnalysisNode node)> items)
+        protected override List<LayoutAnalysisNode> GroupChildren(List<((Hand hand, Direction roll) value, LayoutAnalysisNode node)> items)
         {
             return items
                 .GroupBy(x => x.value.roll)
@@ -21,14 +21,14 @@ namespace Rekog.Core.Layouts.Analyzers
                 .ToList();
         }
 
-        protected override bool TryGetValue(Key firstKey, Key secondKey, Key thirdKey, out ((Hand, Roll), double?) value)
+        protected override bool TryGetValue(Key firstKey, Key secondKey, Key thirdKey, out ((Hand, Direction), double?) value)
         {
-            if (firstKey.GetHandRoll(secondKey) is not Roll.None and var handRoll && handRoll == secondKey.GetHandRoll(thirdKey))
+            if (firstKey.GetHandRoll(secondKey) is not Direction.None and var handRoll && handRoll == secondKey.GetHandRoll(thirdKey))
             {
                 var effort = handRoll switch
                 {
-                    Roll.Inward => -0.5,
-                    Roll.Outward => 0.5,
+                    Direction.Inward => -0.5,
+                    Direction.Outward => 0.5,
                     _ => throw new NotSupportedException(),
                 };
 
