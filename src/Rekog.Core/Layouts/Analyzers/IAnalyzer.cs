@@ -4,6 +4,6 @@
     {
         string Description { get; }
 
-        LayoutAnalysisResult GetResult();
+        LayoutAnalysisNode GetResult();
     }
 }

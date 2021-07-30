@@ -11,15 +11,13 @@ namespace Rekog.Core.Layouts.Analyzers
         {
         }
 
-        protected override List<LayoutAnalysisResult> GroupResultItems(List<((Finger firstFinger, Finger secondFinger) value, LayoutAnalysisResult result)> items)
+        protected override List<LayoutAnalysisNode> GroupChildren(List<((Finger firstFinger, Finger secondFinger) value, LayoutAnalysisNode node)> items)
         {
             return items
                 .GroupBy(x => x.value.firstFinger.GetHand())
-                .Select(g => new LayoutAnalysisResult(g.Key.ToString(), g.Select(x => new LayoutAnalysisResult((x.value.firstFinger.GetKind(), x.value.secondFinger.GetKind()).ToString())
-                {
-                    Percentage = x.result.Percentage,
-                    Effort = x.result.Effort,
-                }).ToList()))
+                .Select(g => new LayoutAnalysisNode(g.Key.ToString(), g
+                    .Select(x => new LayoutAnalysisNode((x.value.firstFinger.GetKind(), x.value.secondFinger.GetKind()).ToString(), x.node.Percentage, x.node.Effort))
+                    .ToList()))
                 .ToList();
         }
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Rekog.Core.Corpora;
 using Rekog.Core.Layouts.Analyzers;
 
@@ -8,7 +6,7 @@ namespace Rekog.Core.Layouts
 {
     public class LayoutAnalyzer
     {
-        public void Analyze(CorpusAnalysisData corpusAnalysisData, Layout layout)
+        public LayoutAnalysisNode Analyze(CorpusAnalysisData corpusAnalysisData, Layout layout)
         {
             var ngramAnalyzers = new INgramAnalyzer[]
             {
@@ -79,31 +77,7 @@ namespace Rekog.Core.Layouts
                 analyzer.AnalyzeNull(trigrams.NullTotal);
             }
 
-            var result = new LayoutAnalysisResult("Result", ngramAnalyzers.Select(x => x.GetResult()).ToList());
-
-            Print(result, 0);
-
-            static void Print(LayoutAnalysisResult result, int indent)
-            {
-                const int maxDescriptionLength = 40;
-
-                var sb = new StringBuilder(new string(' ', indent));
-                var description = string.Concat(result.Description.Take(maxDescriptionLength - indent));
-                sb.Append(description);
-                sb.Append(new string(' ', maxDescriptionLength - indent - description.Length));
-                sb.Append($"  {(indent > 0 ? result.GetTotalPercentage() : null),10:P3}");
-                sb.Append($"  {result.GetTotalEffort(),10:N5}");
-                Console.WriteLine(sb);
-
-                var items = result.Items
-                    .OrderByDescending(x => x.GetTotalEffort())
-                    .ThenByDescending(x => x.GetTotalPercentage())
-                    .ThenByDescending(x => x.Description);
-                foreach (var item in items)
-                {
-                    Print(item, indent + 2);
-                }
-            }
+            return new LayoutAnalysisNode("Result", ngramAnalyzers.Select(x => x.GetResult()).ToList());
         }
     }
 }

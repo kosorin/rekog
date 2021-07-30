@@ -12,18 +12,15 @@ namespace Rekog.Core.Layouts.Analyzers
         {
         }
 
-        protected override List<LayoutAnalysisResult> GroupResultItems(List<((Finger, Rune, Rune) value, LayoutAnalysisResult result)> items)
+        protected override List<LayoutAnalysisNode> GroupChildren(List<((Finger, Rune, Rune) value, LayoutAnalysisNode node)> items)
         {
             return items
                 .GroupBy(x => x.value.Item1.GetHand())
-                .Select(h => new LayoutAnalysisResult(h.Key.ToString(), h
+                .Select(h => new LayoutAnalysisNode(h.Key.ToString(), h
                     .GroupBy(x => x.value.Item1.GetKind())
-                    .Select(k => new LayoutAnalysisResult(k.Key.ToString(), k
-                        .Select(x => new LayoutAnalysisResult(x.value.Item2.ToString() + x.value.Item3.ToString())
-                        {
-                            Percentage = x.result.Percentage,
-                            Effort = x.result.Effort,
-                        }).ToList()))
+                    .Select(k => new LayoutAnalysisNode(k.Key.ToString(), k
+                        .Select(x => new LayoutAnalysisNode(x.value.Item2.ToString() + x.value.Item3.ToString(), x.node.Percentage, x.node.Effort))
+                        .ToList()))
                     .ToList()))
                 .ToList();
         }

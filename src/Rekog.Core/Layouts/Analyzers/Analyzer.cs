@@ -9,6 +9,6 @@
 
         public string Description { get; }
 
-        public abstract LayoutAnalysisResult GetResult();
+        public abstract LayoutAnalysisNode GetResult();
     }
 }

@@ -32,32 +32,26 @@ namespace Rekog.Core.Layouts.Analyzers
             _occurrences.AddNull(count);
         }
 
-        public override LayoutAnalysisResult GetResult()
+        public override LayoutAnalysisNode GetResult()
         {
-            var items = _occurrences.Analyze().Occurrences.Values
+            List<(T value, LayoutAnalysisNode node)> items = _occurrences.Analyze().Occurrences.Values
                 .GroupBy(x => x.Value.value)
-                .Select(g => (value: g.Key, result: new LayoutAnalysisResult(g.Key.ToString()!)
-                {
-                    Percentage = g.Sum(x => x.Percentage),
-                    Effort = g.Any(x => x.Value.effort.HasValue) ? g.Sum(x => x.Percentage * x.Value.effort) : null,
-                }))
+                .Select(g => (value: g.Key, node: new LayoutAnalysisNode(g.Key.ToString()!,
+                    g.Sum(x => x.Percentage),
+                    g.Any(x => x.Value.effort.HasValue) ? g.Sum(x => x.Percentage * x.Value.effort) : null)))
                 .ToList();
 
             if (typeof(T) == typeof(bool))
             {
-                var trueResult = items.Where(x => Equals(true, x.value)).Select(x => x.result).FirstOrDefault();
-                return new LayoutAnalysisResult(Description)
-                {
-                    Effort = trueResult?.Effort,
-                    Percentage = trueResult?.Percentage ?? 0,
-                };
+                var trueNode = items.Where(x => Equals(true, x.value)).Select(x => x.node).FirstOrDefault();
+                return new LayoutAnalysisNode(Description, trueNode?.Percentage ?? 0, trueNode?.Effort);
             }
-            return new LayoutAnalysisResult(Description, GroupResultItems(items));
+            return new LayoutAnalysisNode(Description, GroupChildren(items));
         }
 
-        protected virtual List<LayoutAnalysisResult> GroupResultItems(List<(T value, LayoutAnalysisResult result)> items)
+        protected virtual List<LayoutAnalysisNode> GroupChildren(List<(T value, LayoutAnalysisNode node)> items)
         {
-            return items.Select(x => x.result).ToList();
+            return items.Select(x => x.node).ToList();
         }
 
         protected abstract bool TryGetValue(Key[] keys, out (T value, double? effort) value);
