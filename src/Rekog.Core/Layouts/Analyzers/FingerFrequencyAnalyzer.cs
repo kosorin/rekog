@@ -25,9 +25,9 @@ namespace Rekog.Core.Layouts.Analyzers
                 .ToList();
         }
 
-        protected override bool TryGetValue(Key key, out ((Finger, Rune), double?) value)
+        protected override bool TryAnalyze(Key key, out LayoutNgramAnalysis<(Finger, Rune)> result)
         {
-            value = ((key.Finger, key.Character), key.Effort);
+            result = new LayoutNgramAnalysis<(Finger, Rune)>((key.Finger, key.Character), key.Effort);
             return true;
         }
     }

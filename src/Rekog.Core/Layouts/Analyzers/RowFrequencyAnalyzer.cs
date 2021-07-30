@@ -7,9 +7,9 @@
         {
         }
 
-        protected override bool TryGetValue(Key key, out (int, double?) value)
+        protected override bool TryAnalyze(Key key, out LayoutNgramAnalysis<int> result)
         {
-            value = (key.Row, default);
+            result = new LayoutNgramAnalysis<int>(key.Row);
             return true;
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace Rekog.Core.Layouts.Analyzers
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Rekog.Core.Layouts.Analyzers
 {
     internal abstract class BigramAnalyzer<T> : NgramAnalyzer<T>
         where T : notnull
@@ -10,11 +12,11 @@
 
         public sealed override int Size => 2;
 
-        protected override bool TryGetValue(Key[] keys, out (T, double?) value)
+        protected sealed override bool TryAnalyze(Key[] keys, [MaybeNullWhen(false)] out LayoutNgramAnalysis<T> result)
         {
-            return TryGetValue(keys[0], keys[1], out value);
+            return TryAnalyze(keys[0], keys[1], out result);
         }
 
-        protected abstract bool TryGetValue(Key firstKey, Key secondKey, out (T, double?) value);
+        protected abstract bool TryAnalyze(Key firstKey, Key secondKey, [MaybeNullWhen(false)] out LayoutNgramAnalysis<T> result);
     }
 }

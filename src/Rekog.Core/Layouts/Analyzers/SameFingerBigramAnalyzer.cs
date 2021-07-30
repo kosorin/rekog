@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using Rekog.Core.Extensions;
@@ -25,7 +26,7 @@ namespace Rekog.Core.Layouts.Analyzers
                 .ToList();
         }
 
-        protected override bool TryGetValue(Key firstKey, Key secondKey, out ((Finger, Rune, Rune), double?) value)
+        protected override bool TryAnalyze(Key firstKey, Key secondKey, [MaybeNullWhen(false)] out LayoutNgramAnalysis<(Finger, Rune, Rune)> result)
         {
             if (firstKey.Finger == secondKey.Finger && firstKey.Position != secondKey.Position)
             {
@@ -34,10 +35,10 @@ namespace Rekog.Core.Layouts.Analyzers
                 var distance = firstKey.GetDistance(secondKey);
                 var effort = distance + 1.5;
 
-                value = ((finger, firstKey.Character, secondKey.Character), effort);
+                result = new LayoutNgramAnalysis<(Finger, Rune, Rune)>((finger, firstKey.Character, secondKey.Character), effort);
                 return true;
             }
-            value = default;
+            result = null;
             return false;
         }
     }

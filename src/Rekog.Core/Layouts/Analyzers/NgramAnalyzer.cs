@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Rekog.Core.Layouts.Analyzers
@@ -6,7 +7,7 @@ namespace Rekog.Core.Layouts.Analyzers
     internal abstract class NgramAnalyzer<T> : Analyzer, INgramAnalyzer
         where T : notnull
     {
-        private readonly OccurrenceCollection<(T value, double? effort)> _occurrences = new OccurrenceCollection<(T value, double? effort)>();
+        private readonly OccurrenceCollection<LayoutNgramAnalysis<T>> _occurrences = new OccurrenceCollection<LayoutNgramAnalysis<T>>();
 
         protected NgramAnalyzer(string description)
             : base(description)
@@ -17,9 +18,9 @@ namespace Rekog.Core.Layouts.Analyzers
 
         public void Analyze(Occurrence<LayoutNgram> ngram)
         {
-            if (TryGetValue(ngram.Value.Keys, out var value))
+            if (TryAnalyze(ngram.Value.Keys, out var result))
             {
-                _occurrences.Add(value, ngram.Count);
+                _occurrences.Add(result, ngram.Count);
             }
             else
             {
@@ -35,10 +36,10 @@ namespace Rekog.Core.Layouts.Analyzers
         public override LayoutAnalysisNode GetResult()
         {
             List<(T value, LayoutAnalysisNode node)> items = _occurrences.Analyze().Occurrences.Values
-                .GroupBy(x => x.Value.value)
+                .GroupBy(x => x.Value.Value)
                 .Select(g => (value: g.Key, node: new LayoutAnalysisNode(g.Key.ToString()!,
                     g.Sum(x => x.Percentage),
-                    g.Any(x => x.Value.effort.HasValue) ? g.Sum(x => x.Percentage * x.Value.effort) : null)))
+                    g.Any(x => x.Value.Effort.HasValue) ? g.Sum(x => x.Percentage * x.Value.Effort) : null)))
                 .ToList();
 
             if (typeof(T) == typeof(bool))
@@ -54,6 +55,6 @@ namespace Rekog.Core.Layouts.Analyzers
             return items.Select(x => x.node).ToList();
         }
 
-        protected abstract bool TryGetValue(Key[] keys, out (T value, double? effort) value);
+        protected abstract bool TryAnalyze(Key[] keys, [MaybeNullWhen(false)] out LayoutNgramAnalysis<T> result);
     }
 }

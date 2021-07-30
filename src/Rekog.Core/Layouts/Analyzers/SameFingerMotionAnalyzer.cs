@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Rekog.Core.Layouts.Analyzers
@@ -20,14 +21,14 @@ namespace Rekog.Core.Layouts.Analyzers
                 .ToList();
         }
 
-        protected override bool TryGetValue(Key firstKey, Key secondKey, out ((Finger, Motion), double?) value)
+        protected override bool TryAnalyze(Key firstKey, Key secondKey, [MaybeNullWhen(false)] out LayoutNgramAnalysis<(Finger finger, Motion motion)> result)
         {
             if (firstKey.GetFingerMotion(secondKey) is not Motion.None and var fingerMotion)
             {
-                value = ((firstKey.Finger, fingerMotion), default);
+                result = new LayoutNgramAnalysis<(Finger finger, Motion motion)>((firstKey.Finger, fingerMotion));
                 return true;
             }
-            value = default;
+            result = null;
             return false;
         }
     }

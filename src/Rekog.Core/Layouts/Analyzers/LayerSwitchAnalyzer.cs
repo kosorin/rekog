@@ -7,11 +7,11 @@
         {
         }
 
-        protected override bool TryGetValue(Key firstKey, Key secondKey, out (bool, double?) value)
+        protected override bool TryAnalyze(Key firstKey, Key secondKey, out LayoutNgramAnalysis<bool> result)
         {
             var isSwitch = firstKey.Layer != secondKey.Layer;
 
-            value = (isSwitch, isSwitch ? 1 : 0);
+            result = new LayoutNgramAnalysis<bool>(isSwitch, isSwitch ? 1 : 0);
             return true;
         }
     }

@@ -7,11 +7,11 @@
         {
         }
 
-        protected override bool TryGetValue(Key firstKey, Key secondKey, out (bool, double?) value)
+        protected override bool TryAnalyze(Key firstKey, Key secondKey, out LayoutNgramAnalysis<bool> result)
         {
             var isAlternation = firstKey.Hand != secondKey.Hand;
 
-            value = (isAlternation, default);
+            result = new LayoutNgramAnalysis<bool>(isAlternation);
             return true;
         }
     }

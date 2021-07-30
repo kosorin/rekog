@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Rekog.Core.Layouts.Analyzers
@@ -21,7 +22,7 @@ namespace Rekog.Core.Layouts.Analyzers
                 .ToList();
         }
 
-        protected override bool TryGetValue(Key firstKey, Key secondKey, Key thirdKey, out ((Hand, Direction), double?) value)
+        protected override bool TryAnalyze(Key firstKey, Key secondKey, Key thirdKey, [MaybeNullWhen(false)] out LayoutNgramAnalysis<(Hand hand, Direction roll)> result)
         {
             if (firstKey.GetHandRoll(secondKey) is not Direction.None and var handRoll && handRoll == secondKey.GetHandRoll(thirdKey))
             {
@@ -32,10 +33,10 @@ namespace Rekog.Core.Layouts.Analyzers
                     _ => throw new NotSupportedException(),
                 };
 
-                value = ((firstKey.Hand, handRoll), effort);
+                result = new LayoutNgramAnalysis<(Hand hand, Direction roll)>((firstKey.Hand, handRoll), effort);
                 return true;
             }
-            value = default;
+            result = null;
             return false;
         }
     }
