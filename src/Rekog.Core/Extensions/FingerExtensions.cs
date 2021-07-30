@@ -47,15 +47,32 @@ namespace Rekog.Core.Extensions
             }
         }
 
-        public static bool IsNeighbor(this Finger finger, Finger neighbor)
+        public static Direction GetNeighbor(this Finger finger, Finger neighbor)
         {
             if (finger.GetKind() == FingerKind.Thumb || neighbor.GetKind() == FingerKind.Thumb)
             {
-                return false;
+                return Direction.None;
             }
 
-            var distance = Math.Abs(neighbor - finger);
-            return distance == 1;
+            var hand = finger.GetHand();
+            if (hand != neighbor.GetHand())
+            {
+                return Direction.None;
+            }
+
+            return (hand, neighbor - finger) switch
+            {
+                (Hand.Left, 1) => Direction.Inward,
+                (Hand.Left, -1) => Direction.Outward,
+                (Hand.Right, 1) => Direction.Outward,
+                (Hand.Right, -1) => Direction.Inward,
+                _ => Direction.None,
+            };
+        }
+
+        public static bool IsNeighbor(this Finger finger, Finger neighbor)
+        {
+            return GetNeighbor(finger, neighbor) != Direction.None;
         }
     }
 }
