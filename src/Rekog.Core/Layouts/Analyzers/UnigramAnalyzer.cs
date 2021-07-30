@@ -8,7 +8,7 @@
         {
         }
 
-        public override int Size => 1;
+        public sealed override int Size => 1;
 
         protected override bool TryGetValue(Key[] keys, out (T, double?) value)
         {
