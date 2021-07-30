@@ -44,7 +44,7 @@ namespace Rekog.Core.Layouts
 
         public Roll GetHandRoll(Key other)
         {
-            if (other.Hand != Hand || Math.Abs(other.Row - Row) > 1)
+            if (Hand != other.Hand || Math.Abs(other.Row - Row) > 1)
             {
                 return Roll.None;
             }
@@ -61,7 +61,7 @@ namespace Rekog.Core.Layouts
 
         public Motion GetFingerMotion(Key other)
         {
-            if (other.Finger != Finger)
+            if (Finger != other.Finger || Finger.GetKind() == FingerKind.Thumb)
             {
                 return Motion.None;
             }
