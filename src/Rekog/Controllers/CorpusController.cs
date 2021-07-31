@@ -7,12 +7,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Rekog.Common.Extensions;
+using Rekog.Common.IO;
 using Rekog.Core;
 using Rekog.Core.Corpora;
 using Rekog.Data;
 using Rekog.Data.Serialization;
-using Rekog.Extensions;
-using Rekog.IO;
 using Serilog;
 
 namespace Rekog.Controllers

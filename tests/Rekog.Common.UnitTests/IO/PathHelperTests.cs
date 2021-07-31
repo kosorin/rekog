@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
-using Rekog.IO;
+using Rekog.Common.IO;
 using Shouldly;
 using Xunit;
 
-namespace Rekog.UnitTests.IO
+namespace Rekog.Common.UnitTests.IO
 {
     public class PathHelperTests
     {

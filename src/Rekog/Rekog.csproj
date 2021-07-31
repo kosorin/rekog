@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Rekog.Common\Rekog.Common.csproj" />
         <ProjectReference Include="..\Rekog.Core\Rekog.Core.csproj" />
     </ItemGroup>
 

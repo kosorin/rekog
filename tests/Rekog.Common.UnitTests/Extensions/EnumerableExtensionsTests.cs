@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Rekog.Extensions;
+using Rekog.Common.Extensions;
 using Shouldly;
 using Xunit;
 
-namespace Rekog.UnitTests.Extensions
+namespace Rekog.Common.UnitTests.Extensions
 {
     public class EnumerableExtensionsTests
     {

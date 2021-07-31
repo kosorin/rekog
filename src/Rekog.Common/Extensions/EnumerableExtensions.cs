@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Rekog.Extensions
+namespace Rekog.Common.Extensions
 {
     public static class EnumerableExtensions
     {

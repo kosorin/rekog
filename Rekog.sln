@@ -25,6 +25,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynWordsToCorpus", "tools\c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengerToCorpus", "tools\corpora\MessengerToCorpus\MessengerToCorpus.csproj", "{0837A64A-B882-4B7A-A2A5-449A11D6A888}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rekog.Common", "src\Rekog.Common\Rekog.Common.csproj", "{DC5053D5-914D-4F33-922F-9946E6DEA056}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rekog.Common.UnitTests", "tests\Rekog.Common.UnitTests\Rekog.Common.UnitTests.csproj", "{29EB615D-5C67-4EFB-BBB3-AE6F98A1A054}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,14 @@ Global
 		{0837A64A-B882-4B7A-A2A5-449A11D6A888}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0837A64A-B882-4B7A-A2A5-449A11D6A888}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0837A64A-B882-4B7A-A2A5-449A11D6A888}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC5053D5-914D-4F33-922F-9946E6DEA056}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC5053D5-914D-4F33-922F-9946E6DEA056}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC5053D5-914D-4F33-922F-9946E6DEA056}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC5053D5-914D-4F33-922F-9946E6DEA056}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29EB615D-5C67-4EFB-BBB3-AE6F98A1A054}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29EB615D-5C67-4EFB-BBB3-AE6F98A1A054}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29EB615D-5C67-4EFB-BBB3-AE6F98A1A054}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29EB615D-5C67-4EFB-BBB3-AE6F98A1A054}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +84,8 @@ Global
 		{8D5F791F-94FA-4892-9B1E-DC733B9A64D6} = {70DD95C5-175E-4361-88FD-AAA3450B304D}
 		{226C35A9-5463-4076-B31C-C14492BC8897} = {87FCDE66-9A8B-4988-9817-D582C9891DE9}
 		{0837A64A-B882-4B7A-A2A5-449A11D6A888} = {87FCDE66-9A8B-4988-9817-D582C9891DE9}
+		{DC5053D5-914D-4F33-922F-9946E6DEA056} = {70DD95C5-175E-4361-88FD-AAA3450B304D}
+		{29EB615D-5C67-4EFB-BBB3-AE6F98A1A054} = {5D1A83F2-8D02-41CB-839B-2D14436BC520}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {520A9CF3-FF47-4F87-B24F-0B0ED6051D27}
