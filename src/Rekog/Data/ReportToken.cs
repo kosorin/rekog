@@ -21,7 +21,7 @@ namespace Rekog.Data
             Value = value;
         }
 
-        public string Value { get; private set; }
+        public string Value { get; private set; } = null!;
 
         [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
         protected override void FixSelf()

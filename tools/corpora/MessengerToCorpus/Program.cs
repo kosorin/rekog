@@ -24,6 +24,12 @@ File.WriteAllLines("messages.txt", Directory
 
 internal class Conversation
 {
+    public Conversation(List<Participant> participants, List<Message> messages)
+    {
+        Participants = participants;
+        Messages = messages;
+    }
+
     [JsonPropertyName("participants")]
     public List<Participant> Participants { get; init; }
 
@@ -33,12 +39,25 @@ internal class Conversation
 
 internal class Participant
 {
+    public Participant(string? name)
+    {
+        Name = name;
+    }
+
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 }
 
 internal class Message
 {
+    public Message(string? content, string senderName, string type, bool isUnsent)
+    {
+        Content = content;
+        SenderName = senderName;
+        Type = type;
+        IsUnsent = isUnsent;
+    }
+
     [JsonPropertyName("content")]
     public string? Content { get; init; }
 

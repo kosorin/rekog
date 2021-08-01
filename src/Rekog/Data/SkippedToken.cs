@@ -20,15 +20,15 @@ namespace Rekog.Data
             Hex = $"0x{codePoint:x4}";
         }
 
-        public ReportToken Value { get; set; }
+        public ReportToken Value { get; set; } = null!;
 
         public ulong Count { get; set; }
 
         public UnicodeCategory Category { get; set; }
 
-        public string Dec { get; set; }
+        public string Dec { get; set; } = null!;
 
-        public string Hex { get; set; }
+        public string Hex { get; set; } = null!;
 
         [SuppressMessage("ReSharper", "ConstantNullCoalescingCondition")]
         protected override void FixSelf()
