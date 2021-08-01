@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:cx="clr-namespace:Rekog.App.Converters">
+
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <cx:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
+    <cx:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter" />
+    <cx:KeyLabelAlignmentConverter x:Key="KeyLabelAlignmentConverter" />
+    <cx:LightenConverter x:Key="LightenConverter" />
+    <cx:MultConverter x:Key="MultConverter" />
+    <cx:ContainsConverter x:Key="ContainsConverter" />
+    <cx:EnlargedGeometryConverter x:Key="EnlargedGeometryConverter" Round="False" />
+    <cx:EnlargedGeometryConverter x:Key="EnlargedRoundGeometryConverter" Round="True" />
+    <cx:BooleanToFontWeightConverter x:Key="BooleanToFontWeightConverter" />
+    <cx:BooleanToFontStyleConverter x:Key="BooleanToFontStyleConverter" />
+    <cx:StringToColorConverter x:Key="StringToColorConverter" />
+
+</ResourceDictionary>
