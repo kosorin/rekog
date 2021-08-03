@@ -7,6 +7,7 @@ using System.Windows.Media;
 using Rekog.App.Extensions;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel;
+using Rekog.App.ViewModel.Forms;
 
 namespace Rekog.App.ViewModel
 {
@@ -14,6 +15,8 @@ namespace Rekog.App.ViewModel
     {
         private static readonly Color DefaultBackground = Colors.White;
 
+        private KeyFormViewModel _keyForm;
+        
         private ObservableObjectCollection<KeyViewModel> _keys = new ObservableObjectCollection<KeyViewModel>();
         private Thickness _canvasOffset;
         private Size _canvasSize;
@@ -26,6 +29,17 @@ namespace Rekog.App.ViewModel
             DeleteKeyCommand = new DelegateCommand<KeyViewModel>(DeleteKey, CanDeleteKey);
 
             UpdateAll();
+
+            Form = new BoardFormViewModel(Model);
+            _keyForm = new KeyFormViewModel();
+        }
+
+        public BoardFormViewModel Form { get; }
+
+        public KeyFormViewModel KeyForm
+        {
+            get => _keyForm;
+            private set => Set(ref _keyForm, value);
         }
 
         public DelegateCommand AddKeyCommand { get; }
@@ -173,6 +187,7 @@ namespace Rekog.App.ViewModel
                             SelectedKeyModels.Remove(keyModel);
                         }
                     }
+                    KeyForm = new KeyFormViewModel(SelectedKeyModels.ToArray());
                     break;
             }
         }

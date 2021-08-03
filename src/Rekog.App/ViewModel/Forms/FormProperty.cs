@@ -56,7 +56,7 @@ namespace Rekog.App.ViewModel.Forms
 
         public T? Value
         {
-            get => _value;
+            get => _isSet ? _value : default;
             set
             {
                 if (Set(ref _value, value))
@@ -69,9 +69,12 @@ namespace Rekog.App.ViewModel.Forms
         protected void Initialize()
         {
             // Set values to fields instead of properties to prevent side effects
-            (_isSet, _value) = GetValue();
+            var (isSet, value) = GetValue();
+            _isSet = isSet;
+            _value = isSet ? value : default;
         }
 
+        // Warning: This method returns not null value for "Value" property even if isSet is false
         protected abstract (bool isSet, T? value) GetValue();
 
         protected abstract bool TrySetValue(T? value);

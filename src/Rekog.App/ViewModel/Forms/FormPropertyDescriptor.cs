@@ -23,7 +23,14 @@ namespace Rekog.App.ViewModel.Forms
             var property = GetProperty(propertySelector);
             _getter = model => (T?)property.GetValue(model);
             _setter = (model, value) => property.SetValue(model, value);
+
+            Name = $"{typeof(TModel).Name}:{property.Name}";
         }
+        
+        // For debug purpose
+        // ReSharper disable once MemberCanBePrivate.Global
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        public string Name { get; }
 
         public (bool isSet, T? value) GetValue(ICollection<TModel> models)
         {

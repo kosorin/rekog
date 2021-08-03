@@ -4,7 +4,7 @@ namespace Rekog.App.ViewModel.Forms
 {
     public class BoardFormViewModel : FormViewModel
     {
-        public BoardFormViewModel(params BoardModel[] models)
+        public BoardFormViewModel(params BoardModel[] models) : base(models)
         {
             Name = FormProperty.Reference(models, x => x.Name);
             Author = FormProperty.Reference(models, x => x.Author);

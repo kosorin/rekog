@@ -4,7 +4,7 @@ namespace Rekog.App.ViewModel.Forms
 {
     public class KeyFormViewModel : FormViewModel
     {
-        public KeyFormViewModel(params KeyModel[] models)
+        public KeyFormViewModel(params KeyModel[] models) : base(models)
         {
             X = FormProperty.Value(models, x => x.X);
             Y = FormProperty.Value(models, x => x.Y);

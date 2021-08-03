@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using PropertyTools.DataAnnotations;
-using Rekog.App.Converters;
 using Rekog.App.Model.Kle;
 using Rekog.App.ObjectModel;
 
@@ -14,40 +12,30 @@ namespace Rekog.App.Model
         private string _background = "#808080";
         private ObservableObjectCollection<KeyModel> _keys = new ObservableObjectCollection<KeyModel>();
 
-        [Category("Board")]
-        [SortIndex(0)]
         public string Name
         {
             get => _name;
             set => Set(ref _name, value);
         }
 
-        [Category("Board")]
-        [SortIndex(1)]
         public string Author
         {
             get => _author;
             set => Set(ref _author, value);
         }
 
-        [Category("Board")]
-        [SortIndex(2)]
         public string Notes
         {
             get => _notes;
             set => Set(ref _notes, value);
         }
 
-        [Category("Board")]
-        [Converter(typeof(StringToColorConverter))]
-        [SortIndex(3)]
         public string Background
         {
             get => _background;
             set => Set(ref _background, value);
         }
 
-        [Browsable(false)]
         public ObservableObjectCollection<KeyModel> Keys
         {
             get => _keys;

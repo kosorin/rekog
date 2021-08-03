@@ -4,7 +4,7 @@ namespace Rekog.App.ViewModel.Forms
 {
     public class KeyLabelFormViewModel : FormViewModel
     {
-        public KeyLabelFormViewModel(params KeyLabelModel[] models)
+        public KeyLabelFormViewModel(params KeyLabelModel[] models) : base(models)
         {
             Value = FormProperty.Reference(models, x => x.Value);
             Alignment = FormProperty.Value(models, x => x.Alignment);

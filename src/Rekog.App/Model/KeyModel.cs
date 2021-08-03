@@ -2,8 +2,6 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
-using PropertyTools.DataAnnotations;
-using Rekog.App.Converters;
 using Rekog.App.Model.Kle;
 using Rekog.App.ObjectModel;
 
@@ -32,189 +30,128 @@ namespace Rekog.App.Model
         private bool _isGhosted;
         private bool _isDecal;
 
-        [Category("Group")]
-        [SortIndex(0)]
         public string Group
         {
             get => _group;
             set => Set(ref _group, value);
         }
 
-        [Spinnable(0.05, 0.25, -100, 100)]
-        [Category("Position")]
-        [SortIndex(1)]
         public double X
         {
             get => _x;
             set => Set(ref _x, Math.Round(value, Precision));
         }
 
-        [Spinnable(0.05, 0.25, -100, 100)]
-        [Category("Position")]
-        [SortIndex(2)]
         public double Y
         {
             get => _y;
             set => Set(ref _y, Math.Round(value, Precision));
         }
 
-        [Spinnable(1, 10, -360, 360)]
-        [Category("Rotation")]
-        [DisplayName("Angle")]
-        [SortIndex(11)]
         public double RotationAngle
         {
             get => _rotationAngle;
             set => Set(ref _rotationAngle, Math.Round(value, Precision));
         }
 
-        [Spinnable(0.05, 0.25, -100, 100)]
-        [Category("Rotation")]
-        [DisplayName("Origin X")]
-        [SortIndex(12)]
         public double RotationOriginX
         {
             get => _rotationOriginX;
             set => Set(ref _rotationOriginX, Math.Round(value, Precision));
         }
 
-        [Spinnable(0.05, 0.25, -100, 100)]
-        [Category("Rotation")]
-        [DisplayName("Origin Y")]
-        [SortIndex(13)]
         public double RotationOriginY
         {
             get => _rotationOriginY;
             set => Set(ref _rotationOriginY, Math.Round(value, Precision));
         }
 
-        [Category("Shape")]
-        [SortIndex(21)]
         public string? Shape
         {
             get => _shape;
             set => Set(ref _shape, value);
         }
 
-        [Browsable(false)]
         public bool IsStepped => !string.IsNullOrWhiteSpace(SteppedShape);
 
-        [Category("Shape")]
-        [SortIndex(22)]
         public string? SteppedShape
         {
             get => _steppedShape;
             set => Set(ref _steppedShape, value);
         }
 
-        [Spinnable(0.05, 0.25, 0.25, 10)]
-        [Category("Simple shape")]
-        [SortIndex(31)]
         public double Width
         {
             get => _width;
             set => Set(ref _width, Math.Round(value, Precision));
         }
 
-        [Spinnable(0.05, 0.25, 0.25, 10)]
-        [Category("Simple shape")]
-        [SortIndex(32)]
         public double Height
         {
             get => _height;
             set => Set(ref _height, Math.Round(value, Precision));
         }
 
-        [Category("Style")]
-        [Converter(typeof(StringToColorConverter))]
-        [SortIndex(41)]
         public string Color
         {
             get => _color;
             set => Set(ref _color, value);
         }
 
-        [Spinnable(0.005, 0.025, 0, 0.2)]
-        [Category("Style")]
-        [SortIndex(42)]
         public double Roundness
         {
             get => _roundness;
             set => Set(ref _roundness, Math.Round(value, HighPrecision));
         }
 
-        [Category("Style")]
-        [SortIndex(43)]
         public bool RoundConcaveCorner
         {
             get => _roundConcaveCorner;
             set => Set(ref _roundConcaveCorner, value);
         }
 
-        [Spinnable(0.005, 0.025, 0, 0.2)]
-        [Category("Style")]
-        [SortIndex(44)]
         public double Margin
         {
             get => _margin;
             set => Set(ref _margin, Math.Round(value, HighPrecision));
         }
 
-        [Spinnable(0.005, 0.025, 0, 0.2)]
-        [Category("Style")]
-        [SortIndex(45)]
         public double Padding
         {
             get => _padding;
             set => Set(ref _padding, Math.Round(value, HighPrecision));
         }
 
-        [Spinnable(0.005, 0.025, 0, 0.2)]
-        [Category("Style")]
-        [SortIndex(46)]
         public double InnerPadding
         {
             get => _innerPadding;
             set => Set(ref _innerPadding, Math.Round(value, HighPrecision));
         }
 
-        [Spinnable(0.005, 0.025, -0.1, 0.1)]
-        [Category("Style")]
-        [SortIndex(47)]
         public double InnerVerticalOffset
         {
             get => _innerVerticalOffset;
             set => Set(ref _innerVerticalOffset, Math.Round(value, HighPrecision));
         }
 
-        [Category("Misc")]
-        [Browsable(false)]
-        [SortIndex(91)]
         public bool IsHoming
         {
             get => _isHoming;
             set => Set(ref _isHoming, value);
         }
 
-        [Category("Misc")]
-        [Browsable(false)]
-        [SortIndex(92)]
         public bool IsGhosted
         {
             get => _isGhosted;
             set => Set(ref _isGhosted, value);
         }
 
-        [Category("Misc")]
-        [Browsable(false)]
-        [SortIndex(93)]
         public bool IsDecal
         {
             get => _isDecal;
             set => Set(ref _isDecal, value);
         }
 
-        [Browsable(false)]
         public ObservableObjectCollection<KeyLabelModel> Labels { get; set; } = new ObservableObjectCollection<KeyLabelModel>();
 
         public PathGeometry GetShapeGeometry()
