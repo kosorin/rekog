@@ -15,13 +15,13 @@ namespace Rekog.App.ObjectModel
 
         public ObservableObjectCollection(IEnumerable<T> collection) : base(collection)
         {
-            Subscribe(Items);
+            Subscribe(Items.ToArray());
         }
 
         protected override void InsertItem(int index, T item)
         {
             base.InsertItem(index, item);
-            Subscribe(item);
+            Subscribe(new[] { item, });
         }
 
         protected override void SetItem(int index, T item)
@@ -32,21 +32,27 @@ namespace Rekog.App.ObjectModel
                 return;
             }
 
-            Unsubscribe(oldItem);
+            var oldItems = new[] { oldItem, };
+            BeginUnsubscribe(oldItems);
             base.SetItem(index, item);
-            Subscribe(item);
+            EndUnsubscribe(oldItems);
+            Subscribe(new[] { item, });
         }
 
         protected override void RemoveItem(int index)
         {
-            Unsubscribe(Items[index]);
+            var oldItems = new[] { Items[index], };
+            BeginUnsubscribe(oldItems);
             base.RemoveItem(index);
+            EndUnsubscribe(oldItems);
         }
 
         protected override void ClearItems()
         {
-            Unsubscribe(Items);
+            var oldItems = Items.ToArray();
+            BeginUnsubscribe(oldItems);
             base.ClearItems();
+            EndUnsubscribe(oldItems);
         }
 
         protected virtual void OnCollectionItemPropertyChanged(object item, CollectionItemPropertyChangedEventArgs args)
@@ -59,20 +65,8 @@ namespace Rekog.App.ObjectModel
             CollectionItemChanged?.Invoke(this, args);
         }
 
-        private void Subscribe(T item)
+        private void Subscribe(T[] newItems)
         {
-            Subscribe(new[] { item, });
-        }
-
-        private void Unsubscribe(T item)
-        {
-            Unsubscribe(new[] { item, });
-        }
-
-        private void Subscribe(IEnumerable<T> items)
-        {
-            var newItems = items.ToArray();
-
             OnCollectionItemChanged(new CollectionItemChangedEventArgs(Array.Empty<T>(), newItems));
             foreach (var item in newItems)
             {
@@ -81,14 +75,16 @@ namespace Rekog.App.ObjectModel
             }
         }
 
-        private void Unsubscribe(IEnumerable<T> items)
+        private void BeginUnsubscribe(T[] oldItems)
         {
-            var oldItems = items.ToArray();
-
             foreach (var item in oldItems)
             {
                 item.PropertyChanged -= Item_PropertyChanged;
             }
+        }
+
+        private void EndUnsubscribe(T[] oldItems)
+        {
             OnCollectionItemChanged(new CollectionItemChangedEventArgs(oldItems, Array.Empty<T>()));
         }
 
