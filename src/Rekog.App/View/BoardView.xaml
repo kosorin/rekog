@@ -7,6 +7,7 @@
              xmlns:mx="clr-namespace:Rekog.App.Markup"
              xmlns:v="clr-namespace:Rekog.App.View"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
+             d:DataContext="{d:DesignInstance vm:BoardViewModel, IsDesignTimeCreatable=False}"
              d:Height="480"
              d:Width="240"
              Focusable="True"
@@ -17,7 +18,6 @@
              PreviewMouseMove="UserControl_PreviewMouseMove"
              PreviewMouseUp="UserControl_PreviewMouseUp"
              PreviewMouseWheel="UserControl_PreviewMouseWheel"
-             d:DataContext="{d:DesignInstance vm:BoardViewModel, IsDesignTimeCreatable=False}"
              mc:Ignorable="d">
     <UserControl.Background>
         <SolidColorBrush Color="{Binding Background}" />
@@ -69,8 +69,7 @@
                             <Setter Property="RenderTransform">
                                 <Setter.Value>
                                     <TransformGroup>
-                                        <RotateTransform Angle="{Binding Rotation.Angle}" CenterX="{Binding Rotation.CenterX, Converter={StaticResource ScaleConverter}}"
-                                                         CenterY="{Binding Rotation.CenterY, Converter={StaticResource ScaleConverter}}" />
+                                        <RotateTransform Angle="{Binding Rotation.Angle}" CenterX="{Binding Rotation.CenterX, Converter={StaticResource ScaleConverter}}" CenterY="{Binding Rotation.CenterY, Converter={StaticResource ScaleConverter}}" />
                                         <TranslateTransform a:Bindable.Y="0" Y="{Binding Path=(a:Bindable.Y), RelativeSource={RelativeSource Self}, Converter={StaticResource ScaleConverter}}" />
                                     </TransformGroup>
                                 </Setter.Value>
@@ -172,8 +171,7 @@
                                       RenderTransformOrigin="0.5,0.5"
                                       StrokeThickness="{Binding Source={mx:Double 0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}">
                                     <Path.RenderTransform>
-                                        <TranslateTransform X="{Binding InnerShapeOffset.X, Converter={StaticResource ScaleConverter}}"
-                                                            Y="{Binding InnerShapeOffset.Y, Converter={StaticResource ScaleConverter}}" />
+                                        <TranslateTransform X="{Binding InnerShapeOffset.X, Converter={StaticResource ScaleConverter}}" Y="{Binding InnerShapeOffset.Y, Converter={StaticResource ScaleConverter}}" />
                                     </Path.RenderTransform>
                                     <Path.Fill>
                                         <SolidColorBrush Color="{Binding Color}" />
@@ -192,8 +190,7 @@
                                               IsHitTestVisible="False"
                                               ItemsSource="{Binding Labels}">
                                     <ItemsControl.RenderTransform>
-                                        <TranslateTransform X="{Binding InnerShapeOffset.X, Converter={StaticResource ScaleConverter}}"
-                                                            Y="{Binding InnerShapeOffset.Y, Converter={StaticResource ScaleConverter}}" />
+                                        <TranslateTransform X="{Binding InnerShapeOffset.X, Converter={StaticResource ScaleConverter}}" Y="{Binding InnerShapeOffset.Y, Converter={StaticResource ScaleConverter}}" />
                                     </ItemsControl.RenderTransform>
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>

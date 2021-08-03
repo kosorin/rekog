@@ -23,11 +23,20 @@
                      Grid.Column="0"
                      Grid.ColumnSpan="2" />
         <ui:ThemeShadowChrome Grid.Column="2">
-            <TabControl Background="#ccc"
+            <ui:ThemeShadowChrome.Style>
+                <Style TargetType="{x:Type ui:ThemeShadowChrome}">
+                    <Setter Property="Visibility" Value="Visible" />
+                    <Style.Triggers>
+                        <Trigger Property="ActualWidth" Value="0">
+                            <Setter Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ui:ThemeShadowChrome.Style>
+            <TabControl Background="{StaticResource SystemControlForegroundChromeHighBrush}"
                         BorderThickness="0"
                         TabStripPlacement="Left">
                 <TabControl.Resources>
-
                     <Style x:Key="TabItemTextStyle"
                            BasedOn="{StaticResource {x:Type TabItem}}"
                            TargetType="{x:Type TabItem}">
@@ -35,8 +44,8 @@
                         <Setter Property="HeaderTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <TextBlock FontWeight="Bold"
-                                               Foreground="Black"
+                                    <TextBlock Foreground="Black"
+                                               Style="{StaticResource BaseTextBlockStyle}"
                                                Text="{Binding}" />
                                 </DataTemplate>
                             </Setter.Value>
@@ -47,7 +56,7 @@
                         <Setter Property="HeaderTemplate">
                             <Setter.Value>
                                 <DataTemplate>
-                                    <TextBlock Margin="0,2,0,12"
+                                    <TextBlock Margin="0,12"
                                                Style="{StaticResource BaseTextBlockStyle}"
                                                Text="{Binding}" />
                                 </DataTemplate>
@@ -57,24 +66,33 @@
                     <Style TargetType="{x:Type ui:SimpleStackPanel}">
                         <Setter Property="Spacing" Value="12" />
                     </Style>
+                    <Style TargetType="{x:Type ScrollViewer}">
+                        <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                        <Setter Property="Background" Value="{StaticResource SystemControlBackgroundAltHighBrush}" />
+                    </Style>
                 </TabControl.Resources>
                 <TabItem Header="Board">
                     <ui:TabItemHelper.Icon>
-                        <ui:SymbolIcon Symbol="Keyboard" />
+                        <ui:FontIcon Glyph="&#xE144;" />
                     </ui:TabItemHelper.Icon>
-                    <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer>
                         <ui:SimpleStackPanel Margin="16,8" Spacing="16">
-                            <GroupBox DataContext="{Binding Board.Form}"
-                                      Header="Board"
-                                      IsEnabled="{Binding IsSet}">
+                            <HeaderedContentControl DataContext="{Binding Board.Form}"
+                                                    Header="Board"
+                                                    IsEnabled="{Binding IsSet}">
                                 <ui:SimpleStackPanel>
                                     <TextBox ui:ControlHelper.Header="Name" Text="{Binding Name.Value, Mode=TwoWay}" />
                                     <TextBox ui:ControlHelper.Header="Author" Text="{Binding Author.Value, Mode=TwoWay}" />
                                     <TextBox ui:ControlHelper.Header="Notes" Text="{Binding Notes.Value, Mode=TwoWay}" />
+                                </ui:SimpleStackPanel>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl DataContext="{Binding Board.Form}"
+                                                    Header="Style"
+                                                    IsEnabled="{Binding IsSet}">
+                                <ui:SimpleStackPanel>
                                     <TextBox ui:ControlHelper.Header="Background" Text="{Binding Background.Value, Mode=TwoWay}" />
                                 </ui:SimpleStackPanel>
-                            </GroupBox>
-                            <Button Command="{Binding Board.AddKeyCommand}" Content="Add key" />
+                            </HeaderedContentControl>
                             <GroupBox Header="Import">
                                 <ui:SimpleStackPanel>
                                     <ComboBox x:Name="KleRawDataList"
@@ -333,185 +351,186 @@
                     <ui:TabItemHelper.Icon>
                         <ui:FontIcon Glyph="&#xEB3C;" />
                     </ui:TabItemHelper.Icon>
-                    <ScrollViewer Background="White" VerticalScrollBarVisibility="Auto">
-                        <ui:SimpleStackPanel Margin="16,8" Spacing="16">
-                            <GroupBox DataContext="{Binding Board.KeyForm}"
-                                      Header="Key"
-                                      IsEnabled="{Binding IsSet}">
+                    <ScrollViewer>
+                        <ui:SimpleStackPanel DataContext="{Binding Board.KeyForm}"
+                                             Margin="16,8"
+                                             IsEnabled="{Binding IsSet}"
+                                             Spacing="16">
+                            <HeaderedContentControl Header="Position">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="12" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ui:NumberBox Grid.Column="0"
+                                                  AcceptsExpression="True"
+                                                  Header="X"
+                                                  LargeChange="0.25"
+                                                  Maximum="200"
+                                                  Minimum="-200"
+                                                  SmallChange="0.05"
+                                                  TextAlignment="Right"
+                                                  Value="{Binding X.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    <ui:NumberBox Grid.Column="2"
+                                                  AcceptsExpression="True"
+                                                  Header="Y"
+                                                  LargeChange="0.25"
+                                                  Maximum="200"
+                                                  Minimum="-200"
+                                                  SmallChange="0.05"
+                                                  SpinButtonPlacementMode="Hidden"
+                                                  TextAlignment="Right"
+                                                  Value="{Binding Y.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
+                                </Grid>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Rotation">
                                 <ui:SimpleStackPanel>
-                                    <HeaderedContentControl Header="Position">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition />
-                                                <ColumnDefinition Width="12" />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <ui:NumberBox Grid.Column="0"
-                                                          AcceptsExpression="True"
-                                                          Header="X"
-                                                          LargeChange="0.25"
-                                                          Maximum="200"
-                                                          Minimum="-200"
-                                                          SmallChange="0.05"
-                                                          TextAlignment="Right"
-                                                          Value="{Binding X.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                            <ui:NumberBox Grid.Column="2"
-                                                          AcceptsExpression="True"
-                                                          Header="Y"
-                                                          LargeChange="0.25"
-                                                          Maximum="200"
-                                                          Minimum="-200"
-                                                          SmallChange="0.05"
-                                                          SpinButtonPlacementMode="Hidden"
-                                                          TextAlignment="Right"
-                                                          Value="{Binding Y.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
-                                        </Grid>
-                                    </HeaderedContentControl>
-                                    <HeaderedContentControl Header="Rotation">
-                                        <ui:SimpleStackPanel>
-                                            <ui:NumberBox AcceptsExpression="True"
-                                                          Header="Angle"
-                                                          LargeChange="5"
-                                                          Maximum="360"
-                                                          Minimum="-360"
-                                                          SmallChange="1"
-                                                          TextAlignment="Right"
-                                                          Value="{Binding RotationAngle.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="12" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <ui:NumberBox Grid.Column="0"
-                                                              AcceptsExpression="True"
-                                                              Header="X"
-                                                              LargeChange="0.25"
-                                                              Maximum="200"
-                                                              Minimum="-200"
-                                                              SmallChange="0.05"
-                                                              TextAlignment="Right"
-                                                              Value="{Binding RotationOriginX.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                                <ui:NumberBox Grid.Column="2"
-                                                              AcceptsExpression="True"
-                                                              Header="Y"
-                                                              LargeChange="0.25"
-                                                              Maximum="200"
-                                                              Minimum="-200"
-                                                              SmallChange="0.05"
-                                                              SpinButtonPlacementMode="Hidden"
-                                                              TextAlignment="Right"
-                                                              Value="{Binding RotationOriginY.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
-                                            </Grid>
-                                        </ui:SimpleStackPanel>
-                                    </HeaderedContentControl>
-                                    <HeaderedContentControl Header="Shape">
-                                        <ui:SimpleStackPanel>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="12" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <ui:NumberBox Grid.Column="0"
-                                                              AcceptsExpression="True"
-                                                              Header="Width"
-                                                              LargeChange="0.25"
-                                                              Maximum="20"
-                                                              Minimum="0.25"
-                                                              SmallChange="0.05"
-                                                              TextAlignment="Right"
-                                                              Value="{Binding Width.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                                <ui:NumberBox Grid.Column="2"
-                                                              AcceptsExpression="True"
-                                                              Header="Height"
-                                                              LargeChange="0.25"
-                                                              Maximum="20"
-                                                              Minimum="0.25"
-                                                              SmallChange="0.05"
-                                                              SpinButtonPlacementMode="Hidden"
-                                                              TextAlignment="Right"
-                                                              Value="{Binding Height.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
-                                            </Grid>
-                                            <TextBox ui:ControlHelper.Description="Overrides width and height."
-                                                     ui:ControlHelper.Header="Shape"
-                                                     Text="{Binding Shape.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                            <TextBox ui:ControlHelper.Header="Stepped shape" Text="{Binding SteppedShape.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        </ui:SimpleStackPanel>
-                                    </HeaderedContentControl>
-                                    <HeaderedContentControl Header="Style">
-                                        <ui:SimpleStackPanel>
-                                            <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
-                                            <ui:NumberBox AcceptsExpression="True"
-                                                          Header="Roudness"
-                                                          LargeChange="0.025"
-                                                          Maximum="0.2"
-                                                          Minimum="0"
-                                                          SmallChange="0.005"
-                                                          TextAlignment="Right"
-                                                          Value="{Binding Roundness.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-
-                                            <CheckBox Content="Round concave corner" IsChecked="{Binding RoundConcaveCorner.Value, Mode=TwoWay}" />
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="12" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition />
-                                                    <RowDefinition Height="12" />
-                                                    <RowDefinition />
-                                                </Grid.RowDefinitions>
-                                                <ui:NumberBox Grid.Row="0"
-                                                              Grid.Column="0"
-                                                              AcceptsExpression="True"
-                                                              Header="Margin"
-                                                              LargeChange="0.025"
-                                                              Maximum="0.2"
-                                                              Minimum="0"
-                                                              SmallChange="0.005"
-                                                              TextAlignment="Right"
-                                                              Value="{Binding Margin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                                <ui:NumberBox Grid.Row="0"
-                                                              Grid.Column="2"
-                                                              AcceptsExpression="True"
-                                                              Header="Padding"
-                                                              LargeChange="0.025"
-                                                              Maximum="0.2"
-                                                              Minimum="0"
-                                                              SmallChange="0.005"
-                                                              TextAlignment="Right"
-                                                              Value="{Binding Padding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                                <ui:NumberBox Grid.Row="2"
-                                                              Grid.Column="0"
-                                                              AcceptsExpression="True"
-                                                              Header="Inner vertical offset"
-                                                              LargeChange="0.025"
-                                                              Maximum="0.1"
-                                                              Minimum="-0.1"
-                                                              SmallChange="0.005"
-                                                              TextAlignment="Right"
-                                                              Value="{Binding InnerVerticalOffset.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                                <ui:NumberBox Grid.Row="2"
-                                                              Grid.Column="2"
-                                                              AcceptsExpression="True"
-                                                              Header="Inner padding"
-                                                              LargeChange="0.025"
-                                                              Maximum="0.2"
-                                                              Minimum="0"
-                                                              SmallChange="0.005"
-                                                              TextAlignment="Right"
-                                                              Value="{Binding InnerPadding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-
-                                            </Grid>
-                                            <CheckBox Content="Homing" IsChecked="{Binding IsHoming.Value, Mode=TwoWay}" />
-                                            <CheckBox Content="Decal" IsChecked="{Binding IsDecal.Value, Mode=TwoWay}" />
-                                            <CheckBox Content="Ghosted" IsChecked="{Binding IsGhosted.Value, Mode=TwoWay}" />
-                                        </ui:SimpleStackPanel>
-                                    </HeaderedContentControl>
+                                    <ui:NumberBox AcceptsExpression="True"
+                                                  Header="Angle"
+                                                  LargeChange="5"
+                                                  Maximum="360"
+                                                  Minimum="-360"
+                                                  SmallChange="1"
+                                                  TextAlignment="Right"
+                                                  Value="{Binding RotationAngle.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:NumberBox Grid.Column="0"
+                                                      AcceptsExpression="True"
+                                                      Header="X"
+                                                      LargeChange="0.25"
+                                                      Maximum="200"
+                                                      Minimum="-200"
+                                                      SmallChange="0.05"
+                                                      TextAlignment="Right"
+                                                      Value="{Binding RotationOriginX.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                        <ui:NumberBox Grid.Column="2"
+                                                      AcceptsExpression="True"
+                                                      Header="Y"
+                                                      LargeChange="0.25"
+                                                      Maximum="200"
+                                                      Minimum="-200"
+                                                      SmallChange="0.05"
+                                                      SpinButtonPlacementMode="Hidden"
+                                                      TextAlignment="Right"
+                                                      Value="{Binding RotationOriginY.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
+                                    </Grid>
                                 </ui:SimpleStackPanel>
-                            </GroupBox>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Shape">
+                                <ui:SimpleStackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:NumberBox Grid.Column="0"
+                                                      AcceptsExpression="True"
+                                                      Header="Width"
+                                                      LargeChange="0.25"
+                                                      Maximum="20"
+                                                      Minimum="0.25"
+                                                      SmallChange="0.05"
+                                                      TextAlignment="Right"
+                                                      Value="{Binding Width.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                        <ui:NumberBox Grid.Column="2"
+                                                      AcceptsExpression="True"
+                                                      Header="Height"
+                                                      LargeChange="0.25"
+                                                      Maximum="20"
+                                                      Minimum="0.25"
+                                                      SmallChange="0.05"
+                                                      SpinButtonPlacementMode="Hidden"
+                                                      TextAlignment="Right"
+                                                      Value="{Binding Height.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
+                                    </Grid>
+                                    <TextBox ui:ControlHelper.Description="Overrides width and height."
+                                             ui:ControlHelper.Header="Shape"
+                                             Text="{Binding Shape.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox ui:ControlHelper.Header="Stepped shape" Text="{Binding SteppedShape.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </ui:SimpleStackPanel>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Style">
+                                <ui:SimpleStackPanel>
+                                    <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
+                                    <ui:NumberBox AcceptsExpression="True"
+                                                  Header="Roudness"
+                                                  LargeChange="0.025"
+                                                  Maximum="0.2"
+                                                  Minimum="0"
+                                                  SmallChange="0.005"
+                                                  TextAlignment="Right"
+                                                  Value="{Binding Roundness.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+
+                                    <CheckBox Content="Round concave corner" IsChecked="{Binding RoundConcaveCorner.Value, Mode=TwoWay}" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="12" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition Height="12" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <ui:NumberBox Grid.Row="0"
+                                                      Grid.Column="0"
+                                                      AcceptsExpression="True"
+                                                      Header="Margin"
+                                                      LargeChange="0.025"
+                                                      Maximum="0.2"
+                                                      Minimum="0"
+                                                      SmallChange="0.005"
+                                                      TextAlignment="Right"
+                                                      Value="{Binding Margin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                        <ui:NumberBox Grid.Row="0"
+                                                      Grid.Column="2"
+                                                      AcceptsExpression="True"
+                                                      Header="Padding"
+                                                      LargeChange="0.025"
+                                                      Maximum="0.2"
+                                                      Minimum="0"
+                                                      SmallChange="0.005"
+                                                      TextAlignment="Right"
+                                                      Value="{Binding Padding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                        <ui:NumberBox Grid.Row="2"
+                                                      Grid.Column="0"
+                                                      AcceptsExpression="True"
+                                                      Header="Inner vertical offset"
+                                                      LargeChange="0.025"
+                                                      Maximum="0.1"
+                                                      Minimum="-0.1"
+                                                      SmallChange="0.005"
+                                                      TextAlignment="Right"
+                                                      Value="{Binding InnerVerticalOffset.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                        <ui:NumberBox Grid.Row="2"
+                                                      Grid.Column="2"
+                                                      AcceptsExpression="True"
+                                                      Header="Inner padding"
+                                                      LargeChange="0.025"
+                                                      Maximum="0.2"
+                                                      Minimum="0"
+                                                      SmallChange="0.005"
+                                                      TextAlignment="Right"
+                                                      Value="{Binding InnerPadding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+
+                                    </Grid>
+                                </ui:SimpleStackPanel>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Misc">
+                                <ui:SimpleStackPanel>
+                                    <CheckBox Content="Homing" IsChecked="{Binding IsHoming.Value, Mode=TwoWay}" />
+                                    <CheckBox Content="Decal" IsChecked="{Binding IsDecal.Value, Mode=TwoWay}" />
+                                    <CheckBox Content="Ghosted" IsChecked="{Binding IsGhosted.Value, Mode=TwoWay}" />
+                                </ui:SimpleStackPanel>
+                            </HeaderedContentControl>
                         </ui:SimpleStackPanel>
                     </ScrollViewer>
                 </TabItem>
