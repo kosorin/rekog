@@ -22,6 +22,18 @@
                      DataContext="{Binding Board}"
                      Grid.Column="0"
                      Grid.ColumnSpan="2" />
+        <ui:ThemeShadowChrome Grid.Column="0"
+                              Margin="8,16"
+                              HorizontalAlignment="Right"
+                              VerticalAlignment="Top"
+                              Visibility="{Binding Board, Converter={StaticResource NotNullToVisibilityConverter}}">
+            <Border Padding="12" Background="{StaticResource SystemControlBackgroundAltHighBrush}">
+                <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
+                    <ui:SplitButton Command="{Binding Board.AddKeyCommand}" Content="Add key" />
+                    <Button Command="{Binding Board.DeleteSelectedKeysCommand}" Content="Delete keys" />
+                </ui:SimpleStackPanel>
+            </Border>
+        </ui:ThemeShadowChrome>
         <ui:ThemeShadowChrome Grid.Column="2">
             <ui:ThemeShadowChrome.Style>
                 <Style TargetType="{x:Type ui:ThemeShadowChrome}">
