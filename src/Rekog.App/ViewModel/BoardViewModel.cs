@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -17,7 +18,6 @@ namespace Rekog.App.ViewModel
         private KeyFormViewModel _keyForm;
 
         private ObservableObjectCollection<KeyViewModel> _keys = new ObservableObjectCollection<KeyViewModel>();
-        private ObservableObjectCollection<KeyViewModel> _selectedKeys = new ObservableObjectCollection<KeyViewModel>();
         private Thickness _canvasOffset;
         private Size _canvasSize;
         private Color _background = DefaultBackground;
@@ -53,21 +53,8 @@ namespace Rekog.App.ViewModel
             {
                 if (SetCollection(ref _keys, value, Keys_CollectionItemChanged, Keys_CollectionItemPropertyChanged))
                 {
-                    SelectedKeys = new ObservableObjectCollection<KeyViewModel>(Keys.Where(x => x.IsSelected));
+                    UpdateSelectedKeys();
                     UpdateCanvas();
-                }
-            }
-        }
-
-        public ObservableObjectCollection<KeyViewModel> SelectedKeys
-        {
-            get => _selectedKeys;
-            private set
-            {
-                if (SetCollection(ref _selectedKeys, value, SelectedKeys_CollectionItemChanged))
-                {
-                    KeyForm = new KeyFormViewModel(SelectedKeys.Select(x => x.Model).ToArray());
-                    DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -117,6 +104,11 @@ namespace Rekog.App.ViewModel
             }
         }
 
+        private IEnumerable<KeyModel> GetSelectedKeyModels()
+        {
+            return Keys.Where(x => x.IsSelected).Select(x => x.Model);
+        }
+
         private void UpdateAll()
         {
             UpdateKeys();
@@ -163,16 +155,7 @@ namespace Rekog.App.ViewModel
 
         private void Keys_CollectionItemChanged(ICollection collection, CollectionItemChangedEventArgs args)
         {
-            foreach (KeyViewModel oldKey in args.OldItems)
-            {
-                SelectedKeys.Remove(oldKey);
-            }
-
-            foreach (KeyViewModel newKey in args.NewItems)
-            {
-                SelectedKeys.Add(newKey);
-            }
-
+            UpdateSelectedKeys();
             UpdateCanvas();
         }
 
@@ -189,24 +172,14 @@ namespace Rekog.App.ViewModel
                     UpdateCanvas();
                     break;
                 case nameof(KeyViewModel.IsSelected):
-                    if (key.IsSelected)
-                    {
-                        if (!SelectedKeys.Contains(key))
-                        {
-                            SelectedKeys.Add(key);
-                        }
-                    }
-                    else
-                    {
-                        SelectedKeys.Remove(key);
-                    }
+                    UpdateSelectedKeys();
                     break;
             }
         }
 
-        private void SelectedKeys_CollectionItemChanged(IObservableObjectCollection collection, CollectionItemChangedEventArgs args)
+        private void UpdateSelectedKeys()
         {
-            KeyForm = new KeyFormViewModel(SelectedKeys.Select(x => x.Model).ToArray());
+            KeyForm = new KeyFormViewModel(GetSelectedKeyModels().ToArray());
             DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
         }
 
@@ -238,7 +211,7 @@ namespace Rekog.App.ViewModel
 
         private void DeleteSelectedKeys()
         {
-            foreach (var model in SelectedKeys.Select(x => x.Model).ToList())
+            foreach (var model in GetSelectedKeyModels().ToList())
             {
                 Model.Keys.Remove(model);
             }
@@ -246,7 +219,7 @@ namespace Rekog.App.ViewModel
 
         private bool CanDeleteSelectedKeys()
         {
-            return SelectedKeys.Any();
+            return GetSelectedKeyModels().Any();
         }
     }
 }
