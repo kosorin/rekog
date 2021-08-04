@@ -161,11 +161,6 @@ namespace Rekog.App.ViewModel
 
         private void Keys_CollectionItemPropertyChanged(object item, CollectionItemPropertyChangedEventArgs args)
         {
-            if (item is not KeyViewModel key)
-            {
-                return;
-            }
-
             switch (args.PropertyName)
             {
                 case nameof(KeyViewModel.ActualBounds):

@@ -9,7 +9,6 @@ namespace Rekog.App.Model
 {
     public class KeyModel : ModelBase
     {
-        private string _group = string.Empty;
         private double _x;
         private double _y;
         private double _rotationAngle;
@@ -29,12 +28,6 @@ namespace Rekog.App.Model
         private bool _isHoming;
         private bool _isGhosted;
         private bool _isDecal;
-
-        public string Group
-        {
-            get => _group;
-            set => Set(ref _group, value);
-        }
 
         public double X
         {
