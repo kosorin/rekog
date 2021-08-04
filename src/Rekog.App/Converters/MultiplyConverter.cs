@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Rekog.App.Converters
 {
-    public class MultConverter : IMultiValueConverter
+    public class MultiplyConverter : IMultiValueConverter
     {
         public object Convert(object?[] values, Type targetType, object? parameter, CultureInfo culture)
         {

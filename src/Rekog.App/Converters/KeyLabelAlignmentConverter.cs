@@ -24,7 +24,7 @@ namespace Rekog.App.Converters
                 ("T", KeyLabelAlignment.Top or KeyLabelAlignment.Center or KeyLabelAlignment.Bottom) => TextAlignment.Center,
                 ("T", KeyLabelAlignment.TopRight or KeyLabelAlignment.Right or KeyLabelAlignment.BottomRight) => TextAlignment.Right,
 
-                _ => throw new ArgumentException(null, nameof(value)),
+                _ => DependencyProperty.UnsetValue,
             };
         }
 

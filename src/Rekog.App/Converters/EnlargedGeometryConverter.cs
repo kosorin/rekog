@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using Rekog.App.Extensions;
@@ -15,13 +16,21 @@ namespace Rekog.App.Converters
         {
             if (value is not Geometry geometry)
             {
-                return null;
+                return DependencyProperty.UnsetValue;
             }
             if (parameter is not double size)
             {
                 return geometry;
             }
-            return geometry.GetEnlargedPathGeometry(size, Round);
+
+            try
+            {
+                return geometry.GetEnlargedPathGeometry(size, Round);
+            }
+            catch
+            {
+                return DependencyProperty.UnsetValue;
+            }
         }
 
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

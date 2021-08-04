@@ -10,16 +10,16 @@ namespace Rekog.App.Converters
     {
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            return value switch
-            {
-                bool bold => bold ? FontWeights.Bold : FontWeights.Normal,
-                _ => throw new ArgumentException(null, nameof(value)),
-            };
+            return value is bool bold
+                ? bold ? FontWeights.Bold : FontWeights.Normal
+                : DependencyProperty.UnsetValue;
         }
 
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            throw new NotSupportedException();
+            return value is FontWeight fontWeights
+                ? fontWeights == FontWeights.Bold
+                : DependencyProperty.UnsetValue;
         }
     }
 }

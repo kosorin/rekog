@@ -20,15 +20,22 @@ namespace Rekog.App.Converters
         {
             var scale = (parameter is double s ? s : 1d) * Scale;
 
-            return value switch
+            try
             {
-                double v when targetType == typeof(Thickness) => ConvertThickness(v, scale),
-                double v => ConvertDouble(v, scale),
-                Thickness v => ConvertThickness(v, scale),
-                PointCollection v => ConvertPointCollection(v, scale),
-                Geometry v => ConvertGeometry(v, scale),
-                _ => throw new NotSupportedException(),
-            };
+                return value switch
+                {
+                    double v when targetType == typeof(Thickness) => ConvertThickness(v, scale),
+                    double v => ConvertDouble(v, scale),
+                    Thickness v => ConvertThickness(v, scale),
+                    PointCollection v => ConvertPointCollection(v, scale),
+                    Geometry v => ConvertGeometry(v, scale),
+                    _ => DependencyProperty.UnsetValue,
+                };
+            }
+            catch
+            {
+                return DependencyProperty.UnsetValue;
+            }
         }
 
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
