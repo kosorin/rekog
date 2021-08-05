@@ -98,6 +98,7 @@ namespace Rekog.App.Model
             set => Set(ref _roundness, Math.Round(value, HighPrecision));
         }
 
+        // TODO: Consider removing RoundConcaveCorner property
         public bool RoundConcaveCorner
         {
             get => _roundConcaveCorner;
