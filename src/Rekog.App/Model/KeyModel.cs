@@ -28,6 +28,7 @@ namespace Rekog.App.Model
         private bool _isHoming;
         private bool _isGhosted;
         private bool _isDecal;
+        private ObservableObjectCollection<KeyLabelModel> _labels = new ObservableObjectCollection<KeyLabelModel>();
 
         public double X
         {
@@ -145,7 +146,11 @@ namespace Rekog.App.Model
             set => Set(ref _isDecal, value);
         }
 
-        public ObservableObjectCollection<KeyLabelModel> Labels { get; set; } = new ObservableObjectCollection<KeyLabelModel>();
+        public ObservableObjectCollection<KeyLabelModel> Labels
+        {
+            get => _labels;
+            set => Set(ref _labels, value);
+        }
 
         public PathGeometry GetShapeGeometry()
         {
