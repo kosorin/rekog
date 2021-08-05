@@ -21,6 +21,7 @@ namespace Rekog.App.ViewModel
         private Thickness _canvasOffset;
         private Size _canvasSize;
         private Color _background = DefaultBackground;
+        private bool _showRotationOrigin;
 
         public BoardViewModel(BoardModel model)
             : base(model)
@@ -77,6 +78,12 @@ namespace Rekog.App.ViewModel
             set => Set(ref _background, value);
         }
 
+        public bool ShowRotationOrigin
+        {
+            get => _showRotationOrigin;
+            private set => Set(ref _showRotationOrigin, value);
+        }
+
         protected override void OnModelPropertyChanging(object? sender, PropertyChangingEventArgs args)
         {
             base.OnModelPropertyChanging(sender, args);
@@ -85,6 +92,7 @@ namespace Rekog.App.ViewModel
             {
                 case nameof(BoardModel.Keys):
                     Model.Keys.CollectionItemChanged -= ModelKeys_CollectionItemChanged;
+                    Model.Keys.CollectionItemPropertyChanged -= ModelKeys_CollectionItemPropertyChanged;
                     break;
             }
         }
@@ -119,6 +127,7 @@ namespace Rekog.App.ViewModel
         {
             Keys = new ObservableObjectCollection<KeyViewModel>(Model.Keys.Where(x => !x.IsDecal).Select(x => new KeyViewModel(x)));
             Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
+            Model.Keys.CollectionItemPropertyChanged += ModelKeys_CollectionItemPropertyChanged;
         }
 
         private void UpdateBackground()
@@ -153,6 +162,18 @@ namespace Rekog.App.ViewModel
             }
         }
 
+        private void ModelKeys_CollectionItemPropertyChanged(object item, CollectionItemPropertyChangedEventArgs args)
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(KeyModel.RotationAngle):
+                case nameof(KeyModel.RotationOriginX):
+                case nameof(KeyModel.RotationOriginY):
+                    UpdateRotationOrigin();
+                    break;
+            }
+        }
+
         private void Keys_CollectionItemChanged(ICollection collection, CollectionItemChangedEventArgs args)
         {
             UpdateSelectedKeys();
@@ -176,6 +197,22 @@ namespace Rekog.App.ViewModel
         {
             KeyForm = new KeyFormViewModel(GetSelectedKeyModels().ToArray());
             DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
+
+            UpdateRotationOrigin();
+        }
+
+        private void UpdateRotationOrigin()
+        {
+            if (KeyForm.RotationOriginX.IsSet && KeyForm.RotationOriginY.IsSet)
+            {
+                ShowRotationOrigin = (KeyForm.RotationAngle.IsSet && KeyForm.RotationAngle.Value != 0) 
+                    || KeyForm.RotationOriginX.Value != 0 
+                    || KeyForm.RotationOriginY.Value != 0;
+            }
+            else
+            {
+                ShowRotationOrigin = false;
+            }
         }
 
         private void UpdateCanvas()
