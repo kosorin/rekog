@@ -7,10 +7,13 @@ namespace Rekog.App.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private BoardViewModel _board = new BoardViewModel(new BoardModel());
+        private BoardViewModel _board;
 
         public MainViewModel()
         {
+            _board = GetNewKeyboard();
+
+            NewKeyboardCommand = new DelegateCommand(NewKeyboard);
             ParseKleRawDataCommand = new DelegateCommand<string>(ParseKleRawData);
             ParseKleJsonCommand = new DelegateCommand<string>(ParseKleJson);
         }
@@ -21,9 +24,21 @@ namespace Rekog.App.ViewModel
             set => Set(ref _board, value);
         }
 
+        public DelegateCommand NewKeyboardCommand { get; }
+
         public DelegateCommand<string> ParseKleRawDataCommand { get; }
 
         public DelegateCommand<string> ParseKleJsonCommand { get; }
+
+        private void NewKeyboard()
+        {
+            Board = GetNewKeyboard();
+        }
+
+        private BoardViewModel GetNewKeyboard()
+        {
+            return new BoardViewModel(new BoardModel());
+        }
 
         private void ParseKleRawData(string? kleRawData)
         {
