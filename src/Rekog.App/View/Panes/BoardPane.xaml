@@ -69,56 +69,56 @@
                                 <ui:SplitButton.Flyout>
                                     <ui:MenuFlyout Placement="BottomEdgeAlignedLeft">
                                         <MenuItem Header="Standard" Style="{StaticResource GroupMenuItemStyle}" />
-                                        <MenuItem Click="MenuItem_Click" Header="ANSI 104">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ANSI 104">
+                                            <MenuItem.CommandParameter>
                                                 [{a:7},&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5,h:2,w2:2.25,h2:1,x2:-0.75,y2:1},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;],
-                                                [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.75},&quot;&quot;,&quot;&quot;,&quot;&quot;],
+                                                [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
+                                                [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;],
+                                                [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.25},&quot;&quot;,{x:3.5},&quot;&quot;,&quot;&quot;,&quot;&quot;],
                                                 [{w:2.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;,{x:1.25},&quot;&quot;,{x:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;],
                                                 [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:2},&quot;&quot;,&quot;&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
-                                        <MenuItem Click="MenuItem_Click" Header="ISO 105">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ISO 105">
+                                            <MenuItem.CommandParameter>
                                                 [{a:7},&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;],
                                                 [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
                                                 [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;],
                                                 [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:4.75},&quot;&quot;,&quot;&quot;,&quot;&quot;],
                                                 [{w:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;,{x:1.25},&quot;&quot;,{x:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;],
                                                 [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:2},&quot;&quot;,&quot;&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
-                                        <MenuItem Click="MenuItem_Click" Header="ANSI 60%">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ANSI 60%">
+                                            <MenuItem.CommandParameter>
                                                 [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;],
                                                 [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5},&quot;&quot;],
                                                 [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.25},&quot;&quot;],
                                                 [{w:2.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;],
                                                 [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
-                                        <MenuItem Click="MenuItem_Click" Header="ISO 60%">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ISO 60%">
+                                            <MenuItem.CommandParameter>
                                                 [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;],
                                                 [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},&quot;&quot;],
                                                 [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
                                                 [{w:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;],
                                                 [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
                                         <MenuItem Header="Matrix" Style="{StaticResource GroupMenuItemStyle}" />
-                                        <MenuItem Click="MenuItem_Click" Header="Planck">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Planck">
+                                            <MenuItem.CommandParameter>
                                                 [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
                                                 [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
                                                 [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
                                                 [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
                                         <MenuItem Header="Split" Style="{StaticResource GroupMenuItemStyle}" />
-                                        <MenuItem Click="MenuItem_Click" Header="Atreus">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Atreus">
+                                            <MenuItem.CommandParameter>
                                                 [{r:10,rx:1,y:-0.1,x:2,a:7},&quot;&quot;],
                                                 [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;],
                                                 [{y:-0.75},&quot;&quot;],
@@ -153,10 +153,10 @@
                                                 [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;],
                                                 [{y:-0.75,x:4},&quot;&quot;],
                                                 [{y:-0.9},&quot;&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
-                                        <MenuItem Click="MenuItem_Click" Header="ErgoDox">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ErgoDox">
+                                            <MenuItem.CommandParameter>
                                                 [{x:3.5,a:7},&quot;&quot;,{x:10.5},&quot;&quot;],
                                                 [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;],
                                                 [{y:-0.875,x:5.5},&quot;&quot;,&quot;&quot;,{x:4.5},&quot;&quot;,&quot;&quot;],
@@ -183,10 +183,10 @@
                                                 [{r:-30,rx:13,y:-1,x:-3},&quot;&quot;,&quot;&quot;],
                                                 [{x:-3},&quot;&quot;,{h:2},&quot;&quot;,{h:2},&quot;&quot;],
                                                 [{x:-3},&quot;&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
-                                        <MenuItem Click="MenuItem_Click" Header="Kinesis Advantage">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Kinesis Advantage">
+                                            <MenuItem.CommandParameter>
                                                 [{a:7,f:1,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:4.825,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;],
                                                 [{x:2.25,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
                                                 [{y:-0.75,w:1.25},&quot;&quot;,&quot;&quot;,{x:13.5},&quot;&quot;,{w:1.25},&quot;&quot;],
@@ -204,10 +204,10 @@
                                                 [{r:-15,rx:12.75,x:-3.5},&quot;&quot;,&quot;&quot;],
                                                 [{x:-3.5},&quot;&quot;,{h:2},&quot;&quot;,{h:2},&quot;&quot;],
                                                 [{x:-3.5},&quot;&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
-                                        <MenuItem Click="MenuItem_Click" Header="Programmer's Keyboard">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Programmer's Keyboard">
+                                            <MenuItem.CommandParameter>
                                                 [{y:0.38,x:1.25,c:&quot;#857eb1&quot;,a:7,f:6},&quot;&quot;,{c:&quot;#b81b24&quot;,f:5},&quot;&quot;,&quot;&quot;,{x:0.75,c:&quot;#d9dae0&quot;,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.75,c:&quot;#857eb1&quot;,f:5},&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:3},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;],
                                                 [{y:0.75,x:9.5,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;],
                                                 [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;],
@@ -229,10 +229,10 @@
                                                 [{x:13.15,c:&quot;#00833e&quot;,f:5,h:2},&quot;&quot;,{c:&quot;#e5dbca&quot;,f:3},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;],
                                                 [{x:14.15,c:&quot;#909596&quot;,w:1.5},&quot;&quot;,{c:&quot;#857eb1&quot;,f:5,w:1.5},&quot;&quot;,{c:&quot;#45b866&quot;,f:3},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;],
                                                 [{x:13.13,c:&quot;#e5dbca&quot;,w:2.75},&quot;&quot;,{x:0.27,c:&quot;#45b866&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
-                                        <MenuItem Click="MenuItem_Click" Header="Klave rev1">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Klave rev1">
+                                            <MenuItem.CommandParameter>
                                                 [{x:3,p:&quot;SA&quot;,a:7},&quot;&quot;,{x:9},&quot;&quot;],
                                                 [{y:-0.75,x:2},&quot;&quot;,{x:11},&quot;&quot;],
                                                 [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;],
@@ -262,11 +262,11 @@
                                                 [{r:-28,rx:13.05,y:-6,x:-1.5},&quot;&quot;,&quot;&quot;],
                                                 [{x:-1.5},&quot;&quot;,&quot;&quot;],
                                                 [{r:-14,y:-1,x:-0.5},&quot;&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
                                         <MenuItem Header="Other" Style="{StaticResource GroupMenuItemStyle}" />
-                                        <MenuItem Click="MenuItem_Click" Header="Rekog">
-                                            <MenuItem.Tag>
+                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Rekog">
+                                            <MenuItem.CommandParameter>
                                                 [{p:&quot;FLAT&quot;,a:7,f:9,n:true},&quot;A&quot;,{c:&quot;#ffffff&quot;,t:&quot;#0ca800&quot;,f:1},&quot;B&quot;,{c:&quot;#cccccc&quot;,t:&quot;#000000&quot;,f:3,fa:[1]},&quot;C&quot;,{f:3,n:true},&quot;D&quot;,{t:&quot;#000000\n\n\n#d91c1c\n\n\n\n\n#201cd9&quot;,a:4,fa:[1,0,0,9,0,0,0,0,4]},&quot;\n\n\ne\n\n\n\n\ně\nE&quot;,{t:&quot;#000000&quot;,g:true,a:3,f:3,n:true},&quot;FX\n\n\n\nuxx2&quot;],
                                                 [{t:&quot;#000000\n\n\n#aa07f5\n\n#a824d6\n#ffd600\n\n\n\n\n#a624d4&quot;,g:false,a:0,f:7,w:1.5},&quot;0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11&quot;],
                                                 [{y:-0.75,x:4.75,t:&quot;#000000&quot;,f:3,w:1.25,w2:1.75,x2:-0.25,l:true},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n+&quot;],
@@ -278,7 +278,7 @@
                                                 [{x:1,w:1.25},&quot;&quot;],
                                                 [{r:-15,rx:1,ry:2,y:0.5,x:1.5,c:&quot;#a5a5a5&quot;,a:0,w:1.5,h:2,w2:2.25,h2:1,x2:-0.5,y2:0.75,n:true,l:true},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@&quot;],
                                                 [{rx:8,y:-1.5,x:0.75,w:2.25,h:1.25,w2:1.5,h2:2.5,x2:0.25,y2:-0.5},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@\n+\n+&quot;]
-                                            </MenuItem.Tag>
+                                            </MenuItem.CommandParameter>
                                         </MenuItem>
                                     </ui:MenuFlyout>
                                 </ui:SplitButton.Flyout>

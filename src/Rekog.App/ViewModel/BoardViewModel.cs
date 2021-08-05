@@ -26,7 +26,7 @@ namespace Rekog.App.ViewModel
         public BoardViewModel(BoardModel model)
             : base(model)
         {
-            AddKeyCommand = new DelegateCommand(AddKey);
+            AddKeyCommand = new DelegateCommand<NewKeyTemplate>(AddKey);
             DeleteSelectedKeysCommand = new DelegateCommand(DeleteSelectedKeys, CanDeleteSelectedKeys);
 
             UpdateAll();
@@ -43,7 +43,7 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _keyForm, value);
         }
 
-        public DelegateCommand AddKeyCommand { get; }
+        public DelegateCommand<NewKeyTemplate> AddKeyCommand { get; }
 
         public DelegateCommand DeleteSelectedKeysCommand { get; }
 
@@ -205,8 +205,8 @@ namespace Rekog.App.ViewModel
         {
             if (KeyForm.RotationOriginX.IsSet && KeyForm.RotationOriginY.IsSet)
             {
-                ShowRotationOrigin = (KeyForm.RotationAngle.IsSet && KeyForm.RotationAngle.Value != 0) 
-                    || KeyForm.RotationOriginX.Value != 0 
+                ShowRotationOrigin = (KeyForm.RotationAngle.IsSet && KeyForm.RotationAngle.Value != 0)
+                    || KeyForm.RotationOriginX.Value != 0
                     || KeyForm.RotationOriginY.Value != 0;
             }
             else
@@ -233,11 +233,42 @@ namespace Rekog.App.ViewModel
             CanvasSize = new Size(right - left, bottom - top);
         }
 
-        private void AddKey()
+        private void AddKey(NewKeyTemplate template)
         {
-            Model.Keys.Add(new KeyModel
+            var y = Keys.OrderByDescending(x => x.ActualBounds.Bottom).FirstOrDefault()?.ActualBounds.Bottom ?? 0;
+
+            Model.Keys.Add(template switch
             {
-                Y = Keys.OrderByDescending(x => x.ActualBounds.Bottom).FirstOrDefault()?.ActualBounds.Bottom ?? 0,
+                NewKeyTemplate.IsoEnter => new KeyModel
+                {
+                    Y = y,
+                    Shape = "M-.25 0 0 0 1.25 0 1.25 1 1.25 2 0 2 0 1-.25 1-.25 0z",
+                    Width = 1.25,
+                    Height = 2.0,
+                },
+                NewKeyTemplate.BigAssEnter => new KeyModel
+                {
+                    Y = y,
+                    Shape = "M0 0 1.5 0 1.5 1 1.5 2 0 2-.75 2-.75 1 0 1 0 0z",
+                    Width = 1.5,
+                    Height = 2.0,
+                },
+                NewKeyTemplate.SteppedCapsLock => new KeyModel
+                {
+                    Y = y,
+                    SteppedShape = "M0 0 1.25 0 1.25 1 0 1 0 0z",
+                    Width = 1.75,
+                },
+                NewKeyTemplate.CenterStepped => new KeyModel
+                {
+                    Y = y,
+                    Shape = "M-.25 0 1.25 0 1.25 1-.25 1-.25 0z",
+                    SteppedShape = "M0 0 1 0 1 1 0 1 0 0z",
+                },
+                _ => new KeyModel
+                {
+                    Y = y,
+                },
             });
         }
 

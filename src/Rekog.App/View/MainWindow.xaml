@@ -32,7 +32,35 @@
                               Visibility="{Binding Board, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Border Padding="12" Background="{StaticResource SystemControlBackgroundAltHighBrush}">
                 <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
-                    <ui:SplitButton Command="{Binding Board.AddKeyCommand}" Content="Add key" />
+                    <ui:SplitButton Command="{Binding Board.AddKeyCommand}" Content="Add key">
+                        <ui:SplitButton.CommandParameter>
+                            <vm:NewKeyTemplate>None</vm:NewKeyTemplate>
+                        </ui:SplitButton.CommandParameter>
+                        <ui:SplitButton.Flyout>
+                            <ui:MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                <MenuItem Command="{Binding Board.AddKeyCommand}" Header="ISO Enter">
+                                    <MenuItem.CommandParameter>
+                                        <vm:NewKeyTemplate>IsoEnter</vm:NewKeyTemplate>
+                                    </MenuItem.CommandParameter>
+                                </MenuItem>
+                                <MenuItem Command="{Binding Board.AddKeyCommand}" Header="BIG-ass Enter">
+                                    <MenuItem.CommandParameter>
+                                        <vm:NewKeyTemplate>BigAssEnter</vm:NewKeyTemplate>
+                                    </MenuItem.CommandParameter>
+                                </MenuItem>
+                                <MenuItem Command="{Binding Board.AddKeyCommand}" Header="Stepped Caps Lock">
+                                    <MenuItem.CommandParameter>
+                                        <vm:NewKeyTemplate>SteppedCapsLock</vm:NewKeyTemplate>
+                                    </MenuItem.CommandParameter>
+                                </MenuItem>
+                                <MenuItem Command="{Binding Board.AddKeyCommand}" Header="Center stepped">
+                                    <MenuItem.CommandParameter>
+                                        <vm:NewKeyTemplate>CenterStepped</vm:NewKeyTemplate>
+                                    </MenuItem.CommandParameter>
+                                </MenuItem>
+                            </ui:MenuFlyout>
+                        </ui:SplitButton.Flyout>
+                    </ui:SplitButton>
                     <Button Command="{Binding Board.DeleteSelectedKeysCommand}" Content="Delete keys" />
                 </ui:SimpleStackPanel>
             </Border>
