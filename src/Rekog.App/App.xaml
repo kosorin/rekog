@@ -4,20 +4,31 @@
              xmlns:clr="clr-namespace:System;assembly=mscorlib"
              xmlns:cx="clr-namespace:Rekog.App.Converters"
              xmlns:ui="http://schemas.modernwpf.com/2019"
-             xmlns:vm="clr-namespace:Rekog.App.ViewModel"
-             StartupUri="View/MainWindow.xaml">
+             ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
+
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemeResources RequestedTheme="Light" />
                 <ui:XamlControlsResources />
-                <ResourceDictionary Source="Themes/Converters.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <vm:MainViewModel x:Key="MainViewModel" />
 
             <clr:Double x:Key="UnitSize">96</clr:Double>
 
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <cx:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
+            <cx:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter" />
+            <cx:KeyLabelAlignmentConverter x:Key="KeyLabelAlignmentConverter" />
+            <cx:LightenConverter x:Key="LightenConverter" />
+            <cx:MultiplyConverter x:Key="MultiplyConverter" />
+            <cx:EnumIsInConverter x:Key="EnumIsInConverter" />
+            <cx:EnlargedGeometryConverter x:Key="EnlargedGeometryConverter" Round="False" />
+            <cx:EnlargedGeometryConverter x:Key="EnlargedRoundGeometryConverter" Round="True" />
+            <cx:BooleanToFontWeightConverter x:Key="BooleanToFontWeightConverter" />
+            <cx:BooleanToFontStyleConverter x:Key="BooleanToFontStyleConverter" />
+            <cx:StringToColorConverter x:Key="StringToColorConverter" />
+            <cx:NullToNanConverter x:Key="NullToNanConverter" />
+            <cx:BooleanNegationConverter x:Key="BooleanNegationConverter" />
             <cx:ScaleConverter x:Key="ScaleConverter" Scale="{StaticResource UnitSize}" />
 
         </ResourceDictionary>
