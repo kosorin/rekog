@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
              d:DataContext="{d:DesignInstance vm:MainViewModel}"
@@ -419,9 +418,6 @@
                         </ui:SimpleStackPanel>
                     </HeaderedContentControl>
                     <HeaderedContentControl Header="Rotation">
-                        <b:Interaction.Behaviors>
-                            <b:TranslateZoomRotateBehavior />
-                        </b:Interaction.Behaviors>
                         <ui:SimpleStackPanel>
                             <ui:NumberBox Header="Angle"
                                           LargeChange="5"
