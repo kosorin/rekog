@@ -1,4 +1,4 @@
-﻿namespace Rekog.App.View.Panes
+﻿namespace Rekog.App.View.Designer
 {
     public partial class BoardPane
     {

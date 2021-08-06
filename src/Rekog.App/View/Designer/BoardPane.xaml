@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Rekog.App.View.Panes.BoardPane"
+﻿<UserControl x:Class="Rekog.App.View.Designer.BoardPane"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -501,7 +501,6 @@
                                               Minimum="0"
                                               SmallChange="0.005"
                                               Value="{Binding InnerPadding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-
                             </Grid>
                         </ui:SimpleStackPanel>
                     </HeaderedContentControl>
