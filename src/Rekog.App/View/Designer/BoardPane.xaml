@@ -12,7 +12,7 @@
              mc:Ignorable="d">
     <TabControl BorderThickness="0" TabStripPlacement="Left">
         <TabControl.Resources>
-            <Style x:Key="TabItemTextStyle"
+            <Style x:Key="GroupTabItemStyle"
                    BasedOn="{StaticResource {x:Type TabItem}}"
                    TargetType="{x:Type TabItem}">
                 <Setter Property="IsEnabled" Value="False" />
@@ -340,7 +340,7 @@
                 </ui:SimpleStackPanel>
             </ScrollViewer>
         </TabItem>
-        <TabItem Header="Layout" Style="{StaticResource TabItemTextStyle}" />
+        <TabItem Header="Layout" Style="{StaticResource GroupTabItemStyle}" />
         <TabItem Header="Board">
             <ui:TabItemHelper.Icon>
                 <ui:FontIcon Glyph="&#xE809;" />
@@ -514,7 +514,7 @@
                 </ui:SimpleStackPanel>
             </ScrollViewer>
         </TabItem>
-        <TabItem Header="Keymap" Style="{StaticResource TabItemTextStyle}" />
+        <TabItem Header="Keymap" Style="{StaticResource GroupTabItemStyle}" />
         <TabItem Header="Top left">
             <ui:TabItemHelper.Icon>
                 <ui:FontIcon Glyph="&#xE81E;" />
