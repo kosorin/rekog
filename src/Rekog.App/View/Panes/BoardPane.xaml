@@ -343,7 +343,7 @@
         <TabItem Header="Layout" Style="{StaticResource TabItemTextStyle}" />
         <TabItem Header="Board">
             <ui:TabItemHelper.Icon>
-                <ui:FontIcon Glyph="&#xE144;" />
+                <ui:FontIcon Glyph="&#xE809;" />
             </ui:TabItemHelper.Icon>
             <ScrollViewer>
                 <ui:SimpleStackPanel DataContext="{Binding Board.Form}"
@@ -359,7 +359,7 @@
         </TabItem>
         <TabItem Header="Key">
             <ui:TabItemHelper.Icon>
-                <ui:FontIcon Glyph="&#xEB3C;" />
+                <ui:FontIcon Glyph="&#xF158;" />
             </ui:TabItemHelper.Icon>
             <ScrollViewer>
                 <ui:SimpleStackPanel DataContext="{Binding Board.KeyForm}"
