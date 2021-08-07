@@ -1,14 +1,18 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:c="clr-namespace:Rekog.App.Controls">
+                    xmlns:c="clr-namespace:Rekog.App.Controls"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <Style TargetType="{x:Type c:KeyLabelAlignmentPicker}">
-        <Setter Property="FontSize" Value="20" />
-        <Setter Property="Padding" Value="4" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
+        <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="Contained" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:KeyLabelAlignmentPicker}">
@@ -16,19 +20,12 @@
                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                         <Grid.Resources>
-                            <Style TargetType="{x:Type ToggleButton}">
-                                <Setter Property="Width" Value="24" />
-                                <Setter Property="Height" Value="24" />
-                                <Setter Property="Padding" Value="4" />
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                            </Style>
-                            <Style TargetType="{x:Type Path}">
-                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
-                                <Setter Property="Fill" Value="#cc000000" />
-                                <Setter Property="Stretch" Value="Uniform" />
-                                <Setter Property="Data" Value="M 0 0 l -1.5 1.2 l 0 -0.8 l -1.75 0 l 0 -0.8 l 1.75 0 l 0 -0.8 z" />
-                            </Style>
+                            <sys:Double x:Key="ButtonSize">32</sys:Double>
+                            <Thickness x:Key="ButtonPadding">8</Thickness>
+                            <Thickness x:Key="CenterButtonPadding">10</Thickness>
+                            <Point x:Key="IconRenderTransformOrigin">0.5,0.5</Point>
+                            <PathGeometry x:Key="ArrowIconData">M0 0l-1.5 1.2 0-.8-1.75 0 0-.8 1.75 0 0-.8z</PathGeometry>
+                            <PathGeometry x:Key="CenterIconData">M0 0l1 0 0 1-1 0z</PathGeometry>
                         </Grid.Resources>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -47,83 +44,127 @@
 
                         <ToggleButton x:Name="PART_TopLeft"
                                       Grid.Row="0"
-                                      Grid.Column="0">
-                            <Path>
-                                <Path.RenderTransform>
+                                      Grid.Column="0"
+                                      Width="{StaticResource ButtonSize}"
+                                      Height="{StaticResource ButtonSize}"
+                                      Padding="{StaticResource ButtonPadding}"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch">
+                            <ui:PathIcon Data="{StaticResource ArrowIconData}" RenderTransformOrigin="{StaticResource IconRenderTransformOrigin}">
+                                <ui:PathIcon.RenderTransform>
                                     <RotateTransform Angle="-135" />
-                                </Path.RenderTransform>
-                            </Path>
+                                </ui:PathIcon.RenderTransform>
+                            </ui:PathIcon>
                         </ToggleButton>
                         <ToggleButton x:Name="PART_TopCenter"
                                       Grid.Row="0"
-                                      Grid.Column="2">
-                            <Path>
-                                <Path.RenderTransform>
+                                      Grid.Column="2"
+                                      Width="{StaticResource ButtonSize}"
+                                      Height="{StaticResource ButtonSize}"
+                                      Padding="{StaticResource ButtonPadding}"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch">
+                            <ui:PathIcon Data="{StaticResource ArrowIconData}" RenderTransformOrigin="{StaticResource IconRenderTransformOrigin}">
+                                <ui:PathIcon.RenderTransform>
                                     <RotateTransform Angle="-90" />
-                                </Path.RenderTransform>
-                            </Path>
+                                </ui:PathIcon.RenderTransform>
+                            </ui:PathIcon>
                         </ToggleButton>
                         <ToggleButton x:Name="PART_TopRight"
                                       Grid.Row="0"
-                                      Grid.Column="4">
-                            <Path>
-                                <Path.RenderTransform>
+                                      Grid.Column="4"
+                                      Width="{StaticResource ButtonSize}"
+                                      Height="{StaticResource ButtonSize}"
+                                      Padding="{StaticResource ButtonPadding}"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch">
+                            <ui:PathIcon Data="{StaticResource ArrowIconData}" RenderTransformOrigin="{StaticResource IconRenderTransformOrigin}">
+                                <ui:PathIcon.RenderTransform>
                                     <RotateTransform Angle="-45" />
-                                </Path.RenderTransform>
-                            </Path>
+                                </ui:PathIcon.RenderTransform>
+                            </ui:PathIcon>
                         </ToggleButton>
 
                         <ToggleButton x:Name="PART_CenterLeft"
                                       Grid.Row="2"
-                                      Grid.Column="0">
-                            <Path>
-                                <Path.RenderTransform>
+                                      Grid.Column="0"
+                                      Width="{StaticResource ButtonSize}"
+                                      Height="{StaticResource ButtonSize}"
+                                      Padding="{StaticResource ButtonPadding}"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch">
+                            <ui:PathIcon Data="{StaticResource ArrowIconData}" RenderTransformOrigin="{StaticResource IconRenderTransformOrigin}">
+                                <ui:PathIcon.RenderTransform>
                                     <RotateTransform Angle="180" />
-                                </Path.RenderTransform>
-                            </Path>
+                                </ui:PathIcon.RenderTransform>
+                            </ui:PathIcon>
                         </ToggleButton>
                         <ToggleButton x:Name="PART_CenterCenter"
                                       Grid.Row="2"
                                       Grid.Column="2"
-                                      Padding="8">
-                            <Path Data="M 0 0 l 1 0 l 0 1 l -1 0 z" />
+                                      Width="{StaticResource ButtonSize}"
+                                      Height="{StaticResource ButtonSize}"
+                                      Padding="{StaticResource CenterButtonPadding}"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch">
+                            <ui:PathIcon Data="{StaticResource CenterIconData}" />
                         </ToggleButton>
                         <ToggleButton x:Name="PART_CenterRight"
                                       Grid.Row="2"
-                                      Grid.Column="4">
-                            <Path>
-                                <Path.RenderTransform>
+                                      Grid.Column="4"
+                                      Width="{StaticResource ButtonSize}"
+                                      Height="{StaticResource ButtonSize}"
+                                      Padding="{StaticResource ButtonPadding}"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch">
+                            <ui:PathIcon Data="{StaticResource ArrowIconData}" RenderTransformOrigin="{StaticResource IconRenderTransformOrigin}">
+                                <ui:PathIcon.RenderTransform>
                                     <RotateTransform Angle="0" />
-                                </Path.RenderTransform>
-                            </Path>
+                                </ui:PathIcon.RenderTransform>
+                            </ui:PathIcon>
                         </ToggleButton>
 
                         <ToggleButton x:Name="PART_BottomLeft"
                                       Grid.Row="4"
-                                      Grid.Column="0">
-                            <Path>
-                                <Path.RenderTransform>
+                                      Grid.Column="0"
+                                      Width="{StaticResource ButtonSize}"
+                                      Height="{StaticResource ButtonSize}"
+                                      Padding="{StaticResource ButtonPadding}"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch">
+                            <ui:PathIcon Data="{StaticResource ArrowIconData}" RenderTransformOrigin="{StaticResource IconRenderTransformOrigin}">
+                                <ui:PathIcon.RenderTransform>
                                     <RotateTransform Angle="135" />
-                                </Path.RenderTransform>
-                            </Path>
+                                </ui:PathIcon.RenderTransform>
+                            </ui:PathIcon>
                         </ToggleButton>
                         <ToggleButton x:Name="PART_BottomCenter"
                                       Grid.Row="4"
-                                      Grid.Column="2">
-                            <Path>
-                                <Path.RenderTransform>
+                                      Grid.Column="2"
+                                      Width="{StaticResource ButtonSize}"
+                                      Height="{StaticResource ButtonSize}"
+                                      Padding="{StaticResource ButtonPadding}"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch">
+                            <ui:PathIcon Data="{StaticResource ArrowIconData}" RenderTransformOrigin="{StaticResource IconRenderTransformOrigin}">
+                                <ui:PathIcon.RenderTransform>
                                     <RotateTransform Angle="90" />
-                                </Path.RenderTransform>
-                            </Path>
+                                </ui:PathIcon.RenderTransform>
+                            </ui:PathIcon>
                         </ToggleButton>
                         <ToggleButton x:Name="PART_BottomRight"
                                       Grid.Row="4"
-                                      Grid.Column="4">
-                            <Path>
-                                <Path.RenderTransform>
+                                      Grid.Column="4"
+                                      Width="{StaticResource ButtonSize}"
+                                      Height="{StaticResource ButtonSize}"
+                                      Padding="{StaticResource ButtonPadding}"
+                                      HorizontalContentAlignment="Stretch"
+                                      VerticalContentAlignment="Stretch">
+                            <ui:PathIcon Data="{StaticResource ArrowIconData}" RenderTransformOrigin="{StaticResource IconRenderTransformOrigin}">
+                                <ui:PathIcon.RenderTransform>
                                     <RotateTransform Angle="45" />
-                                </Path.RenderTransform>
-                            </Path>
+                                </ui:PathIcon.RenderTransform>
+                            </ui:PathIcon>
                         </ToggleButton>
 
                     </Grid>
@@ -131,4 +172,5 @@
             </Setter.Value>
         </Setter>
     </Style>
+
 </ResourceDictionary>
