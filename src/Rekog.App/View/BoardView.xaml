@@ -190,6 +190,7 @@
                                               HorizontalAlignment="Stretch"
                                               VerticalAlignment="Stretch"
                                               IsHitTestVisible="False"
+                                              IsTabStop="False"
                                               ItemsSource="{Binding Labels}">
                                     <ItemsControl.RenderTransform>
                                         <TranslateTransform X="{Binding InnerShapeOffset.X, Converter={StaticResource ScaleConverter}}" Y="{Binding InnerShapeOffset.Y, Converter={StaticResource ScaleConverter}}" />
