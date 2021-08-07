@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:a="clr-namespace:Rekog.App.Behaviors.AttachedProperties"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
              d:DataContext="{d:DesignInstance vm:MainViewModel}"
@@ -10,283 +11,234 @@
              d:DesignWidth="450"
              Background="{StaticResource SystemControlBackgroundAltHighBrush}"
              mc:Ignorable="d">
-    <TabControl BorderThickness="0" TabStripPlacement="Left">
-        <TabControl.Resources>
-            <Style x:Key="GroupTabItemStyle"
-                   BasedOn="{StaticResource {x:Type TabItem}}"
-                   TargetType="{x:Type TabItem}">
-                <Setter Property="IsEnabled" Value="False" />
-                <Setter Property="HeaderTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <TextBlock Foreground="{StaticResource SystemControlForegroundBaseHighBrush}"
-                                       Style="{StaticResource BaseTextBlockStyle}"
-                                       Text="{Binding}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <Style TargetType="{x:Type HeaderedContentControl}">
-                <Setter Property="IsTabStop" Value="False" />
-                <Setter Property="HeaderTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <TextBlock Margin="0,16,0,12"
-                                       Style="{StaticResource BaseTextBlockStyle}"
-                                       Text="{Binding}" />
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-            <Style TargetType="{x:Type ui:SimpleStackPanel}">
-                <Setter Property="Spacing" Value="12" />
-            </Style>
-            <Style TargetType="{x:Type ScrollViewer}">
-                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-            </Style>
-            <Style BasedOn="{StaticResource {x:Type ui:NumberBox}}" TargetType="{x:Type ui:NumberBox}">
-                <Setter Property="AcceptsExpression" Value="True" />
-                <Setter Property="TextAlignment" Value="Left" />
-            </Style>
-            <Style x:Key="GroupMenuItemStyle"
-                   BasedOn="{StaticResource {x:Type MenuItem}}"
-                   TargetType="{x:Type MenuItem}">
-                <Setter Property="IsEnabled" Value="False" />
-            </Style>
-        </TabControl.Resources>
-        <TabItem Header="File">
-            <ui:TabItemHelper.Icon>
-                <ui:FontIcon Glyph="&#xE130;" />
-            </ui:TabItemHelper.Icon>
-            <ScrollViewer>
-                <ui:SimpleStackPanel Margin="16,8">
-                    <HeaderedContentControl Header="Keyboard">
-                        <ui:SimpleStackPanel>
-                            <ui:SplitButton VerticalAlignment="Top"
-                                            Command="{Binding NewKeyboardCommand}"
-                                            Content="New">
-                                <ui:SplitButton.Flyout>
-                                    <ui:MenuFlyout Placement="BottomEdgeAlignedLeft">
-                                        <MenuItem Header="Standard" Style="{StaticResource GroupMenuItemStyle}" />
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ANSI 104">
-                                            <MenuItem.CommandParameter>
-                                                [{a:7},&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;],
-                                                [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.25},&quot;&quot;,{x:3.5},&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{w:2.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;,{x:1.25},&quot;&quot;,{x:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;],
-                                                [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:2},&quot;&quot;,&quot;&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ISO 105">
-                                            <MenuItem.CommandParameter>
-                                                [{a:7},&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;],
-                                                [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:4.75},&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{w:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;,{x:1.25},&quot;&quot;,{x:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;],
-                                                [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:2},&quot;&quot;,&quot;&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ANSI 60%">
-                                            <MenuItem.CommandParameter>
-                                                [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;],
-                                                [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5},&quot;&quot;],
-                                                [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.25},&quot;&quot;],
-                                                [{w:2.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;],
-                                                [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ISO 60%">
-                                            <MenuItem.CommandParameter>
-                                                [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;],
-                                                [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},&quot;&quot;],
-                                                [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{w:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;],
-                                                [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                        <MenuItem Header="Matrix" Style="{StaticResource GroupMenuItemStyle}" />
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Planck">
-                                            <MenuItem.CommandParameter>
-                                                [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                        <MenuItem Header="Split" Style="{StaticResource GroupMenuItemStyle}" />
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Atreus">
-                                            <MenuItem.CommandParameter>
-                                                [{r:10,rx:1,y:-0.1,x:2,a:7},&quot;&quot;],
-                                                [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.75},&quot;&quot;],
-                                                [{y:-0.9,x:4},&quot;&quot;],
-                                                [{y:-0.7,x:2},&quot;&quot;],
-                                                [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.75},&quot;&quot;],
-                                                [{y:-0.9,x:4},&quot;&quot;],
-                                                [{y:-0.7,x:2},&quot;&quot;],
-                                                [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.75},&quot;&quot;],
-                                                [{y:-0.9,x:4},&quot;&quot;],
-                                                [{y:-0.75,x:5,h:1.5},&quot;&quot;],
-                                                [{y:-0.95,x:2},&quot;&quot;],
-                                                [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.75},&quot;&quot;],
-                                                [{y:-0.9,x:4},&quot;&quot;],
-                                                [{r:-10,rx:7,ry:0.965,y:-0.2,x:2},&quot;&quot;],
-                                                [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.75,x:4},&quot;&quot;],
-                                                [{y:-0.9},&quot;&quot;],
-                                                [{y:-0.7,x:2},&quot;&quot;],
-                                                [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.75,x:4},&quot;&quot;],
-                                                [{y:-0.9},&quot;&quot;],
-                                                [{y:-0.7,x:2},&quot;&quot;],
-                                                [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.75,x:4},&quot;&quot;],
-                                                [{y:-0.9},&quot;&quot;],
-                                                [{y:-0.75,x:-1,h:1.5},&quot;&quot;],
-                                                [{y:-0.95,x:2},&quot;&quot;],
-                                                [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.75,x:4},&quot;&quot;],
-                                                [{y:-0.9},&quot;&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ErgoDox">
-                                            <MenuItem.CommandParameter>
-                                                [{x:3.5,a:7},&quot;&quot;,{x:10.5},&quot;&quot;],
-                                                [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.875,x:5.5},&quot;&quot;,&quot;&quot;,{x:4.5},&quot;&quot;,&quot;&quot;],
-                                                [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;],
-                                                [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;],
-                                                [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.875,x:5.5},&quot;&quot;,{h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;,&quot;&quot;],
-                                                [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;],
-                                                [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;],
-                                                [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.875,x:5.5},&quot;&quot;,{x:6.5},&quot;&quot;],
-                                                [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;],
-                                                [{y:-0.625,x:6.5,h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;],
-                                                [{y:-0.75,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;],
-                                                [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.875,x:5.5},&quot;&quot;,{x:6.5},&quot;&quot;],
-                                                [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;],
-                                                [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;],
-                                                [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.75,x:0.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,&quot;&quot;],
-                                                [{r:30,rx:6.5,ry:4.25,y:-1,x:1},&quot;&quot;,&quot;&quot;],
-                                                [{h:2},&quot;&quot;,{h:2},&quot;&quot;,&quot;&quot;],
-                                                [{x:2},&quot;&quot;],
-                                                [{r:-30,rx:13,y:-1,x:-3},&quot;&quot;,&quot;&quot;],
-                                                [{x:-3},&quot;&quot;,{h:2},&quot;&quot;,{h:2},&quot;&quot;],
-                                                [{x:-3},&quot;&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Kinesis Advantage">
-                                            <MenuItem.CommandParameter>
-                                                [{a:7,f:1,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:4.825,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;],
-                                                [{x:2.25,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{y:-0.75,w:1.25},&quot;&quot;,&quot;&quot;,{x:13.5},&quot;&quot;,{w:1.25},&quot;&quot;],
-                                                [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{y:-0.75,f:3,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5},&quot;&quot;,{f:3,w:1.25},&quot;&quot;],
-                                                [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{y:-0.75,f:3,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5,f:3},&quot;&quot;,{w:1.25},&quot;&quot;],
-                                                [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;,&quot;&quot;],
-                                                [{y:-0.75,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5,f:3},&quot;&quot;,{w:1.25},&quot;&quot;],
-                                                [{y:-0.25,x:2.25},&quot;&quot;,{f:5},&quot;&quot;,&quot;&quot;,{x:7.5},&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;],
-                                                [{y:-0.75,x:1.25},&quot;&quot;,{x:13.5},&quot;&quot;],
-                                                [{r:15,rx:5.25,ry:4,x:1.5},&quot;&quot;,&quot;&quot;],
-                                                [{x:0.5,h:2},&quot;&quot;,{h:2},&quot;&quot;,&quot;&quot;],
-                                                [{x:2.5},&quot;&quot;],
-                                                [{r:-15,rx:12.75,x:-3.5},&quot;&quot;,&quot;&quot;],
-                                                [{x:-3.5},&quot;&quot;,{h:2},&quot;&quot;,{h:2},&quot;&quot;],
-                                                [{x:-3.5},&quot;&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Programmer's Keyboard">
-                                            <MenuItem.CommandParameter>
-                                                [{y:0.38,x:1.25,c:&quot;#857eb1&quot;,a:7,f:6},&quot;&quot;,{c:&quot;#b81b24&quot;,f:5},&quot;&quot;,&quot;&quot;,{x:0.75,c:&quot;#d9dae0&quot;,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.75,c:&quot;#857eb1&quot;,f:5},&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:3},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;],
-                                                [{y:0.75,x:9.5,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;],
-                                                [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;],
-                                                [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;],
-                                                [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;,t:&quot;#7f007f&quot;,f:2},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;,t:&quot;#000000&quot;},&quot;&quot;],
-                                                [{x:9.5,c:&quot;#95bfe8&quot;,t:&quot;#7f007f&quot;,f:3},&quot;&quot;,&quot;&quot;,{f:2},&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{y:0.25,x:9.5,c:&quot;#c4c8c5&quot;,t:&quot;#000000&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;],
-                                                [{y:0,x:9.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{f:5},&quot;&quot;],
-                                                [{r:15,y:-8.53,x:3,c:&quot;#c7c3b4&quot;,f:3},&quot;&quot;],
-                                                [{y:-1,x:4},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;],
-                                                [{x:2.5,c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;],
-                                                [{x:2.5,c:&quot;#c4c8c5&quot;,f:9,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;],
-                                                [{x:2.5,c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#00833e&quot;,t:&quot;#00000&quot;,h:2},&quot;&quot;],
-                                                [{x:2.5,c:&quot;#c4c8c5&quot;,t:&quot;#000000&quot;,w:1.5},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;,{c:&quot;#45b866&quot;},&quot;&quot;,{c:&quot;#857eb1&quot;,f:5,w:1.5},&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:3,w:1.5},&quot;&quot;],
-                                                [{x:4,c:&quot;#45b866&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,c:&quot;#e5dbca&quot;,w:2.75},&quot;&quot;],
-                                                [{r:-15,y:0.18,x:14.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;],
-                                                [{y:0,x:13.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;],
-                                                [{x:13.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:9,w:1.5},&quot;&quot;],
-                                                [{x:13.15,c:&quot;#00833e&quot;,f:5,h:2},&quot;&quot;,{c:&quot;#e5dbca&quot;,f:3},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;],
-                                                [{x:14.15,c:&quot;#909596&quot;,w:1.5},&quot;&quot;,{c:&quot;#857eb1&quot;,f:5,w:1.5},&quot;&quot;,{c:&quot;#45b866&quot;,f:3},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;],
-                                                [{x:13.13,c:&quot;#e5dbca&quot;,w:2.75},&quot;&quot;,{x:0.27,c:&quot;#45b866&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Klave rev1">
-                                            <MenuItem.CommandParameter>
-                                                [{x:3,p:&quot;SA&quot;,a:7},&quot;&quot;,{x:9},&quot;&quot;],
-                                                [{y:-0.75,x:2},&quot;&quot;,{x:11},&quot;&quot;],
-                                                [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;],
-                                                [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;],
-                                                [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;],
-                                                [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;],
-                                                [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;],
-                                                [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;],
-                                                [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;],
-                                                [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;],
-                                                [{y:-0.85,x:4,n:true},&quot;&quot;,{x:7,n:true},&quot;&quot;],
-                                                [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;],
-                                                [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;],
-                                                [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;],
-                                                [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;],
-                                                [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;],
-                                                [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;],
-                                                [{y:-0.5,x:1},&quot;&quot;,{x:13},&quot;&quot;],
-                                                [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;],
-                                                [{rx:3.95,ry:9.4,y:-5,x:-1.5},&quot;&quot;,&quot;&quot;],
-                                                [{rx:13.05,y:-5,x:-0.5},&quot;&quot;,&quot;&quot;],
-                                                [{r:14,rx:3.95,y:-5,x:-0.5},&quot;&quot;],
-                                                [{r:28,y:-2,x:-0.5},&quot;&quot;,&quot;&quot;],
-                                                [{x:-0.5},&quot;&quot;,&quot;&quot;],
-                                                [{r:-28,rx:13.05,y:-6,x:-1.5},&quot;&quot;,&quot;&quot;],
-                                                [{x:-1.5},&quot;&quot;,&quot;&quot;],
-                                                [{r:-14,y:-1,x:-0.5},&quot;&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                        <MenuItem Header="Other" Style="{StaticResource GroupMenuItemStyle}" />
-                                        <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Rekog">
-                                            <MenuItem.CommandParameter>
-                                                [{p:&quot;FLAT&quot;,a:7,f:9,n:true},&quot;A&quot;,{c:&quot;#ffffff&quot;,t:&quot;#0ca800&quot;,f:1},&quot;B&quot;,{c:&quot;#cccccc&quot;,t:&quot;#000000&quot;,f:3,fa:[1]},&quot;C&quot;,{f:3,n:true},&quot;D&quot;,{t:&quot;#000000\n\n\n#d91c1c\n\n\n\n\n#201cd9&quot;,a:4,fa:[1,0,0,9,0,0,0,0,4]},&quot;\n\n\ne\n\n\n\n\ně\nE&quot;,{t:&quot;#000000&quot;,g:true,a:3,f:3,n:true},&quot;FX\n\n\n\nuxx2&quot;],
-                                                [{t:&quot;#000000\n\n\n#aa07f5\n\n#a824d6\n#ffd600\n\n\n\n\n#a624d4&quot;,g:false,a:0,f:7,w:1.5},&quot;0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11&quot;],
-                                                [{y:-0.75,x:4.75,t:&quot;#000000&quot;,f:3,w:1.25,w2:1.75,x2:-0.25,l:true},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n+&quot;],
-                                                [{y:-0.5,x:2,a:5,d:true},&quot;WUT&quot;],
-                                                [{y:-0.75,a:0,f:6,n:true},&quot;A\nB\nC\nD\n\nok&quot;],
-                                                [{y:-0.5,x:7.25,p:&quot;CHICKLET&quot;,a:7,f:3,w:1.25,w2:1.75,l:true},&quot;&quot;],
-                                                [{r:15,h:0.5},&quot;&quot;],
-                                                [{rx:5,ry:3,y:-0.5,h:1.5},&quot;&quot;,&quot;&quot;],
-                                                [{x:1,w:1.25},&quot;&quot;],
-                                                [{r:-15,rx:1,ry:2,y:0.5,x:1.5,c:&quot;#a5a5a5&quot;,a:0,w:1.5,h:2,w2:2.25,h2:1,x2:-0.5,y2:0.75,n:true,l:true},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@&quot;],
-                                                [{rx:8,y:-1.5,x:0.75,w:2.25,h:1.25,w2:1.5,h2:2.5,x2:0.25,y2:-0.5},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@\n+\n+&quot;]
-                                            </MenuItem.CommandParameter>
-                                        </MenuItem>
-                                    </ui:MenuFlyout>
-                                </ui:SplitButton.Flyout>
-                            </ui:SplitButton>
-                        </ui:SimpleStackPanel>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Header="KLE">
-                        <ui:SimpleStackPanel>
-                            <Label Margin="0,0,0,-6">Input</Label>
+    <UserControl.Resources>
+        <Style x:Key="GroupMenuItemStyle"
+               BasedOn="{StaticResource {x:Type MenuItem}}"
+               TargetType="{x:Type MenuItem}">
+            <Setter Property="IsEnabled" Value="False" />
+        </Style>
+        <Style x:Key="FormContainerScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+        </Style>
+        <Style x:Key="FormContainerStackPanelStyle" TargetType="{x:Type ui:SimpleStackPanel}">
+            <Setter Property="Margin" Value="16,12" />
+            <Setter Property="Spacing" Value="12" />
+        </Style>
+        <Style x:Key="FormContentGroupStyle"
+               BasedOn="{StaticResource {x:Type Label}}"
+               TargetType="{x:Type Label}">
+            <Setter Property="Margin" Value="0,12,0,0" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style x:Key="FormContentHeaderStyle"
+               BasedOn="{StaticResource {x:Type Label}}"
+               TargetType="{x:Type Label}">
+            <Setter Property="Margin" Value="0,0,0,4" />
+        </Style>
+        <Style x:Key="FormTabItemGroupTextStyle"
+               BasedOn="{StaticResource BaseTextBlockStyle}"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="12,10" />
+            <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+        <Style x:Key="FormTabItemStyle" TargetType="{x:Type TabItem}">
+            <Style.Resources>
+                <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type TextBox}">
+                    <Setter Property="a:InputBindingManager.UpdatePropertySourceWhenEnterPressed" Value="TextBox.Text" />
+                </Style>
+                <Style BasedOn="{StaticResource {x:Type ui:NumberBox}}" TargetType="{x:Type ui:NumberBox}">
+                    <Setter Property="AcceptsExpression" Value="True" />
+                    <Setter Property="TextAlignment" Value="Left" />
+                </Style>
+            </Style.Resources>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
+            <Setter Property="ui:FocusVisualHelper.UseSystemFocusVisuals" Value="{DynamicResource UseSystemFocusVisuals}" />
+            <Setter Property="ui:ControlHelper.CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ContentPresenter x:Name="HeaderContentPresenter"
+                                              Grid.Row="0"
+                                              Content="{TemplateBinding a:TabItemHelper.Header}"
+                                              ContentTemplate="{TemplateBinding a:TabItemHelper.HeaderTemplate}"
+                                              KeyboardNavigation.TabNavigation="None"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ContentPresenter x:Name="FooterContentPresenter"
+                                              Grid.Row="2"
+                                              DockPanel.Dock="Left"
+                                              Content="{TemplateBinding a:TabItemHelper.Footer}"
+                                              ContentTemplate="{TemplateBinding a:TabItemHelper.FooterTemplate}"
+                                              KeyboardNavigation.TabNavigation="None"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ui:ThemeShadowChrome x:Name="Shadow"
+                                                  Grid.Row="1"
+                                                  CornerRadius="{Binding CornerRadius, ElementName=TabContainer}"
+                                                  Depth="{DynamicResource TabViewShadowDepth}"
+                                                  IsShadowEnabled="False">
+                                <Border x:Name="TabContainer"
+                                        Padding="{DynamicResource TabViewItemHeaderPadding}"
+                                        ui:FocusVisualHelper.IsTemplateFocusTarget="True"
+                                        Background="{DynamicResource TabViewItemHeaderBackground}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{Binding Path=(ui:ControlHelper.CornerRadius), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource LeftCornerRadiusFilterConverter}}"
+                                        SnapsToDevicePixels="True">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Viewbox x:Name="IconBox"
+                                                 MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
+                                                 MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
+                                                 Margin="{DynamicResource TabViewItemHeaderIconMargin}">
+                                            <ContentControl x:Name="IconControl"
+                                                            Content="{TemplateBinding ui:TabItemHelper.Icon}"
+                                                            Foreground="{DynamicResource TabViewItemIconForeground}"
+                                                            IsTabStop="False" />
+                                        </Viewbox>
+                                        <ContentPresenter x:Name="ContentPresenter"
+                                                          Grid.Column="1"
+                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          ContentSource="Header"
+                                                          Focusable="False"
+                                                          RecognizesAccessKey="True"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                          TextElement.FontSize="{DynamicResource TabViewItemHeaderFontSize}"
+                                                          TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                          TextElement.Foreground="{DynamicResource TabViewItemHeaderForeground}" />
+                                    </Grid>
+                                </Border>
+                            </ui:ThemeShadowChrome>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger SourceName="Shadow" Property="IsMouseOver" Value="True">
+                                <Setter TargetName="TabContainer" Property="Background" Value="{DynamicResource TabViewItemHeaderBackgroundPointerOver}" />
+                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundPointerOver}" />
+                                <Setter TargetName="IconControl" Property="Foreground" Value="{DynamicResource TabViewItemIconForegroundPointerOver}" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Shadow" Property="IsShadowEnabled" Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}" />
+                                <Setter TargetName="TabContainer" Property="Background" Value="{DynamicResource TabViewItemHeaderBackgroundSelected}" />
+                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundSelected}" />
+                                <Setter TargetName="IconControl" Property="Foreground" Value="{DynamicResource TabViewItemIconForegroundSelected}" />
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition SourceName="Shadow" Property="IsMouseOver" Value="True" />
+                                    <Condition Property="IsSelected" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="TabContainer" Property="Background" Value="{DynamicResource TabViewItemHeaderBackgroundSelected}" />
+                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundPointerOver}" />
+                                <Setter TargetName="IconControl" Property="Foreground" Value="{DynamicResource TabViewItemIconForegroundPointerOver}" />
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="IconControl" Property="Foreground" Value="{DynamicResource TabViewButtonForegroundDisabled}" />
+                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundDisabled}" />
+                            </Trigger>
+                            <Trigger Property="ui:TabItemHelper.Icon" Value="{x:Null}">
+                                <Setter TargetName="IconBox" Property="Visibility" Value="Collapsed" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <TabControl BorderThickness="0"
+                    ItemContainerStyle="{StaticResource FormTabItemStyle}"
+                    TabStripPlacement="Left">
+            <TabItem Header="File">
+                <ui:TabItemHelper.Icon>
+                    <ui:FontIcon Glyph="&#xE130;" />
+                </ui:TabItemHelper.Icon>
+                <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
+                    <ui:SimpleStackPanel Style="{StaticResource FormContainerStackPanelStyle}">
+                        <Label Content="Keyboard" Style="{StaticResource FormContentGroupStyle}" />
+                        <ui:SplitButton VerticalAlignment="Top"
+                                        Command="{Binding NewKeyboardCommand}"
+                                        Content="New">
+                            <ui:SplitButton.Flyout>
+                                <ui:MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                    <MenuItem Header="Standard" Style="{StaticResource GroupMenuItemStyle}" />
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ANSI 104">
+                                        <MenuItem.CommandParameter>
+                                            [{a:7},&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.25},&quot;&quot;,{x:3.5},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:2.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;,{x:1.25},&quot;&quot;,{x:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:2},&quot;&quot;,&quot;&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ISO 105">
+                                        <MenuItem.CommandParameter>
+                                            [{a:7},&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:4.75},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;,{x:1.25},&quot;&quot;,{x:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:2},&quot;&quot;,&quot;&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ANSI 60%">
+                                        <MenuItem.CommandParameter>
+                                            [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.25},&quot;&quot;], [{w:2.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ISO 60%">
+                                        <MenuItem.CommandParameter>
+                                            [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Header="Matrix" Style="{StaticResource GroupMenuItemStyle}" />
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Planck">
+                                        <MenuItem.CommandParameter>
+                                            [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Header="Split" Style="{StaticResource GroupMenuItemStyle}" />
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Atreus">
+                                        <MenuItem.CommandParameter>
+                                            [{r:10,rx:1,y:-0.1,x:2,a:7},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{y:-0.75,x:5,h:1.5},&quot;&quot;], [{y:-0.95,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{r:-10,rx:7,ry:0.965,y:-0.2,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;], [{y:-0.75,x:-1,h:1.5},&quot;&quot;], [{y:-0.95,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ErgoDox">
+                                        <MenuItem.CommandParameter>
+                                            [{x:3.5,a:7},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,&quot;&quot;,{x:4.5},&quot;&quot;,&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,{h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;,&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,{x:6.5},&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.625,x:6.5,h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;], [{y:-0.75,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,{x:6.5},&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:0.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,&quot;&quot;], [{r:30,rx:6.5,ry:4.25,y:-1,x:1},&quot;&quot;,&quot;&quot;], [{h:2},&quot;&quot;,{h:2},&quot;&quot;,&quot;&quot;], [{x:2},&quot;&quot;], [{r:-30,rx:13,y:-1,x:-3},&quot;&quot;,&quot;&quot;], [{x:-3},&quot;&quot;,{h:2},&quot;&quot;,{h:2},&quot;&quot;], [{x:-3},&quot;&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Kinesis Advantage">
+                                        <MenuItem.CommandParameter>
+                                            [{a:7,f:1,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:4.825,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;], [{x:2.25,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:-0.75,w:1.25},&quot;&quot;,&quot;&quot;,{x:13.5},&quot;&quot;,{w:1.25},&quot;&quot;], [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:-0.75,f:3,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5},&quot;&quot;,{f:3,w:1.25},&quot;&quot;], [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:-0.75,f:3,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5,f:3},&quot;&quot;,{w:1.25},&quot;&quot;], [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;,&quot;&quot;], [{y:-0.75,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5,f:3},&quot;&quot;,{w:1.25},&quot;&quot;], [{y:-0.25,x:2.25},&quot;&quot;,{f:5},&quot;&quot;,&quot;&quot;,{x:7.5},&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;], [{y:-0.75,x:1.25},&quot;&quot;,{x:13.5},&quot;&quot;], [{r:15,rx:5.25,ry:4,x:1.5},&quot;&quot;,&quot;&quot;], [{x:0.5,h:2},&quot;&quot;,{h:2},&quot;&quot;,&quot;&quot;], [{x:2.5},&quot;&quot;], [{r:-15,rx:12.75,x:-3.5},&quot;&quot;,&quot;&quot;], [{x:-3.5},&quot;&quot;,{h:2},&quot;&quot;,{h:2},&quot;&quot;], [{x:-3.5},&quot;&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Programmer's Keyboard">
+                                        <MenuItem.CommandParameter>
+                                            [{y:0.38,x:1.25,c:&quot;#857eb1&quot;,a:7,f:6},&quot;&quot;,{c:&quot;#b81b24&quot;,f:5},&quot;&quot;,&quot;&quot;,{x:0.75,c:&quot;#d9dae0&quot;,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.75,c:&quot;#857eb1&quot;,f:5},&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:3},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;], [{y:0.75,x:9.5,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;,t:&quot;#7f007f&quot;,f:2},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;,t:&quot;#000000&quot;},&quot;&quot;], [{x:9.5,c:&quot;#95bfe8&quot;,t:&quot;#7f007f&quot;,f:3},&quot;&quot;,&quot;&quot;,{f:2},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:0.25,x:9.5,c:&quot;#c4c8c5&quot;,t:&quot;#000000&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;], [{y:0,x:9.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{f:5},&quot;&quot;], [{r:15,y:-8.53,x:3,c:&quot;#c7c3b4&quot;,f:3},&quot;&quot;], [{y:-1,x:4},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,f:9,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#00833e&quot;,t:&quot;#00000&quot;,h:2},&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,t:&quot;#000000&quot;,w:1.5},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;,{c:&quot;#45b866&quot;},&quot;&quot;,{c:&quot;#857eb1&quot;,f:5,w:1.5},&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:3,w:1.5},&quot;&quot;], [{x:4,c:&quot;#45b866&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,c:&quot;#e5dbca&quot;,w:2.75},&quot;&quot;], [{r:-15,y:0.18,x:14.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;], [{y:0,x:13.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;], [{x:13.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:9,w:1.5},&quot;&quot;], [{x:13.15,c:&quot;#00833e&quot;,f:5,h:2},&quot;&quot;,{c:&quot;#e5dbca&quot;,f:3},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;], [{x:14.15,c:&quot;#909596&quot;,w:1.5},&quot;&quot;,{c:&quot;#857eb1&quot;,f:5,w:1.5},&quot;&quot;,{c:&quot;#45b866&quot;,f:3},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;], [{x:13.13,c:&quot;#e5dbca&quot;,w:2.75},&quot;&quot;,{x:0.27,c:&quot;#45b866&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Klave rev1">
+                                        <MenuItem.CommandParameter>
+                                            [{x:3,p:&quot;SA&quot;,a:7},&quot;&quot;,{x:9},&quot;&quot;], [{y:-0.75,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4,n:true},&quot;&quot;,{x:7,n:true},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:13},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{rx:3.95,ry:9.4,y:-5,x:-1.5},&quot;&quot;,&quot;&quot;], [{rx:13.05,y:-5,x:-0.5},&quot;&quot;,&quot;&quot;], [{r:14,rx:3.95,y:-5,x:-0.5},&quot;&quot;], [{r:28,y:-2,x:-0.5},&quot;&quot;,&quot;&quot;], [{x:-0.5},&quot;&quot;,&quot;&quot;], [{r:-28,rx:13.05,y:-6,x:-1.5},&quot;&quot;,&quot;&quot;], [{x:-1.5},&quot;&quot;,&quot;&quot;], [{r:-14,y:-1,x:-0.5},&quot;&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                    <MenuItem Header="Other" Style="{StaticResource GroupMenuItemStyle}" />
+                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Rekog">
+                                        <MenuItem.CommandParameter>
+                                            [{p:&quot;FLAT&quot;,a:7,f:9,n:true},&quot;A&quot;,{c:&quot;#ffffff&quot;,t:&quot;#0ca800&quot;,f:1},&quot;B&quot;,{c:&quot;#cccccc&quot;,t:&quot;#000000&quot;,f:3,fa:[1]},&quot;C&quot;,{f:3,n:true},&quot;D&quot;,{t:&quot;#000000\n\n\n#d91c1c\n\n\n\n\n#201cd9&quot;,a:4,fa:[1,0,0,9,0,0,0,0,4]},&quot;\n\n\ne\n\n\n\n\ně\nE&quot;,{t:&quot;#000000&quot;,g:true,a:3,f:3,n:true},&quot;FX\n\n\n\nuxx2&quot;], [{t:&quot;#000000\n\n\n#aa07f5\n\n#a824d6\n#ffd600\n\n\n\n\n#a624d4&quot;,g:false,a:0,f:7,w:1.5},&quot;0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11&quot;], [{y:-0.75,x:4.75,t:&quot;#000000&quot;,f:3,w:1.25,w2:1.75,x2:-0.25,l:true},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n+&quot;], [{y:-0.5,x:2,a:5,d:true},&quot;WUT&quot;], [{y:-0.75,a:0,f:6,n:true},&quot;A\nB\nC\nD\n\nok&quot;], [{y:-0.5,x:7.25,p:&quot;CHICKLET&quot;,a:7,f:3,w:1.25,w2:1.75,l:true},&quot;&quot;], [{r:15,h:0.5},&quot;&quot;], [{rx:5,ry:3,y:-0.5,h:1.5},&quot;&quot;,&quot;&quot;], [{x:1,w:1.25},&quot;&quot;], [{r:-15,rx:1,ry:2,y:0.5,x:1.5,c:&quot;#a5a5a5&quot;,a:0,w:1.5,h:2,w2:2.25,h2:1,x2:-0.5,y2:0.75,n:true,l:true},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@&quot;], [{rx:8,y:-1.5,x:0.75,w:2.25,h:1.25,w2:1.5,h2:2.5,x2:0.25,y2:-0.5},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@\n+\n+&quot;]
+                                        </MenuItem.CommandParameter>
+                                    </MenuItem>
+                                </ui:MenuFlyout>
+                            </ui:SplitButton.Flyout>
+                        </ui:SplitButton>
+                        <Label Content="KLE" Style="{StaticResource FormContentGroupStyle}" />
+                        <StackPanel>
+                            <Label Content="Input" Style="{StaticResource FormContentHeaderStyle}" />
                             <TextBox x:Name="KleInput"
                                      Height="100"
                                      AcceptsReturn="True"
@@ -300,96 +252,101 @@
                                                 Modifiers="Ctrl" />
                                 </TextBox.InputBindings>
                             </TextBox>
-                            <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
-                                <Button x:Name="KleParseRawDataButton"
-                                        HorizontalAlignment="Stretch"
-                                        Command="{Binding ParseKleRawDataCommand}"
-                                        CommandParameter="{Binding Text, ElementName=KleInput}"
-                                        Content="Parse raw data" />
-                                <Button HorizontalAlignment="Stretch"
-                                        Command="{Binding ParseKleJsonCommand}"
-                                        CommandParameter="{Binding Text, ElementName=KleInput}"
-                                        Content="Parse json" />
-                            </ui:SimpleStackPanel>
+                        </StackPanel>
+                        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
+                            <Button HorizontalAlignment="Stretch"
+                                    Command="{Binding ParseKleRawDataCommand}"
+                                    CommandParameter="{Binding Text, ElementName=KleInput}"
+                                    Content="Parse raw data" />
+                            <Button HorizontalAlignment="Stretch"
+                                    Command="{Binding ParseKleJsonCommand}"
+                                    CommandParameter="{Binding Text, ElementName=KleInput}"
+                                    Content="Parse json" />
                         </ui:SimpleStackPanel>
-                    </HeaderedContentControl>
-                </ui:SimpleStackPanel>
-            </ScrollViewer>
-        </TabItem>
-        <TabItem Header="Properties">
-            <ui:TabItemHelper.Icon>
-                <ui:FontIcon Glyph="&#xE946;" />
-            </ui:TabItemHelper.Icon>
-            <ScrollViewer>
-                <ui:SimpleStackPanel DataContext="{Binding Board.Form}"
-                                     Margin="16,8"
-                                     IsEnabled="{Binding IsSet}">
-                    <HeaderedContentControl Header="General">
-                        <ui:SimpleStackPanel>
-                            <TextBox ui:ControlHelper.Header="Name" Text="{Binding Name.Value, Mode=TwoWay}" />
-                            <TextBox ui:ControlHelper.Header="Author" Text="{Binding Author.Value, Mode=TwoWay}" />
-                            <TextBox Height="150"
-                                     ui:ControlHelper.Header="Notes"
-                                     AcceptsReturn="True"
-                                     HorizontalScrollBarVisibility="Auto"
-                                     Text="{Binding Notes.Value, Mode=TwoWay}"
-                                     TextWrapping="Wrap"
-                                     VerticalScrollBarVisibility="Auto" />
-                        </ui:SimpleStackPanel>
-                    </HeaderedContentControl>
-                </ui:SimpleStackPanel>
-            </ScrollViewer>
-        </TabItem>
-        <TabItem Header="Layout" Style="{StaticResource GroupTabItemStyle}" />
-        <TabItem Header="Board">
-            <ui:TabItemHelper.Icon>
-                <ui:FontIcon Glyph="&#xE809;" />
-            </ui:TabItemHelper.Icon>
-            <ScrollViewer>
-                <ui:SimpleStackPanel DataContext="{Binding Board.Form}"
-                                     Margin="16,8"
-                                     IsEnabled="{Binding IsSet}">
-                    <HeaderedContentControl Header="Style">
-                        <ui:SimpleStackPanel>
+                    </ui:SimpleStackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Properties">
+                <ui:TabItemHelper.Icon>
+                    <ui:FontIcon Glyph="&#xE946;" />
+                </ui:TabItemHelper.Icon>
+                <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
+                    <ui:SimpleStackPanel DataContext="{Binding Board.Form}"
+                                         IsEnabled="{Binding IsSet}"
+                                         Style="{StaticResource FormContainerStackPanelStyle}">
+                        <Label Content="General" Style="{StaticResource FormContentGroupStyle}" />
+                        <TextBox ui:ControlHelper.Header="Name" Text="{Binding Name.Value, Mode=TwoWay}" />
+                        <TextBox ui:ControlHelper.Header="Author" Text="{Binding Author.Value, Mode=TwoWay}" />
+                        <TextBox Height="150"
+                                 ui:ControlHelper.Header="Notes"
+                                 AcceptsReturn="True"
+                                 HorizontalScrollBarVisibility="Auto"
+                                 Text="{Binding Notes.Value, Mode=TwoWay}"
+                                 TextWrapping="Wrap"
+                                 VerticalScrollBarVisibility="Auto" />
+                    </ui:SimpleStackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Board">
+                <ui:TabItemHelper.Icon>
+                    <ui:FontIcon Glyph="&#xE809;" />
+                </ui:TabItemHelper.Icon>
+                <a:TabItemHelper.Header>
+                    <TextBlock Style="{StaticResource FormTabItemGroupTextStyle}" Text="Layout" />
+                </a:TabItemHelper.Header>
+                <TabItem.Content>
+                    <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
+                        <ui:SimpleStackPanel DataContext="{Binding Board.Form}"
+                                             Margin="16,8"
+                                             IsEnabled="{Binding IsSet}"
+                                             Style="{StaticResource FormContainerStackPanelStyle}">
+                            <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
                             <TextBox ui:ControlHelper.Header="Background" Text="{Binding Background.Value, Mode=TwoWay}" />
                         </ui:SimpleStackPanel>
-                    </HeaderedContentControl>
-                </ui:SimpleStackPanel>
-            </ScrollViewer>
-        </TabItem>
-        <TabItem Header="Key">
-            <ui:TabItemHelper.Icon>
-                <ui:FontIcon Glyph="&#xF158;" />
-            </ui:TabItemHelper.Icon>
-            <ScrollViewer>
-                <ui:SimpleStackPanel DataContext="{Binding Board.KeyForm}"
-                                     Margin="16,8"
-                                     IsEnabled="{Binding IsSet}">
-                    <HeaderedContentControl Header="Position">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="12" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <ui:NumberBox Grid.Column="0"
-                                          Header="X"
-                                          LargeChange="0.25"
-                                          Maximum="200"
-                                          Minimum="-200"
-                                          SmallChange="0.05"
-                                          Value="{Binding X.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            <ui:NumberBox Grid.Column="2"
-                                          Header="Y"
-                                          LargeChange="0.25"
-                                          Maximum="200"
-                                          Minimum="-200"
-                                          SmallChange="0.05"
-                                          Value="{Binding Y.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
-                        </Grid>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Header="Shape">
-                        <ui:SimpleStackPanel>
+                    </ScrollViewer>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Header="Key">
+                <ui:TabItemHelper.Icon>
+                    <ui:FontIcon Glyph="&#xF158;" />
+                </ui:TabItemHelper.Icon>
+                <a:TabItemHelper.Footer>
+                    <DockPanel>
+                        <ui:HyperlinkButton DockPanel.Dock="Right" Padding="10">
+                            <ui:FontIcon FontSize="16" Glyph="&#xE109;" />
+                        </ui:HyperlinkButton>
+                        <TextBlock Style="{StaticResource FormTabItemGroupTextStyle}" Text="Layers" />
+                    </DockPanel>
+                </a:TabItemHelper.Footer>
+                <TabItem.Content>
+                    <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
+                        <ui:SimpleStackPanel DataContext="{Binding Board.KeyForm}"
+                                             Margin="16,8"
+                                             IsEnabled="{Binding IsSet}"
+                                             Style="{StaticResource FormContainerStackPanelStyle}">
+                            <Label Content="Position" Style="{StaticResource FormContentGroupStyle}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <ui:NumberBox Grid.Column="0"
+                                              Header="X"
+                                              LargeChange="0.25"
+                                              Maximum="200"
+                                              Minimum="-200"
+                                              SmallChange="0.05"
+                                              Value="{Binding X.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                <ui:NumberBox Grid.Column="2"
+                                              Header="Y"
+                                              LargeChange="0.25"
+                                              Maximum="200"
+                                              Minimum="-200"
+                                              SmallChange="0.05"
+                                              Value="{Binding Y.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
+                            </Grid>
+                            <Label Content="Shape" Style="{StaticResource FormContentGroupStyle}" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -415,10 +372,7 @@
                                      ui:ControlHelper.Header="Custom shape"
                                      Text="{Binding Shape.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <TextBox ui:ControlHelper.Header="Stepped shape" Text="{Binding SteppedShape.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                        </ui:SimpleStackPanel>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Header="Rotation">
-                        <ui:SimpleStackPanel>
+                            <Label Content="Rotation" Style="{StaticResource FormContentGroupStyle}" />
                             <ui:NumberBox Header="Angle"
                                           LargeChange="5"
                                           Maximum="360"
@@ -446,10 +400,7 @@
                                               SmallChange="0.05"
                                               Value="{Binding RotationOriginY.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
                             </Grid>
-                        </ui:SimpleStackPanel>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Header="Style">
-                        <ui:SimpleStackPanel>
+                            <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
                             <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
                             <ui:NumberBox Header="Roundness"
                                           LargeChange="0.025"
@@ -457,7 +408,6 @@
                                           Minimum="0"
                                           SmallChange="0.005"
                                           Value="{Binding Roundness.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            <CheckBox Content="Round concave corner" IsChecked="{Binding RoundConcaveCorner.Value, Mode=TwoWay}" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -502,36 +452,35 @@
                                               SmallChange="0.005"
                                               Value="{Binding InnerPadding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                             </Grid>
+                            <CheckBox Content="Round concave corner" IsChecked="{Binding RoundConcaveCorner.Value, Mode=TwoWay}" />
+                            <Label Content="Misc" Style="{StaticResource FormContentGroupStyle}" />
+                            <StackPanel>
+                                <CheckBox Content="Homing" IsChecked="{Binding IsHoming.Value, Mode=TwoWay}" />
+                                <CheckBox Content="Decal" IsChecked="{Binding IsDecal.Value, Mode=TwoWay}" />
+                                <CheckBox Content="Ghosted" IsChecked="{Binding IsGhosted.Value, Mode=TwoWay}" />
+                            </StackPanel>
                         </ui:SimpleStackPanel>
-                    </HeaderedContentControl>
-                    <HeaderedContentControl Header="Misc">
-                        <ui:SimpleStackPanel>
-                            <CheckBox Content="Homing" IsChecked="{Binding IsHoming.Value, Mode=TwoWay}" />
-                            <CheckBox Content="Decal" IsChecked="{Binding IsDecal.Value, Mode=TwoWay}" />
-                            <CheckBox Content="Ghosted" IsChecked="{Binding IsGhosted.Value, Mode=TwoWay}" />
-                        </ui:SimpleStackPanel>
-                    </HeaderedContentControl>
-                </ui:SimpleStackPanel>
-            </ScrollViewer>
-        </TabItem>
-        <TabItem Header="Keymap" Style="{StaticResource GroupTabItemStyle}" />
-        <TabItem Header="Top left">
-            <ui:TabItemHelper.Icon>
-                <ui:FontIcon Glyph="&#xE81E;" />
-            </ui:TabItemHelper.Icon>
-            <ScrollViewer />
-        </TabItem>
-        <TabItem Header="Top center">
-            <ui:TabItemHelper.Icon>
-                <ui:FontIcon Glyph="&#xE81E;" />
-            </ui:TabItemHelper.Icon>
-            <ScrollViewer />
-        </TabItem>
-        <TabItem Header="Bottom center">
-            <ui:TabItemHelper.Icon>
-                <ui:FontIcon Glyph="&#xE81E;" />
-            </ui:TabItemHelper.Icon>
-            <ScrollViewer />
-        </TabItem>
-    </TabControl>
+                    </ScrollViewer>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Header="Top left">
+                <ui:TabItemHelper.Icon>
+                    <ui:FontIcon Glyph="&#xE81E;" />
+                </ui:TabItemHelper.Icon>
+                <ScrollViewer />
+            </TabItem>
+            <TabItem Header="Top center">
+                <ui:TabItemHelper.Icon>
+                    <ui:FontIcon Glyph="&#xE81E;" />
+                </ui:TabItemHelper.Icon>
+                <ScrollViewer />
+            </TabItem>
+            <TabItem Header="Bottom center">
+                <ui:TabItemHelper.Icon>
+                    <ui:FontIcon Glyph="&#xE81E;" />
+                </ui:TabItemHelper.Icon>
+                <ScrollViewer />
+            </TabItem>
+        </TabControl>
+    </Grid>
 </UserControl>
