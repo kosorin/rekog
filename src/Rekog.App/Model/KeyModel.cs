@@ -21,10 +21,10 @@ namespace Rekog.App.Model
         private string _color = "#FCFCFC";
         private double _roundness = 0.1;
         private bool _roundConcaveCorner = true;
-        private double _margin = 0.02;
-        private double _padding = 0.095;
+        private double _margin = 0.0175;
+        private double _padding = 0.08;
         private double _innerPadding = 0.05;
-        private double _innerVerticalOffset = 0.055;
+        private double _innerVerticalOffset = 0.08;
         private bool _isHoming;
         private bool _isGhosted;
         private bool _isDecal;
