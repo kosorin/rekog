@@ -30,6 +30,7 @@
             <cx:NullToNanConverter x:Key="NullToNanConverter" />
             <cx:BooleanNegationConverter x:Key="BooleanNegationConverter" />
             <cx:ScaleConverter x:Key="ScaleConverter" Scale="{StaticResource UnitSize}" />
+            <cx:StringToFontFamilyConverter x:Key="StringToFontFamilyConverter" />
 
         </ResourceDictionary>
     </Application.Resources>

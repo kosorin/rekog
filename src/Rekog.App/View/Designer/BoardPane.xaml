@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:a="clr-namespace:Rekog.App.Behaviors.AttachedProperties"
+             xmlns:c="clr-namespace:Rekog.App.Controls"
+             xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
              d:DataContext="{d:DesignInstance vm:MainViewModel}"
@@ -414,37 +416,37 @@
                                     <ColumnDefinition Width="12" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition Height="12" />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <ui:NumberBox Grid.Row="0"
-                                              Grid.Column="0"
+                                <ui:NumberBox Grid.Column="0"
                                               Header="Margin"
                                               LargeChange="0.025"
                                               Maximum="0.2"
                                               Minimum="0"
                                               SmallChange="0.005"
                                               Value="{Binding Margin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                <ui:NumberBox Grid.Row="0"
-                                              Grid.Column="2"
+                                <ui:NumberBox Grid.Column="2"
                                               Header="Padding"
                                               LargeChange="0.025"
                                               Maximum="0.2"
                                               Minimum="0"
                                               SmallChange="0.005"
                                               Value="{Binding Padding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                <ui:NumberBox Grid.Row="2"
-                                              Grid.Column="0"
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <ui:NumberBox Grid.Column="0"
+                                              VerticalAlignment="Bottom"
                                               Header="Inner vertical offset"
                                               LargeChange="0.025"
                                               Maximum="0.1"
                                               Minimum="-0.1"
                                               SmallChange="0.005"
                                               Value="{Binding InnerVerticalOffset.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                <ui:NumberBox Grid.Row="2"
-                                              Grid.Column="2"
+                                <ui:NumberBox Grid.Column="2"
+                                              VerticalAlignment="Bottom"
                                               Header="Inner padding"
                                               LargeChange="0.025"
                                               Maximum="0.2"
@@ -467,7 +469,114 @@
                 <ui:TabItemHelper.Icon>
                     <ui:FontIcon Glyph="&#xE81E;" />
                 </ui:TabItemHelper.Icon>
-                <ScrollViewer />
+                <TabItem.Content>
+                    <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
+                        <ui:SimpleStackPanel DataContext="{Binding Board.KeyLabelForm}"
+                                             Margin="16,8"
+                                             IsEnabled="{Binding IsSet}"
+                                             Style="{StaticResource FormContainerStackPanelStyle}">
+                            <Label Content="Label" Style="{StaticResource FormContentGroupStyle}" />
+                            <TextBox ui:ControlHelper.Header="Value" Text="{Binding Value.Value, Mode=TwoWay}" />
+                            <Label Content="Layout" Style="{StaticResource FormContentGroupStyle}" />
+                            <StackPanel>
+                                <Label Content="Alignment" Style="{StaticResource FormContentHeaderStyle}" />
+                                <c:KeyLabelAlignmentPicker Alignment="{Binding Alignment.Value, Mode=TwoWay}" AllowNull="True" />
+                            </StackPanel>
+                            <Label Content="Padding" Style="{StaticResource FormContentHeaderStyle}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <ui:NumberBox Grid.Column="0"
+                                              Header="Left"
+                                              LargeChange="0.05"
+                                              Maximum="20"
+                                              Minimum="-20"
+                                              SmallChange="0.01"
+                                              Value="{Binding Left.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                <ui:NumberBox Grid.Column="2"
+                                              Header="Right"
+                                              LargeChange="0.05"
+                                              Maximum="20"
+                                              Minimum="-20"
+                                              SmallChange="0.01"
+                                              Value="{Binding Right.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <ui:NumberBox Grid.Column="0"
+                                              Header="Top"
+                                              LargeChange="0.05"
+                                              Maximum="20"
+                                              Minimum="-20"
+                                              SmallChange="0.01"
+                                              Value="{Binding Top.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                <ui:NumberBox Grid.Column="2"
+                                              Header="Bottom"
+                                              LargeChange="0.05"
+                                              Maximum="20"
+                                              Minimum="-20"
+                                              SmallChange="0.01"
+                                              Value="{Binding Bottom.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                            </Grid>
+                            <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
+                            <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
+                            <ComboBox HorizontalAlignment="Stretch"
+                                      ui:ControlHelper.Header="Font"
+                                      IsEditable="True"
+                                      ItemTemplate="{DynamicResource FontTemplate}"
+                                      SelectedValue="{Binding Font.Value, Mode=TwoWay, Converter={StaticResource StringToFontFamilyConverter}}">
+                                <ComboBox.Resources>
+                                    <CollectionViewSource x:Key="SystemFontFamilies" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                                        <CollectionViewSource.SortDescriptions>
+                                            <cm:SortDescription PropertyName="Source" />
+                                        </CollectionViewSource.SortDescriptions>
+                                    </CollectionViewSource>
+                                    <Style x:Key="FontStyle">
+                                        <Setter Property="Control.FontFamily" Value="{Binding Source}" />
+                                        <Setter Property="Control.FontSize" Value="16" />
+                                    </Style>
+                                    <DataTemplate x:Key="FontTemplate">
+                                        <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
+                                            <TextBlock Style="{StaticResource FontStyle}"
+                                                       Text="{Binding Source}"
+                                                       ToolTip="{Binding Source}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.Resources>
+                                <ComboBox.ItemsSource>
+                                    <Binding Source="{StaticResource SystemFontFamilies}" />
+                                </ComboBox.ItemsSource>
+                            </ComboBox>
+                            <StackPanel>
+                                <Label Content="Size" Style="{StaticResource FormContentHeaderStyle}" />
+                                <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
+                                    <ui:NumberBox Width="100"
+                                                  LargeChange="0.4"
+                                                  Maximum="96"
+                                                  Minimum="4"
+                                                  SmallChange="1"
+                                                  Value="{Binding Size.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    <ToggleButton IsChecked="{Binding Bold.Value}">
+                                        <ui:FontIcon Glyph="&#xE8DD;" />
+                                    </ToggleButton>
+                                    <ToggleButton IsChecked="{Binding Italic.Value}">
+                                        <ui:FontIcon Glyph="&#xE8DB;" />
+                                    </ToggleButton>
+                                    <ToggleButton Visibility="Collapsed">
+                                        <ui:FontIcon Glyph="&#xE8DC;" />
+                                    </ToggleButton>
+                                </ui:SimpleStackPanel>
+                            </StackPanel>
+                        </ui:SimpleStackPanel>
+                    </ScrollViewer>
+                </TabItem.Content>
             </TabItem>
             <TabItem Header="Top center">
                 <ui:TabItemHelper.Icon>
