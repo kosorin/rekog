@@ -18,7 +18,7 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <cx:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
             <cx:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter" />
-            <cx:KeyLabelAlignmentConverter x:Key="KeyLabelAlignmentConverter" />
+            <cx:LegendAlignmentConverter x:Key="LegendAlignmentConverter" />
             <cx:LightenConverter x:Key="LightenConverter" />
             <cx:MultiplyConverter x:Key="MultiplyConverter" />
             <cx:EnumIsInConverter x:Key="EnumIsInConverter" />

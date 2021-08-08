@@ -3,9 +3,9 @@ using Rekog.App.ObjectModel.Forms;
 
 namespace Rekog.App.ViewModel.Forms
 {
-    public class KeyLabelFormViewModel : FormViewModel
+    public class LegendFormViewModel : FormViewModel
     {
-        public KeyLabelFormViewModel(params KeyLabelModel[] models) : base(models)
+        public LegendFormViewModel(params LegendModel[] models) : base(models)
         {
             Value = FormProperty.Reference(models, x => x.Value);
             Alignment = FormProperty.Value(models, x => x.Alignment);
@@ -22,7 +22,7 @@ namespace Rekog.App.ViewModel.Forms
 
         public IFormProperty<string?> Value { get; }
 
-        public IFormProperty<KeyLabelAlignment?> Alignment { get; }
+        public IFormProperty<LegendAlignment?> Alignment { get; }
 
         public IFormProperty<double?> Left { get; }
 

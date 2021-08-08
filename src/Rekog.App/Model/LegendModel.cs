@@ -2,10 +2,10 @@
 
 namespace Rekog.App.Model
 {
-    public class KeyLabelModel : ModelBase
+    public class LegendModel : ModelBase
     {
         private string _value = string.Empty;
-        private KeyLabelAlignment _alignment;
+        private LegendAlignment _alignment;
         private double _left;
         private double _top;
         private double _right;
@@ -22,7 +22,7 @@ namespace Rekog.App.Model
             set => Set(ref _value, value);
         }
 
-        public KeyLabelAlignment Alignment
+        public LegendAlignment Alignment
         {
             get => _alignment;
             set => Set(ref _alignment, value);

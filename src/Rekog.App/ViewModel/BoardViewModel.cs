@@ -16,7 +16,7 @@ namespace Rekog.App.ViewModel
         private static readonly Color DefaultBackground = Colors.White;
 
         private KeyFormViewModel _keyForm;
-        private KeyLabelFormViewModel _keyLabelForm;
+        private LegendFormViewModel _legendForm;
 
         private ObservableObjectCollection<KeyViewModel> _keys = new ObservableObjectCollection<KeyViewModel>();
         private Thickness _canvasOffset;
@@ -34,7 +34,7 @@ namespace Rekog.App.ViewModel
 
             Form = new BoardFormViewModel(Model);
             _keyForm = new KeyFormViewModel();
-            _keyLabelForm = new KeyLabelFormViewModel();
+            _legendForm = new LegendFormViewModel();
         }
 
         public BoardFormViewModel Form { get; }
@@ -45,10 +45,10 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _keyForm, value);
         }
 
-        public KeyLabelFormViewModel KeyLabelForm
+        public LegendFormViewModel LegendForm
         {
-            get => _keyLabelForm;
-            private set => Set(ref _keyLabelForm, value);
+            get => _legendForm;
+            private set => Set(ref _legendForm, value);
         }
 
         public DelegateCommand<NewKeyTemplate> AddKeyCommand { get; }
@@ -204,7 +204,7 @@ namespace Rekog.App.ViewModel
         private void UpdateSelectedKeys()
         {
             KeyForm = new KeyFormViewModel(GetSelectedKeyModels().ToArray());
-            KeyLabelForm = new KeyLabelFormViewModel(GetSelectedKeyModels().Select(x => x.Labels.FirstOrDefault()).NotNull().ToArray());
+            LegendForm = new LegendFormViewModel(GetSelectedKeyModels().Select(x => x.Legends.FirstOrDefault()).NotNull().ToArray());
             DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
 
             UpdateRotationOrigin();

@@ -191,7 +191,7 @@
                                               VerticalAlignment="Stretch"
                                               IsHitTestVisible="False"
                                               IsTabStop="False"
-                                              ItemsSource="{Binding Labels}">
+                                              ItemsSource="{Binding Legends}">
                                     <ItemsControl.RenderTransform>
                                         <TranslateTransform X="{Binding InnerShapeOffset.X, Converter={StaticResource ScaleConverter}}" Y="{Binding InnerShapeOffset.Y, Converter={StaticResource ScaleConverter}}" />
                                     </ItemsControl.RenderTransform>
@@ -201,10 +201,10 @@
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type vm:KeyLabelViewModel}">
+                                        <DataTemplate DataType="{x:Type vm:LegendViewModel}">
                                             <TextBlock Margin="{Binding Margin, Converter={StaticResource ScaleConverter}}"
-                                                       HorizontalAlignment="{Binding Model.Alignment, ConverterParameter=H, Converter={StaticResource KeyLabelAlignmentConverter}}"
-                                                       VerticalAlignment="{Binding Model.Alignment, ConverterParameter=V, Converter={StaticResource KeyLabelAlignmentConverter}}"
+                                                       HorizontalAlignment="{Binding Model.Alignment, ConverterParameter=H, Converter={StaticResource LegendAlignmentConverter}}"
+                                                       VerticalAlignment="{Binding Model.Alignment, ConverterParameter=V, Converter={StaticResource LegendAlignmentConverter}}"
                                                        FontFamily="{Binding Font}"
                                                        FontSize="{Binding Model.Size}"
                                                        FontStyle="{Binding Model.Italic, Converter={StaticResource BooleanToFontStyleConverter}}"

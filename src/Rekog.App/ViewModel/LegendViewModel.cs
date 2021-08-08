@@ -6,7 +6,7 @@ using Rekog.App.Model;
 
 namespace Rekog.App.ViewModel
 {
-    public class KeyLabelViewModel : ViewModelBase<KeyLabelModel>
+    public class LegendViewModel : ViewModelBase<LegendModel>
     {
         private static readonly Color DefaultColor = Colors.Black;
         private static readonly FontFamily DefaultFont = new FontFamily("Arial");
@@ -15,7 +15,7 @@ namespace Rekog.App.ViewModel
         private Color _color = DefaultColor;
         private FontFamily _font = DefaultFont;
 
-        public KeyLabelViewModel(KeyLabelModel model)
+        public LegendViewModel(LegendModel model)
             : base(model)
         {
             UpdateAll();
@@ -45,16 +45,16 @@ namespace Rekog.App.ViewModel
 
             switch (args.PropertyName)
             {
-                case nameof(KeyLabelModel.Left):
-                case nameof(KeyLabelModel.Top):
-                case nameof(KeyLabelModel.Right):
-                case nameof(KeyLabelModel.Bottom):
+                case nameof(LegendModel.Left):
+                case nameof(LegendModel.Top):
+                case nameof(LegendModel.Right):
+                case nameof(LegendModel.Bottom):
                     UpdateMargin();
                     break;
-                case nameof(KeyLabelModel.Color):
+                case nameof(LegendModel.Color):
                     UpdateColor();
                     break;
-                case nameof(KeyLabelModel.Font):
+                case nameof(LegendModel.Font):
                     UpdateFont();
                     break;
             }

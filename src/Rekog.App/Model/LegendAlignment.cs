@@ -1,6 +1,6 @@
 ﻿namespace Rekog.App.Model
 {
-    public enum KeyLabelAlignment
+    public enum LegendAlignment
     {
         TopLeft,
         Top,

@@ -28,7 +28,7 @@ namespace Rekog.App.Model
         private bool _isHoming;
         private bool _isGhosted;
         private bool _isDecal;
-        private ObservableObjectCollection<KeyLabelModel> _labels = new ObservableObjectCollection<KeyLabelModel>();
+        private ObservableObjectCollection<LegendModel> _legends = new ObservableObjectCollection<LegendModel>();
 
         public double X
         {
@@ -147,10 +147,10 @@ namespace Rekog.App.Model
             set => Set(ref _isDecal, value);
         }
 
-        public ObservableObjectCollection<KeyLabelModel> Labels
+        public ObservableObjectCollection<LegendModel> Legends
         {
-            get => _labels;
-            set => Set(ref _labels, value);
+            get => _legends;
+            set => Set(ref _legends, value);
         }
 
         public PathGeometry GetShapeGeometry()
@@ -220,31 +220,31 @@ namespace Rekog.App.Model
 
             for (var i = 0; i < 9; i++)
             {
-                var label = new KeyLabelModel
+                var legend = new LegendModel
                 {
-                    Value = kleKey.Labels[i] ?? string.Empty,
+                    Value = kleKey.Legends[i] ?? string.Empty,
 
-                    Alignment = (KeyLabelAlignment)i,
+                    Alignment = (LegendAlignment)i,
 
                     Size = GetSize(kleKey.TextSizes[i] ?? kleKey.DefaultTextSize),
                     Color = kleKey.TextColors[i] ?? kleKey.DefaultTextColor,
                 };
-                key.Labels.Add(label);
+                key.Legends.Add(legend);
             }
 
             for (var i = 9; i < 12; i++)
             {
-                var label = new KeyLabelModel
+                var legend = new LegendModel
                 {
-                    Value = kleKey.Labels[i] ?? string.Empty,
+                    Value = kleKey.Legends[i] ?? string.Empty,
 
-                    Alignment = KeyLabelAlignment.BottomLeft + (i - 9),
+                    Alignment = LegendAlignment.BottomLeft + (i - 9),
                     Bottom = -0.22,
 
                     Size = GetSize(kleKey.LegendTextSize),
                     Color = kleKey.TextColors[i] ?? kleKey.DefaultTextColor,
                 };
-                key.Labels.Add(label);
+                key.Legends.Add(legend);
             }
 
             return key;

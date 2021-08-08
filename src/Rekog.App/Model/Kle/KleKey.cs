@@ -54,6 +54,6 @@ namespace Rekog.App.Model.Kle
 
         public int?[] TextSizes { get; set; } = Array.Empty<int?>();
 
-        public string?[] Labels { get; set; } = Array.Empty<string?>();
+        public string?[] Legends { get; set; } = Array.Empty<string?>();
     }
 }

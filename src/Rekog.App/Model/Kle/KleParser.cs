@@ -149,9 +149,9 @@ namespace Rekog.App.Model.Kle
                             TryUse(properties, "d", (bool value) => currentKey.IsDecal = value);
                             TryUse(properties, "g", (bool value) => currentKey.IsGhosted = value);
                         }
-                        else if (keyData is JValue label)
+                        else if (keyData is JValue legend)
                         {
-                            var labels = GetValues(label.Value<string>().Split('\n').Select(x => !string.IsNullOrEmpty(x) ? x : null).ToArray());
+                            var legends = GetValues(legend.Value<string>().Split('\n').Select(x => !string.IsNullOrEmpty(x) ? x : null).ToArray());
                             var key = new KleKey
                             {
                                 X = currentKey.X,
@@ -178,7 +178,7 @@ namespace Rekog.App.Model.Kle
                                 DefaultTextSize = currentKey.DefaultTextSize,
                                 TextColors = ReorderValues(currentKey.TextColors.ToArray(), align),
                                 TextSizes = ReorderValues(currentKey.TextSizes.ToArray(), align),
-                                Labels = ReorderValues(labels, align),
+                                Legends = ReorderValues(legends, align),
                             };
                             board.Keys.Add(key);
 

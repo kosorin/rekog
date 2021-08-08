@@ -15,20 +15,20 @@ namespace Rekog.App.Controls
     [TemplatePart(Name = "PART_BottomLeft", Type = typeof(ToggleButton))]
     [TemplatePart(Name = "PART_BottomCenter", Type = typeof(ToggleButton))]
     [TemplatePart(Name = "PART_BottomRight", Type = typeof(ToggleButton))]
-    public class KeyLabelAlignmentPicker : Control
+    public class LegendAlignmentPicker : Control
     {
         public static readonly DependencyProperty AllowNullProperty =
-            DependencyProperty.Register(nameof(AllowNull), typeof(bool), typeof(KeyLabelAlignmentPicker), new PropertyMetadata(false, OnAllowNullChanged));
+            DependencyProperty.Register(nameof(AllowNull), typeof(bool), typeof(LegendAlignmentPicker), new PropertyMetadata(false, OnAllowNullChanged));
 
         public static readonly DependencyProperty AlignmentProperty =
-            DependencyProperty.Register(nameof(Alignment), typeof(KeyLabelAlignment?), typeof(KeyLabelAlignmentPicker), new PropertyMetadata(null, OnAlignmentChanged));
+            DependencyProperty.Register(nameof(Alignment), typeof(LegendAlignment?), typeof(LegendAlignmentPicker), new PropertyMetadata(null, OnAlignmentChanged));
 
         private bool _manual;
-        private Dictionary<KeyLabelAlignment, ToggleButton>? _buttons;
+        private Dictionary<LegendAlignment, ToggleButton>? _buttons;
 
-        static KeyLabelAlignmentPicker()
+        static LegendAlignmentPicker()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(KeyLabelAlignmentPicker), new FrameworkPropertyMetadata(typeof(KeyLabelAlignmentPicker)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(LegendAlignmentPicker), new FrameworkPropertyMetadata(typeof(LegendAlignmentPicker)));
         }
 
         public bool AllowNull
@@ -37,9 +37,9 @@ namespace Rekog.App.Controls
             set => SetValue(AllowNullProperty, value);
         }
 
-        public KeyLabelAlignment? Alignment
+        public LegendAlignment? Alignment
         {
-            get => (KeyLabelAlignment?)GetValue(AlignmentProperty);
+            get => (LegendAlignment?)GetValue(AlignmentProperty);
             set => SetValue(AlignmentProperty, value);
         }
 
@@ -56,17 +56,17 @@ namespace Rekog.App.Controls
                 }
             }
 
-            _buttons = new Dictionary<KeyLabelAlignment, ToggleButton>
+            _buttons = new Dictionary<LegendAlignment, ToggleButton>
             {
-                [KeyLabelAlignment.TopLeft] = (ToggleButton)Template.FindName("PART_TopLeft", this),
-                [KeyLabelAlignment.Top] = (ToggleButton)Template.FindName("PART_TopCenter", this),
-                [KeyLabelAlignment.TopRight] = (ToggleButton)Template.FindName("PART_TopRight", this),
-                [KeyLabelAlignment.Left] = (ToggleButton)Template.FindName("PART_CenterLeft", this),
-                [KeyLabelAlignment.Center] = (ToggleButton)Template.FindName("PART_CenterCenter", this),
-                [KeyLabelAlignment.Right] = (ToggleButton)Template.FindName("PART_CenterRight", this),
-                [KeyLabelAlignment.BottomLeft] = (ToggleButton)Template.FindName("PART_BottomLeft", this),
-                [KeyLabelAlignment.Bottom] = (ToggleButton)Template.FindName("PART_BottomCenter", this),
-                [KeyLabelAlignment.BottomRight] = (ToggleButton)Template.FindName("PART_BottomRight", this),
+                [LegendAlignment.TopLeft] = (ToggleButton)Template.FindName("PART_TopLeft", this),
+                [LegendAlignment.Top] = (ToggleButton)Template.FindName("PART_TopCenter", this),
+                [LegendAlignment.TopRight] = (ToggleButton)Template.FindName("PART_TopRight", this),
+                [LegendAlignment.Left] = (ToggleButton)Template.FindName("PART_CenterLeft", this),
+                [LegendAlignment.Center] = (ToggleButton)Template.FindName("PART_CenterCenter", this),
+                [LegendAlignment.Right] = (ToggleButton)Template.FindName("PART_CenterRight", this),
+                [LegendAlignment.BottomLeft] = (ToggleButton)Template.FindName("PART_BottomLeft", this),
+                [LegendAlignment.Bottom] = (ToggleButton)Template.FindName("PART_BottomCenter", this),
+                [LegendAlignment.BottomRight] = (ToggleButton)Template.FindName("PART_BottomRight", this),
             };
 
             foreach (var button in _buttons.Values)
@@ -91,7 +91,7 @@ namespace Rekog.App.Controls
 
                 if (!Alignment.HasValue && !AllowNull)
                 {
-                    Alignment = KeyLabelAlignment.TopLeft;
+                    Alignment = LegendAlignment.TopLeft;
                 }
 
                 foreach (var (alignment, button) in _buttons)
@@ -107,7 +107,7 @@ namespace Rekog.App.Controls
 
         private static void OnAllowNullChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is KeyLabelAlignmentPicker picker)
+            if (d is LegendAlignmentPicker picker)
             {
                 picker.UpdateData();
             }
@@ -115,7 +115,7 @@ namespace Rekog.App.Controls
 
         private static void OnAlignmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is KeyLabelAlignmentPicker picker)
+            if (d is LegendAlignmentPicker picker)
             {
                 picker.UpdateData();
             }

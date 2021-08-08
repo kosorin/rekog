@@ -471,16 +471,16 @@
                 </ui:TabItemHelper.Icon>
                 <TabItem.Content>
                     <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
-                        <ui:SimpleStackPanel DataContext="{Binding Board.KeyLabelForm}"
+                        <ui:SimpleStackPanel DataContext="{Binding Board.LegendForm}"
                                              Margin="16,8"
                                              IsEnabled="{Binding IsSet}"
                                              Style="{StaticResource FormContainerStackPanelStyle}">
-                            <Label Content="Label" Style="{StaticResource FormContentGroupStyle}" />
+                            <Label Content="Legend" Style="{StaticResource FormContentGroupStyle}" />
                             <TextBox ui:ControlHelper.Header="Value" Text="{Binding Value.Value, Mode=TwoWay}" />
                             <Label Content="Layout" Style="{StaticResource FormContentGroupStyle}" />
                             <StackPanel>
                                 <Label Content="Alignment" Style="{StaticResource FormContentHeaderStyle}" />
-                                <c:KeyLabelAlignmentPicker Alignment="{Binding Alignment.Value, Mode=TwoWay}" AllowNull="True" />
+                                <c:LegendAlignmentPicker Alignment="{Binding Alignment.Value, Mode=TwoWay}" AllowNull="True" />
                             </StackPanel>
                             <Label Content="Padding" Style="{StaticResource FormContentHeaderStyle}" />
                             <Grid>

@@ -24,7 +24,7 @@ namespace Rekog.App.ViewModel
         private Rect _actualBounds;
         private Geometry _actualShape = EmptyGeometry;
         private Color _color = DefaultColor;
-        private ObservableObjectCollection<KeyLabelViewModel> _labels = new ObservableObjectCollection<KeyLabelViewModel>();
+        private ObservableObjectCollection<LegendViewModel> _legends = new ObservableObjectCollection<LegendViewModel>();
 
         public KeyViewModel(KeyModel model)
             : base(model)
@@ -86,10 +86,10 @@ namespace Rekog.App.ViewModel
             set => Set(ref _color, value);
         }
 
-        public ObservableObjectCollection<KeyLabelViewModel> Labels
+        public ObservableObjectCollection<LegendViewModel> Legends
         {
-            get => _labels;
-            private set => SetCollection(ref _labels, value);
+            get => _legends;
+            private set => SetCollection(ref _legends, value);
         }
 
         protected override void OnModelPropertyChanging(object? sender, PropertyChangingEventArgs args)
@@ -98,8 +98,8 @@ namespace Rekog.App.ViewModel
 
             switch (args.PropertyName)
             {
-                case nameof(KeyModel.Labels):
-                    Model.Labels.CollectionItemChanged -= ModelLabels_CollectionItemChanged;
+                case nameof(KeyModel.Legends):
+                    Model.Legends.CollectionItemChanged -= ModelLegends_CollectionItemChanged;
                     break;
             }
         }
@@ -129,8 +129,8 @@ namespace Rekog.App.ViewModel
                 case nameof(KeyModel.Color):
                     UpdateColor();
                     break;
-                case nameof(KeyModel.Labels):
-                    UpdateLabels();
+                case nameof(KeyModel.Legends):
+                    UpdateLegends();
                     break;
             }
         }
@@ -139,7 +139,7 @@ namespace Rekog.App.ViewModel
         {
             UpdateLayout();
             UpdateColor();
-            UpdateLabels();
+            UpdateLegends();
         }
 
         private void UpdateLayout()
@@ -173,28 +173,28 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void UpdateLabels()
+        private void UpdateLegends()
         {
-            Labels = new ObservableObjectCollection<KeyLabelViewModel>(Model.Labels.Select(x => new KeyLabelViewModel(x)));
-            Model.Labels.CollectionItemChanged += ModelLabels_CollectionItemChanged;
+            Legends = new ObservableObjectCollection<LegendViewModel>(Model.Legends.Select(x => new LegendViewModel(x)));
+            Model.Legends.CollectionItemChanged += ModelLegends_CollectionItemChanged;
         }
 
-        private void ModelLabels_CollectionItemChanged(IObservableObjectCollection collection, CollectionItemChangedEventArgs args)
+        private void ModelLegends_CollectionItemChanged(IObservableObjectCollection collection, CollectionItemChangedEventArgs args)
         {
-            foreach (KeyLabelModel oldLabelModel in args.OldItems)
+            foreach (LegendModel oldLegendModel in args.OldItems)
             {
-                for (var i = Labels.Count - 1; i >= 0; i--)
+                for (var i = Legends.Count - 1; i >= 0; i--)
                 {
-                    if (Labels[i].Model == oldLabelModel)
+                    if (Legends[i].Model == oldLegendModel)
                     {
-                        Labels.RemoveAt(i);
+                        Legends.RemoveAt(i);
                     }
                 }
             }
 
-            foreach (KeyLabelModel newLabelModel in args.NewItems)
+            foreach (LegendModel newLegendModel in args.NewItems)
             {
-                Labels.Add(new KeyLabelViewModel(newLabelModel));
+                Legends.Add(new LegendViewModel(newLegendModel));
             }
         }
 
