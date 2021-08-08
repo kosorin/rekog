@@ -226,7 +226,22 @@ namespace Rekog.App.Model
 
                     Alignment = (KeyLabelAlignment)i,
 
-                    Size = 1.4 * (6 + 3 * (kleKey.TextSizes[i] ?? kleKey.DefaultTextSize)),
+                    Size = GetSize(kleKey.TextSizes[i] ?? kleKey.DefaultTextSize),
+                    Color = kleKey.TextColors[i] ?? kleKey.DefaultTextColor,
+                };
+                key.Labels.Add(label);
+            }
+
+            for (var i = 9; i < 12; i++)
+            {
+                var label = new KeyLabelModel
+                {
+                    Value = kleKey.Labels[i] ?? string.Empty,
+
+                    Alignment = KeyLabelAlignment.BottomLeft + (i - 9),
+                    Bottom = -0.22,
+
+                    Size = GetSize(kleKey.LegendTextSize),
                     Color = kleKey.TextColors[i] ?? kleKey.DefaultTextColor,
                 };
                 key.Labels.Add(label);
@@ -251,6 +266,12 @@ namespace Rekog.App.Model
             static PathGeometry GetSteppedShapePathGeometry(KleKey kleKey)
             {
                 return new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height)).GetFlattenedPathGeometry();
+            }
+
+            static double GetSize(double kleTextSize)
+            {
+                // Just trial and error
+                return 8 + 4 * kleTextSize;
             }
         }
     }
