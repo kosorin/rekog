@@ -10,8 +10,8 @@ namespace Rekog.App.View
 {
     public partial class BoardView
     {
-        public static readonly DependencyProperty PlateCanvasOffsetProperty =
-            DependencyProperty.RegisterAttached("PlateCanvasOffset", typeof(Thickness), typeof(BoardView), new PropertyMetadata(new Thickness()));
+        public static readonly DependencyProperty CanvasOffsetProperty =
+            DependencyProperty.RegisterAttached("CanvasOffset", typeof(Thickness), typeof(BoardView), new PropertyMetadata(new Thickness()));
 
         public static readonly DependencyProperty BoundsProperty =
             DependencyProperty.RegisterAttached("Bounds", typeof(Rect), typeof(BoardView), new PropertyMetadata(new Rect()));
@@ -42,14 +42,14 @@ namespace Rekog.App.View
         }
 
 
-        public static Thickness GetPlateCanvasOffset(DependencyObject obj)
+        public static Thickness GetCanvasOffset(DependencyObject obj)
         {
-            return (Thickness)obj.GetValue(PlateCanvasOffsetProperty);
+            return (Thickness)obj.GetValue(CanvasOffsetProperty);
         }
 
-        public static void SetPlateCanvasOffset(DependencyObject obj, Thickness value)
+        public static void SetCanvasOffset(DependencyObject obj, Thickness value)
         {
-            obj.SetValue(PlateCanvasOffsetProperty, value);
+            obj.SetValue(CanvasOffsetProperty, value);
         }
 
         public static Rect GetBounds(DependencyObject obj)
@@ -127,7 +127,7 @@ namespace Rekog.App.View
 
         private Point GetCoords(MouseEventArgs args)
         {
-            var canvasOffset = GetPlateCanvasOffset(PlateCanvasContainer);
+            var canvasOffset = GetCanvasOffset(CanvasContainer);
             var position = args.GetPosition(PlateCanvasContainer);
             return new Point((position.X - canvasOffset.Left) / App.UnitSize, (position.Y - canvasOffset.Top) / App.UnitSize);
         }
