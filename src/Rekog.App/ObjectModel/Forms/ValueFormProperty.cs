@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Rekog.App.Model;
 
-namespace Rekog.App.ViewModel.Forms
+namespace Rekog.App.ObjectModel.Forms
 {
-    public class NullableValueFormProperty<TModel, T> : FormProperty<TModel, T?>
+    public class ValueFormProperty<TModel, T> : FormProperty<TModel, T?>
         where TModel : ModelBase
+        where T : struct
     {
         private readonly FormPropertyDescriptor<TModel, T> _descriptor;
 
-        public NullableValueFormProperty(ICollection<TModel> models, Expression<Func<TModel, T>> propertySelector)
+        public ValueFormProperty(ICollection<TModel> models, Expression<Func<TModel, T>> propertySelector)
             : base(models)
         {
-            if (Nullable.GetUnderlyingType(typeof(T)) == null)
-            {
-                throw new Exception($"Generic parameter {nameof(T)} of type {nameof(NullableValueFormProperty<TModel, T>)} expects {nameof(Nullable)} type.");
-            }
-
             _descriptor = new FormPropertyDescriptor<TModel, T>(propertySelector, true);
 
             Initialize();
@@ -30,8 +26,15 @@ namespace Rekog.App.ViewModel.Forms
 
         protected override bool TrySetValue(T? value)
         {
-            _descriptor.SetValue(Models, value);
-            return true;
+            if (value.HasValue)
+            {
+                _descriptor.SetValue(Models, value.Value);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

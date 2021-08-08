@@ -1,6 +1,4 @@
-using Rekog.App.ObjectModel;
-
-namespace Rekog.App.ViewModel.Forms
+namespace Rekog.App.ObjectModel.Forms
 {
     public interface IFormProperty<T> : IObservableObject
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Rekog.App.ViewModel.Forms
+namespace Rekog.App.ObjectModel.Forms
 {
     public class FormPropertyDescriptor<TModel, T>
     {

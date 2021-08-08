@@ -1,4 +1,5 @@
 using Rekog.App.Model;
+using Rekog.App.ObjectModel.Forms;
 
 namespace Rekog.App.ViewModel.Forms
 {

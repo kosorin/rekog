@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Rekog.App.Model;
 
-namespace Rekog.App.ViewModel.Forms
+namespace Rekog.App.ObjectModel.Forms
 {
     public class NullableReferenceFormProperty<TModel, T> : FormProperty<TModel, T?>
         where TModel : ModelBase

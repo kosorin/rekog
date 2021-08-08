@@ -4,7 +4,7 @@ using Rekog.App.Model;
 
 namespace Rekog.App.ViewModel.Forms
 {
-    public abstract class FormViewModel : ViewModelBase, IForm
+    public abstract class FormViewModel : ViewModelBase
     {
         private bool _isSet;
 

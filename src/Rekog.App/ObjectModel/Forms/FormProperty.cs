@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Rekog.App.Model;
-using Rekog.App.ObjectModel;
 
-namespace Rekog.App.ViewModel.Forms
+namespace Rekog.App.ObjectModel.Forms
 {
     public abstract class FormProperty : ObservableObject
     {
