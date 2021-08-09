@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
-using ABI.Windows.System;
 using Rekog.App.Model.Kle;
 using Rekog.App.ObjectModel;
 
@@ -274,6 +273,8 @@ namespace Rekog.App.Model
                     var geometry1 = new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height));
                     var geometry2 = new RectangleGeometry(new Rect(kleKey.X2, kleKey.Y2, kleKey.Width2, kleKey.Height2));
                     shape = new CombinedGeometry(GeometryCombineMode.Union, geometry1, geometry2).GetFlattenedPathGeometry().ToString(CultureInfo.InvariantCulture);
+                    
+                    // Delete "fill rule"
                     if (shape[0] == 'F')
                     {
                         shape = shape[2..];
