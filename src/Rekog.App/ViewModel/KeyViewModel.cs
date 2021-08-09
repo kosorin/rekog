@@ -112,16 +112,23 @@ namespace Rekog.App.ViewModel
             {
                 case nameof(KeyModel.X):
                 case nameof(KeyModel.Y):
-                case nameof(KeyModel.Width):
-                case nameof(KeyModel.Height):
                 case nameof(KeyModel.RotationAngle):
                 case nameof(KeyModel.RotationOriginX):
                 case nameof(KeyModel.RotationOriginY):
+                case nameof(KeyModel.Width):
+                case nameof(KeyModel.Height):
+                case nameof(KeyModel.UseShape):
                 case nameof(KeyModel.Shape):
+                case nameof(KeyModel.IsStepped):
+                case nameof(KeyModel.SteppedOffsetX):
+                case nameof(KeyModel.SteppedOffsetY):
+                case nameof(KeyModel.SteppedWidth):
+                case nameof(KeyModel.SteppedHeight):
+                case nameof(KeyModel.UseSteppedShape):
+                case nameof(KeyModel.SteppedShape):
                 case nameof(KeyModel.Roundness):
                 case nameof(KeyModel.RoundConcaveCorner):
                 case nameof(KeyModel.Margin):
-                case nameof(KeyModel.SteppedShape):
                 case nameof(KeyModel.InnerVerticalOffset):
                 case nameof(KeyModel.Padding):
                     UpdateLayout();
@@ -146,16 +153,16 @@ namespace Rekog.App.ViewModel
         {
             Rotation = new RotateTransform(Model.RotationAngle, Model.RotationOriginX - Model.X, Model.RotationOriginY - Model.Y);
 
-            Shape = GetShape(Model.GetShapeGeometry());
-            SteppedShape = Model.IsStepped ? GetShape(Model.GetSteppedShapeGeometry()) : null;
+            Shape = GetShape(Model.GetGeometry());
+            SteppedShape = Model.IsStepped ? GetShape(Model.GetSteppedGeometry()) : null;
 
-            InnerShape = GetInnerShape(Model.GetSteppedShapeGeometry());
+            InnerShape = GetInnerShape(Model.GetSteppedGeometry());
             InnerShapeOffset = new Point(Model.InnerVerticalOffset * -Math.Sin(Math.PI * Model.RotationAngle / 180d), Model.InnerVerticalOffset * -Math.Cos(Math.PI * Model.RotationAngle / 180d));
 
             var actualTransform = new TransformGroup();
             actualTransform.Children.Add(Rotation);
             actualTransform.Children.Add(new TranslateTransform(Model.X, Model.Y));
-            var actualShape = Model.GetShapeGeometry().Clone();
+            var actualShape = Model.GetGeometry().Clone();
             actualShape.Transform = actualTransform;
             ActualShape = actualShape;
             ActualBounds = ActualShape.Bounds;

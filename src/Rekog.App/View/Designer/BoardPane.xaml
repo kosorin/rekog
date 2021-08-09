@@ -6,6 +6,8 @@
              xmlns:a="clr-namespace:Rekog.App.Behaviors.AttachedProperties"
              xmlns:c="clr-namespace:Rekog.App.Controls"
              xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:mx="clr-namespace:Rekog.App.Markup"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
              d:DataContext="{d:DesignInstance vm:MainViewModel}"
@@ -19,17 +21,20 @@
                TargetType="{x:Type MenuItem}">
             <Setter Property="IsEnabled" Value="False" />
         </Style>
+        <sys:Double x:Key="FormSpacing">12</sys:Double>
+        <GridLength x:Key="FormGridSpacing">12</GridLength>
         <Style x:Key="FormContainerScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
             <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="MinWidth" Value="280" />
         </Style>
         <Style x:Key="FormContainerStackPanelStyle" TargetType="{x:Type ui:SimpleStackPanel}">
-            <Setter Property="Margin" Value="16,12" />
-            <Setter Property="Spacing" Value="12" />
+            <Setter Property="Margin" Value="16,0" />
+            <Setter Property="Spacing" Value="{StaticResource FormSpacing}" />
         </Style>
         <Style x:Key="FormContentGroupStyle"
                BasedOn="{StaticResource {x:Type Label}}"
                TargetType="{x:Type Label}">
-            <Setter Property="Margin" Value="0,12,0,0" />
+            <Setter Property="Margin" Value="0,24,0,0" />
             <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
         <Style x:Key="FormContentHeaderStyle"
@@ -42,6 +47,14 @@
                TargetType="{x:Type TextBlock}">
             <Setter Property="Margin" Value="12,10" />
             <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+        <Style x:Key="FormEnableCheckBoxStyle"
+               BasedOn="{StaticResource {x:Type CheckBox}}"
+               TargetType="{x:Type CheckBox}">
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+            <Setter Property="MinWidth" Value="0" />
         </Style>
         <Style x:Key="FormTabItemStyle" TargetType="{x:Type TabItem}">
             <Style.Resources>
@@ -244,6 +257,7 @@
                             <TextBox x:Name="KleInput"
                                      Height="100"
                                      AcceptsReturn="True"
+                                     FontFamily="Courier New"
                                      HorizontalScrollBarVisibility="Auto"
                                      TextWrapping="NoWrap"
                                      VerticalScrollBarVisibility="Auto">
@@ -255,7 +269,7 @@
                                 </TextBox.InputBindings>
                             </TextBox>
                         </StackPanel>
-                        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
+                        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource FormSpacing}">
                             <Button HorizontalAlignment="Stretch"
                                     Command="{Binding ParseKleRawDataCommand}"
                                     CommandParameter="{Binding Text, ElementName=KleInput}"
@@ -299,7 +313,6 @@
                 <TabItem.Content>
                     <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                         <ui:SimpleStackPanel DataContext="{Binding Board.Form}"
-                                             Margin="16,8"
                                              IsEnabled="{Binding IsSet}"
                                              Style="{StaticResource FormContainerStackPanelStyle}">
                             <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
@@ -323,14 +336,13 @@
                 <TabItem.Content>
                     <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                         <ui:SimpleStackPanel DataContext="{Binding Board.KeyForm}"
-                                             Margin="16,8"
                                              IsEnabled="{Binding IsSet}"
                                              Style="{StaticResource FormContainerStackPanelStyle}">
                             <Label Content="Position" Style="{StaticResource FormContentGroupStyle}" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <ui:NumberBox Grid.Column="0"
@@ -346,13 +358,13 @@
                                               Maximum="200"
                                               Minimum="-200"
                                               SmallChange="0.05"
-                                              Value="{Binding Y.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
+                                              Value="{Binding Y.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                             </Grid>
                             <Label Content="Shape" Style="{StaticResource FormContentGroupStyle}" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <ui:NumberBox Grid.Column="0"
@@ -368,12 +380,86 @@
                                               Maximum="20"
                                               Minimum="0.25"
                                               SmallChange="0.05"
-                                              Value="{Binding Height.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
+                                              Value="{Binding Height.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                             </Grid>
-                            <TextBox ui:ControlHelper.Description="Overrides width and height."
-                                     ui:ControlHelper.Header="Custom shape"
-                                     Text="{Binding Shape.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBox ui:ControlHelper.Header="Stepped shape" Text="{Binding SteppedShape.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox HorizontalContentAlignment="Left"
+                                         ui:ControlHelper.Header="Custom shape"
+                                         IsEnabled="{Binding UseShape.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}"
+                                         Text="{Binding Shape.Value, Mode=TwoWay}" />
+                                <CheckBox Grid.Column="2"
+                                          IsChecked="{Binding UseShape.Value, Mode=TwoWay}"
+                                          Style="{StaticResource FormEnableCheckBoxStyle}" />
+                            </Grid>
+                            <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource FormSpacing}">
+                                <Label Content="Stepped shape" Style="{StaticResource FormContentGroupStyle}" />
+                                <CheckBox Margin="0,-8"
+                                          IsChecked="{Binding IsStepped.Value, Mode=TwoWay}"
+                                          Style="{StaticResource FormEnableCheckBoxStyle}" />
+                            </ui:SimpleStackPanel>
+                            <ui:SimpleStackPanel IsEnabled="{Binding IsStepped.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}" Spacing="{StaticResource FormSpacing}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ui:NumberBox Grid.Column="0"
+                                                  Header="Offset X"
+                                                  LargeChange="0.25"
+                                                  Maximum="200"
+                                                  Minimum="-200"
+                                                  SmallChange="0.05"
+                                                  Value="{Binding SteppedOffsetX.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    <ui:NumberBox Grid.Column="2"
+                                                  Grid.ColumnSpan="2"
+                                                  Header="Offset Y"
+                                                  LargeChange="0.25"
+                                                  Maximum="200"
+                                                  Minimum="-200"
+                                                  SmallChange="0.05"
+                                                  Value="{Binding SteppedOffsetY.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ui:NumberBox Grid.Column="0"
+                                                  Header="Width"
+                                                  LargeChange="0.25"
+                                                  Maximum="20"
+                                                  Minimum="0.25"
+                                                  SmallChange="0.05"
+                                                  Value="{Binding SteppedWidth.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    <ui:NumberBox Grid.Column="2"
+                                                  Header="Height"
+                                                  LargeChange="0.25"
+                                                  Maximum="20"
+                                                  Minimum="0.25"
+                                                  SmallChange="0.05"
+                                                  Value="{Binding SteppedHeight.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox ui:ControlHelper.Header="Custom shape"
+                                             IsEnabled="{Binding UseSteppedShape.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}"
+                                             Text="{Binding SteppedShape.Value, Mode=TwoWay}" />
+                                    <CheckBox Grid.Column="2"
+                                              IsChecked="{Binding UseSteppedShape.Value, Mode=TwoWay}"
+                                              Style="{StaticResource FormEnableCheckBoxStyle}" />
+                                </Grid>
+                            </ui:SimpleStackPanel>
                             <Label Content="Rotation" Style="{StaticResource FormContentGroupStyle}" />
                             <ui:NumberBox Header="Angle"
                                           LargeChange="5"
@@ -384,23 +470,23 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <ui:NumberBox Grid.Column="0"
-                                              Header="X"
+                                              Header="Origin X"
                                               LargeChange="0.25"
                                               Maximum="200"
                                               Minimum="-200"
                                               SmallChange="0.05"
                                               Value="{Binding RotationOriginX.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                                 <ui:NumberBox Grid.Column="2"
-                                              Header="Y"
+                                              Header="Origin Y"
                                               LargeChange="0.25"
                                               Maximum="200"
                                               Minimum="-200"
                                               SmallChange="0.05"
-                                              Value="{Binding RotationOriginY.Value, Mode=TwoWay, Converter={StaticResource NullToNanConverter}}" />
+                                              Value="{Binding RotationOriginY.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                             </Grid>
                             <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
                             <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
@@ -413,7 +499,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <ui:NumberBox Grid.Column="0"
@@ -434,7 +520,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <ui:NumberBox Grid.Column="0"
@@ -472,7 +558,6 @@
                 <TabItem.Content>
                     <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                         <ui:SimpleStackPanel DataContext="{Binding Board.LegendForm}"
-                                             Margin="16,8"
                                              IsEnabled="{Binding IsSet}"
                                              Style="{StaticResource FormContainerStackPanelStyle}">
                             <Label Content="Legend" Style="{StaticResource FormContentGroupStyle}" />
@@ -482,11 +567,11 @@
                                 <Label Content="Alignment" Style="{StaticResource FormContentHeaderStyle}" />
                                 <c:LegendAlignmentPicker Alignment="{Binding Alignment.Value, Mode=TwoWay}" AllowNull="True" />
                             </StackPanel>
-                            <Label Content="Padding" Style="{StaticResource FormContentHeaderStyle}" />
+                            <Label Content="Margin" Style="{StaticResource FormContentGroupStyle}" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <ui:NumberBox Grid.Column="0"
@@ -507,7 +592,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
-                                    <ColumnDefinition Width="12" />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <ui:NumberBox Grid.Column="0"
@@ -529,7 +614,6 @@
                             <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
                             <ComboBox HorizontalAlignment="Stretch"
                                       ui:ControlHelper.Header="Font"
-                                      IsEditable="True"
                                       ItemTemplate="{DynamicResource FontTemplate}"
                                       SelectedValue="{Binding Font.Value, Mode=TwoWay, Converter={StaticResource StringToFontFamilyConverter}}">
                                 <ComboBox.Resources>
@@ -538,13 +622,10 @@
                                             <cm:SortDescription PropertyName="Source" />
                                         </CollectionViewSource.SortDescriptions>
                                     </CollectionViewSource>
-                                    <Style x:Key="FontStyle">
-                                        <Setter Property="Control.FontFamily" Value="{Binding Source}" />
-                                        <Setter Property="Control.FontSize" Value="16" />
-                                    </Style>
                                     <DataTemplate x:Key="FontTemplate">
                                         <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
-                                            <TextBlock Style="{StaticResource FontStyle}"
+                                            <TextBlock FontFamily="{Binding Source}"
+                                                       FontSize="16"
                                                        Text="{Binding Source}"
                                                        ToolTip="{Binding Source}" />
                                         </StackPanel>
@@ -556,7 +637,7 @@
                             </ComboBox>
                             <StackPanel>
                                 <Label Content="Size" Style="{StaticResource FormContentHeaderStyle}" />
-                                <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
+                                <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource FormSpacing}">
                                     <ui:NumberBox Width="100"
                                                   LargeChange="0.4"
                                                   Maximum="96"

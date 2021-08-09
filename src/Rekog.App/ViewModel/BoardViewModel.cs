@@ -251,28 +251,42 @@ namespace Rekog.App.ViewModel
                 NewKeyTemplate.IsoEnter => new KeyModel
                 {
                     Y = y,
-                    Shape = "M-.25 0 0 0 1.25 0 1.25 1 1.25 2 0 2 0 1-.25 1-.25 0z",
                     Width = 1.25,
                     Height = 2.0,
+                    UseShape = true,
+                    Shape = "M-.25 0 0 0 1.25 0 1.25 1 1.25 2 0 2 0 1-.25 1-.25 0z",
+                    SteppedWidth = 1.25,
+                    SteppedHeight = 2.0,
                 },
                 NewKeyTemplate.BigAssEnter => new KeyModel
                 {
                     Y = y,
-                    Shape = "M0 0 1.5 0 1.5 1 1.5 2 0 2-.75 2-.75 1 0 1 0 0z",
                     Width = 1.5,
                     Height = 2.0,
+                    UseShape = true,
+                    Shape = "M0 0 1.5 0 1.5 1 1.5 2 0 2-.75 2-.75 1 0 1 0 0z",
+                    SteppedWidth = 1.5,
+                    SteppedHeight = 2.0,
                 },
                 NewKeyTemplate.SteppedCapsLock => new KeyModel
                 {
                     Y = y,
-                    SteppedShape = "M0 0 1.25 0 1.25 1 0 1 0 0z",
                     Width = 1.75,
+                    Height = 1,
+                    IsStepped = true,
+                    SteppedWidth = 1.25,
+                    SteppedHeight = 1,
                 },
                 NewKeyTemplate.CenterStepped => new KeyModel
                 {
                     Y = y,
-                    Shape = "M-.25 0 1.25 0 1.25 1-.25 1-.25 0z",
-                    SteppedShape = "M0 0 1 0 1 1 0 1 0 0z",
+                    Width = 1.55,
+                    Height = 1,
+                    IsStepped = true,
+                    SteppedOffsetX = 0.25,
+                    SteppedOffsetY = 0,
+                    SteppedWidth = 1,
+                    SteppedHeight = 1,
                 },
                 _ => new KeyModel
                 {

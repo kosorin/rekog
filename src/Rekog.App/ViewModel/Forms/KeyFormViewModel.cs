@@ -12,10 +12,17 @@ namespace Rekog.App.ViewModel.Forms
             RotationAngle = FormProperty.Value(models, x => x.RotationAngle);
             RotationOriginX = FormProperty.Value(models, x => x.RotationOriginX);
             RotationOriginY = FormProperty.Value(models, x => x.RotationOriginY);
-            Shape = FormProperty.NullableReference(models, x => x.Shape);
-            SteppedShape = FormProperty.NullableReference(models, x => x.SteppedShape);
             Width = FormProperty.Value(models, x => x.Width);
             Height = FormProperty.Value(models, x => x.Height);
+            UseShape = FormProperty.Value(models, x => x.UseShape);
+            Shape = FormProperty.NullableReference(models, x => x.Shape);
+            IsStepped = FormProperty.Value(models, x => x.IsStepped);
+            SteppedOffsetX = FormProperty.Value(models, x => x.SteppedOffsetX);
+            SteppedOffsetY = FormProperty.Value(models, x => x.SteppedOffsetY);
+            SteppedWidth = FormProperty.Value(models, x => x.SteppedWidth);
+            SteppedHeight = FormProperty.Value(models, x => x.SteppedHeight);
+            UseSteppedShape = FormProperty.Value(models, x => x.UseSteppedShape);
+            SteppedShape = FormProperty.NullableReference(models, x => x.SteppedShape);
             Color = FormProperty.Reference(models, x => x.Color);
             Roundness = FormProperty.Value(models, x => x.Roundness);
             RoundConcaveCorner = FormProperty.Value(models, x => x.RoundConcaveCorner);
@@ -38,13 +45,27 @@ namespace Rekog.App.ViewModel.Forms
 
         public IFormProperty<double?> RotationOriginY { get; }
 
-        public IFormProperty<string?> Shape { get; }
-
-        public IFormProperty<string?> SteppedShape { get; }
-
         public IFormProperty<double?> Width { get; }
 
         public IFormProperty<double?> Height { get; }
+
+        public IFormProperty<bool?> UseShape { get; }
+        
+        public IFormProperty<string?> Shape { get; }
+        
+        public IFormProperty<bool?> IsStepped { get; }
+
+        public IFormProperty<double?> SteppedOffsetX { get; }
+
+        public IFormProperty<double?> SteppedOffsetY { get; }
+
+        public IFormProperty<double?> SteppedWidth { get; }
+
+        public IFormProperty<double?> SteppedHeight { get; }
+
+        public IFormProperty<bool?> UseSteppedShape { get; }
+        
+        public IFormProperty<string?> SteppedShape { get; }
 
         public IFormProperty<string?> Color { get; }
 

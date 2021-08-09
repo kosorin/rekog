@@ -25,6 +25,8 @@ namespace Rekog.App.Model.Kle
         [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         public bool IsSimple => X2 == 0 && Y2 == 0 && Width == Width2 && Height == Height2;
 
+        public bool IsSimpleInverted => Width + X2 <= Width2 && Height + Y2 <= Height2;
+
 
         public double RotationAngle { get; set; }
 

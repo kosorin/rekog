@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
+using ABI.Windows.System;
 using Rekog.App.Model.Kle;
 using Rekog.App.ObjectModel;
 
@@ -14,10 +15,17 @@ namespace Rekog.App.Model
         private double _rotationAngle;
         private double _rotationOriginX;
         private double _rotationOriginY;
-        private string? _shape;
-        private string? _steppedShape;
         private double _width = 1;
         private double _height = 1;
+        private bool _useShape;
+        private string? _shape;
+        private bool _isStepped;
+        private double _steppedOffsetX;
+        private double _steppedOffsetY;
+        private double _steppedWidth = 1;
+        private double _steppedHeight = 1;
+        private bool _useSteppedShape;
+        private string? _steppedShape;
         private string _color = "#FCFCFC";
         private double _roundness = 0.1;
         private bool _roundConcaveCorner = true;
@@ -60,20 +68,6 @@ namespace Rekog.App.Model
             set => Set(ref _rotationOriginY, Math.Round(value, Precision));
         }
 
-        public string? Shape
-        {
-            get => _shape;
-            set => Set(ref _shape, value);
-        }
-
-        public bool IsStepped => !string.IsNullOrWhiteSpace(SteppedShape);
-
-        public string? SteppedShape
-        {
-            get => _steppedShape;
-            set => Set(ref _steppedShape, value);
-        }
-
         public double Width
         {
             get => _width;
@@ -84,6 +78,60 @@ namespace Rekog.App.Model
         {
             get => _height;
             set => Set(ref _height, Math.Round(value, Precision));
+        }
+
+        public bool UseShape
+        {
+            get => _useShape;
+            set => Set(ref _useShape, value);
+        }
+
+        public string? Shape
+        {
+            get => _shape;
+            set => Set(ref _shape, value);
+        }
+
+        public bool IsStepped
+        {
+            get => _isStepped;
+            set => Set(ref _isStepped, value);
+        }
+
+        public double SteppedOffsetX
+        {
+            get => _steppedOffsetX;
+            set => Set(ref _steppedOffsetX, Math.Round(value, Precision));
+        }
+
+        public double SteppedOffsetY
+        {
+            get => _steppedOffsetY;
+            set => Set(ref _steppedOffsetY, value);
+        }
+
+        public double SteppedWidth
+        {
+            get => _steppedWidth;
+            set => Set(ref _steppedWidth, Math.Round(value, Precision));
+        }
+
+        public double SteppedHeight
+        {
+            get => _steppedHeight;
+            set => Set(ref _steppedHeight, value);
+        }
+
+        public bool UseSteppedShape
+        {
+            get => _useSteppedShape;
+            set => Set(ref _useSteppedShape, value);
+        }
+
+        public string? SteppedShape
+        {
+            get => _steppedShape;
+            set => Set(ref _steppedShape, value);
         }
 
         public string Color
@@ -153,63 +201,107 @@ namespace Rekog.App.Model
             set => Set(ref _legends, value);
         }
 
-        public PathGeometry GetShapeGeometry()
+        public PathGeometry GetGeometry()
         {
-            return GetShapeGeometryCore(Shape);
-        }
-
-        public PathGeometry GetSteppedShapeGeometry()
-        {
-            var outerShapeGeometry = GetShapeGeometry();
-
-            if (!IsStepped)
-            {
-                return outerShapeGeometry;
-            }
-
-            return GetShapeGeometryCore(SteppedShape, outerShapeGeometry);
-        }
-
-        private PathGeometry GetShapeGeometryCore(string? shape, Geometry? outerShapeGeometry = null)
-        {
-            var geometry = string.IsNullOrWhiteSpace(shape) ? GetDefaultShapeGeometry() : Geometry.Parse(shape);
-
-            if (outerShapeGeometry != null)
-            {
-                geometry = new CombinedGeometry(GeometryCombineMode.Intersect, geometry, outerShapeGeometry);
-            }
+            var geometry = CreateGeometry(UseShape, Shape, 0, 0, Width, Height);
 
             var pathGeometry = geometry as PathGeometry ?? geometry.GetFlattenedPathGeometry();
-
-            while (pathGeometry.Figures.Count > 1)
-            {
-                pathGeometry.Figures.RemoveAt(1);
-            }
+            FixPathGeometry(pathGeometry);
 
             return pathGeometry;
         }
 
-        private Geometry GetDefaultShapeGeometry()
+        public PathGeometry GetSteppedGeometry()
         {
-            return new RectangleGeometry(new Rect(0, 0, Width, Height));
+            var outerGeometry = GetGeometry();
+
+            if (!IsStepped)
+            {
+                return outerGeometry;
+            }
+
+            var geometry = CreateGeometry(UseSteppedShape, SteppedShape, SteppedOffsetX, SteppedOffsetY, SteppedWidth, SteppedHeight);
+            geometry = new CombinedGeometry(GeometryCombineMode.Intersect, geometry, outerGeometry);
+
+            var pathGeometry = geometry as PathGeometry ?? geometry.GetFlattenedPathGeometry();
+            FixPathGeometry(pathGeometry);
+
+            return pathGeometry;
+        }
+
+        private static Geometry CreateGeometry(bool useShape, string? shape, double x, double y, double width, double height)
+        {
+            return useShape && !string.IsNullOrWhiteSpace(shape)
+                ? Geometry.Parse(shape)
+                : new RectangleGeometry(new Rect(x, y, width, height));
+        }
+
+        private static void FixPathGeometry(PathGeometry pathGeometry)
+        {
+            while (pathGeometry.Figures.Count > 1)
+            {
+                pathGeometry.Figures.RemoveAt(1);
+            }
         }
 
         public static KeyModel FromKle(KleKey kleKey)
         {
+            var x = kleKey.X;
+            var y = kleKey.Y;
+            var width = kleKey.Width;
+            var height = kleKey.Height;
+            var steppedOffsetX = 0d;
+            var steppedOffsetY = 0d;
+            var steppedWidth = kleKey.Width;
+            var steppedHeight = kleKey.Height;
+            string? shape = null;
+
+            if (!kleKey.IsSimple)
+            {
+                if (kleKey.IsSimpleInverted)
+                {
+                    x = kleKey.X + kleKey.X2;
+                    y = kleKey.Y + kleKey.Y2;
+                    width = kleKey.Width2;
+                    height = kleKey.Height2;
+                    steppedOffsetX = -kleKey.X2;
+                    steppedOffsetY = -kleKey.Y2;
+                    steppedWidth = kleKey.Width;
+                    steppedHeight = kleKey.Height;
+                }
+                else
+                {
+                    var geometry1 = new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height));
+                    var geometry2 = new RectangleGeometry(new Rect(kleKey.X2, kleKey.Y2, kleKey.Width2, kleKey.Height2));
+                    shape = new CombinedGeometry(GeometryCombineMode.Union, geometry1, geometry2).GetFlattenedPathGeometry().ToString(CultureInfo.InvariantCulture);
+                    if (shape[0] == 'F')
+                    {
+                        shape = shape[2..];
+                    }
+                }
+            }
+
             var key = new KeyModel
             {
-                X = kleKey.X,
-                Y = kleKey.Y,
+                X = x,
+                Y = y,
 
                 RotationAngle = kleKey.RotationAngle,
                 RotationOriginX = kleKey.RotationX,
                 RotationOriginY = kleKey.RotationY,
 
-                Shape = kleKey.IsSimple ? null : GetShapePathGeometry(kleKey).ToString(CultureInfo.InvariantCulture),
-                SteppedShape = kleKey.IsSimple || !kleKey.IsStepped ? null : GetSteppedShapePathGeometry(kleKey).ToString(CultureInfo.InvariantCulture),
+                Width = width,
+                Height = height,
+                UseShape = shape != null,
+                Shape = shape,
 
-                Width = kleKey.Width,
-                Height = kleKey.Height,
+                IsStepped = kleKey.IsStepped,
+                SteppedOffsetX = steppedOffsetX,
+                SteppedOffsetY = steppedOffsetY,
+                SteppedWidth = steppedWidth,
+                SteppedHeight = steppedHeight,
+                UseSteppedShape = false,
+                SteppedShape = null,
 
                 Color = kleKey.Color,
 
@@ -248,25 +340,6 @@ namespace Rekog.App.Model
             }
 
             return key;
-
-            static PathGeometry GetShapePathGeometry(KleKey kleKey)
-            {
-                var geometry1 = new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height));
-
-                if (kleKey.IsSimple)
-                {
-                    return geometry1.GetFlattenedPathGeometry();
-                }
-
-                var geometry2 = new RectangleGeometry(new Rect(kleKey.X2, kleKey.Y2, kleKey.Width2, kleKey.Height2));
-
-                return new CombinedGeometry(GeometryCombineMode.Union, geometry1, geometry2).GetFlattenedPathGeometry();
-            }
-
-            static PathGeometry GetSteppedShapePathGeometry(KleKey kleKey)
-            {
-                return new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height)).GetFlattenedPathGeometry();
-            }
 
             static double GetSize(double kleTextSize)
             {
