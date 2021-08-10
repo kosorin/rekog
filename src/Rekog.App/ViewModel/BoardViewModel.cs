@@ -254,11 +254,26 @@ namespace Rekog.App.ViewModel
             CanvasSize = new Size(right - left, bottom - top);
         }
 
+        private void SelectKey(KeyModel model)
+        {
+            SelectingKeys(true);
+            try
+            {
+                foreach (var key in Keys)
+                {
+                    key.IsSelected = key.Model == model;
+                }
+            }
+            finally
+            {
+                SelectingKeys(false);
+            }
+        }
+
         private void AddKey(NewKeyTemplate template)
         {
             var y = Keys.OrderByDescending(x => x.ActualBounds.Bottom).FirstOrDefault()?.ActualBounds.Bottom ?? 0;
-
-            Model.Keys.Add(template switch
+            var keyModel = template switch
             {
                 NewKeyTemplate.IsoEnter => new KeyModel
                 {
@@ -304,7 +319,11 @@ namespace Rekog.App.ViewModel
                 {
                     Y = y,
                 },
-            });
+            };
+
+            Model.Keys.Add(keyModel);
+
+            SelectKey(keyModel);
         }
 
         private void DeleteSelectedKeys()
