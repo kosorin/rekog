@@ -37,9 +37,9 @@
             </Setter>
         </Style>
     </UserControl.FocusVisualStyle>
-    <Canvas x:Name="PlateContainer"
+    <Canvas x:Name="LayoutRoot"
             ClipToBounds="True"
-            SizeChanged="PlateContainer_SizeChanged">
+            SizeChanged="LayoutRoot_SizeChanged">
         <Border x:Name="Plate"
                 Padding="{Binding Source={mx:Double 0.5}, Converter={StaticResource ScaleConverter}, Mode=OneTime}"
                 HorizontalAlignment="Center"
@@ -49,18 +49,18 @@
             <Border.RenderTransform>
                 <MatrixTransform x:Name="PlateMatrixTransform" />
             </Border.RenderTransform>
-            <Grid x:Name="CanvasContainer"
+            <Grid x:Name="CanvasWrapper"
                   Width="{Binding CanvasSize.Width, Converter={StaticResource ScaleConverter}}"
                   Height="{Binding CanvasSize.Height, Converter={StaticResource ScaleConverter}}"
                   v:BoardView.CanvasOffset="{Binding CanvasOffset, Converter={StaticResource ScaleConverter}}">
-                <ItemsControl x:Name="PlateCanvasContainer"
+                <ItemsControl x:Name="CanvasContainer"
                               HorizontalContentAlignment="Stretch"
                               VerticalContentAlignment="Stretch"
                               Focusable="False"
                               ItemsSource="{Binding Keys}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Canvas Margin="{Binding Path=(v:BoardView.CanvasOffset), ElementName=CanvasContainer}" />
+                            <Canvas Margin="{Binding Path=(v:BoardView.CanvasOffset), ElementName=CanvasWrapper}" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemContainerStyle>
@@ -81,7 +81,7 @@
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding (ContentPresenter.IsMouseOver), RelativeSource={RelativeSource Self}}" Value="True" />
-                                        <Condition Binding="{Binding State, RelativeSource={RelativeSource AncestorType={x:Type v:BoardView}}}" Value="{x:Static v:BoardState.ClickSelecting}" />
+                                        <Condition Binding="{Binding State, RelativeSource={RelativeSource AncestorType={x:Type v:BoardView}}}" Value="{x:Static v:BoardViewState.ClickSelecting}" />
                                     </MultiDataTrigger.Conditions>
                                     <MultiDataTrigger.EnterActions>
                                         <BeginStoryboard>
@@ -129,7 +129,7 @@
                     </ItemsControl.ItemContainerStyle>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type vm:KeyViewModel}">
-                            <Canvas x:Name="Root"
+                            <Canvas x:Name="LayoutRoot"
                                     v:BoardView.Bounds="{Binding ActualBounds}"
                                     v:BoardView.IsSelected="{Binding IsSelected, Mode=TwoWay}"
                                     Background="{x:Null}"
@@ -239,24 +239,24 @@
                                             <Style.Triggers>
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding IsMouseOver, ElementName=Root}" Value="True" />
+                                                        <Condition Binding="{Binding IsMouseOver, ElementName=LayoutRoot}" Value="True" />
                                                         <Condition Value="True">
                                                             <Condition.Binding>
                                                                 <MultiBinding Converter="{StaticResource EnumIsInConverter}">
                                                                     <Binding Path="State" RelativeSource="{RelativeSource AncestorType={x:Type v:BoardView}}" />
-                                                                    <Binding Source="{x:Static v:BoardState.None}" />
-                                                                    <Binding Source="{x:Static v:BoardState.ClickSelecting}" />
+                                                                    <Binding Source="{x:Static v:BoardViewState.None}" />
+                                                                    <Binding Source="{x:Static v:BoardViewState.ClickSelecting}" />
                                                                 </MultiBinding>
                                                             </Condition.Binding>
                                                         </Condition>
                                                     </MultiDataTrigger.Conditions>
                                                     <Setter Property="Fill" Value="{StaticResource MouseOverFillBrush}" />
                                                 </MultiDataTrigger>
-                                                <DataTrigger Binding="{Binding Path=(v:BoardView.IsSelected), ElementName=Root}" Value="True">
+                                                <DataTrigger Binding="{Binding Path=(v:BoardView.IsSelected), ElementName=LayoutRoot}" Value="True">
                                                     <Setter Property="Stroke" Value="{StaticResource SelectedStrokeBrush}" />
                                                     <Setter Property="StrokeThickness" Value="{Binding Source={mx:Double 0.06}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Path=(v:BoardView.IsPreviewSelected), ElementName=Root}" Value="True">
+                                                <DataTrigger Binding="{Binding Path=(v:BoardView.IsPreviewSelected), ElementName=LayoutRoot}" Value="True">
                                                     <Setter Property="Fill" Value="{StaticResource PreviewSelectedFillBrush}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -267,7 +267,9 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Canvas Margin="{Binding Path=(v:BoardView.CanvasOffset), ElementName=CanvasContainer}" Visibility="{Binding ShowRotationOrigin, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Canvas x:Name="AdornerCanvas"
+                        Margin="{Binding Path=(v:BoardView.CanvasOffset), ElementName=CanvasWrapper}"
+                        Visibility="{Binding ShowRotationOrigin, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Path Canvas.Left="{Binding KeyForm.RotationOriginX.Value, Converter={StaticResource ScaleConverter}}"
                           Canvas.Top="{Binding KeyForm.RotationOriginY.Value, Converter={StaticResource ScaleConverter}}"
                           Data="M19.1-2.5 16.7-2.5C15.6-9.8 9.8-15.6 2.5-16.7L2.5-19.1C2.5-19.6 2.1-20 1.6-20L-1.6-20C-2.1-20-2.5-19.6-2.5-19.1L-2.5-16.7C-9.8-15.6-15.6-9.8-16.7-2.5L-19.1-2.5C-19.6-2.5-20-2.1-20-1.6L-20 1.6C-20 2.1-19.6 2.5-19.1 2.5L-16.7 2.5C-15.6 9.8-9.8 15.6-2.5 16.7L-2.5 19.1C-2.5 19.6-2.1 20-1.6 20L1.6 20C2.1 20 2.5 19.6 2.5 19.1L2.5 16.7C9.8 15.6 15.6 9.8 16.7 2.5L19.1 2.5C19.6 2.5 20 2.1 20 1.6L20-1.6C20-2.1 19.6-2.5 19.1-2.5ZM2.5 11.6 2.5 8.4C2.5 7.9 2.1 7.5 1.6 7.5L-1.6 7.5C-2.1 7.5-2.5 7.9-2.5 8.4L-2.5 11.6C-7 10.6-10.6 7.1-11.6 2.5L-8.4 2.5C-7.9 2.5-7.5 2.1-7.5 1.6L-7.5-1.6C-7.5-2.1-7.9-2.5-8.4-2.5L-11.6-2.5C-10.6-7-7.1-10.6-2.5-11.6L-2.5-8.4C-2.5-7.9-2.1-7.5-1.6-7.5L1.6-7.5C2.1-7.5 2.5-7.9 2.5-8.4L2.5-11.6C7-10.6 10.6-7.1 11.6-2.5L8.4-2.5C7.9-2.5 7.5-2.1 7.5-1.6L7.5 1.6C7.5 2.1 7.9 2.5 8.4 2.5L11.6 2.5C10.6 7 7.1 10.6 2.5 11.6ZM2.5 0C2.5-1.4 1.4-2.5 0-2.5C-1.4-2.5-2.5-1.4-2.5 0C-2.5 1.4-1.4 2.5 0 2.5C1.4 2.5 2.5 1.4 2.5 0Z"
@@ -289,7 +291,7 @@
                 <Style TargetType="{x:Type Rectangle}">
                     <Setter Property="Visibility" Value="Collapsed" />
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding State, RelativeSource={RelativeSource AncestorType={x:Type v:BoardView}}}" Value="{x:Static v:BoardState.DragSelecting}">
+                        <DataTrigger Binding="{Binding State, RelativeSource={RelativeSource AncestorType={x:Type v:BoardView}}}" Value="{x:Static v:BoardViewState.DragSelecting}">
                             <Setter Property="Visibility" Value="Visible" />
                         </DataTrigger>
                     </Style.Triggers>

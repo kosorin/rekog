@@ -1,6 +1,6 @@
 ﻿namespace Rekog.App.View
 {
-    public enum BoardState
+    public enum BoardViewState
     {
         None,
         ClickSelecting,

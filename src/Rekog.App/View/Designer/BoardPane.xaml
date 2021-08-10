@@ -445,7 +445,6 @@
                                                   SmallChange="0.05"
                                                   Value="{Binding SteppedOffsetX.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                                     <ui:NumberBox Grid.Column="2"
-                                                  Grid.ColumnSpan="2"
                                                   Header="Offset Y"
                                                   LargeChange="0.25"
                                                   Maximum="200"
@@ -650,7 +649,7 @@
                                             <cm:SortDescription PropertyName="Source" />
                                         </CollectionViewSource.SortDescriptions>
                                     </CollectionViewSource>
-                                    <DataTemplate x:Key="FontTemplate">
+                                    <DataTemplate x:Key="FontTemplate" DataType="{x:Type FontFamily}">
                                         <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
                                             <TextBlock FontFamily="{Binding Source}"
                                                        FontSize="16"
