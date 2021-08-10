@@ -15,6 +15,8 @@ namespace Rekog.App.ViewModel
     {
         private static readonly Color DefaultBackground = Colors.White;
 
+        private int? _selectingKeysCounter;
+
         private KeyFormViewModel _keyForm;
         private LegendFormViewModel _legendForm;
 
@@ -29,6 +31,7 @@ namespace Rekog.App.ViewModel
         {
             AddKeyCommand = new DelegateCommand<NewKeyTemplate>(AddKey);
             DeleteSelectedKeysCommand = new DelegateCommand(DeleteSelectedKeys, CanDeleteSelectedKeys);
+            SelectingKeysCommand = new DelegateCommand<bool>(SelectingKeys);
 
             UpdateAll();
 
@@ -54,6 +57,8 @@ namespace Rekog.App.ViewModel
         public DelegateCommand<NewKeyTemplate> AddKeyCommand { get; }
 
         public DelegateCommand DeleteSelectedKeysCommand { get; }
+
+        public DelegateCommand<bool> SelectingKeysCommand { get; }
 
         public ObservableObjectCollection<KeyViewModel> Keys
         {
@@ -203,8 +208,15 @@ namespace Rekog.App.ViewModel
 
         private void UpdateSelectedKeys()
         {
+            if (_selectingKeysCounter.HasValue)
+            {
+                _selectingKeysCounter++;
+                return;
+            }
+
             KeyForm = new KeyFormViewModel(GetSelectedKeyModels().ToArray());
             LegendForm = new LegendFormViewModel(GetSelectedKeyModels().Select(x => x.Legends.FirstOrDefault()).NotNull().ToArray());
+
             DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
 
             UpdateRotationOrigin();
@@ -306,6 +318,25 @@ namespace Rekog.App.ViewModel
         private bool CanDeleteSelectedKeys()
         {
             return GetSelectedKeyModels().Any();
+        }
+
+        private void SelectingKeys(bool selectingKeys)
+        {
+            if (selectingKeys)
+            {
+                _selectingKeysCounter ??= 0;
+            }
+            else
+            {
+                var counter = _selectingKeysCounter ?? 0;
+
+                _selectingKeysCounter = null;
+
+                if (counter > 0)
+                {
+                    UpdateSelectedKeys();
+                }
+            }
         }
     }
 }

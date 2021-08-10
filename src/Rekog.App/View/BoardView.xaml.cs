@@ -25,6 +25,9 @@ namespace Rekog.App.View
         private static readonly DependencyProperty StateProperty =
             DependencyProperty.Register(nameof(State), typeof(BoardState), typeof(BoardView), new PropertyMetadata(BoardState.None));
 
+        public static readonly DependencyProperty SelectingKeysProperty =
+            DependencyProperty.Register("SelectingKeys", typeof(ICommand), typeof(BoardView), new PropertyMetadata(null));
+
         private readonly double _selectionBoxInflateSize = 0.25;
 
         private SelectContext? _selectContext;
@@ -39,6 +42,12 @@ namespace Rekog.App.View
         {
             get => (BoardState)GetValue(StateProperty);
             private set => SetValue(StateProperty, value);
+        }
+
+        public ICommand? SelectingKeys
+        {
+            get => (ICommand?)GetValue(SelectingKeysProperty);
+            set => SetValue(SelectingKeysProperty, value);
         }
 
 
@@ -379,57 +388,89 @@ namespace Rekog.App.View
 
         private void SelectSingle(MouseEventArgs args)
         {
-            if (!IsCtrl())
+            OnSelectingKeys(true);
+            try
             {
-                UnselectAll();
-            }
+                if (!IsCtrl())
+                {
+                    UnselectAll();
+                }
 
-            if (_selectContext == null)
+                if (_selectContext == null)
+                {
+                    return;
+                }
+
+                if (_selectContext.InitialKey is not { } initialKey || GetKeyContainer(args) is not { } key || initialKey.Container != key.Container)
+                {
+                    return;
+                }
+
+                key.Toggle();
+            }
+            finally
             {
-                return;
+                OnSelectingKeys(false);
             }
-
-            if (_selectContext.InitialKey is not { } initialKey || GetKeyContainer(args) is not { } key || initialKey.Container != key.Container)
-            {
-                return;
-            }
-
-            key.Toggle();
         }
 
         private void SelectMultiple(MouseEventArgs args)
         {
-            if (!IsCtrl())
+            OnSelectingKeys(true);
+            try
             {
-                UnselectAll();
+                if (!IsCtrl())
+                {
+                    UnselectAll();
+                }
+
+                if (_selectContext == null)
+                {
+                    return;
+                }
+
+                var selectionBox = GetSelectionBox(_selectContext.InitialCoords, GetCoords(args), GetCoordBounds(), _selectionBoxInflateSize);
+
+                foreach (var keyContainer in _selectContext.Keys.Where(x => selectionBox.Contains(x.Bounds)))
+                {
+                    keyContainer.Select();
+                }
             }
-
-            if (_selectContext == null)
+            finally
             {
-                return;
-            }
-
-            var selectionBox = GetSelectionBox(_selectContext.InitialCoords, GetCoords(args), GetCoordBounds(), _selectionBoxInflateSize);
-
-            foreach (var keyContainer in _selectContext.Keys.Where(x => selectionBox.Contains(x.Bounds)))
-            {
-                keyContainer.Select();
+                OnSelectingKeys(false);
             }
         }
 
         private void SelectAll()
         {
-            foreach (var keyContainer in GetKeyContainers())
+            OnSelectingKeys(true);
+            try
             {
-                keyContainer.Select();
+                foreach (var keyContainer in GetKeyContainers())
+                {
+                    keyContainer.Select();
+                }
+            }
+            finally
+            {
+                OnSelectingKeys(false);
             }
         }
 
         private void UnselectAll()
         {
-            foreach (var keyContainer in GetKeyContainers())
+            OnSelectingKeys(true);
+            try
             {
-                keyContainer.Unselect();
+                foreach (var keyContainer in GetKeyContainers())
+                {
+                    keyContainer.Unselect();
+                }
+            }
+            finally
+            {
+                OnSelectingKeys(false);
             }
         }
 
@@ -663,6 +704,14 @@ namespace Rekog.App.View
                 plateContainerPosition.Y - (platePosition.Y * scale + matrix.OffsetY));
 
             return (plateContainerBounds, plateBounds, plateOffset);
+        }
+
+        private void OnSelectingKeys(bool selectingKeys)
+        {
+            if (SelectingKeys is { } command && command.CanExecute(selectingKeys))
+            {
+                command.Execute(selectingKeys);
+            }
         }
 
         private class SelectContext

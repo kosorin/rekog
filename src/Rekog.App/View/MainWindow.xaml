@@ -23,7 +23,8 @@
         <v:BoardView x:Name="Board"
                      DataContext="{Binding Board}"
                      Grid.Column="0"
-                     Grid.ColumnSpan="2" />
+                     Grid.ColumnSpan="2"
+                     SelectingKeys="{Binding SelectingKeysCommand}" />
         <ui:ThemeShadowChrome Grid.Column="0"
                               Margin="8,16"
                               HorizontalAlignment="Right"
