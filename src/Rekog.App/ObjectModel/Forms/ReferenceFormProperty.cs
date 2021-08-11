@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using Rekog.App.Model;
 
@@ -9,8 +8,8 @@ namespace Rekog.App.ObjectModel.Forms
         where TModel : ModelBase
         where T : class
     {
-        public ReferenceFormProperty(ICollection<TModel> models, Expression<Func<TModel, T>> propertySelector)
-            : base(models, propertySelector!, false)
+        public ReferenceFormProperty(IForm<TModel> form, Expression<Func<TModel, T>> propertySelector)
+            : base(form, propertySelector!, false)
         {
         }
     }

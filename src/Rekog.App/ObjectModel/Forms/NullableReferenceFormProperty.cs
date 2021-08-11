@@ -12,30 +12,28 @@ namespace Rekog.App.ObjectModel.Forms
         private readonly FormPropertyDescriptor<TModel, T?> _descriptor;
         private readonly bool _allowNull;
 
-        public NullableReferenceFormProperty(ICollection<TModel> models, Expression<Func<TModel, T?>> propertySelector)
-            : this(models, propertySelector, true)
+        public NullableReferenceFormProperty(IForm<TModel> form, Expression<Func<TModel, T?>> propertySelector)
+            : this(form, propertySelector, true)
         {
         }
 
-        protected NullableReferenceFormProperty(ICollection<TModel> models, Expression<Func<TModel, T?>> propertySelector, bool allowNull)
-            : base(models)
+        protected NullableReferenceFormProperty(IForm<TModel> form, Expression<Func<TModel, T?>> propertySelector, bool allowNull)
+            : base(form)
         {
             _allowNull = allowNull;
             _descriptor = new FormPropertyDescriptor<TModel, T?>(propertySelector, false);
-
-            Initialize();
         }
 
-        protected override (bool isSet, T? value) GetValue()
+        protected override (bool isSet, T? value) GetValue(IReadOnlyCollection<TModel> models)
         {
-            return _descriptor.GetValue(Models);
+            return _descriptor.GetValue(models);
         }
 
-        protected override bool TrySetValue(T? value)
+        protected override bool TrySetValue(IReadOnlyCollection<TModel> models, T? value)
         {
             if (_allowNull || value != null)
             {
-                _descriptor.SetValue(Models, value);
+                _descriptor.SetValue(models, value);
                 return true;
             }
             else

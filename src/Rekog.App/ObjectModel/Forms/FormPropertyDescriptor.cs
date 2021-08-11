@@ -26,13 +26,13 @@ namespace Rekog.App.ObjectModel.Forms
 
             Name = $"{typeof(TModel).Name}:{property.Name}";
         }
-        
+
         // For debug purpose
         // ReSharper disable once MemberCanBePrivate.Global
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public string Name { get; }
 
-        public (bool isSet, T? value) GetValue(ICollection<TModel> models)
+        public (bool isSet, T? value) GetValue(IReadOnlyCollection<TModel> models)
         {
             if (models.Count == 0)
             {
@@ -49,7 +49,7 @@ namespace Rekog.App.ObjectModel.Forms
             return (false, default);
         }
 
-        public void SetValue(ICollection<TModel> models, T? value)
+        public void SetValue(IReadOnlyCollection<TModel> models, T? value)
         {
             foreach (var model in models)
             {

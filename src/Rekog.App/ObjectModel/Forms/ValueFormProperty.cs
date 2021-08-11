@@ -11,24 +11,22 @@ namespace Rekog.App.ObjectModel.Forms
     {
         private readonly FormPropertyDescriptor<TModel, T> _descriptor;
 
-        public ValueFormProperty(ICollection<TModel> models, Expression<Func<TModel, T>> propertySelector)
-            : base(models)
+        public ValueFormProperty(IForm<TModel> form, Expression<Func<TModel, T>> propertySelector)
+            : base(form)
         {
             _descriptor = new FormPropertyDescriptor<TModel, T>(propertySelector, true);
-
-            Initialize();
         }
 
-        protected override (bool isSet, T? value) GetValue()
+        protected override (bool isSet, T? value) GetValue(IReadOnlyCollection<TModel> models)
         {
-            return _descriptor.GetValue(Models);
+            return _descriptor.GetValue(models);
         }
 
-        protected override bool TrySetValue(T? value)
+        protected override bool TrySetValue(IReadOnlyCollection<TModel> models, T? value)
         {
             if (value.HasValue)
             {
-                _descriptor.SetValue(Models, value.Value);
+                _descriptor.SetValue(models, value.Value);
                 return true;
             }
             else

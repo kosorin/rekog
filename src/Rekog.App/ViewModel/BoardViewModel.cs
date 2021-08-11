@@ -17,9 +17,6 @@ namespace Rekog.App.ViewModel
 
         private int? _selectingKeysCounter;
 
-        private KeyFormViewModel _keyForm;
-        private LegendFormViewModel _legendForm;
-
         private ObservableObjectCollection<KeyViewModel> _keys = new ObservableObjectCollection<KeyViewModel>();
         private Thickness _canvasOffset;
         private Size _canvasSize;
@@ -35,24 +32,14 @@ namespace Rekog.App.ViewModel
 
             UpdateAll();
 
-            Form = new BoardFormViewModel(Model);
-            _keyForm = new KeyFormViewModel();
-            _legendForm = new LegendFormViewModel();
+            Form.Set(Model);
         }
 
-        public BoardFormViewModel Form { get; }
+        public BoardFormViewModel Form { get; } = new BoardFormViewModel();
 
-        public KeyFormViewModel KeyForm
-        {
-            get => _keyForm;
-            private set => Set(ref _keyForm, value);
-        }
+        public KeyFormViewModel KeyForm { get; } = new KeyFormViewModel();
 
-        public LegendFormViewModel LegendForm
-        {
-            get => _legendForm;
-            private set => Set(ref _legendForm, value);
-        }
+        public LegendFormViewModel LegendForm { get; } = new LegendFormViewModel();
 
         public DelegateCommand<NewKeyTemplate> AddKeyCommand { get; }
 
@@ -214,8 +201,8 @@ namespace Rekog.App.ViewModel
                 return;
             }
 
-            KeyForm = new KeyFormViewModel(GetSelectedKeyModels().ToArray());
-            LegendForm = new LegendFormViewModel(GetSelectedKeyModels().Select(x => x.Legends.FirstOrDefault()).NotNull().ToArray());
+            KeyForm.Set(GetSelectedKeyModels());
+            LegendForm.Set(GetSelectedKeyModels().Select(x => x.Legends.FirstOrDefault()).NotNull());
 
             DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
 

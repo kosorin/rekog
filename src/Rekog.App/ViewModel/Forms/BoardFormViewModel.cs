@@ -1,24 +1,30 @@
+using System.Collections.Generic;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel.Forms;
 
 namespace Rekog.App.ViewModel.Forms
 {
-    public class BoardFormViewModel : FormViewModel
+    public class BoardFormViewModel : FormViewModel<BoardModel>
     {
-        public BoardFormViewModel(params BoardModel[] models) : base(models)
+        public BoardFormViewModel()
         {
-            Name = FormProperty.Reference(models, x => x.Name);
-            Author = FormProperty.Reference(models, x => x.Author);
-            Notes = FormProperty.Reference(models, x => x.Notes);
-            Background = FormProperty.Reference(models, x => x.Background);
+            Properties = new FormProperty<BoardModel>[]
+            {
+                Name = FormProperty<BoardModel>.Reference(this, x => x.Name),
+                Author = FormProperty<BoardModel>.Reference(this, x => x.Author),
+                Notes = FormProperty<BoardModel>.Reference(this, x => x.Notes),
+                Background = FormProperty<BoardModel>.Reference(this, x => x.Background),
+            };
         }
 
-        public IFormProperty<string?> Name { get; }
+        public override IReadOnlyCollection<FormProperty<BoardModel>> Properties { get; }
 
-        public IFormProperty<string?> Author { get; }
+        public FormProperty<BoardModel, string?> Name { get; }
 
-        public IFormProperty<string?> Notes { get; }
+        public FormProperty<BoardModel, string?> Author { get; }
 
-        public IFormProperty<string?> Background { get; }
+        public FormProperty<BoardModel, string?> Notes { get; }
+
+        public FormProperty<BoardModel, string?> Background { get; }
     }
 }

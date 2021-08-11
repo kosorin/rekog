@@ -5,47 +5,52 @@ using Rekog.App.Model;
 
 namespace Rekog.App.ObjectModel.Forms
 {
-    public abstract class FormProperty : ObservableObject
+    public abstract class FormProperty<TModel> : ObservableObject
+        where TModel : ModelBase
     {
-        public static IFormProperty<T?> Value<TModel, T>(ICollection<TModel> models, Expression<Func<TModel, T>> propertySelector)
-            where TModel : ModelBase
+        protected FormProperty(IForm<TModel> form)
+        {
+            Form = form;
+        }
+
+        public IForm<TModel> Form { get; }
+
+        public abstract void Update();
+
+        public static FormProperty<TModel, T?> Value<T>(IForm<TModel> form, Expression<Func<TModel, T>> propertySelector)
             where T : struct
         {
-            return new ValueFormProperty<TModel, T>(models, propertySelector);
+            return new ValueFormProperty<TModel, T>(form, propertySelector);
         }
 
-        public static IFormProperty<T?> NullableValue<TModel, T>(ICollection<TModel> models, Expression<Func<TModel, T?>> propertySelector)
-            where TModel : ModelBase
+        public static FormProperty<TModel, T?> NullableValue<T>(IForm<TModel> form, Expression<Func<TModel, T?>> propertySelector)
         {
-            return new NullableValueFormProperty<TModel, T?>(models, propertySelector);
+            return new NullableValueFormProperty<TModel, T?>(form, propertySelector);
         }
 
-        public static IFormProperty<T?> Reference<TModel, T>(ICollection<TModel> models, Expression<Func<TModel, T>> propertySelector)
-            where TModel : ModelBase
+        public static FormProperty<TModel, T?> Reference<T>(IForm<TModel> form, Expression<Func<TModel, T>> propertySelector)
             where T : class
         {
-            return new ReferenceFormProperty<TModel, T>(models, propertySelector);
+            return new ReferenceFormProperty<TModel, T>(form, propertySelector);
         }
 
-        public static IFormProperty<T?> NullableReference<TModel, T>(ICollection<TModel> models, Expression<Func<TModel, T?>> propertySelector)
-            where TModel : ModelBase
+        public static FormProperty<TModel, T?> NullableReference<T>(IForm<TModel> form, Expression<Func<TModel, T?>> propertySelector)
             where T : class?
         {
-            return new NullableReferenceFormProperty<TModel, T?>(models, propertySelector);
+            return new NullableReferenceFormProperty<TModel, T?>(form, propertySelector);
         }
     }
 
-    public abstract class FormProperty<TModel, T> : FormProperty, IFormProperty<T?>
+    public abstract class FormProperty<TModel, T> : FormProperty<TModel>
+        where TModel : ModelBase
     {
         private bool _isSet;
         private T? _value;
 
-        protected FormProperty(ICollection<TModel> models)
+        protected FormProperty(IForm<TModel> form)
+            : base(form)
         {
-            Models = models;
         }
-
-        public ICollection<TModel> Models { get; }
 
         public bool IsSet
         {
@@ -60,22 +65,21 @@ namespace Rekog.App.ObjectModel.Forms
             {
                 if (Set(ref _value, value))
                 {
-                    IsSet = TrySetValue(value);
+                    IsSet = TrySetValue(Form.Models, value);
                 }
             }
         }
 
-        protected void Initialize()
+        public sealed override void Update()
         {
-            // Set values to fields instead of properties to prevent side effects
-            var (isSet, value) = GetValue();
-            _isSet = isSet;
-            _value = isSet ? value : default;
+            var (isSet, value) = GetValue(Form.Models);
+            IsSet = isSet;
+            Value = isSet ? value : default;
         }
 
         // Warning: This method returns not null value for "Value" property even if isSet is false
-        protected abstract (bool isSet, T? value) GetValue();
+        protected abstract (bool isSet, T? value) GetValue(IReadOnlyCollection<TModel> models);
 
-        protected abstract bool TrySetValue(T? value);
+        protected abstract bool TrySetValue(IReadOnlyCollection<TModel> models, T? value);
     }
 }

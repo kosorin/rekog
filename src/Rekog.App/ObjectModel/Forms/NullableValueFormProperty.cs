@@ -10,8 +10,8 @@ namespace Rekog.App.ObjectModel.Forms
     {
         private readonly FormPropertyDescriptor<TModel, T> _descriptor;
 
-        public NullableValueFormProperty(ICollection<TModel> models, Expression<Func<TModel, T>> propertySelector)
-            : base(models)
+        public NullableValueFormProperty(IForm<TModel> form, Expression<Func<TModel, T>> propertySelector)
+            : base(form)
         {
             if (Nullable.GetUnderlyingType(typeof(T)) == null)
             {
@@ -19,18 +19,16 @@ namespace Rekog.App.ObjectModel.Forms
             }
 
             _descriptor = new FormPropertyDescriptor<TModel, T>(propertySelector, true);
-
-            Initialize();
         }
 
-        protected override (bool isSet, T? value) GetValue()
+        protected override (bool isSet, T? value) GetValue(IReadOnlyCollection<TModel> models)
         {
-            return _descriptor.GetValue(Models);
+            return _descriptor.GetValue(models);
         }
 
-        protected override bool TrySetValue(T? value)
+        protected override bool TrySetValue(IReadOnlyCollection<TModel> models, T? value)
         {
-            _descriptor.SetValue(Models, value);
+            _descriptor.SetValue(models, value);
             return true;
         }
     }

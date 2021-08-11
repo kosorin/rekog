@@ -1,90 +1,96 @@
+using System.Collections.Generic;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel.Forms;
 
 namespace Rekog.App.ViewModel.Forms
 {
-    public class KeyFormViewModel : FormViewModel
+    public class KeyFormViewModel : FormViewModel<KeyModel>
     {
-        public KeyFormViewModel(params KeyModel[] models) : base(models)
+        public KeyFormViewModel()
         {
-            X = FormProperty.Value(models, x => x.X);
-            Y = FormProperty.Value(models, x => x.Y);
-            RotationAngle = FormProperty.Value(models, x => x.RotationAngle);
-            RotationOriginX = FormProperty.Value(models, x => x.RotationOriginX);
-            RotationOriginY = FormProperty.Value(models, x => x.RotationOriginY);
-            Width = FormProperty.Value(models, x => x.Width);
-            Height = FormProperty.Value(models, x => x.Height);
-            UseShape = FormProperty.Value(models, x => x.UseShape);
-            Shape = FormProperty.NullableReference(models, x => x.Shape);
-            IsStepped = FormProperty.Value(models, x => x.IsStepped);
-            SteppedOffsetX = FormProperty.Value(models, x => x.SteppedOffsetX);
-            SteppedOffsetY = FormProperty.Value(models, x => x.SteppedOffsetY);
-            SteppedWidth = FormProperty.Value(models, x => x.SteppedWidth);
-            SteppedHeight = FormProperty.Value(models, x => x.SteppedHeight);
-            UseSteppedShape = FormProperty.Value(models, x => x.UseSteppedShape);
-            SteppedShape = FormProperty.NullableReference(models, x => x.SteppedShape);
-            Color = FormProperty.Reference(models, x => x.Color);
-            Roundness = FormProperty.Value(models, x => x.Roundness);
-            RoundConcaveCorner = FormProperty.Value(models, x => x.RoundConcaveCorner);
-            Margin = FormProperty.Value(models, x => x.Margin);
-            Padding = FormProperty.Value(models, x => x.Padding);
-            InnerPadding = FormProperty.Value(models, x => x.InnerPadding);
-            InnerVerticalOffset = FormProperty.Value(models, x => x.InnerVerticalOffset);
-            IsHoming = FormProperty.Value(models, x => x.IsHoming);
-            IsGhosted = FormProperty.Value(models, x => x.IsGhosted);
-            IsDecal = FormProperty.Value(models, x => x.IsDecal);
+            Properties = new FormProperty<KeyModel>[]
+            {
+                X = FormProperty<KeyModel>.Value(this, x => x.X),
+                Y = FormProperty<KeyModel>.Value(this, x => x.Y),
+                RotationAngle = FormProperty<KeyModel>.Value(this, x => x.RotationAngle),
+                RotationOriginX = FormProperty<KeyModel>.Value(this, x => x.RotationOriginX),
+                RotationOriginY = FormProperty<KeyModel>.Value(this, x => x.RotationOriginY),
+                Width = FormProperty<KeyModel>.Value(this, x => x.Width),
+                Height = FormProperty<KeyModel>.Value(this, x => x.Height),
+                UseShape = FormProperty<KeyModel>.Value(this, x => x.UseShape),
+                Shape = FormProperty<KeyModel>.NullableReference(this, x => x.Shape),
+                IsStepped = FormProperty<KeyModel>.Value(this, x => x.IsStepped),
+                SteppedOffsetX = FormProperty<KeyModel>.Value(this, x => x.SteppedOffsetX),
+                SteppedOffsetY = FormProperty<KeyModel>.Value(this, x => x.SteppedOffsetY),
+                SteppedWidth = FormProperty<KeyModel>.Value(this, x => x.SteppedWidth),
+                SteppedHeight = FormProperty<KeyModel>.Value(this, x => x.SteppedHeight),
+                UseSteppedShape = FormProperty<KeyModel>.Value(this, x => x.UseSteppedShape),
+                SteppedShape = FormProperty<KeyModel>.NullableReference(this, x => x.SteppedShape),
+                Color = FormProperty<KeyModel>.Reference(this, x => x.Color),
+                Roundness = FormProperty<KeyModel>.Value(this, x => x.Roundness),
+                RoundConcaveCorner = FormProperty<KeyModel>.Value(this, x => x.RoundConcaveCorner),
+                Margin = FormProperty<KeyModel>.Value(this, x => x.Margin),
+                Padding = FormProperty<KeyModel>.Value(this, x => x.Padding),
+                InnerPadding = FormProperty<KeyModel>.Value(this, x => x.InnerPadding),
+                InnerVerticalOffset = FormProperty<KeyModel>.Value(this, x => x.InnerVerticalOffset),
+                IsHoming = FormProperty<KeyModel>.Value(this, x => x.IsHoming),
+                IsGhosted = FormProperty<KeyModel>.Value(this, x => x.IsGhosted),
+                IsDecal = FormProperty<KeyModel>.Value(this, x => x.IsDecal),
+            };
         }
 
-        public IFormProperty<double?> X { get; }
+        public override IReadOnlyCollection<FormProperty<KeyModel>> Properties { get; }
 
-        public IFormProperty<double?> Y { get; }
+        public FormProperty<KeyModel, double?> X { get; }
 
-        public IFormProperty<double?> RotationAngle { get; }
+        public FormProperty<KeyModel, double?> Y { get; }
 
-        public IFormProperty<double?> RotationOriginX { get; }
+        public FormProperty<KeyModel, double?> RotationAngle { get; }
 
-        public IFormProperty<double?> RotationOriginY { get; }
+        public FormProperty<KeyModel, double?> RotationOriginX { get; }
 
-        public IFormProperty<double?> Width { get; }
+        public FormProperty<KeyModel, double?> RotationOriginY { get; }
 
-        public IFormProperty<double?> Height { get; }
+        public FormProperty<KeyModel, double?> Width { get; }
 
-        public IFormProperty<bool?> UseShape { get; }
-        
-        public IFormProperty<string?> Shape { get; }
-        
-        public IFormProperty<bool?> IsStepped { get; }
+        public FormProperty<KeyModel, double?> Height { get; }
 
-        public IFormProperty<double?> SteppedOffsetX { get; }
+        public FormProperty<KeyModel, bool?> UseShape { get; }
 
-        public IFormProperty<double?> SteppedOffsetY { get; }
+        public FormProperty<KeyModel, string?> Shape { get; }
 
-        public IFormProperty<double?> SteppedWidth { get; }
+        public FormProperty<KeyModel, bool?> IsStepped { get; }
 
-        public IFormProperty<double?> SteppedHeight { get; }
+        public FormProperty<KeyModel, double?> SteppedOffsetX { get; }
 
-        public IFormProperty<bool?> UseSteppedShape { get; }
-        
-        public IFormProperty<string?> SteppedShape { get; }
+        public FormProperty<KeyModel, double?> SteppedOffsetY { get; }
 
-        public IFormProperty<string?> Color { get; }
+        public FormProperty<KeyModel, double?> SteppedWidth { get; }
 
-        public IFormProperty<double?> Roundness { get; }
+        public FormProperty<KeyModel, double?> SteppedHeight { get; }
 
-        public IFormProperty<bool?> RoundConcaveCorner { get; }
+        public FormProperty<KeyModel, bool?> UseSteppedShape { get; }
 
-        public IFormProperty<double?> Margin { get; }
+        public FormProperty<KeyModel, string?> SteppedShape { get; }
 
-        public IFormProperty<double?> Padding { get; }
+        public FormProperty<KeyModel, string?> Color { get; }
 
-        public IFormProperty<double?> InnerPadding { get; }
+        public FormProperty<KeyModel, double?> Roundness { get; }
 
-        public IFormProperty<double?> InnerVerticalOffset { get; }
+        public FormProperty<KeyModel, bool?> RoundConcaveCorner { get; }
 
-        public IFormProperty<bool?> IsHoming { get; }
+        public FormProperty<KeyModel, double?> Margin { get; }
 
-        public IFormProperty<bool?> IsGhosted { get; }
+        public FormProperty<KeyModel, double?> Padding { get; }
 
-        public IFormProperty<bool?> IsDecal { get; }
+        public FormProperty<KeyModel, double?> InnerPadding { get; }
+
+        public FormProperty<KeyModel, double?> InnerVerticalOffset { get; }
+
+        public FormProperty<KeyModel, bool?> IsHoming { get; }
+
+        public FormProperty<KeyModel, bool?> IsGhosted { get; }
+
+        public FormProperty<KeyModel, bool?> IsDecal { get; }
     }
 }
