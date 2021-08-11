@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 using Rekog.App.Model.Kle;
@@ -40,43 +39,43 @@ namespace Rekog.App.Model
         public double X
         {
             get => _x;
-            set => Set(ref _x, Math.Round(value, Precision));
+            set => Set(ref _x, value);
         }
 
         public double Y
         {
             get => _y;
-            set => Set(ref _y, Math.Round(value, Precision));
+            set => Set(ref _y, value);
         }
 
         public double RotationAngle
         {
             get => _rotationAngle;
-            set => Set(ref _rotationAngle, Math.Round(value, Precision));
+            set => Set(ref _rotationAngle, value);
         }
 
         public double RotationOriginX
         {
             get => _rotationOriginX;
-            set => Set(ref _rotationOriginX, Math.Round(value, Precision));
+            set => Set(ref _rotationOriginX, value);
         }
 
         public double RotationOriginY
         {
             get => _rotationOriginY;
-            set => Set(ref _rotationOriginY, Math.Round(value, Precision));
+            set => Set(ref _rotationOriginY, value);
         }
 
         public double Width
         {
             get => _width;
-            set => Set(ref _width, Math.Round(value, Precision));
+            set => Set(ref _width, value);
         }
 
         public double Height
         {
             get => _height;
-            set => Set(ref _height, Math.Round(value, Precision));
+            set => Set(ref _height, value);
         }
 
         public bool UseShape
@@ -100,7 +99,7 @@ namespace Rekog.App.Model
         public double SteppedOffsetX
         {
             get => _steppedOffsetX;
-            set => Set(ref _steppedOffsetX, Math.Round(value, Precision));
+            set => Set(ref _steppedOffsetX, value);
         }
 
         public double SteppedOffsetY
@@ -112,7 +111,7 @@ namespace Rekog.App.Model
         public double SteppedWidth
         {
             get => _steppedWidth;
-            set => Set(ref _steppedWidth, Math.Round(value, Precision));
+            set => Set(ref _steppedWidth, value);
         }
 
         public double SteppedHeight
@@ -142,7 +141,7 @@ namespace Rekog.App.Model
         public double Roundness
         {
             get => _roundness;
-            set => Set(ref _roundness, Math.Round(value, HighPrecision));
+            set => Set(ref _roundness, value);
         }
 
         // TODO: Consider removing RoundConcaveCorner property
@@ -155,25 +154,25 @@ namespace Rekog.App.Model
         public double Margin
         {
             get => _margin;
-            set => Set(ref _margin, Math.Round(value, HighPrecision));
+            set => Set(ref _margin, value);
         }
 
         public double Padding
         {
             get => _padding;
-            set => Set(ref _padding, Math.Round(value, HighPrecision));
+            set => Set(ref _padding, value);
         }
 
         public double InnerPadding
         {
             get => _innerPadding;
-            set => Set(ref _innerPadding, Math.Round(value, HighPrecision));
+            set => Set(ref _innerPadding, value);
         }
 
         public double InnerVerticalOffset
         {
             get => _innerVerticalOffset;
-            set => Set(ref _innerVerticalOffset, Math.Round(value, HighPrecision));
+            set => Set(ref _innerVerticalOffset, value);
         }
 
         public bool IsHoming

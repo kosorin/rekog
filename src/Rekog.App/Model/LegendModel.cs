@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Rekog.App.Model
+﻿namespace Rekog.App.Model
 {
     public class LegendModel : ModelBase
     {
@@ -31,25 +29,25 @@ namespace Rekog.App.Model
         public double Left
         {
             get => _left;
-            set => Set(ref _left, Math.Round(value, HighPrecision));
+            set => Set(ref _left, value);
         }
 
         public double Top
         {
             get => _top;
-            set => Set(ref _top, Math.Round(value, HighPrecision));
+            set => Set(ref _top, value);
         }
 
         public double Right
         {
             get => _right;
-            set => Set(ref _right, Math.Round(value, HighPrecision));
+            set => Set(ref _right, value);
         }
 
         public double Bottom
         {
             get => _bottom;
-            set => Set(ref _bottom, Math.Round(value, HighPrecision));
+            set => Set(ref _bottom, value);
         }
 
         public string Font
@@ -73,7 +71,7 @@ namespace Rekog.App.Model
         public double Size
         {
             get => _size;
-            set => Set(ref _size, Math.Round(value, Precision));
+            set => Set(ref _size, value);
         }
 
         public string Color
