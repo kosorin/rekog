@@ -95,6 +95,7 @@ namespace Rekog.App.View
         {
             var list = new List<KeyContainer>();
 
+            // TODO: Cache items
             foreach (var item in CanvasContainer.Items)
             {
                 var container = CanvasContainer.ItemContainerGenerator.ContainerFromItem(item);
@@ -498,14 +499,14 @@ namespace Rekog.App.View
             }
         }
 
-        
+
         private Rect GetSelectionBox(Point start, Point end, Rect bounds, double inflate = 0)
         {
             var selectionBox = new Rect(start, end);
 
             selectionBox.Intersect(bounds);
 
-            // TODO: Fix bug when selectionBox is Empty after intersect
+            // BUG: Fix bug when selectionBox is Empty after intersect
 
             if (inflate != 0)
             {
