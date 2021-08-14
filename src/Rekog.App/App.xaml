@@ -15,6 +15,9 @@
 
             <clr:Double x:Key="UnitSize">96</clr:Double>
 
+            <!--  ReSharper disable once MarkupTextTypo  -->
+            <FontFamily x:Key="MonospaceFontFamily">Lucida Console</FontFamily>
+
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <cx:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter" />
             <cx:NotNullToBooleanConverter x:Key="NotNullToBooleanConverter" />
