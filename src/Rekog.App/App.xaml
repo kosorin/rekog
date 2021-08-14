@@ -32,6 +32,7 @@
             <cx:ScaleConverter x:Key="ScaleConverter" Scale="{StaticResource UnitSize}" />
             <cx:StringToFontFamilyConverter x:Key="StringToFontFamilyConverter" />
             <cx:NullableBooleanConverter x:Key="NullableBooleanConverter" />
+            <cx:ObjectToListConverter x:Key="ObjectToListConverter" />
 
         </ResourceDictionary>
     </Application.Resources>
