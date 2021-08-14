@@ -44,6 +44,7 @@ namespace Rekog.App.ObjectModel.Forms
     public abstract class FormProperty<TModel, T> : FormProperty<TModel>
         where TModel : ModelBase
     {
+        private bool _isUpdating;
         private bool _isSet;
         private T? _value;
 
@@ -65,16 +66,28 @@ namespace Rekog.App.ObjectModel.Forms
             {
                 if (Set(ref _value, value))
                 {
-                    IsSet = TrySetValue(Form.Models, value);
+                    if (!_isUpdating)
+                    {
+                        IsSet = TrySetValue(Form.Models, value);
+                    }
                 }
             }
         }
 
         public sealed override void Update()
         {
-            var (isSet, value) = GetValue(Form.Models);
-            IsSet = isSet;
-            Value = isSet ? value : default;
+            try
+            {
+                _isUpdating = true;
+
+                var (isSet, value) = GetValue(Form.Models);
+                IsSet = isSet;
+                Value = isSet ? value : default;
+            }
+            finally
+            {
+                _isUpdating = false;
+            }
         }
 
         // Warning: This method returns not null value for "Value" property even if isSet is false
