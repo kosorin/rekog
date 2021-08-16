@@ -29,10 +29,7 @@ namespace Rekog.App.ObjectModel.Forms
                 _descriptor.SetValue(models, value.Value);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 }

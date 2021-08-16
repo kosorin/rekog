@@ -60,7 +60,7 @@ namespace Rekog.App.Core
             out double h, out double l, out double s)
         {
             const double eps = 0.00001;
-            
+
             var doubleR = r / 255d;
             var doubleG = g / 255d;
             var doubleB = b / 255d;

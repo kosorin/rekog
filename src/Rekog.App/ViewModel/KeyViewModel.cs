@@ -32,6 +32,9 @@ namespace Rekog.App.ViewModel
             UpdateAll();
         }
 
+        /// <remarks>
+        /// Don't set this property directly. Use <see cref="BoardViewModel.SelectedKeys" /> instead.
+        /// </remarks>
         public bool IsSelected
         {
             get => _isSelected;
@@ -89,7 +92,7 @@ namespace Rekog.App.ViewModel
         public ObservableObjectCollection<LegendViewModel> Legends
         {
             get => _legends;
-            private set => SetCollection(ref _legends, value);
+            private set => SetCollection<ObservableObjectCollection<LegendViewModel>, LegendViewModel>(ref _legends, value);
         }
 
         protected override void OnModelPropertyChanging(object? sender, PropertyChangingEventArgs args)
@@ -99,7 +102,7 @@ namespace Rekog.App.ViewModel
             switch (args.PropertyName)
             {
                 case nameof(KeyModel.Legends):
-                    Model.Legends.CollectionItemChanged -= ModelLegends_CollectionItemChanged;
+                    UnsubscribeModelLegends();
                     break;
             }
         }
@@ -138,6 +141,7 @@ namespace Rekog.App.ViewModel
                     break;
                 case nameof(KeyModel.Legends):
                     UpdateLegends();
+                    SubscribeModelLegends();
                     break;
             }
         }
@@ -147,6 +151,7 @@ namespace Rekog.App.ViewModel
             UpdateLayout();
             UpdateColor();
             UpdateLegends();
+            SubscribeModelLegends();
         }
 
         private void UpdateLayout()
@@ -183,12 +188,21 @@ namespace Rekog.App.ViewModel
         private void UpdateLegends()
         {
             Legends = new ObservableObjectCollection<LegendViewModel>(Model.Legends.Select(x => new LegendViewModel(x)));
+        }
+
+        private void SubscribeModelLegends()
+        {
             Model.Legends.CollectionItemChanged += ModelLegends_CollectionItemChanged;
         }
 
-        private void ModelLegends_CollectionItemChanged(IObservableObjectCollection collection, CollectionItemChangedEventArgs args)
+        private void UnsubscribeModelLegends()
         {
-            foreach (LegendModel oldLegendModel in args.OldItems)
+            Model.Legends.CollectionItemChanged -= ModelLegends_CollectionItemChanged;
+        }
+
+        private void ModelLegends_CollectionItemChanged(IObservableObjectCollection<LegendModel> collection, CollectionItemChangedEventArgs<LegendModel> args)
+        {
+            foreach (var oldLegendModel in args.OldItems)
             {
                 for (var i = Legends.Count - 1; i >= 0; i--)
                 {
@@ -199,7 +213,7 @@ namespace Rekog.App.ViewModel
                 }
             }
 
-            foreach (LegendModel newLegendModel in args.NewItems)
+            foreach (var newLegendModel in args.NewItems)
             {
                 Legends.Add(new LegendViewModel(newLegendModel));
             }

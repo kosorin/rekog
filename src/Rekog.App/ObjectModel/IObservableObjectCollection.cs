@@ -1,13 +1,14 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
 namespace Rekog.App.ObjectModel
 {
-    public interface IObservableObjectCollection : ICollection, INotifyCollectionChanged, INotifyPropertyChanged
+    public interface IObservableObjectCollection<T> : IList<T>, INotifyCollectionChanged, INotifyPropertyChanged
+        where T : ObservableObject
     {
-        event CollectionItemChangedEventHandler? CollectionItemChanged;
+        event CollectionItemChangedEventHandler<T>? CollectionItemChanged;
 
-        event CollectionItemPropertyChangedEventHandler? CollectionItemPropertyChanged;
+        event CollectionItemPropertyChangedEventHandler<T>? CollectionItemPropertyChanged;
     }
 }

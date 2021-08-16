@@ -9,8 +9,8 @@ namespace Rekog.App.Converters
     {
         public object Convert(object?[] values, Type targetType, object? parameter, CultureInfo culture)
         {
-            return values.Length > 0 
-                && values.First() is Enum valueToCheck 
+            return values.Length > 0
+                && values.First() is Enum valueToCheck
                 && values.Skip(1).Contains(valueToCheck);
         }
 

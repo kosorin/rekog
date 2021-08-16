@@ -6,9 +6,12 @@ using System.Linq;
 
 namespace Rekog.App.ObjectModel
 {
-    public class ObservableObjectCollection<T> : ObservableCollection<T>, IObservableObjectCollection
+    public class ObservableObjectCollection<T> : ObservableCollection<T>, IObservableObjectCollection<T>
         where T : ObservableObject
     {
+        // ReSharper disable once StaticMemberInGenericType
+        private static readonly IComparer<int> DescendingIndexComparer = Comparer<int>.Create((a, b) => b.CompareTo(a));
+
         public ObservableObjectCollection()
         {
         }
@@ -16,6 +19,123 @@ namespace Rekog.App.ObjectModel
         public ObservableObjectCollection(IEnumerable<T> collection) : base(collection)
         {
             Subscribe(Items.ToArray());
+        }
+
+        public void ReplaceUsingClear(IEnumerable<T> items)
+        {
+            var oldItems = Items.ToArray();
+            var newItems = items.ToArray();
+
+            UnsubscribePropertyChanged(oldItems);
+
+            // Remove old
+            base.ClearItems();
+
+            // Add new
+            var newItemIndex = 0;
+            foreach (var newItem in newItems)
+            {
+                base.InsertItem(newItemIndex, newItem);
+                newItemIndex++;
+            }
+
+            OnCollectionItemChanged(new CollectionItemChangedEventArgs<T>(oldItems, newItems));
+            SubscribePropertyChanged(newItems);
+        }
+
+        public void ReplaceUsingMerge(IEnumerable<T> items)
+        {
+            items = items.ToList();
+
+            var oldItemsData = new SortedList<int, T>(DescendingIndexComparer);
+            foreach (var oldItem in Items.Except(items))
+            {
+                if (IndexOf(oldItem) is >= 0 and var oldItemIndex)
+                {
+                    oldItemsData.Add(oldItemIndex, oldItem);
+                }
+            }
+
+            var oldItems = oldItemsData.Values.ToArray();
+            var newItems = items.Except(Items).ToArray();
+
+            UnsubscribePropertyChanged(oldItems);
+
+            // Remove old
+            foreach (var oldItemIndex in oldItemsData.Keys)
+            {
+                base.RemoveItem(oldItemIndex);
+            }
+
+            // Add new
+            var newItemIndex = 0;
+            foreach (var newItem in newItems)
+            {
+                base.InsertItem(newItemIndex, newItem);
+                newItemIndex++;
+            }
+
+            OnCollectionItemChanged(new CollectionItemChangedEventArgs<T>(oldItems, newItems));
+            SubscribePropertyChanged(newItems);
+        }
+
+        public void MergeRange(IEnumerable<T> items)
+        {
+            var newItems = items.Except(Items).ToArray();
+
+            var newItemIndex = Count;
+            foreach (var newItem in newItems)
+            {
+                base.InsertItem(newItemIndex, newItem);
+                newItemIndex++;
+            }
+
+            Subscribe(newItems);
+        }
+
+        public void AddRange(IEnumerable<T> items)
+        {
+            var newItems = items.ToArray();
+
+            var newItemIndex = Count;
+            foreach (var newItem in newItems)
+            {
+                base.InsertItem(newItemIndex, newItem);
+                newItemIndex++;
+            }
+
+            Subscribe(newItems);
+        }
+
+        public void RemoveRange(IEnumerable<T> items)
+        {
+            var oldItemsData = new SortedList<int, T>(DescendingIndexComparer);
+            foreach (var item in items)
+            {
+                if (IndexOf(item) is >= 0 and var index)
+                {
+                    oldItemsData.Add(index, item);
+                }
+            }
+
+            var oldItems = oldItemsData.Values.ToArray();
+
+            BeginUnsubscribe(oldItems);
+
+            foreach (var oldItemIndex in oldItemsData.Keys)
+            {
+                base.RemoveItem(oldItemIndex);
+            }
+
+            EndUnsubscribe(oldItems);
+        }
+
+        public void Merge(T item)
+        {
+            if (!Contains(item))
+            {
+                Add(item);
+            }
         }
 
         protected override void InsertItem(int index, T item)
@@ -55,37 +175,47 @@ namespace Rekog.App.ObjectModel
             EndUnsubscribe(oldItems);
         }
 
-        protected virtual void OnCollectionItemPropertyChanged(object item, CollectionItemPropertyChangedEventArgs args)
-        {
-            CollectionItemPropertyChanged?.Invoke(item, args);
-        }
-
-        protected virtual void OnCollectionItemChanged(CollectionItemChangedEventArgs args)
+        private void OnCollectionItemChanged(CollectionItemChangedEventArgs<T> args)
         {
             CollectionItemChanged?.Invoke(this, args);
         }
 
+        private void OnCollectionItemPropertyChanged(T item, CollectionItemPropertyChangedEventArgs args)
+        {
+            CollectionItemPropertyChanged?.Invoke(item, args);
+        }
+
         private void Subscribe(T[] newItems)
         {
-            OnCollectionItemChanged(new CollectionItemChangedEventArgs(Array.Empty<T>(), newItems));
-            foreach (var item in newItems)
+            OnCollectionItemChanged(new CollectionItemChangedEventArgs<T>(Array.Empty<T>(), newItems));
+            SubscribePropertyChanged(newItems);
+        }
+
+        private void BeginUnsubscribe(T[] oldItems)
+        {
+            UnsubscribePropertyChanged(oldItems);
+        }
+
+        private void EndUnsubscribe(T[] oldItems)
+        {
+            OnCollectionItemChanged(new CollectionItemChangedEventArgs<T>(oldItems, Array.Empty<T>()));
+        }
+
+        private void SubscribePropertyChanged(T[] items)
+        {
+            foreach (var item in items)
             {
                 item.PropertyChanged -= Item_PropertyChanged;
                 item.PropertyChanged += Item_PropertyChanged;
             }
         }
 
-        private void BeginUnsubscribe(T[] oldItems)
+        private void UnsubscribePropertyChanged(T[] items)
         {
-            foreach (var item in oldItems)
+            foreach (var item in items)
             {
                 item.PropertyChanged -= Item_PropertyChanged;
             }
-        }
-
-        private void EndUnsubscribe(T[] oldItems)
-        {
-            OnCollectionItemChanged(new CollectionItemChangedEventArgs(oldItems, Array.Empty<T>()));
         }
 
         private void Item_PropertyChanged(object? sender, PropertyChangedEventArgs args)
@@ -96,8 +226,8 @@ namespace Rekog.App.ObjectModel
             }
         }
 
-        public event CollectionItemChangedEventHandler? CollectionItemChanged;
+        public event CollectionItemChangedEventHandler<T>? CollectionItemChanged;
 
-        public event CollectionItemPropertyChangedEventHandler? CollectionItemPropertyChanged;
+        public event CollectionItemPropertyChangedEventHandler<T>? CollectionItemPropertyChanged;
     }
 }

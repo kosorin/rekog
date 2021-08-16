@@ -10,15 +10,15 @@ namespace Rekog.App.Converters
     {
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            return value is bool v 
-                ? !v 
+            return value is bool v
+                ? !v
                 : DependencyProperty.UnsetValue;
         }
 
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            return value is bool v 
-                ? !v 
+            return value is bool v
+                ? !v
                 : DependencyProperty.UnsetValue;
         }
     }

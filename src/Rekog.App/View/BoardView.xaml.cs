@@ -1,35 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Rekog.App.Extensions;
+using Rekog.App.ViewModel;
 
 namespace Rekog.App.View
 {
     public partial class BoardView
     {
-        private static readonly DependencyProperty StateProperty =
-            DependencyProperty.Register(nameof(State), typeof(BoardViewState), typeof(BoardView), new PropertyMetadata(BoardViewState.None));
+        private static readonly DependencyPropertyKey CoordsPropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(Coords), typeof(Point), typeof(BoardView), new PropertyMetadata(default(Point)));
 
-        public static readonly DependencyProperty SelectingKeysProperty =
-            DependencyProperty.Register(nameof(SelectingKeys), typeof(ICommand), typeof(BoardView), new PropertyMetadata(null));
+        private static readonly DependencyPropertyKey StatePropertyKey =
+            DependencyProperty.RegisterReadOnly(nameof(State), typeof(BoardViewState), typeof(BoardView), new PropertyMetadata(BoardViewState.None));
 
-        public static readonly DependencyProperty CanvasOffsetProperty =
-            DependencyProperty.RegisterAttached("CanvasOffset", typeof(Thickness), typeof(BoardView), new PropertyMetadata(new Thickness()));
+        public static readonly DependencyProperty CoordsProperty = CoordsPropertyKey.DependencyProperty;
 
-        public static readonly DependencyProperty BoundsProperty =
-            DependencyProperty.RegisterAttached("Bounds", typeof(Rect), typeof(BoardView), new PropertyMetadata(new Rect()));
+        public static readonly DependencyProperty StateProperty = StatePropertyKey.DependencyProperty;
 
-        public static readonly DependencyProperty IsPreviewSelectedProperty =
-            DependencyProperty.RegisterAttached("IsPreviewSelected", typeof(bool), typeof(BoardView), new PropertyMetadata(false));
+        public static readonly DependencyProperty SelectionBoxInflateSizeProperty =
+            DependencyProperty.Register(nameof(SelectionBoxInflateSize), typeof(double), typeof(BoardView), new PropertyMetadata(0.25));
 
-        public static readonly DependencyProperty IsSelectedProperty =
-            DependencyProperty.RegisterAttached("IsSelected", typeof(bool), typeof(BoardView), new PropertyMetadata(false));
-
-        private readonly double _selectionBoxInflateSize = 0.25;
-
+        private Canvas? _canvas;
         private SelectContext? _selectContext;
         private DragContext? _dragContext;
 
@@ -38,62 +34,67 @@ namespace Rekog.App.View
             InitializeComponent();
         }
 
+        public BoardViewModel ViewModel => (BoardViewModel)DataContext;
+
+        public Point Coords
+        {
+            get => (Point)GetValue(CoordsProperty);
+            private set => SetValue(CoordsPropertyKey, value);
+        }
+
         public BoardViewState State
         {
             get => (BoardViewState)GetValue(StateProperty);
-            private set => SetValue(StateProperty, value);
+            private set => SetValue(StatePropertyKey, value);
         }
 
-        public ICommand? SelectingKeys
+        public double SelectionBoxInflateSize
         {
-            get => (ICommand?)GetValue(SelectingKeysProperty);
-            set => SetValue(SelectingKeysProperty, value);
+            get => (double)GetValue(SelectionBoxInflateSizeProperty);
+            set => SetValue(SelectionBoxInflateSizeProperty, value);
         }
 
-        public static Thickness GetCanvasOffset(DependencyObject obj)
+        [MemberNotNull(nameof(_canvas))]
+        private void EnsureCanvas()
         {
-            return (Thickness)obj.GetValue(CanvasOffsetProperty);
+            if (_canvas != null)
+            {
+                return;
+            }
+
+            var itemsPresenter = CanvasContainer.FindChild<ItemsPresenter>() ?? throw new NullReferenceException();
+            _canvas = itemsPresenter.FindChild<Canvas>() ?? throw new NullReferenceException();
         }
 
-        public static void SetCanvasOffset(DependencyObject obj, Thickness value)
+        /// <param name="position">Position relative to <see cref="CanvasContainer" />.</param>
+        private Point GetCoords(Point position)
         {
-            obj.SetValue(CanvasOffsetProperty, value);
+            EnsureCanvas();
+            var canvasOffset = _canvas.Margin;
+            return new Point((position.X - canvasOffset.Left) / App.UnitSize, (position.Y - canvasOffset.Top) / App.UnitSize);
         }
 
-        public static Rect GetBounds(DependencyObject obj)
+        private Point GetCoords(MouseEventArgs args)
         {
-            return (Rect)obj.GetValue(BoundsProperty);
+            var position = args.GetPosition(CanvasContainer);
+            return GetCoords(position);
         }
 
-        public static void SetBounds(DependencyObject obj, Rect value)
+        private Rect GetCoordBounds()
         {
-            obj.SetValue(BoundsProperty, value);
+            var start = LayoutRoot.TranslatePoint(new Point(0, 0), CanvasContainer);
+            var end = LayoutRoot.TranslatePoint(new Point(LayoutRoot.ActualWidth, LayoutRoot.ActualHeight), CanvasContainer);
+            return new Rect(GetCoords(start), GetCoords(end));
         }
 
-        public static bool GetIsPreviewSelected(DependencyObject obj)
+        private KeyView? GetKey(MouseEventArgs args)
         {
-            return (bool)obj.GetValue(IsPreviewSelectedProperty);
+            return (args.OriginalSource as DependencyObject)?.FindParent<KeyView>();
         }
 
-        public static void SetIsPreviewSelected(DependencyObject obj, bool value)
+        private List<KeyView> GetKeys()
         {
-            obj.SetValue(IsPreviewSelectedProperty, value);
-        }
-
-        public static bool GetIsSelected(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(IsSelectedProperty);
-        }
-
-        public static void SetIsSelected(DependencyObject obj, bool value)
-        {
-            obj.SetValue(IsSelectedProperty, value);
-        }
-
-
-        private List<KeyContainer> GetKeyContainers()
-        {
-            var list = new List<KeyContainer>();
+            var list = new List<KeyView>();
 
             // TODO: Cache items
             foreach (var item in CanvasContainer.Items)
@@ -105,44 +106,59 @@ namespace Rekog.App.View
                     container = CanvasContainer.ItemContainerGenerator.ContainerFromItem(item);
                 }
 
-                if (container?.FindChild<Canvas>(LayoutRoot.Name) is { } canvas)
+                if (container?.FindChild<KeyView>() is { } key)
                 {
-                    list.Add(new KeyContainer(canvas));
+                    list.Add(key);
                 }
             }
 
             return list;
         }
 
-        private KeyContainer? GetKeyContainer(MouseEventArgs args)
+        private Rect ClipArea(Point start, Point end, Rect bounds, double inflate)
         {
-            if ((args.OriginalSource as DependencyObject)?.FindParent<Canvas>(LayoutRoot.Name) is { } canvas)
+            var selectionBox = new Rect(start, end);
+
+            selectionBox.Intersect(bounds);
+
+            if (selectionBox != Rect.Empty && inflate != 0)
             {
-                return new KeyContainer(canvas);
+                selectionBox.Inflate(inflate, inflate);
             }
 
-            return null;
+            return selectionBox;
         }
 
-        private Point GetCoords(MouseEventArgs args)
+        private void Reset()
         {
-            var canvasOffset = GetCanvasOffset(CanvasWrapper);
-            var position = args.GetPosition(CanvasContainer);
-            return new Point((position.X - canvasOffset.Left) / App.UnitSize, (position.Y - canvasOffset.Top) / App.UnitSize);
+            if (State == BoardViewState.None)
+            {
+                return;
+            }
+
+            if (State == BoardViewState.ClickSelecting || State == BoardViewState.DragSelecting)
+            {
+                CancelSelect();
+            }
+            else if (State == BoardViewState.Dragging)
+            {
+                CancelDrag();
+            }
+            else
+            {
+                State = BoardViewState.None;
+            }
+
+            if (IsMouseCaptured)
+            {
+                ReleaseMouseCapture();
+            }
         }
 
-        private Rect GetCoordBounds()
-        {
-            var start = LayoutRoot.TranslatePoint(new Point(0, 0), CanvasContainer);
-            var end = LayoutRoot.TranslatePoint(new Point(LayoutRoot.ActualWidth, LayoutRoot.ActualHeight), CanvasContainer);
-            return new Rect(new Point(start.X / App.UnitSize, start.Y / App.UnitSize),
-                new Point(end.X / App.UnitSize, end.Y / App.UnitSize));
-        }
-
-
-        private void UserControl_PreviewMouseDown(object? sender, MouseButtonEventArgs args)
+        private void BoardView_PreviewMouseDown(object? sender, MouseButtonEventArgs args)
         {
             args.Handled = true;
+            Coords = GetCoords(args);
 
             if (State != BoardViewState.None)
             {
@@ -159,14 +175,12 @@ namespace Rekog.App.View
             {
                 StartDrag(args);
             }
-            else if (args.ChangedButton == MouseButton.Middle)
-            {
-                Center();
-            }
         }
 
-        private void UserControl_PreviewMouseMove(object? sender, MouseEventArgs args)
+        private void BoardView_PreviewMouseMove(object? sender, MouseEventArgs args)
         {
+            Coords = GetCoords(args);
+
             if (args.LeftButton == MouseButtonState.Pressed && (State == BoardViewState.ClickSelecting || State == BoardViewState.DragSelecting))
             {
                 HandleSelect(args);
@@ -177,9 +191,10 @@ namespace Rekog.App.View
             }
         }
 
-        private void UserControl_PreviewMouseUp(object? sender, MouseButtonEventArgs args)
+        private void BoardView_PreviewMouseUp(object? sender, MouseButtonEventArgs args)
         {
             args.Handled = true;
+            Coords = GetCoords(args);
 
             if (State == BoardViewState.None)
             {
@@ -196,12 +211,12 @@ namespace Rekog.App.View
             }
         }
 
-        private void UserControl_LostMouseCapture(object? sender, MouseEventArgs args)
+        private void BoardView_LostMouseCapture(object? sender, MouseEventArgs args)
         {
             Reset();
         }
 
-        private void UserControl_PreviewMouseWheel(object? sender, MouseWheelEventArgs args)
+        private void BoardView_PreviewMouseWheel(object? sender, MouseWheelEventArgs args)
         {
             args.Handled = true;
 
@@ -224,7 +239,7 @@ namespace Rekog.App.View
             }
         }
 
-        private void UserControl_PreviewKeyDown(object? sender, KeyEventArgs args)
+        private void BoardView_PreviewKeyDown(object? sender, KeyEventArgs args)
         {
             args.Handled = true;
 
@@ -244,6 +259,9 @@ namespace Rekog.App.View
             {
                 switch (args.Key)
                 {
+                    case Key.Escape:
+                        UnselectAll();
+                        break;
                     case Key.A when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
                         SelectAll();
                         break;
@@ -276,33 +294,7 @@ namespace Rekog.App.View
             Coerce();
         }
 
-
-        private void Reset()
-        {
-            if (State == BoardViewState.None)
-            {
-                return;
-            }
-
-            if (State == BoardViewState.ClickSelecting || State == BoardViewState.DragSelecting)
-            {
-                CancelSelect();
-            }
-            else if (State == BoardViewState.Dragging)
-            {
-                CancelDrag();
-            }
-            else
-            {
-                State = BoardViewState.None;
-            }
-
-            if (IsMouseCaptured)
-            {
-                ReleaseMouseCapture();
-            }
-        }
-
+        #region Select
 
         private void StartSelect(MouseEventArgs args)
         {
@@ -312,8 +304,8 @@ namespace Rekog.App.View
             {
                 InitialPosition = args.GetPosition(LayoutRoot),
                 InitialCoords = GetCoords(args),
-                InitialKey = GetKeyContainer(args),
-                Keys = GetKeyContainers(),
+                InitialKey = GetKey(args),
+                Keys = GetKeys(),
             };
         }
 
@@ -324,7 +316,7 @@ namespace Rekog.App.View
                 return;
             }
 
-            var selectionBox = GetSelectionBox(_selectContext.InitialPosition, args.GetPosition(LayoutRoot), new Rect(new Point(0, 0), LayoutRoot.RenderSize));
+            var selectionBox = ClipArea(_selectContext.InitialPosition, args.GetPosition(LayoutRoot), new Rect(new Point(0, 0), LayoutRoot.RenderSize), 0);
 
             if (State != BoardViewState.DragSelecting)
             {
@@ -342,7 +334,7 @@ namespace Rekog.App.View
             {
                 SetSelectionBox(selectionBox);
 
-                PreviewSelectMultiple(args);
+                PreviewSelectMany(args);
             }
         }
 
@@ -350,13 +342,13 @@ namespace Rekog.App.View
         {
             if (State == BoardViewState.ClickSelecting)
             {
-                SelectSingle(args);
+                SelectOne(args);
 
                 CancelSelect();
             }
             else if (State == BoardViewState.DragSelecting)
             {
-                SelectMultiple(args);
+                SelectMany(args);
 
                 ReleaseMouseCapture();
             }
@@ -376,113 +368,83 @@ namespace Rekog.App.View
             State = BoardViewState.None;
         }
 
-        private void SelectSingle(MouseEventArgs args)
-        {
-            OnSelectingKeys(true);
-            try
-            {
-                if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
-                {
-                    UnselectAll();
-                }
-
-                if (_selectContext == null)
-                {
-                    return;
-                }
-
-                if (_selectContext.InitialKey is not { } initialKey || GetKeyContainer(args) is not { } key || initialKey.Container != key.Container)
-                {
-                    return;
-                }
-
-                key.Toggle();
-            }
-            finally
-            {
-                OnSelectingKeys(false);
-            }
-        }
-
-        private void SelectMultiple(MouseEventArgs args)
-        {
-            OnSelectingKeys(true);
-            try
-            {
-                if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
-                {
-                    UnselectAll();
-                }
-
-                if (_selectContext == null)
-                {
-                    return;
-                }
-
-                var selectionBox = GetSelectionBox(_selectContext.InitialCoords, GetCoords(args), GetCoordBounds(), _selectionBoxInflateSize);
-
-                foreach (var keyContainer in _selectContext.Keys.Where(x => selectionBox.Contains(x.Bounds)))
-                {
-                    keyContainer.Select();
-                }
-            }
-            finally
-            {
-                OnSelectingKeys(false);
-            }
-        }
-
-        private void SelectAll()
-        {
-            OnSelectingKeys(true);
-            try
-            {
-                foreach (var keyContainer in GetKeyContainers())
-                {
-                    keyContainer.Select();
-                }
-            }
-            finally
-            {
-                OnSelectingKeys(false);
-            }
-        }
-
-        private void UnselectAll()
-        {
-            OnSelectingKeys(true);
-            try
-            {
-                foreach (var keyContainer in GetKeyContainers())
-                {
-                    keyContainer.Unselect();
-                }
-            }
-            finally
-            {
-                OnSelectingKeys(false);
-            }
-        }
-
-        private void PreviewSelectMultiple(MouseEventArgs args)
+        private void SelectOne(MouseEventArgs args)
         {
             if (_selectContext == null)
             {
                 return;
             }
 
-            var selectionBox = GetSelectionBox(_selectContext.InitialCoords, GetCoords(args), GetCoordBounds(), _selectionBoxInflateSize);
-
-            foreach (var keyContainer in _selectContext.Keys)
+            if (_selectContext.InitialKey is not { } initialKey || GetKey(args) is not { ViewModel: { } keyViewModel, } || initialKey.ViewModel != keyViewModel)
             {
-                if (selectionBox.Contains(keyContainer.Bounds))
+                if (!Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
                 {
-                    keyContainer.PreviewSelect();
+                    UnselectAll();
+                }
+                return;
+            }
+
+            if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+            {
+                if (ViewModel.SelectedKeys.Contains(keyViewModel))
+                {
+                    ViewModel.SelectedKeys.Remove(keyViewModel);
                 }
                 else
                 {
-                    keyContainer.PreviewUnselect();
+                    ViewModel.SelectedKeys.Add(keyViewModel);
                 }
+            }
+            else
+            {
+                ViewModel.SelectedKeys.ReplaceUsingClear(new[] { keyViewModel, });
+            }
+        }
+
+        private void SelectMany(MouseEventArgs args)
+        {
+            if (_selectContext == null)
+            {
+                return;
+            }
+
+            var selectionBox = ClipArea(_selectContext.InitialCoords, GetCoords(args), GetCoordBounds(), SelectionBoxInflateSize);
+            var toSelect = _selectContext.Keys.Where(x => selectionBox.Contains(x.ViewModel.ActualBounds)).Select(x => x.ViewModel);
+
+            if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+            {
+                ViewModel.SelectedKeys.MergeRange(toSelect);
+            }
+            else
+            {
+                ViewModel.SelectedKeys.ReplaceUsingMerge(toSelect);
+            }
+        }
+
+        private void SelectAll()
+        {
+            var toSelect = GetKeys().Select(x => x.ViewModel);
+
+            ViewModel.SelectedKeys.ReplaceUsingMerge(toSelect);
+        }
+
+        private void UnselectAll()
+        {
+            ViewModel.SelectedKeys.Clear();
+        }
+
+        private void PreviewSelectMany(MouseEventArgs args)
+        {
+            if (_selectContext == null)
+            {
+                return;
+            }
+
+            var selectionBox = ClipArea(_selectContext.InitialCoords, GetCoords(args), GetCoordBounds(), SelectionBoxInflateSize);
+
+            foreach (var key in _selectContext.Keys)
+            {
+                key.IsPreviewSelected = selectionBox.Contains(key.ViewModel.ActualBounds);
             }
         }
 
@@ -493,28 +455,10 @@ namespace Rekog.App.View
                 return;
             }
 
-            foreach (var keyContainer in _selectContext.Keys)
+            foreach (var key in _selectContext.Keys)
             {
-                keyContainer.PreviewUnselect();
+                key.IsPreviewSelected = false;
             }
-        }
-
-
-        private Rect GetSelectionBox(Point start, Point end, Rect bounds, double inflate = 0)
-        {
-            var selectionBox = new Rect(start, end);
-
-            selectionBox.Intersect(bounds);
-
-            // BUG: Fix bug when selectionBox is Empty after intersect
-
-            if (inflate != 0)
-            {
-                selectionBox = new Rect(selectionBox.X - inflate, selectionBox.Y - inflate,
-                    selectionBox.Width + 2 * inflate, selectionBox.Height + 2 * inflate);
-            }
-
-            return selectionBox;
         }
 
         private void SetSelectionBox(Rect selectionBox)
@@ -531,6 +475,20 @@ namespace Rekog.App.View
             SelectionBox.Height = 0;
         }
 
+        private class SelectContext
+        {
+            public Point InitialPosition { get; init; }
+
+            public Point InitialCoords { get; init; }
+
+            public KeyView? InitialKey { get; init; }
+
+            public List<KeyView> Keys { get; init; } = new List<KeyView>();
+        }
+
+        #endregion
+
+        #region Drag
 
         private void StartDrag(MouseEventArgs args)
         {
@@ -581,6 +539,14 @@ namespace Rekog.App.View
             Coerce();
         }
 
+        private class DragContext
+        {
+            public Point InitialPosition { get; init; }
+        }
+
+        #endregion
+
+        #region View manipulation
 
         private void Center()
         {
@@ -692,65 +658,6 @@ namespace Rekog.App.View
             return (layoutRootBounds, plateBounds, plateOffset);
         }
 
-        private void OnSelectingKeys(bool selectingKeys)
-        {
-            if (SelectingKeys is { } command && command.CanExecute(selectingKeys))
-            {
-                command.Execute(selectingKeys);
-            }
-        }
-
-        private class SelectContext
-        {
-            public Point InitialPosition { get; init; }
-
-            public Point InitialCoords { get; init; }
-
-            public KeyContainer? InitialKey { get; init; }
-
-            public List<KeyContainer> Keys { get; init; } = new List<KeyContainer>();
-        }
-
-        private class DragContext
-        {
-            public Point InitialPosition { get; init; }
-        }
-
-        private class KeyContainer
-        {
-            public KeyContainer(DependencyObject container)
-            {
-                Container = container;
-            }
-
-            public DependencyObject Container { get; }
-
-            public Rect Bounds => GetBounds(Container);
-
-            public void PreviewSelect()
-            {
-                SetIsPreviewSelected(Container, true);
-            }
-
-            public void PreviewUnselect()
-            {
-                SetIsPreviewSelected(Container, false);
-            }
-
-            public void Select()
-            {
-                SetIsSelected(Container, true);
-            }
-
-            public void Unselect()
-            {
-                SetIsSelected(Container, false);
-            }
-
-            public void Toggle()
-            {
-                SetIsSelected(Container, GetIsSelected(Container) ^ true);
-            }
-        }
+        #endregion
     }
 }

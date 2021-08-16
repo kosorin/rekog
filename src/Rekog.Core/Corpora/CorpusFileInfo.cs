@@ -10,7 +10,7 @@ namespace Rekog.Core.Corpora
 
         public StreamReader Open(IFileSystem fileSystem)
         {
-            return new StreamReader(fileSystem.FileStream.Create(Path, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize: 4096, FileOptions.SequentialScan), Encoding);
+            return new StreamReader(fileSystem.FileStream.Create(Path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.SequentialScan), Encoding);
         }
     }
 }

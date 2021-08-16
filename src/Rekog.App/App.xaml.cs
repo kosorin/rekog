@@ -1,5 +1,5 @@
-﻿using Rekog.App.View;
-using System.Windows;
+﻿using System.Windows;
+using Rekog.App.View;
 using Rekog.App.ViewModel;
 
 namespace Rekog.App

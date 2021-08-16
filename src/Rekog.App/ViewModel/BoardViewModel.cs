@@ -1,34 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using System.Windows.Media;
 using Rekog.App.Extensions;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel;
 using Rekog.App.ViewModel.Forms;
+using Rekog.App.ViewModel.Values;
 
 namespace Rekog.App.ViewModel
 {
     public class BoardViewModel : ViewModelBase<BoardModel>
     {
-        private static readonly Color DefaultBackground = Colors.White;
-
-        private int? _selectingKeysCounter;
-
         private ObservableObjectCollection<KeyViewModel> _keys = new ObservableObjectCollection<KeyViewModel>();
+        private ObservableObjectCollection<KeyViewModel> _selectedKeys = new ObservableObjectCollection<KeyViewModel>();
         private Thickness _canvasOffset;
         private Size _canvasSize;
-        private Color _background = DefaultBackground;
-        private bool _showRotationOrigin;
 
         public BoardViewModel(BoardModel model)
             : base(model)
         {
             AddKeyCommand = new DelegateCommand<NewKeyTemplate>(AddKey);
             DeleteSelectedKeysCommand = new DelegateCommand(DeleteSelectedKeys, CanDeleteSelectedKeys);
-            SelectingKeysCommand = new DelegateCommand<bool>(SelectingKeys);
 
             UpdateAll();
 
@@ -45,20 +37,38 @@ namespace Rekog.App.ViewModel
 
         public DelegateCommand DeleteSelectedKeysCommand { get; }
 
-        public DelegateCommand<bool> SelectingKeysCommand { get; }
-
         public ObservableObjectCollection<KeyViewModel> Keys
         {
             get => _keys;
             private set
             {
-                if (SetCollection(ref _keys, value, Keys_CollectionItemChanged, Keys_CollectionItemPropertyChanged))
+                if (SetCollection<ObservableObjectCollection<KeyViewModel>, KeyViewModel>(ref _keys, value, Keys_CollectionItemChanged, Keys_CollectionItemPropertyChanged))
                 {
-                    UpdateSelectedKeys();
+                    SelectedKeys = new ObservableObjectCollection<KeyViewModel>(Keys.Where(x => x.IsSelected));
+
                     UpdateCanvas();
                 }
             }
         }
+
+        public ObservableObjectCollection<KeyViewModel> SelectedKeys
+        {
+            get => _selectedKeys;
+            private set
+            {
+                if (SetCollection<ObservableObjectCollection<KeyViewModel>, KeyViewModel>(ref _selectedKeys, value, SelectedKeys_CollectionItemChanged, SelectedKeys_CollectionItemPropertyChanged))
+                {
+                    UpdateSelectedKeys();
+
+                    foreach (var key in SelectedKeys)
+                    {
+                        key.IsSelected = true;
+                    }
+                }
+            }
+        }
+
+        public PointValueSource SelectedKeysRotationOrigin { get; } = new PointValueSource(new Point());
 
         public Thickness CanvasOffset
         {
@@ -72,18 +82,6 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _canvasSize, value);
         }
 
-        public Color Background
-        {
-            get => _background;
-            set => Set(ref _background, value);
-        }
-
-        public bool ShowRotationOrigin
-        {
-            get => _showRotationOrigin;
-            private set => Set(ref _showRotationOrigin, value);
-        }
-
         protected override void OnModelPropertyChanging(object? sender, PropertyChangingEventArgs args)
         {
             base.OnModelPropertyChanging(sender, args);
@@ -91,8 +89,7 @@ namespace Rekog.App.ViewModel
             switch (args.PropertyName)
             {
                 case nameof(BoardModel.Keys):
-                    Model.Keys.CollectionItemChanged -= ModelKeys_CollectionItemChanged;
-                    Model.Keys.CollectionItemPropertyChanged -= ModelKeys_CollectionItemPropertyChanged;
+                    UnsubscribeModelKeys();
                     break;
             }
         }
@@ -105,46 +102,38 @@ namespace Rekog.App.ViewModel
             {
                 case nameof(BoardModel.Keys):
                     UpdateKeys();
-                    break;
-                case nameof(BoardModel.Background):
-                    UpdateBackground();
+                    SubscribeModelKeys();
                     break;
             }
-        }
-
-        private IEnumerable<KeyModel> GetSelectedKeyModels()
-        {
-            return Keys.Where(x => x.IsSelected).Select(x => x.Model);
         }
 
         private void UpdateAll()
         {
             UpdateKeys();
-            UpdateBackground();
+            SubscribeModelKeys();
         }
 
         private void UpdateKeys()
         {
+            // TODO: Remove IsDecal where condition and handle IsDecal keys in view
             Keys = new ObservableObjectCollection<KeyViewModel>(Model.Keys.Where(x => !x.IsDecal).Select(x => new KeyViewModel(x)));
+        }
+
+        private void SubscribeModelKeys()
+        {
             Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
             Model.Keys.CollectionItemPropertyChanged += ModelKeys_CollectionItemPropertyChanged;
         }
 
-        private void UpdateBackground()
+        private void UnsubscribeModelKeys()
         {
-            try
-            {
-                Background = Model.Background.ToColor();
-            }
-            catch
-            {
-                Background = DefaultBackground;
-            }
+            Model.Keys.CollectionItemChanged -= ModelKeys_CollectionItemChanged;
+            Model.Keys.CollectionItemPropertyChanged -= ModelKeys_CollectionItemPropertyChanged;
         }
 
-        private void ModelKeys_CollectionItemChanged(IObservableObjectCollection collection, CollectionItemChangedEventArgs args)
+        private void ModelKeys_CollectionItemChanged(IObservableObjectCollection<KeyModel> collection, CollectionItemChangedEventArgs<KeyModel> args)
         {
-            foreach (KeyModel oldKeyModel in args.OldItems)
+            foreach (var oldKeyModel in args.OldItems)
             {
                 for (var i = Keys.Count - 1; i >= 0; i--)
                 {
@@ -156,31 +145,40 @@ namespace Rekog.App.ViewModel
                 }
             }
 
-            foreach (KeyModel newKeyModel in args.NewItems)
+            foreach (var newKeyModel in args.NewItems)
             {
                 Keys.Add(new KeyViewModel(newKeyModel));
             }
         }
 
-        private void ModelKeys_CollectionItemPropertyChanged(object item, CollectionItemPropertyChangedEventArgs args)
+        private void ModelKeys_CollectionItemPropertyChanged(KeyModel item, CollectionItemPropertyChangedEventArgs args)
         {
             switch (args.PropertyName)
             {
                 case nameof(KeyModel.RotationAngle):
                 case nameof(KeyModel.RotationOriginX):
                 case nameof(KeyModel.RotationOriginY):
-                    UpdateRotationOrigin();
+                    UpdateRotationOrigin(false);
                     break;
             }
         }
 
-        private void Keys_CollectionItemChanged(ICollection collection, CollectionItemChangedEventArgs args)
+        private void Keys_CollectionItemChanged(IObservableObjectCollection<KeyViewModel> collection, CollectionItemChangedEventArgs<KeyViewModel> args)
         {
-            UpdateSelectedKeys();
+            if (args.OldItems.Count > 0)
+            {
+                SelectedKeys.RemoveRange(args.OldItems);
+            }
+
+            if (args.NewItems.Count > 0)
+            {
+                SelectedKeys.MergeRange(args.NewItems);
+            }
+
             UpdateCanvas();
         }
 
-        private void Keys_CollectionItemPropertyChanged(object item, CollectionItemPropertyChangedEventArgs args)
+        private void Keys_CollectionItemPropertyChanged(KeyViewModel item, CollectionItemPropertyChangedEventArgs args)
         {
             switch (args.PropertyName)
             {
@@ -188,38 +186,67 @@ namespace Rekog.App.ViewModel
                     UpdateCanvas();
                     break;
                 case nameof(KeyViewModel.IsSelected):
-                    UpdateSelectedKeys();
+                    if (item.IsSelected)
+                    {
+                        SelectedKeys.Merge(item);
+                    }
+                    break;
+            }
+        }
+
+        private void SelectedKeys_CollectionItemChanged(IObservableObjectCollection<KeyViewModel> collection, CollectionItemChangedEventArgs<KeyViewModel> args)
+        {
+            UpdateSelectedKeys();
+
+            foreach (var oldKey in args.OldItems)
+            {
+                oldKey.IsSelected = false;
+            }
+
+            foreach (var newKey in args.NewItems)
+            {
+                newKey.IsSelected = true;
+            }
+        }
+
+        private void SelectedKeys_CollectionItemPropertyChanged(KeyViewModel item, CollectionItemPropertyChangedEventArgs args)
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(KeyViewModel.IsSelected):
+                    if (!item.IsSelected)
+                    {
+                        SelectedKeys.Remove(item);
+                    }
                     break;
             }
         }
 
         private void UpdateSelectedKeys()
         {
-            if (_selectingKeysCounter.HasValue)
-            {
-                _selectingKeysCounter++;
-                return;
-            }
-
-            KeyForm.Set(GetSelectedKeyModels());
-            LegendForm.Set(GetSelectedKeyModels().Select(x => x.Legends.FirstOrDefault()).NotNull());
+            KeyForm.Set(SelectedKeys.Select(x => x.Model));
+            LegendForm.Set(SelectedKeys.Select(x => x.Model.Legends.FirstOrDefault()).NotNull());
 
             DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
 
-            UpdateRotationOrigin();
+            UpdateRotationOrigin(true);
         }
 
-        private void UpdateRotationOrigin()
+        private void UpdateRotationOrigin(bool alwaysIncrementVersion)
         {
-            if (KeyForm.RotationOriginX.IsSet && KeyForm.RotationOriginY.IsSet)
+            if (KeyForm.RotationOriginX.IsSet && KeyForm.RotationOriginY.IsSet &&
+                (KeyForm.RotationOriginX.Value != 0 || KeyForm.RotationOriginY.Value != 0 || KeyForm.RotationAngle.IsSet && KeyForm.RotationAngle.Value != 0))
             {
-                ShowRotationOrigin = (KeyForm.RotationAngle.IsSet && KeyForm.RotationAngle.Value != 0)
-                    || KeyForm.RotationOriginX.Value != 0
-                    || KeyForm.RotationOriginY.Value != 0;
+                if (alwaysIncrementVersion || !SelectedKeysRotationOrigin.IsSet)
+                {
+                    SelectedKeysRotationOrigin.Version++;
+                }
+                SelectedKeysRotationOrigin.Value = new Point(KeyForm.RotationOriginX.Value!.Value, KeyForm.RotationOriginY.Value!.Value);
+                SelectedKeysRotationOrigin.IsSet = true;
             }
             else
             {
-                ShowRotationOrigin = false;
+                SelectedKeysRotationOrigin.IsSet = false;
             }
         }
 
@@ -239,22 +266,6 @@ namespace Rekog.App.ViewModel
 
             CanvasOffset = new Thickness(-left, -top, left, top);
             CanvasSize = new Size(right - left, bottom - top);
-        }
-
-        private void SelectKey(KeyModel model)
-        {
-            SelectingKeys(true);
-            try
-            {
-                foreach (var key in Keys)
-                {
-                    key.IsSelected = key.Model == model;
-                }
-            }
-            finally
-            {
-                SelectingKeys(false);
-            }
         }
 
         private void AddKey(NewKeyTemplate template)
@@ -310,12 +321,20 @@ namespace Rekog.App.ViewModel
 
             Model.Keys.Add(keyModel);
 
-            SelectKey(keyModel);
+            SelectKeyModel(keyModel);
+        }
+
+        private void SelectKeyModel(KeyModel model)
+        {
+            if (Keys.FirstOrDefault(x => x.Model == model) is { } key)
+            {
+                SelectedKeys.ReplaceUsingClear(new[] { key, });
+            }
         }
 
         private void DeleteSelectedKeys()
         {
-            foreach (var model in GetSelectedKeyModels().ToList())
+            foreach (var model in SelectedKeys.Select(x => x.Model).ToList())
             {
                 Model.Keys.Remove(model);
             }
@@ -323,26 +342,7 @@ namespace Rekog.App.ViewModel
 
         private bool CanDeleteSelectedKeys()
         {
-            return GetSelectedKeyModels().Any();
-        }
-
-        private void SelectingKeys(bool selectingKeys)
-        {
-            if (selectingKeys)
-            {
-                _selectingKeysCounter ??= 0;
-            }
-            else
-            {
-                var counter = _selectingKeysCounter ?? 0;
-
-                _selectingKeysCounter = null;
-
-                if (counter > 0)
-                {
-                    UpdateSelectedKeys();
-                }
-            }
+            return SelectedKeys.Any();
         }
     }
 }

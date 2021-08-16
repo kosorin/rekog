@@ -8,6 +8,15 @@ namespace Rekog.App.Behaviors.AttachedProperties
         public static readonly DependencyProperty HeaderProperty =
             DependencyProperty.RegisterAttached("Header", typeof(object), typeof(TabItemHelper));
 
+        public static readonly DependencyProperty HeaderTemplateProperty =
+            DependencyProperty.RegisterAttached("HeaderTemplate", typeof(DataTemplate), typeof(TabItemHelper));
+
+        public static readonly DependencyProperty FooterProperty =
+            DependencyProperty.RegisterAttached("Footer", typeof(object), typeof(TabItemHelper));
+
+        public static readonly DependencyProperty FooterTemplateProperty =
+            DependencyProperty.RegisterAttached("FooterTemplate", typeof(DataTemplate), typeof(TabItemHelper));
+
         public static object GetHeader(TabItem tabItem)
         {
             return tabItem.GetValue(HeaderProperty);
@@ -17,9 +26,6 @@ namespace Rekog.App.Behaviors.AttachedProperties
         {
             tabItem.SetValue(HeaderProperty, value);
         }
-
-        public static readonly DependencyProperty HeaderTemplateProperty =
-            DependencyProperty.RegisterAttached("HeaderTemplate", typeof(DataTemplate), typeof(TabItemHelper));
 
         public static DataTemplate GetHeaderTemplate(TabItem tabItem)
         {
@@ -31,9 +37,6 @@ namespace Rekog.App.Behaviors.AttachedProperties
             tabItem.SetValue(HeaderTemplateProperty, value);
         }
 
-        public static readonly DependencyProperty FooterProperty =
-            DependencyProperty.RegisterAttached("Footer", typeof(object), typeof(TabItemHelper));
-
         public static object GetFooter(TabItem tabItem)
         {
             return tabItem.GetValue(FooterProperty);
@@ -43,9 +46,6 @@ namespace Rekog.App.Behaviors.AttachedProperties
         {
             tabItem.SetValue(FooterProperty, value);
         }
-
-        public static readonly DependencyProperty FooterTemplateProperty =
-            DependencyProperty.RegisterAttached("FooterTemplate", typeof(DataTemplate), typeof(TabItemHelper));
 
         public static DataTemplate GetFooterTemplate(TabItem tabItem)
         {

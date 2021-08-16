@@ -24,7 +24,7 @@ namespace Rekog.App.Converters
         {
             return value switch
             {
-                FontFamily { Source: var source } => source,
+                FontFamily { Source: var source, } => source,
                 string source => source,
                 _ => DependencyProperty.UnsetValue,
             };

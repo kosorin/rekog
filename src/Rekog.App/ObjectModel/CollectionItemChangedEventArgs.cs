@@ -1,17 +1,18 @@
-﻿using System.Collections;
+﻿using System.Collections.Generic;
 
 namespace Rekog.App.ObjectModel
 {
-    public class CollectionItemChangedEventArgs
+    public class CollectionItemChangedEventArgs<T>
+        where T : ObservableObject
     {
-        public CollectionItemChangedEventArgs(ICollection oldItems, ICollection newItems)
+        public CollectionItemChangedEventArgs(IReadOnlyCollection<T> oldItems, IReadOnlyCollection<T> newItems)
         {
             OldItems = oldItems;
             NewItems = newItems;
         }
 
-        public ICollection OldItems { get; }
+        public IReadOnlyCollection<T> OldItems { get; }
 
-        public ICollection NewItems { get; }
+        public IReadOnlyCollection<T> NewItems { get; }
     }
 }

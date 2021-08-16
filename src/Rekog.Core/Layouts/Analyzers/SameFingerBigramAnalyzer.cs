@@ -20,7 +20,7 @@ namespace Rekog.Core.Layouts.Analyzers
                 .Select(h => new LayoutAnalysisNode(h.Key.ToString(), h
                     .GroupBy(x => x.value.Item1.GetKind())
                     .Select(k => new LayoutAnalysisNode(k.Key.ToString(), k
-                        .Select(x => new LayoutAnalysisNode(x.value.Item2.ToString() + x.value.Item3.ToString(), x.node.Percentage, x.node.Effort))
+                        .Select(x => new LayoutAnalysisNode(x.value.Item2 + x.value.Item3.ToString(), x.node.Percentage, x.node.Effort))
                         .ToList()))
                     .ToList()))
                 .ToList();

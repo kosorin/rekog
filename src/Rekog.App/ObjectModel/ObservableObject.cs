@@ -31,13 +31,14 @@ namespace Rekog.App.ObjectModel
             return true;
         }
 
-        protected bool SetCollection<T>(ref T field, T value,
-            CollectionItemChangedEventHandler? onCollectionItemChanged = null,
-            CollectionItemPropertyChangedEventHandler? onCollectionItemPropertyChanged = null,
+        protected bool SetCollection<TCollection, TItem>(ref TCollection field, TCollection value,
+            CollectionItemChangedEventHandler<TItem>? onCollectionItemChanged = null,
+            CollectionItemPropertyChangedEventHandler<TItem>? onCollectionItemPropertyChanged = null,
             [CallerMemberName] string? propertyName = null)
-            where T : class, IObservableObjectCollection
+            where TCollection : IObservableObjectCollection<TItem>
+            where TItem : ObservableObject
         {
-            if (EqualityComparer<T>.Default.Equals(field, value))
+            if (EqualityComparer<TCollection>.Default.Equals(field, value))
             {
                 return false;
             }

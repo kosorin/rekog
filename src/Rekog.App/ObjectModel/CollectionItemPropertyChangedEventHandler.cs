@@ -1,4 +1,5 @@
 ﻿namespace Rekog.App.ObjectModel
 {
-    public delegate void CollectionItemPropertyChangedEventHandler(object item, CollectionItemPropertyChangedEventArgs args);
+    public delegate void CollectionItemPropertyChangedEventHandler<in T>(T item, CollectionItemPropertyChangedEventArgs args)
+        where T : ObservableObject;
 }

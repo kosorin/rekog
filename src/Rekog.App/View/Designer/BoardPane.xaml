@@ -257,7 +257,7 @@
                             <TextBox x:Name="KleInput"
                                      Height="100"
                                      AcceptsReturn="True"
-                                     FontFamily="Courier New"
+                                     FontFamily="{StaticResource MonospaceFontFamily}"
                                      HorizontalScrollBarVisibility="Auto"
                                      TextWrapping="NoWrap"
                                      VerticalScrollBarVisibility="Auto">

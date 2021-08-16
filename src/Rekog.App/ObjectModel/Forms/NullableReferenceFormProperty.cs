@@ -36,10 +36,7 @@ namespace Rekog.App.ObjectModel.Forms
                 _descriptor.SetValue(models, value);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
     }
 }

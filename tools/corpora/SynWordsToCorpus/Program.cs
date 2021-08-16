@@ -4,7 +4,6 @@ using System.IO;
 using CsvHelper;
 using CsvHelper.Configuration;
 
-
 if (args.Length < 2)
 {
     Console.WriteLine("Usage: .exe <input-path> <output-path>");

@@ -272,7 +272,7 @@ namespace Rekog.App.Model
                     var geometry1 = new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height));
                     var geometry2 = new RectangleGeometry(new Rect(kleKey.X2, kleKey.Y2, kleKey.Width2, kleKey.Height2));
                     shape = new CombinedGeometry(GeometryCombineMode.Union, geometry1, geometry2).GetFlattenedPathGeometry().ToString(CultureInfo.InvariantCulture);
-                    
+
                     // Delete "fill rule"
                     if (shape[0] == 'F')
                     {
