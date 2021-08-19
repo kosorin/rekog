@@ -32,9 +32,6 @@ namespace Rekog.App.ViewModel
             UpdateAll();
         }
 
-        /// <remarks>
-        /// Don't set this property directly. Use <see cref="BoardViewModel.SelectedKeys" /> instead.
-        /// </remarks>
         public bool IsSelected
         {
             get => _isSelected;

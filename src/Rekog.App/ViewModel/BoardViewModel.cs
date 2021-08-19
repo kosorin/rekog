@@ -115,8 +115,7 @@ namespace Rekog.App.ViewModel
 
         private void UpdateKeys()
         {
-            // TODO: Remove IsDecal where condition and handle IsDecal keys in view
-            Keys = new ObservableObjectCollection<KeyViewModel>(Model.Keys.Where(x => !x.IsDecal).Select(x => new KeyViewModel(x)));
+            Keys = new ObservableObjectCollection<KeyViewModel>(Model.Keys.Select(x => new KeyViewModel(x)));
         }
 
         private void SubscribeModelKeys()
@@ -133,22 +132,8 @@ namespace Rekog.App.ViewModel
 
         private void ModelKeys_CollectionItemChanged(IObservableObjectCollection<KeyModel> collection, CollectionItemChangedEventArgs<KeyModel> args)
         {
-            foreach (var oldKeyModel in args.OldItems)
-            {
-                for (var i = Keys.Count - 1; i >= 0; i--)
-                {
-                    var key = Keys[i];
-                    if (key.Model == oldKeyModel)
-                    {
-                        Keys.RemoveAt(i);
-                    }
-                }
-            }
-
-            foreach (var newKeyModel in args.NewItems)
-            {
-                Keys.Add(new KeyViewModel(newKeyModel));
-            }
+            Keys.RemoveRange(args.OldItems.Join(Keys, model => model, key => key.Model, (_, key) => key));
+            Keys.AddRange(args.NewItems.Select(x => new KeyViewModel(x)));
         }
 
         private void ModelKeys_CollectionItemPropertyChanged(KeyModel item, CollectionItemPropertyChangedEventArgs args)
@@ -334,10 +319,7 @@ namespace Rekog.App.ViewModel
 
         private void DeleteSelectedKeys()
         {
-            foreach (var model in SelectedKeys.Select(x => x.Model).ToList())
-            {
-                Model.Keys.Remove(model);
-            }
+            Model.Keys.RemoveRange(SelectedKeys.Select(x => x.Model));
         }
 
         private bool CanDeleteSelectedKeys()
