@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using Rekog.App.Extensions;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel;
@@ -11,10 +12,13 @@ namespace Rekog.App.ViewModel
 {
     public class BoardViewModel : ViewModelBase<BoardModel>
     {
+        private static readonly Color DefaultBackground = Colors.White;
+
         private ObservableObjectCollection<KeyViewModel> _keys = new ObservableObjectCollection<KeyViewModel>();
         private ObservableObjectCollection<KeyViewModel> _selectedKeys = new ObservableObjectCollection<KeyViewModel>();
         private Thickness _canvasOffset;
         private Size _canvasSize;
+        private Color _background = DefaultBackground;
 
         public BoardViewModel(BoardModel model)
             : base(model)
@@ -82,6 +86,12 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _canvasSize, value);
         }
 
+        public Color Background
+        {
+            get => _background;
+            private set => Set(ref _background, value);
+        }
+
         protected override void OnModelPropertyChanging(object? sender, PropertyChangingEventArgs args)
         {
             base.OnModelPropertyChanging(sender, args);
@@ -104,6 +114,9 @@ namespace Rekog.App.ViewModel
                     UpdateKeys();
                     SubscribeModelKeys();
                     break;
+                case nameof(BoardModel.Background):
+                    UpdateBackground();
+                    break;
             }
         }
 
@@ -111,11 +124,17 @@ namespace Rekog.App.ViewModel
         {
             UpdateKeys();
             SubscribeModelKeys();
+            UpdateBackground();
         }
 
         private void UpdateKeys()
         {
             Keys = new ObservableObjectCollection<KeyViewModel>(Model.Keys.Select(x => new KeyViewModel(x)));
+        }
+
+        private void UpdateBackground()
+        {
+            Background = Model.Background.ToColor(defaultColor: DefaultBackground);
         }
 
         private void SubscribeModelKeys()

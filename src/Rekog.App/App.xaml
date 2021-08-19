@@ -29,7 +29,6 @@
             <cx:EnlargedGeometryConverter x:Key="EnlargedRoundGeometryConverter" Round="True" />
             <cx:BooleanToFontWeightConverter x:Key="BooleanToFontWeightConverter" />
             <cx:BooleanToFontStyleConverter x:Key="BooleanToFontStyleConverter" />
-            <cx:StringToColorConverter x:Key="StringToColorConverter" />
             <cx:NullToNanConverter x:Key="NullToNanConverter" />
             <cx:BooleanNegationConverter x:Key="BooleanNegationConverter" />
             <cx:ScaleConverter x:Key="ScaleConverter" Scale="{StaticResource UnitSize}" />

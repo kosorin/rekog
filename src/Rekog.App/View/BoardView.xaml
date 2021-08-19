@@ -21,7 +21,7 @@
              PreviewMouseWheel="BoardView_PreviewMouseWheel"
              mc:Ignorable="d">
     <UserControl.Background>
-        <SolidColorBrush Color="{Binding Model.Background, Converter={StaticResource StringToColorConverter}}" />
+        <SolidColorBrush Color="{Binding Background}" />
     </UserControl.Background>
     <UserControl.FocusVisualStyle>
         <Style>

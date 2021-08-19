@@ -172,14 +172,7 @@ namespace Rekog.App.ViewModel
 
         private void UpdateColor()
         {
-            try
-            {
-                Color = Model.Color.ToColor();
-            }
-            catch
-            {
-                Color = DefaultColor;
-            }
+            Color = Model.Color.ToColor(defaultColor: DefaultColor);
         }
 
         private void UpdateLegends()
