@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using Rekog.App.Extensions;
+using Koda.ColorTools.Wpf;
 
 namespace Rekog.App.Converters
 {
@@ -18,8 +18,8 @@ namespace Rekog.App.Converters
             {
                 return (value, parameter) switch
                 {
-                    (Color color, double amount) => color.Lighten(amount),
-                    (Color color, _) => color.Lighten(Amount),
+                    (Color color, double amount) => color.ToHsl().Lighten(amount).ToColor(),
+                    (Color color, _) => color.ToHsl().Lighten(Amount).ToColor(),
                     _ => DependencyProperty.UnsetValue,
                 };
             }

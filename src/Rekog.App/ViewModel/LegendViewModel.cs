@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
-using Rekog.App.Extensions;
+using Koda.ColorTools;
+using Koda.ColorTools.Wpf;
 using Rekog.App.Model;
 
 namespace Rekog.App.ViewModel
@@ -74,7 +75,7 @@ namespace Rekog.App.ViewModel
 
         private void UpdateColor()
         {
-            Color = Model.Color.ToColor(defaultColor: DefaultColor);
+            Color = HexColor.TryParse(Model.Color, out var color) ? color.ToColor() : DefaultColor;
         }
 
         private void UpdateFont()

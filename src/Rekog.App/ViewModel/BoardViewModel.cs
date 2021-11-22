@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using Koda.ColorTools;
+using Koda.ColorTools.Wpf;
 using Rekog.App.Extensions;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel;
@@ -134,7 +136,7 @@ namespace Rekog.App.ViewModel
 
         private void UpdateBackground()
         {
-            Background = Model.Background.ToColor(defaultColor: DefaultBackground);
+            Background = HexColor.TryParse(Model.Background, out var color) ? color.ToColor() : DefaultBackground;
         }
 
         private void SubscribeModelKeys()

@@ -3,6 +3,8 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using Koda.ColorTools;
+using Koda.ColorTools.Wpf;
 using Rekog.App.Extensions;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel;
@@ -172,7 +174,7 @@ namespace Rekog.App.ViewModel
 
         private void UpdateColor()
         {
-            Color = Model.Color.ToColor(defaultColor: DefaultColor);
+            Color = HexColor.TryParse(Model.Color, out var color) ? color.ToColor() : DefaultColor;
         }
 
         private void UpdateLegends()
