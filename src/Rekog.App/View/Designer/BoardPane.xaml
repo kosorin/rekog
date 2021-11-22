@@ -6,6 +6,7 @@
              xmlns:a="clr-namespace:Rekog.App.Behaviors.AttachedProperties"
              xmlns:c="clr-namespace:Rekog.App.Controls"
              xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:color="clr-namespace:Koda.ColorTools.Wpf;assembly=Koda.ColorTools.Wpf"
              xmlns:mx="clr-namespace:Rekog.App.Markup"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -47,6 +48,12 @@
                TargetType="{x:Type TextBlock}">
             <Setter Property="Margin" Value="12,10" />
             <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+        <Style x:Key="FormColorPickerButtonStyle"
+               BasedOn="{StaticResource {x:Type Button}}"
+               TargetType="{x:Type Button}">
+            <Setter Property="ToolTip" Value="Pick a color" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
         </Style>
         <Style x:Key="FormEnableCheckBoxStyle"
                BasedOn="{StaticResource {x:Type CheckBox}}"
@@ -344,7 +351,22 @@
                                              IsEnabled="{Binding IsSet}"
                                              Style="{StaticResource FormContainerStackPanelStyle}">
                             <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
-                            <TextBox ui:ControlHelper.Header="Background" Text="{Binding Background.Value, Mode=TwoWay}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox ui:ControlHelper.Header="Background" Text="{Binding Background.Value, Mode=TwoWay}" />
+                                <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
+                                    <ui:FontIcon Glyph="&#xE790;" />
+                                    <ui:FlyoutService.Flyout>
+                                        <ui:Flyout>
+                                            <color:ColorPicker SelectedHex="{Binding Background.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
+                                        </ui:Flyout>
+                                    </ui:FlyoutService.Flyout>
+                                </Button>
+                            </Grid>
                         </ui:SimpleStackPanel>
                     </ScrollViewer>
                 </TabItem.Content>
@@ -516,7 +538,22 @@
                                               Value="{Binding RotationOriginY.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                             </Grid>
                             <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
-                            <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
+                                <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
+                                    <ui:FontIcon Glyph="&#xE790;" />
+                                    <ui:FlyoutService.Flyout>
+                                        <ui:Flyout>
+                                            <color:ColorPicker SelectedHex="{Binding Color.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
+                                        </ui:Flyout>
+                                    </ui:FlyoutService.Flyout>
+                                </Button>
+                            </Grid>
                             <ui:NumberBox Header="Roundness"
                                           LargeChange="0.025"
                                           Maximum="0.2"
@@ -638,7 +675,22 @@
                                               Value="{Binding Bottom.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                             </Grid>
                             <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
-                            <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
+                                <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
+                                    <ui:FontIcon Glyph="&#xE790;" />
+                                    <ui:FlyoutService.Flyout>
+                                        <ui:Flyout>
+                                            <color:ColorPicker SelectedHex="{Binding Color.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
+                                        </ui:Flyout>
+                                    </ui:FlyoutService.Flyout>
+                                </Button>
+                            </Grid>
                             <ComboBox HorizontalAlignment="Stretch"
                                       ui:ControlHelper.Header="Font"
                                       ItemTemplate="{DynamicResource FontTemplate}"
