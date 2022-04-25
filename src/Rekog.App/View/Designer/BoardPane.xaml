@@ -300,7 +300,7 @@
                             <ui:SimpleStackPanel Style="{StaticResource FormContainerStackPanelStyle}">
                                 <Label Content="Keyboard" Style="{StaticResource FormContentGroupStyle}" />
                                 <ui:SplitButton VerticalAlignment="Top"
-                                                Command="{Binding NewKeyboardCommand}"
+                                                Command="{Binding NewBoardCommand}"
                                                 Content="New">
                                     <ui:SplitButton.Flyout>
                                         <ui:MenuFlyout Placement="BottomEdgeAlignedLeft">
