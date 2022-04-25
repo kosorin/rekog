@@ -35,7 +35,7 @@ namespace Rekog.App.ViewModel
         private readonly PropertiesFormViewModel _propertiesForm = new PropertiesFormViewModel();
         private readonly BoardFormViewModel _boardForm = new BoardFormViewModel();
         private readonly KeyFormViewModel _keyForm = new KeyFormViewModel();
-        private readonly LegendFormViewModel _legendForm = new LegendFormViewModel();
+        private readonly LayerFormViewModel _layerForm = new LayerFormViewModel();
 
         private readonly FormTabViewModel _fileTab;
         private readonly FormTabViewModel _propertiesTab;
@@ -70,7 +70,7 @@ namespace Rekog.App.ViewModel
             _propertiesForm.Set(Model);
             _boardForm.Set(Model);
             _keyForm.Clear();
-            _legendForm.Clear();
+            _layerForm.Clear();
 
             GeneralTabs.AddRange(new[]
             {
@@ -395,7 +395,7 @@ namespace Rekog.App.ViewModel
             // TODO: Ugly
             if (args.NewItems.Count > 0)
             {
-                var tabs = args.NewItems.Select(x => new LayerFormTabViewModel(x.Model, "\uE81E", _legendForm)
+                var tabs = args.NewItems.Select(x => new LayerFormTabViewModel(x.Model, "\uE81E", _layerForm)
                 {
                     DeleteCommand = new DelegateCommand(() => DeleteLayer(x.Model)),
                 }).ToList();
@@ -465,6 +465,7 @@ namespace Rekog.App.ViewModel
 
         private void OnSelectedLayersChanged()
         {
+            UpdateLayerForm();
             UpdateLegendForm();
         }
 
@@ -563,6 +564,18 @@ namespace Rekog.App.ViewModel
             _keyForm.Set(_selectedKeys.Select(x => x.Model));
         }
 
+        private void UpdateLayerForm()
+        {
+            if (_selectedLayers.Count == 1)
+            {
+                _layerForm.Set(_selectedLayers.Single().Model);
+            }
+            else
+            {
+                _layerForm.Clear();
+            }
+        }
+
         private void UpdateLegendForm()
         {
             var selectedModels = _layers.Where(x => x.IsSelected).Select(x => x.Model).ToHashSet();
@@ -571,7 +584,7 @@ namespace Rekog.App.ViewModel
                 .Where(x => x.isSelected)
                 .Select(x => x.index)
                 .ToList();
-            _legendForm.Set(SelectedKeys.SelectMany(x => x.Model.Legends.Where((_, i) => selectedLayerIndices.Contains(i))));
+            _layerForm.LegendForm.Set(SelectedKeys.SelectMany(x => x.Model.Legends.Where((_, i) => selectedLayerIndices.Contains(i))));
         }
 
         private void AddLayer()

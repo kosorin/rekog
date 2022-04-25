@@ -61,7 +61,6 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.Resources>
-                    <!--  Key  -->
                     <CollectionViewSource x:Key="KeyCollection" Source="{Binding Keys}" />
                     <Style x:Key="KeyStyle"
                            d:DataContext="{d:DesignInstance vm:KeyViewModel}"

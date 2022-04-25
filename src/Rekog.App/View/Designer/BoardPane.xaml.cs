@@ -11,7 +11,7 @@ namespace Rekog.App.View.Designer
             InitializeComponent();
         }
 
-        private void DeleteLayerFlyoutButton_OnClick(object sender, RoutedEventArgs args)
+        private void ShowFlyoutButton_OnClick(object sender, RoutedEventArgs args)
         {
             if (sender is ButtonBase button && FlyoutBase.GetAttachedFlyout(button) is { } flyout)
             {
@@ -19,7 +19,7 @@ namespace Rekog.App.View.Designer
             }
         }
 
-        private void DeleteLayerConfirmationButton_OnClick(object sender, RoutedEventArgs args)
+        private void HideFlyoutButton_OnClick(object sender, RoutedEventArgs args)
         {
             if (sender is ButtonBase button && FlyoutBase.GetAttachedFlyout(button) is { } flyout)
             {

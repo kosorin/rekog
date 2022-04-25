@@ -18,7 +18,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="12" />
-            <ColumnDefinition Width="450" />
+            <ColumnDefinition Width="500" />
         </Grid.ColumnDefinitions>
         <v:BoardView x:Name="Board"
                      DataContext="{Binding Board}"

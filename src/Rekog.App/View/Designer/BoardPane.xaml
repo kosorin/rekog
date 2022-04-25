@@ -21,7 +21,7 @@
         <ui:Flyout x:Key="FormColorPickerFlyout">
             <color:ColorPicker SelectedHex="{Binding Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
         </ui:Flyout>
-        <ui:Flyout x:Key="DeleteLayerFlyout" d:DataContext="{d:DesignInstance vmft:LayerFormTabViewModel}">
+        <ui:Flyout x:Key="DeleteLayerFlyout" d:DataContext="{d:DesignInstance vmft:LayerFormTabViewModel, IsDesignTimeCreatable=False}">
             <StackPanel>
                 <TextBlock Style="{StaticResource BodyTextBlockStyle}">
                     <Run Text="Do you want to delete the layer " /><Run FontWeight="Medium" Text="{Binding Header}" /><Run Text="?" />
@@ -29,7 +29,7 @@
                     <Run Text="All legends on that layer will be deleted." />
                 </TextBlock>
                 <Button Margin="0,12,0,0"
-                        Click="DeleteLayerConfirmationButton_OnClick"
+                        Click="HideFlyoutButton_OnClick"
                         ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}"
                         Command="{Binding DeleteCommand}"
                         Content="Yes, delete layer" />
@@ -44,7 +44,6 @@
         <GridLength x:Key="FormGridSpacing">12</GridLength>
         <Style x:Key="FormContainerScrollViewerStyle" TargetType="{x:Type ScrollViewer}">
             <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
-            <Setter Property="MinWidth" Value="280" />
         </Style>
         <Style x:Key="FormContainerStackPanelStyle" TargetType="{x:Type ui:SimpleStackPanel}">
             <Setter Property="Margin" Value="16,0" />
@@ -108,6 +107,7 @@
                 </Viewbox>
                 <TextBlock Grid.Column="1"
                            Margin="0,0,8,0"
+                           TextTrimming="CharacterEllipsis"
                            Text="{Binding Header}" />
             </Grid>
         </DataTemplate>
@@ -125,18 +125,28 @@
                 </Viewbox>
                 <TextBlock Grid.Column="1"
                            Margin="0,0,8,0"
+                           TextTrimming="CharacterEllipsis"
                            Text="{Binding Header}" />
-                <Viewbox Grid.Column="2"
-                         MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
-                         MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
-                         Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}">
-                    <ui:HyperlinkButton Click="DeleteLayerFlyoutButton_OnClick"
-                                        ToolTip="Delete layer"
-                                        ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}">
-                        <ui:FontIcon Glyph="&#xE106;" />
-                    </ui:HyperlinkButton>
-                </Viewbox>
+                <ui:SimpleStackPanel x:Name="ButtonStackPanel"
+                                     Visibility="Collapsed"
+                                     Grid.Column="2"
+                                     Orientation="Horizontal"
+                                     Spacing="8">
+                    <Viewbox MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
+                             MaxHeight="{DynamicResource TabViewItemHeaderIconSize}">
+                        <ui:HyperlinkButton Click="ShowFlyoutButton_OnClick"
+                                            ToolTip="Delete layer"
+                                            ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}">
+                            <ui:FontIcon Glyph="&#xE106;" />
+                        </ui:HyperlinkButton>
+                    </Viewbox>
+                </ui:SimpleStackPanel>
             </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
+                    <Setter TargetName="ButtonStackPanel" Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
         <Style x:Key="FormListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
             <Setter Property="IsSelected" Value="{Binding Path=DataContext.IsSelected, RelativeSource={RelativeSource Self}, Mode=TwoWay}" />
@@ -154,37 +164,29 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Grid x:Name="LayoutRoot">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <ui:ThemeShadowChrome x:Name="Shadow"
-                                                  Grid.Row="1"
-                                                  CornerRadius="{Binding CornerRadius, ElementName=TabContainer}"
-                                                  Depth="{DynamicResource TabViewShadowDepth}"
-                                                  IsShadowEnabled="False">
-                                <Border x:Name="ItemBorder"
-                                        Padding="{DynamicResource TabViewItemHeaderPadding}"
-                                        ui:FocusVisualHelper.IsTemplateFocusTarget="True"
-                                        Background="{DynamicResource TabViewItemHeaderBackground}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
-                                        SnapsToDevicePixels="True">
-                                    <ContentPresenter x:Name="ContentPresenter"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                      Focusable="False"
-                                                      RecognizesAccessKey="True"
-                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                      TextElement.FontSize="{DynamicResource TabViewItemHeaderFontSize}"
-                                                      TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                                      TextElement.Foreground="{DynamicResource TabViewItemHeaderForeground}" />
-                                </Border>
-                            </ui:ThemeShadowChrome>
-                        </Grid>
+                        <ui:ThemeShadowChrome x:Name="Shadow"
+                                              CornerRadius="{Binding CornerRadius, ElementName=TabContainer}"
+                                              Depth="{DynamicResource TabViewShadowDepth}"
+                                              IsShadowEnabled="False">
+                            <Border x:Name="ItemBorder"
+                                    Padding="{DynamicResource TabViewItemHeaderPadding}"
+                                    ui:FocusVisualHelper.IsTemplateFocusTarget="True"
+                                    Background="{DynamicResource TabViewItemHeaderBackground}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                                    SnapsToDevicePixels="True">
+                                <ContentPresenter x:Name="ContentPresenter"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Focusable="False"
+                                                  RecognizesAccessKey="True"
+                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                  TextElement.FontSize="{DynamicResource TabViewItemHeaderFontSize}"
+                                                  TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                  TextElement.Foreground="{DynamicResource TabViewItemHeaderForeground}" />
+                            </Border>
+                        </ui:ThemeShadowChrome>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundDisabled}" />
@@ -259,7 +261,7 @@
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Left"
-                        MinWidth="150"
+                        Width="180"
                         Background="{DynamicResource TabViewBackground}">
                 <ListBox ItemsSource="{Binding Board.GeneralTabs}" Style="{StaticResource FormListBoxStyle}" />
                 <DockPanel Style="{StaticResource FormGroupDockPanelStyle}">
@@ -287,6 +289,7 @@
                          Style="{StaticResource FormListBoxStyle}" />
             </StackPanel>
             <ContentControl x:Name="FooBar"
+                            MinWidth="300"
                             DataContext="{Binding .}"
                             Content="{Binding Board.CurrentForm}">
                 <ContentControl.Resources>
@@ -549,7 +552,8 @@
                                               IsChecked="{Binding IsStepped.Value, Mode=TwoWay}"
                                               Style="{StaticResource FormEnableCheckBoxStyle}" />
                                 </ui:SimpleStackPanel>
-                                <ui:SimpleStackPanel IsEnabled="{Binding IsStepped.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}" Spacing="{StaticResource FormSpacing}">
+                                <ui:SimpleStackPanel IsEnabled="{Binding IsStepped.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}"
+                                                     Spacing="{StaticResource FormSpacing}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition />
@@ -676,113 +680,121 @@
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vmf:LegendFormViewModel}">
+                    <DataTemplate DataType="{x:Type vmf:LayerFormViewModel}">
                         <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
-                            <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
-                                <Label Content="Legend" Style="{StaticResource FormContentGroupStyle}" />
-                                <TextBox ui:ControlHelper.Header="Value" Text="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <Label Content="Layout" Style="{StaticResource FormContentGroupStyle}" />
-                                <StackPanel>
-                                    <Label Content="Alignment" Style="{StaticResource FormContentHeaderStyle}" />
-                                    <c:LegendAlignmentPicker Alignment="{Binding Alignment.Value, Mode=TwoWay}" AllowNull="True" />
-                                </StackPanel>
-                                <Label Content="Margin" Style="{StaticResource FormContentGroupStyle}" />
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <ui:NumberBox Grid.Column="0"
-                                                  Header="Left"
-                                                  LargeChange="0.05"
-                                                  Maximum="20"
-                                                  Minimum="-20"
-                                                  SmallChange="0.01"
-                                                  Value="{Binding Left.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                    <ui:NumberBox Grid.Column="2"
-                                                  Header="Right"
-                                                  LargeChange="0.05"
-                                                  Maximum="20"
-                                                  Minimum="-20"
-                                                  SmallChange="0.01"
-                                                  Value="{Binding Right.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                </Grid>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <ui:NumberBox Grid.Column="0"
-                                                  Header="Top"
-                                                  LargeChange="0.05"
-                                                  Maximum="20"
-                                                  Minimum="-20"
-                                                  SmallChange="0.01"
-                                                  Value="{Binding Top.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                    <ui:NumberBox Grid.Column="2"
-                                                  Header="Bottom"
-                                                  LargeChange="0.05"
-                                                  Maximum="20"
-                                                  Minimum="-20"
-                                                  SmallChange="0.01"
-                                                  Value="{Binding Bottom.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                </Grid>
-                                <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
-                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}" DataContext="{Binding Color}" />
-                                </Grid>
-                                <ComboBox HorizontalAlignment="Stretch"
-                                          ui:ControlHelper.Header="Font"
-                                          ItemTemplate="{DynamicResource FontTemplate}"
-                                          SelectedValue="{Binding Font.Value, Mode=TwoWay, Converter={StaticResource StringToFontFamilyConverter}}">
-                                    <ComboBox.Resources>
-                                        <CollectionViewSource x:Key="SystemFontFamilies" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
-                                            <CollectionViewSource.SortDescriptions>
-                                                <cm:SortDescription PropertyName="Source" />
-                                            </CollectionViewSource.SortDescriptions>
-                                        </CollectionViewSource>
-                                        <DataTemplate x:Key="FontTemplate" DataType="{x:Type FontFamily}">
-                                            <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
-                                                <TextBlock FontFamily="{Binding Source}"
-                                                           FontSize="16"
-                                                           Text="{Binding Source}"
-                                                           ToolTip="{Binding Source}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ComboBox.Resources>
-                                    <ComboBox.ItemsSource>
-                                        <Binding Source="{StaticResource SystemFontFamilies}" />
-                                    </ComboBox.ItemsSource>
-                                </ComboBox>
-                                <StackPanel>
-                                    <Label Content="Size" Style="{StaticResource FormContentHeaderStyle}" />
-                                    <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource FormSpacing}">
-                                        <ui:NumberBox Width="100"
-                                                      LargeChange="0.4"
-                                                      Maximum="96"
-                                                      Minimum="4"
-                                                      SmallChange="1"
-                                                      Value="{Binding Size.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                        <ToggleButton IsChecked="{Binding Bold.Value}">
-                                            <ui:FontIcon Glyph="&#xE8DD;" />
-                                        </ToggleButton>
-                                        <ToggleButton IsChecked="{Binding Italic.Value}">
-                                            <ui:FontIcon Glyph="&#xE8DB;" />
-                                        </ToggleButton>
-                                        <ToggleButton Visibility="Collapsed">
-                                            <ui:FontIcon Glyph="&#xE8DC;" />
-                                        </ToggleButton>
-                                    </ui:SimpleStackPanel>
-                                </StackPanel>
-                            </ui:SimpleStackPanel>
+                            <StackPanel>
+                                <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
+                                    <Label Content="Layer" Style="{StaticResource FormContentGroupStyle}" />
+                                    <TextBox ui:ControlHelper.Header="Name" Text="{Binding Name.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </ui:SimpleStackPanel>
+                                <ui:SimpleStackPanel DataContext="{Binding LegendForm}"
+                                                     IsEnabled="{Binding IsSet}"
+                                                     Style="{StaticResource FormContainerStackPanelStyle}">
+                                    <Label Content="Legend" Style="{StaticResource FormContentGroupStyle}" />
+                                    <TextBox ui:ControlHelper.Header="Value" Text="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <Label Content="Layout" Style="{StaticResource FormContentGroupStyle}" />
+                                    <StackPanel>
+                                        <Label Content="Alignment" Style="{StaticResource FormContentHeaderStyle}" />
+                                        <c:LegendAlignmentPicker Alignment="{Binding Alignment.Value, Mode=TwoWay}" AllowNull="True" />
+                                    </StackPanel>
+                                    <Label Content="Margin" Style="{StaticResource FormContentGroupStyle}" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:NumberBox Grid.Column="0"
+                                                      Header="Left"
+                                                      LargeChange="0.05"
+                                                      Maximum="20"
+                                                      Minimum="-20"
+                                                      SmallChange="0.01"
+                                                      Value="{Binding Left.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                        <ui:NumberBox Grid.Column="2"
+                                                      Header="Right"
+                                                      LargeChange="0.05"
+                                                      Maximum="20"
+                                                      Minimum="-20"
+                                                      SmallChange="0.01"
+                                                      Value="{Binding Right.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:NumberBox Grid.Column="0"
+                                                      Header="Top"
+                                                      LargeChange="0.05"
+                                                      Maximum="20"
+                                                      Minimum="-20"
+                                                      SmallChange="0.01"
+                                                      Value="{Binding Top.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                        <ui:NumberBox Grid.Column="2"
+                                                      Header="Bottom"
+                                                      LargeChange="0.05"
+                                                      Maximum="20"
+                                                      Minimum="-20"
+                                                      SmallChange="0.01"
+                                                      Value="{Binding Bottom.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    </Grid>
+                                    <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
+                                        <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}" DataContext="{Binding Color}" />
+                                    </Grid>
+                                    <ComboBox HorizontalAlignment="Stretch"
+                                              ui:ControlHelper.Header="Font"
+                                              ItemTemplate="{DynamicResource FontTemplate}"
+                                              SelectedValue="{Binding Font.Value, Mode=TwoWay, Converter={StaticResource StringToFontFamilyConverter}}">
+                                        <ComboBox.Resources>
+                                            <CollectionViewSource x:Key="SystemFontFamilies" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                                                <CollectionViewSource.SortDescriptions>
+                                                    <cm:SortDescription PropertyName="Source" />
+                                                </CollectionViewSource.SortDescriptions>
+                                            </CollectionViewSource>
+                                            <DataTemplate x:Key="FontTemplate" DataType="{x:Type FontFamily}">
+                                                <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
+                                                    <TextBlock FontFamily="{Binding Source}"
+                                                               FontSize="16"
+                                                               Text="{Binding Source}"
+                                                               ToolTip="{Binding Source}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.Resources>
+                                        <ComboBox.ItemsSource>
+                                            <Binding Source="{StaticResource SystemFontFamilies}" />
+                                        </ComboBox.ItemsSource>
+                                    </ComboBox>
+                                    <StackPanel>
+                                        <Label Content="Size" Style="{StaticResource FormContentHeaderStyle}" />
+                                        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource FormSpacing}">
+                                            <ui:NumberBox Width="100"
+                                                          LargeChange="0.4"
+                                                          Maximum="96"
+                                                          Minimum="4"
+                                                          SmallChange="1"
+                                                          Value="{Binding Size.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                            <ToggleButton IsChecked="{Binding Bold.Value}">
+                                                <ui:FontIcon Glyph="&#xE8DD;" />
+                                            </ToggleButton>
+                                            <ToggleButton IsChecked="{Binding Italic.Value}">
+                                                <ui:FontIcon Glyph="&#xE8DB;" />
+                                            </ToggleButton>
+                                            <ToggleButton Visibility="Collapsed">
+                                                <ui:FontIcon Glyph="&#xE8DC;" />
+                                            </ToggleButton>
+                                        </ui:SimpleStackPanel>
+                                    </StackPanel>
+                                </ui:SimpleStackPanel>
+                            </StackPanel>
                         </ScrollViewer>
                     </DataTemplate>
                 </ContentControl.Resources>
