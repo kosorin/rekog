@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls.Primitives;
 using ModernWpf.Controls.Primitives;
 
 namespace Rekog.App.View.Designer
@@ -10,11 +11,19 @@ namespace Rekog.App.View.Designer
             InitializeComponent();
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs args)
+        private void DeleteLayerFlyoutButton_OnClick(object sender, RoutedEventArgs args)
         {
-            if (sender is FrameworkElement element)
+            if (sender is ButtonBase button && FlyoutBase.GetAttachedFlyout(button) is { } flyout)
             {
-                FlyoutBase.ShowAttachedFlyout(element);
+                flyout.ShowAt(button);
+            }
+        }
+
+        private void DeleteLayerConfirmationButton_OnClick(object sender, RoutedEventArgs args)
+        {
+            if (sender is ButtonBase button && FlyoutBase.GetAttachedFlyout(button) is { } flyout)
+            {
+                flyout.Hide();
             }
         }
     }

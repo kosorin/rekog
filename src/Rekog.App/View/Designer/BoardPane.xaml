@@ -8,16 +8,33 @@
              xmlns:color="clr-namespace:Koda.ColorTools.Wpf;assembly=Koda.ColorTools.Wpf"
              xmlns:mx="clr-namespace:Rekog.App.Markup"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             xmlns:tabs="clr-namespace:Rekog.App.ViewModel.Forms.Tabs"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
              xmlns:vmf="clr-namespace:Rekog.App.ViewModel.Forms"
+             xmlns:vmft="clr-namespace:Rekog.App.ViewModel.Forms.Tabs"
              d:DataContext="{d:DesignInstance vm:MainViewModel}"
              d:DesignHeight="2000"
              d:DesignWidth="450"
              Background="{StaticResource SystemControlBackgroundAltHighBrush}"
              mc:Ignorable="d">
     <UserControl.Resources>
+        <ui:Flyout x:Key="FormColorPickerFlyout">
+            <color:ColorPicker SelectedHex="{Binding Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
+        </ui:Flyout>
+        <ui:Flyout x:Key="DeleteLayerFlyout" d:DataContext="{d:DesignInstance vmft:LayerFormTabViewModel}">
+            <StackPanel>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                    <Run Text="Do you want to delete the layer " /><Run FontWeight="Medium" Text="{Binding Header}" /><Run Text="?" />
+                    <LineBreak />
+                    <Run Text="All legends on that layer will be deleted." />
+                </TextBlock>
+                <Button Margin="0,12,0,0"
+                        Click="DeleteLayerConfirmationButton_OnClick"
+                        ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}"
+                        Command="{Binding DeleteCommand}"
+                        Content="Yes, delete layer" />
+            </StackPanel>
+        </ui:Flyout>
         <Style x:Key="GroupMenuItemStyle"
                BasedOn="{StaticResource {x:Type MenuItem}}"
                TargetType="{x:Type MenuItem}">
@@ -48,6 +65,12 @@
                BasedOn="{StaticResource {x:Type Button}}"
                TargetType="{x:Type Button}">
             <Setter Property="ToolTip" Value="Pick a color" />
+            <Setter Property="Content">
+                <Setter.Value>
+                    <ui:FontIcon Glyph="&#xE790;" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ui:FlyoutService.Flyout" Value="{StaticResource FormColorPickerFlyout}" />
             <Setter Property="VerticalAlignment" Value="Bottom" />
         </Style>
         <Style x:Key="FormEnableCheckBoxStyle"
@@ -72,7 +95,23 @@
             <Setter Property="Padding" Value="0,0" />
             <Setter Property="DockPanel.Dock" Value="Right" />
         </Style>
-        <DataTemplate x:Key="FormListBoxItemDataTemplate" DataType="tabs:FormTabViewModel">
+        <DataTemplate x:Key="FormListBoxItemDataTemplate" DataType="vmft:FormTabViewModel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Viewbox MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
+                         MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
+                         Margin="{DynamicResource TabViewItemHeaderIconMargin}">
+                    <ui:FontIcon Glyph="{Binding Icon}" />
+                </Viewbox>
+                <TextBlock Grid.Column="1"
+                           Margin="0,0,8,0"
+                           Text="{Binding Header}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="LayerFormListBoxItemDataTemplate" DataType="vmft:LayerFormTabViewModel">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -90,25 +129,11 @@
                 <Viewbox Grid.Column="2"
                          MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
                          MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
-                         Visibility="{Binding DeleteCommand, Converter={StaticResource NotNullToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}">
-                    <ui:HyperlinkButton Click="ButtonBase_OnClick"
-                                        ToolTip="Delete"
-                                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}">
+                         Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}">
+                    <ui:HyperlinkButton Click="DeleteLayerFlyoutButton_OnClick"
+                                        ToolTip="Delete layer"
+                                        ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}">
                         <ui:FontIcon Glyph="&#xE106;" />
-                        <ui:FlyoutBase.AttachedFlyout>
-                            <ui:Flyout AreOpenCloseAnimationsEnabled="False">
-                                <StackPanel>
-                                    <TextBlock Style="{StaticResource BodyTextBlockStyle}">
-                                        <Run Text="Do you want to delete the layer " /><Run FontWeight="Medium" Text="{Binding Header}" /><Run Text="?" />
-                                        <LineBreak />
-                                        <Run Text="All legends on that layer will be deleted." />
-                                    </TextBlock>
-                                    <Button Margin="0,12,0,0"
-                                            Command="{Binding DeleteCommand}"
-                                            Content="Yes, delete layer" />
-                                </StackPanel>
-                            </ui:Flyout>
-                        </ui:FlyoutBase.AttachedFlyout>
                     </ui:HyperlinkButton>
                 </Viewbox>
             </Grid>
@@ -244,12 +269,12 @@
                 <DockPanel Style="{StaticResource FormGroupDockPanelStyle}">
                     <ui:HyperlinkButton Command="{Binding Board.SelectAllLayersCommand}"
                                         Style="{StaticResource FormGroupButtonStyle}"
-                                        ToolTip="Select all">
+                                        ToolTip="Select all layers">
                         <ui:FontIcon FontSize="16" Glyph="&#xE762;" />
                     </ui:HyperlinkButton>
                     <ui:HyperlinkButton Command="{Binding Board.AddLayerCommand}"
                                         Style="{StaticResource FormGroupButtonStyle}"
-                                        ToolTip="Add">
+                                        ToolTip="Add layer">
                         <ui:FontIcon FontSize="16" Glyph="&#xE109;" />
                     </ui:HyperlinkButton>
                     <TextBlock VerticalAlignment="Bottom"
@@ -257,6 +282,7 @@
                                Text="Layers" />
                 </DockPanel>
                 <ListBox ItemsSource="{Binding Board.LayerTabs}"
+                         ItemTemplate="{StaticResource LayerFormListBoxItemDataTemplate}"
                          SelectionMode="Extended"
                          Style="{StaticResource FormListBoxStyle}" />
             </StackPanel>
@@ -423,14 +449,7 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBox ui:ControlHelper.Header="Background" Text="{Binding Background.Value, Mode=TwoWay}" />
-                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
-                                        <ui:FontIcon Glyph="&#xE790;" />
-                                        <ui:FlyoutService.Flyout>
-                                            <ui:Flyout AreOpenCloseAnimationsEnabled="False">
-                                                <color:ColorPicker SelectedHex="{Binding Background.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
-                                            </ui:Flyout>
-                                        </ui:FlyoutService.Flyout>
-                                    </Button>
+                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}" DataContext="{Binding Background}" />
                                 </Grid>
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
@@ -595,14 +614,7 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
-                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
-                                        <ui:FontIcon Glyph="&#xE790;" />
-                                        <ui:FlyoutService.Flyout>
-                                            <ui:Flyout AreOpenCloseAnimationsEnabled="False">
-                                                <color:ColorPicker SelectedHex="{Binding Color.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
-                                            </ui:Flyout>
-                                        </ui:FlyoutService.Flyout>
-                                    </Button>
+                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}" DataContext="{Binding Color}" />
                                 </Grid>
                                 <ui:NumberBox Header="Roundness"
                                               LargeChange="0.025"
@@ -725,14 +737,7 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
-                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
-                                        <ui:FontIcon Glyph="&#xE790;" />
-                                        <ui:FlyoutService.Flyout>
-                                            <ui:Flyout AreOpenCloseAnimationsEnabled="False">
-                                                <color:ColorPicker SelectedHex="{Binding Color.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
-                                            </ui:Flyout>
-                                        </ui:FlyoutService.Flyout>
-                                    </Button>
+                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}" DataContext="{Binding Color}" />
                                 </Grid>
                                 <ComboBox HorizontalAlignment="Stretch"
                                           ui:ControlHelper.Header="Font"

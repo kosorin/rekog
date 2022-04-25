@@ -16,7 +16,6 @@
 
             <clr:Double x:Key="UnitSize">96</clr:Double>
 
-            <!--  ReSharper disable once MarkupTextTypo  -->
             <FontFamily x:Key="MonospaceFontFamily">Lucida Console</FontFamily>
 
             <cx:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -36,7 +35,6 @@
             <cx:StringToFontFamilyConverter x:Key="StringToFontFamilyConverter" />
             <cx:NullableBooleanConverter x:Key="NullableBooleanConverter" />
             <cx:ObjectToListConverter x:Key="ObjectToListConverter" />
-
             <cx:ValueConverterChain x:Key="NegationBooleanToVisibilityConverter">
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanNegationConverter}" />
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanToVisibilityConverter}" />

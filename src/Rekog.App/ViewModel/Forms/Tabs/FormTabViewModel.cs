@@ -1,5 +1,3 @@
-using System.Windows.Input;
-
 namespace Rekog.App.ViewModel.Forms.Tabs
 {
     public class FormTabViewModel : ViewModelBase
@@ -8,7 +6,6 @@ namespace Rekog.App.ViewModel.Forms.Tabs
         private string _icon;
         private ViewModelBase _form;
         private bool _isSelected;
-        private ICommand? _deleteCommand;
 
         public FormTabViewModel(string header, string icon, ViewModelBase form)
         {
@@ -39,12 +36,6 @@ namespace Rekog.App.ViewModel.Forms.Tabs
         {
             get => _isSelected;
             set => Set(ref _isSelected, value);
-        }
-
-        public ICommand? DeleteCommand
-        {
-            get => _deleteCommand;
-            set => Set(ref _deleteCommand, value);
         }
     }
 }
