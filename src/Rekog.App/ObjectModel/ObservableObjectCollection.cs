@@ -29,7 +29,7 @@ namespace Rekog.App.ObjectModel
             {
                 return;
             }
-            
+
             var oldItems = Items.ToArray();
 
             UnsubscribePropertyChanged(oldItems);
@@ -68,7 +68,7 @@ namespace Rekog.App.ObjectModel
             {
                 return;
             }
-            
+
             var oldItems = oldItemsData.Values.ToArray();
 
             UnsubscribePropertyChanged(oldItems);

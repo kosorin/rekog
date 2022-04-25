@@ -16,7 +16,7 @@ namespace Rekog.App.Converters
 
         public object? ConvertBack(object? value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is IList { Count: >0, } list)
+            if (value is IList { Count: > 0, } list)
             {
                 return list[0];
             }

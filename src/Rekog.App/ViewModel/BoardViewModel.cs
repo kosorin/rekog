@@ -226,7 +226,7 @@ namespace Rekog.App.ViewModel
         private void UpdateRotationOrigin(bool alwaysIncrementVersion)
         {
             if (_keyForm.RotationOriginX.IsSet && _keyForm.RotationOriginY.IsSet &&
-                (_keyForm.RotationOriginX.Value != 0 || _keyForm.RotationOriginY.Value != 0 || _keyForm.RotationAngle.IsSet && _keyForm.RotationAngle.Value != 0))
+                (_keyForm.RotationOriginX.Value != 0 || _keyForm.RotationOriginY.Value != 0 || (_keyForm.RotationAngle.IsSet && _keyForm.RotationAngle.Value != 0)))
             {
                 if (alwaysIncrementVersion || !SelectedKeysRotationOrigin.IsSet)
                 {
@@ -300,7 +300,7 @@ namespace Rekog.App.ViewModel
             foreach (var item in args.OldItems)
             {
                 item.IsSelected = false;
-                
+
                 // TODO: Ugly
                 if (item is LayerFormTabViewModel layerTab)
                 {
@@ -317,7 +317,7 @@ namespace Rekog.App.ViewModel
             foreach (var item in args.NewItems)
             {
                 item.IsSelected = true;
-                
+
                 // TODO: Ugly
                 if (item is LayerFormTabViewModel layerTab)
                 {
@@ -391,7 +391,7 @@ namespace Rekog.App.ViewModel
                 LayerTabs.RemoveRange(tabs);
                 _tabs.RemoveRange(tabs);
             }
-                
+
             // TODO: Ugly
             if (args.NewItems.Count > 0)
             {
@@ -422,7 +422,7 @@ namespace Rekog.App.ViewModel
             foreach (var item in args.OldItems)
             {
                 item.IsSelected = false;
-                
+
                 // TODO: Ugly
                 foreach (var layerTab in LayerTabs)
                 {
@@ -436,7 +436,7 @@ namespace Rekog.App.ViewModel
             foreach (var item in args.NewItems)
             {
                 item.IsSelected = true;
-                
+
                 // TODO: Ugly
                 foreach (var layerTab in LayerTabs)
                 {
