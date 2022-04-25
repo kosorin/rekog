@@ -32,7 +32,7 @@ namespace Rekog.App.ObjectModel
 
             var oldItems = Items.ToArray();
 
-            UnsubscribePropertyChanged(oldItems);
+            BeginSubscribe(oldItems);
 
             // Remove old
             base.ClearItems();
@@ -45,8 +45,7 @@ namespace Rekog.App.ObjectModel
                 newItemIndex++;
             }
 
-            OnCollectionItemChanged(new CollectionItemChangedEventArgs<T>(oldItems, newItems));
-            SubscribePropertyChanged(newItems);
+            EndSubscribe(oldItems, newItems);
         }
 
         public void ReplaceUsingMerge(IEnumerable<T> items, IEqualityComparer<T>? comparer = null)
@@ -71,7 +70,7 @@ namespace Rekog.App.ObjectModel
 
             var oldItems = oldItemsData.Values.ToArray();
 
-            UnsubscribePropertyChanged(oldItems);
+            BeginSubscribe(oldItems);
 
             // Remove old
             foreach (var oldItemIndex in oldItemsData.Keys)
@@ -87,8 +86,7 @@ namespace Rekog.App.ObjectModel
                 newItemIndex++;
             }
 
-            OnCollectionItemChanged(new CollectionItemChangedEventArgs<T>(oldItems, newItems));
-            SubscribePropertyChanged(newItems);
+            EndSubscribe(oldItems, newItems);
         }
 
         public void MergeRange(IEnumerable<T> items, IEqualityComparer<T>? comparer = null)
@@ -147,14 +145,14 @@ namespace Rekog.App.ObjectModel
 
             var oldItems = oldItemsData.Values.ToArray();
 
-            BeginUnsubscribe(oldItems);
+            BeginSubscribe(oldItems);
 
             foreach (var oldItemIndex in oldItemsData.Keys)
             {
                 base.RemoveItem(oldItemIndex);
             }
 
-            EndUnsubscribe(oldItems);
+            EndSubscribe(oldItems);
         }
 
         public void Merge(T item)
@@ -180,26 +178,25 @@ namespace Rekog.App.ObjectModel
             }
 
             var oldItems = new[] { oldItem, };
-            BeginUnsubscribe(oldItems);
+            BeginSubscribe(oldItems);
             base.SetItem(index, item);
-            EndUnsubscribe(oldItems);
-            Subscribe(new[] { item, });
+            EndSubscribe(oldItems, new[] { item, });
         }
 
         protected override void RemoveItem(int index)
         {
             var oldItems = new[] { Items[index], };
-            BeginUnsubscribe(oldItems);
+            BeginSubscribe(oldItems);
             base.RemoveItem(index);
-            EndUnsubscribe(oldItems);
+            EndSubscribe(oldItems);
         }
 
         protected override void ClearItems()
         {
             var oldItems = Items.ToArray();
-            BeginUnsubscribe(oldItems);
+            BeginSubscribe(oldItems);
             base.ClearItems();
-            EndUnsubscribe(oldItems);
+            EndSubscribe(oldItems);
         }
 
         private void OnCollectionItemChanged(CollectionItemChangedEventArgs<T> args)
@@ -218,14 +215,20 @@ namespace Rekog.App.ObjectModel
             SubscribePropertyChanged(newItems);
         }
 
-        private void BeginUnsubscribe(T[] oldItems)
+        private void BeginSubscribe(T[] oldItems)
         {
             UnsubscribePropertyChanged(oldItems);
         }
 
-        private void EndUnsubscribe(T[] oldItems)
+        private void EndSubscribe(T[] oldItems)
         {
             OnCollectionItemChanged(new CollectionItemChangedEventArgs<T>(oldItems, Array.Empty<T>()));
+        }
+
+        private void EndSubscribe(T[] oldItems, T[] newItems)
+        {
+            OnCollectionItemChanged(new CollectionItemChangedEventArgs<T>(oldItems, newItems));
+            SubscribePropertyChanged(newItems);
         }
 
         private void SubscribePropertyChanged(T[] items)
