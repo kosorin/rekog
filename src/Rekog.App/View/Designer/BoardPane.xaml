@@ -9,8 +9,10 @@
              xmlns:color="clr-namespace:Koda.ColorTools.Wpf;assembly=Koda.ColorTools.Wpf"
              xmlns:mx="clr-namespace:Rekog.App.Markup"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:tabs="clr-namespace:Rekog.App.ViewModel.Forms.Tabs"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
+             xmlns:vmf="clr-namespace:Rekog.App.ViewModel.Forms"
              d:DataContext="{d:DesignInstance vm:MainViewModel}"
              d:DesignHeight="2000"
              d:DesignWidth="450"
@@ -43,12 +45,6 @@
                TargetType="{x:Type Label}">
             <Setter Property="Margin" Value="0,0,0,4" />
         </Style>
-        <Style x:Key="FormTabItemGroupTextStyle"
-               BasedOn="{StaticResource BaseTextBlockStyle}"
-               TargetType="{x:Type TextBlock}">
-            <Setter Property="Margin" Value="12,10" />
-            <Setter Property="IsHitTestVisible" Value="False" />
-        </Style>
         <Style x:Key="FormColorPickerButtonStyle"
                BasedOn="{StaticResource {x:Type Button}}"
                TargetType="{x:Type Button}">
@@ -63,17 +59,69 @@
             <Setter Property="VerticalAlignment" Value="Bottom" />
             <Setter Property="MinWidth" Value="0" />
         </Style>
-        <Style x:Key="FormTabItemStyle" TargetType="{x:Type TabItem}">
-            <Style.Resources>
-                <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="{x:Type TextBox}">
-                    <Setter Property="a:InputBindingManager.UpdatePropertySourceWhenEnterPressed" Value="TextBox.Text" />
-                </Style>
-                <Style BasedOn="{StaticResource {x:Type ui:NumberBox}}" TargetType="{x:Type ui:NumberBox}">
-                    <Setter Property="AcceptsExpression" Value="True" />
-                    <Setter Property="TextAlignment" Value="Left" />
-                </Style>
-            </Style.Resources>
+        <Style x:Key="FormGroupDockPanelStyle" TargetType="{x:Type DockPanel}">
+            <Setter Property="Margin" Value="8,0" />
+        </Style>
+        <Style x:Key="FormGroupTextStyle"
+               BasedOn="{StaticResource BaseTextBlockStyle}"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="IsHitTestVisible" Value="False" />
+            <Setter Property="Margin" Value="12,0" />
+        </Style>
+        <Style x:Key="FormGroupButtonStyle" TargetType="{x:Type ui:HyperlinkButton}">
+            <Setter Property="Margin" Value="0,6,8,0" />
+            <Setter Property="Padding" Value="0,0" />
+            <Setter Property="DockPanel.Dock" Value="Right" />
+        </Style>
+        <DataTemplate x:Key="FormListBoxItemDataTemplate" DataType="tabs:FormTabViewModel">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Viewbox MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
+                         MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
+                         Margin="{DynamicResource TabViewItemHeaderIconMargin}">
+                    <ui:FontIcon Glyph="{Binding Icon}" />
+                </Viewbox>
+                <TextBlock Grid.Column="1"
+                           Margin="0,0,8,0"
+                           Text="{Binding Header}" />
+                <Viewbox Grid.Column="2"
+                         MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
+                         MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
+                         Visibility="{Binding DeleteCommand, Converter={StaticResource NotNullToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}">
+                    <ui:HyperlinkButton Click="ButtonBase_OnClick"
+                                        ToolTip="Delete"
+                                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}">
+                        <ui:FontIcon Glyph="&#xE106;" />
+                        <ui:FlyoutBase.AttachedFlyout>
+                            <ui:Flyout AreOpenCloseAnimationsEnabled="False">
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                                        <Run Text="Do you want to delete the layer " /><Run FontWeight="Medium" Text="{Binding Header}" /><Run Text="?" />
+                                        <LineBreak />
+                                        <Run Text="All legends on that layer will be deleted." />
+                                    </TextBlock>
+                                    <Button Margin="0,12,0,0"
+                                            Command="{Binding DeleteCommand}"
+                                            Content="Yes, delete layer" />
+                                </StackPanel>
+                            </ui:Flyout>
+                        </ui:FlyoutBase.AttachedFlyout>
+                    </ui:HyperlinkButton>
+                </Viewbox>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="FormListBoxItemStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding Path=DataContext.IsSelected, RelativeSource={RelativeSource Self}, Mode=TwoWay}" />
             <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0,0,0,4" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="VerticalContentAlignment" Value="Stretch" />
             <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
@@ -81,378 +129,317 @@
             <Setter Property="ui:ControlHelper.CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Grid>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Grid x:Name="LayoutRoot">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <ContentPresenter x:Name="HeaderContentPresenter"
-                                              Grid.Row="0"
-                                              Content="{TemplateBinding a:TabItemHelper.Header}"
-                                              ContentTemplate="{TemplateBinding a:TabItemHelper.HeaderTemplate}"
-                                              KeyboardNavigation.TabNavigation="None"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            <ContentPresenter x:Name="FooterContentPresenter"
-                                              Grid.Row="2"
-                                              DockPanel.Dock="Left"
-                                              Content="{TemplateBinding a:TabItemHelper.Footer}"
-                                              ContentTemplate="{TemplateBinding a:TabItemHelper.FooterTemplate}"
-                                              KeyboardNavigation.TabNavigation="None"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <ui:ThemeShadowChrome x:Name="Shadow"
                                                   Grid.Row="1"
                                                   CornerRadius="{Binding CornerRadius, ElementName=TabContainer}"
                                                   Depth="{DynamicResource TabViewShadowDepth}"
                                                   IsShadowEnabled="False">
-                                <Border x:Name="TabContainer"
+                                <Border x:Name="ItemBorder"
                                         Padding="{DynamicResource TabViewItemHeaderPadding}"
                                         ui:FocusVisualHelper.IsTemplateFocusTarget="True"
                                         Background="{DynamicResource TabViewItemHeaderBackground}"
                                         BorderBrush="{TemplateBinding BorderBrush}"
                                         BorderThickness="{TemplateBinding BorderThickness}"
-                                        CornerRadius="{Binding Path=(ui:ControlHelper.CornerRadius), RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource LeftCornerRadiusFilterConverter}}"
+                                        CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
                                         SnapsToDevicePixels="True">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <Viewbox x:Name="IconBox"
-                                                 MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
-                                                 MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
-                                                 Margin="{DynamicResource TabViewItemHeaderIconMargin}">
-                                            <ContentControl x:Name="IconControl"
-                                                            Content="{TemplateBinding ui:TabItemHelper.Icon}"
-                                                            Foreground="{DynamicResource TabViewItemIconForeground}"
-                                                            IsTabStop="False" />
-                                        </Viewbox>
-                                        <ContentPresenter x:Name="ContentPresenter"
-                                                          Grid.Column="1"
-                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                          ContentSource="Header"
-                                                          Focusable="False"
-                                                          RecognizesAccessKey="True"
-                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                          TextElement.FontSize="{DynamicResource TabViewItemHeaderFontSize}"
-                                                          TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                                          TextElement.Foreground="{DynamicResource TabViewItemHeaderForeground}" />
-                                    </Grid>
+                                    <ContentPresenter x:Name="ContentPresenter"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      Focusable="False"
+                                                      RecognizesAccessKey="True"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                      TextElement.FontSize="{DynamicResource TabViewItemHeaderFontSize}"
+                                                      TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                      TextElement.Foreground="{DynamicResource TabViewItemHeaderForeground}" />
                                 </Border>
                             </ui:ThemeShadowChrome>
                         </Grid>
                         <ControlTemplate.Triggers>
-                            <Trigger SourceName="Shadow" Property="IsMouseOver" Value="True">
-                                <Setter TargetName="TabContainer" Property="Background" Value="{DynamicResource TabViewItemHeaderBackgroundPointerOver}" />
-                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundPointerOver}" />
-                                <Setter TargetName="IconControl" Property="Foreground" Value="{DynamicResource TabViewItemIconForegroundPointerOver}" />
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundDisabled}" />
                             </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Shadow" Property="IsShadowEnabled" Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}" />
-                                <Setter TargetName="TabContainer" Property="Background" Value="{DynamicResource TabViewItemHeaderBackgroundSelected}" />
-                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundSelected}" />
-                                <Setter TargetName="IconControl" Property="Foreground" Value="{DynamicResource TabViewItemIconForegroundSelected}" />
-                                <Setter Property="Panel.ZIndex" Value="1" />
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource TabViewItemHeaderBackgroundPointerOver}" />
+                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundPointerOver}" />
                             </Trigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
-                                    <Condition SourceName="Shadow" Property="IsMouseOver" Value="True" />
                                     <Condition Property="IsSelected" Value="True" />
+                                    <Condition Property="IsMouseOver" Value="False" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="TabContainer" Property="Background" Value="{DynamicResource TabViewItemHeaderBackgroundSelected}" />
-                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundPointerOver}" />
-                                <Setter TargetName="IconControl" Property="Foreground" Value="{DynamicResource TabViewItemIconForegroundPointerOver}" />
+                                <Setter TargetName="Shadow" Property="IsShadowEnabled" Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}" />
+                                <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource TabViewItemHeaderBackgroundSelected}" />
+                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundSelected}" />
                                 <Setter Property="Panel.ZIndex" Value="1" />
                             </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="IconControl" Property="Foreground" Value="{DynamicResource TabViewButtonForegroundDisabled}" />
-                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundDisabled}" />
-                            </Trigger>
-                            <Trigger Property="ui:TabItemHelper.Icon" Value="{x:Null}">
-                                <Setter TargetName="IconBox" Property="Visibility" Value="Collapsed" />
-                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True" />
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Shadow" Property="IsShadowEnabled" Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}" />
+                                <Setter TargetName="ItemBorder" Property="Background" Value="{DynamicResource TabViewItemHeaderBackgroundSelected}" />
+                                <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundPointerOver}" />
+                                <Setter Property="Panel.ZIndex" Value="1" />
+                            </MultiTrigger>
                         </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="FormListBoxStyle" TargetType="{x:Type ListBox}">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource FormListBoxItemStyle}" />
+            <Setter Property="Foreground" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="ScrollViewer.IsDeferredScrollingEnabled" Value="False" />
+            <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalOnly" />
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
+            <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+            <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
+            <Setter Property="ui:FocusVisualHelper.UseSystemFocusVisuals" Value="{DynamicResource UseSystemFocusVisuals}" />
+            <Setter Property="ui:ScrollViewerHelper.AutoHideScrollBars" Value="{DynamicResource AutoHideScrollBars}" />
+            <Setter Property="ItemTemplate" Value="{StaticResource FormListBoxItemDataTemplate}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Border x:Name="LayoutRoot"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                SnapsToDevicePixels="True">
+                            <ItemsPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
     </UserControl.Resources>
     <Grid>
-        <TabControl BorderThickness="0"
-                    ItemContainerStyle="{StaticResource FormTabItemStyle}"
-                    TabStripPlacement="Left">
-            <TabItem Header="File">
-                <ui:TabItemHelper.Icon>
-                    <ui:FontIcon Glyph="&#xE130;" />
-                </ui:TabItemHelper.Icon>
-                <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
-                    <ui:SimpleStackPanel Style="{StaticResource FormContainerStackPanelStyle}">
-                        <Label Content="Keyboard" Style="{StaticResource FormContentGroupStyle}" />
-                        <ui:SplitButton VerticalAlignment="Top"
-                                        Command="{Binding NewKeyboardCommand}"
-                                        Content="New">
-                            <ui:SplitButton.Flyout>
-                                <ui:MenuFlyout Placement="BottomEdgeAlignedLeft">
-                                    <MenuItem Header="Standard" Style="{StaticResource GroupMenuItemStyle}" />
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ANSI 104">
-                                        <MenuItem.CommandParameter>
-                                            [{a:7},&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.25},&quot;&quot;,{x:3.5},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:2.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;,{x:1.25},&quot;&quot;,{x:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:2},&quot;&quot;,&quot;&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ISO 105">
-                                        <MenuItem.CommandParameter>
-                                            [{a:7},&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:4.75},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;,{x:1.25},&quot;&quot;,{x:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:2},&quot;&quot;,&quot;&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ANSI 60%">
-                                        <MenuItem.CommandParameter>
-                                            [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.25},&quot;&quot;], [{w:2.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ISO 60%">
-                                        <MenuItem.CommandParameter>
-                                            [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                    <MenuItem Header="Matrix" Style="{StaticResource GroupMenuItemStyle}" />
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Planck">
-                                        <MenuItem.CommandParameter>
-                                            [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                    <MenuItem Header="Split" Style="{StaticResource GroupMenuItemStyle}" />
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Atreus">
-                                        <MenuItem.CommandParameter>
-                                            [{r:10,rx:1,y:-0.1,x:2,a:7},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{y:-0.75,x:5,h:1.5},&quot;&quot;], [{y:-0.95,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{r:-10,rx:7,ry:0.965,y:-0.2,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;], [{y:-0.75,x:-1,h:1.5},&quot;&quot;], [{y:-0.95,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ErgoDox">
-                                        <MenuItem.CommandParameter>
-                                            [{x:3.5,a:7},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,&quot;&quot;,{x:4.5},&quot;&quot;,&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,{h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;,&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,{x:6.5},&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.625,x:6.5,h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;], [{y:-0.75,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,{x:6.5},&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:0.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,&quot;&quot;], [{r:30,rx:6.5,ry:4.25,y:-1,x:1},&quot;&quot;,&quot;&quot;], [{h:2},&quot;&quot;,{h:2},&quot;&quot;,&quot;&quot;], [{x:2},&quot;&quot;], [{r:-30,rx:13,y:-1,x:-3},&quot;&quot;,&quot;&quot;], [{x:-3},&quot;&quot;,{h:2},&quot;&quot;,{h:2},&quot;&quot;], [{x:-3},&quot;&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Kinesis Advantage">
-                                        <MenuItem.CommandParameter>
-                                            [{a:7,f:1,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:4.825,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;], [{x:2.25,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:-0.75,w:1.25},&quot;&quot;,&quot;&quot;,{x:13.5},&quot;&quot;,{w:1.25},&quot;&quot;], [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:-0.75,f:3,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5},&quot;&quot;,{f:3,w:1.25},&quot;&quot;], [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:-0.75,f:3,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5,f:3},&quot;&quot;,{w:1.25},&quot;&quot;], [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;,&quot;&quot;], [{y:-0.75,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5,f:3},&quot;&quot;,{w:1.25},&quot;&quot;], [{y:-0.25,x:2.25},&quot;&quot;,{f:5},&quot;&quot;,&quot;&quot;,{x:7.5},&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;], [{y:-0.75,x:1.25},&quot;&quot;,{x:13.5},&quot;&quot;], [{r:15,rx:5.25,ry:4,x:1.5},&quot;&quot;,&quot;&quot;], [{x:0.5,h:2},&quot;&quot;,{h:2},&quot;&quot;,&quot;&quot;], [{x:2.5},&quot;&quot;], [{r:-15,rx:12.75,x:-3.5},&quot;&quot;,&quot;&quot;], [{x:-3.5},&quot;&quot;,{h:2},&quot;&quot;,{h:2},&quot;&quot;], [{x:-3.5},&quot;&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Programmer's Keyboard">
-                                        <MenuItem.CommandParameter>
-                                            [{y:0.38,x:1.25,c:&quot;#857eb1&quot;,a:7,f:6},&quot;&quot;,{c:&quot;#b81b24&quot;,f:5},&quot;&quot;,&quot;&quot;,{x:0.75,c:&quot;#d9dae0&quot;,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.75,c:&quot;#857eb1&quot;,f:5},&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:3},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;], [{y:0.75,x:9.5,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;,t:&quot;#7f007f&quot;,f:2},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;,t:&quot;#000000&quot;},&quot;&quot;], [{x:9.5,c:&quot;#95bfe8&quot;,t:&quot;#7f007f&quot;,f:3},&quot;&quot;,&quot;&quot;,{f:2},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:0.25,x:9.5,c:&quot;#c4c8c5&quot;,t:&quot;#000000&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;], [{y:0,x:9.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{f:5},&quot;&quot;], [{r:15,y:-8.53,x:3,c:&quot;#c7c3b4&quot;,f:3},&quot;&quot;], [{y:-1,x:4},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,f:9,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#00833e&quot;,t:&quot;#00000&quot;,h:2},&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,t:&quot;#000000&quot;,w:1.5},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;,{c:&quot;#45b866&quot;},&quot;&quot;,{c:&quot;#857eb1&quot;,f:5,w:1.5},&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:3,w:1.5},&quot;&quot;], [{x:4,c:&quot;#45b866&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,c:&quot;#e5dbca&quot;,w:2.75},&quot;&quot;], [{r:-15,y:0.18,x:14.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;], [{y:0,x:13.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;], [{x:13.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:9,w:1.5},&quot;&quot;], [{x:13.15,c:&quot;#00833e&quot;,f:5,h:2},&quot;&quot;,{c:&quot;#e5dbca&quot;,f:3},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;], [{x:14.15,c:&quot;#909596&quot;,w:1.5},&quot;&quot;,{c:&quot;#857eb1&quot;,f:5,w:1.5},&quot;&quot;,{c:&quot;#45b866&quot;,f:3},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;], [{x:13.13,c:&quot;#e5dbca&quot;,w:2.75},&quot;&quot;,{x:0.27,c:&quot;#45b866&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Klave rev1">
-                                        <MenuItem.CommandParameter>
-                                            [{x:3,p:&quot;SA&quot;,a:7},&quot;&quot;,{x:9},&quot;&quot;], [{y:-0.75,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4,n:true},&quot;&quot;,{x:7,n:true},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:13},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{rx:3.95,ry:9.4,y:-5,x:-1.5},&quot;&quot;,&quot;&quot;], [{rx:13.05,y:-5,x:-0.5},&quot;&quot;,&quot;&quot;], [{r:14,rx:3.95,y:-5,x:-0.5},&quot;&quot;], [{r:28,y:-2,x:-0.5},&quot;&quot;,&quot;&quot;], [{x:-0.5},&quot;&quot;,&quot;&quot;], [{r:-28,rx:13.05,y:-6,x:-1.5},&quot;&quot;,&quot;&quot;], [{x:-1.5},&quot;&quot;,&quot;&quot;], [{r:-14,y:-1,x:-0.5},&quot;&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                    <MenuItem Header="Other" Style="{StaticResource GroupMenuItemStyle}" />
-                                    <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Rekog">
-                                        <MenuItem.CommandParameter>
-                                            [{p:&quot;FLAT&quot;,a:7,f:9,n:true},&quot;A&quot;,{c:&quot;#ffffff&quot;,t:&quot;#0ca800&quot;,f:1},&quot;B&quot;,{c:&quot;#cccccc&quot;,t:&quot;#000000&quot;,f:3,fa:[1]},&quot;C&quot;,{f:3,n:true},&quot;D&quot;,{t:&quot;#000000\n\n\n#d91c1c\n\n\n\n\n#201cd9&quot;,a:4,fa:[1,0,0,9,0,0,0,0,4]},&quot;\n\n\ne\n\n\n\n\ně\nE&quot;,{t:&quot;#000000&quot;,g:true,a:3,f:3,n:true},&quot;FX\n\n\n\nuxx2&quot;], [{t:&quot;#000000\n\n\n#aa07f5\n\n#a824d6\n#ffd600\n\n\n\n\n#a624d4&quot;,g:false,a:0,f:7,w:1.5},&quot;0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11&quot;], [{y:-0.75,x:4.75,t:&quot;#000000&quot;,f:3,w:1.25,w2:1.75,x2:-0.25,l:true},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n+&quot;], [{y:-0.5,x:2,a:5,d:true},&quot;WUT&quot;], [{y:-0.75,a:0,f:6,n:true},&quot;A\nB\nC\nD\n\nok&quot;], [{y:-0.5,x:7.25,p:&quot;CHICKLET&quot;,a:7,f:3,w:1.25,w2:1.75,l:true},&quot;&quot;], [{r:15,h:0.5},&quot;&quot;], [{rx:5,ry:3,y:-0.5,h:1.5},&quot;&quot;,&quot;&quot;], [{x:1,w:1.25},&quot;&quot;], [{r:-15,rx:1,ry:2,y:0.5,x:1.5,c:&quot;#a5a5a5&quot;,a:0,w:1.5,h:2,w2:2.25,h2:1,x2:-0.5,y2:0.75,n:true,l:true},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@&quot;], [{rx:8,y:-1.5,x:0.75,w:2.25,h:1.25,w2:1.5,h2:2.5,x2:0.25,y2:-0.5},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@\n+\n+&quot;]
-                                        </MenuItem.CommandParameter>
-                                    </MenuItem>
-                                </ui:MenuFlyout>
-                            </ui:SplitButton.Flyout>
-                        </ui:SplitButton>
-                        <Label Content="KLE" Style="{StaticResource FormContentGroupStyle}" />
-                        <StackPanel>
-                            <Label Content="Input" Style="{StaticResource FormContentHeaderStyle}" />
-                            <TextBox x:Name="KleInput"
-                                     Height="100"
-                                     AcceptsReturn="True"
-                                     FontFamily="{StaticResource MonospaceFontFamily}"
-                                     HorizontalScrollBarVisibility="Auto"
-                                     TextWrapping="NoWrap"
-                                     VerticalScrollBarVisibility="Auto">
-                                <TextBox.InputBindings>
-                                    <KeyBinding Key="Enter"
-                                                Command="{Binding ParseKleRawDataCommand}"
-                                                CommandParameter="{Binding Text, ElementName=KleInput}"
-                                                Modifiers="Ctrl" />
-                                </TextBox.InputBindings>
-                                <TextBox.Text>
-                                    [{x:3.5,c:&quot;#f5f5f5&quot;},&quot;#\n3&quot;,{x:10.5},&quot;*\n8&quot;],
-                                    [{y:-0.875,x:2.5},&quot;@\n2&quot;,{x:1},&quot;$\n4&quot;,{x:8.5},&quot;Oops\n7&quot;,{x:1},&quot;(\n9&quot;],
-                                    [{y:-0.875,x:5.5},&quot;%\n5&quot;,{a:7},&quot;&quot;,{x:4.5},&quot;&quot;,{a:4},&quot;^\n6&quot;],
-                                    [{y:-0.875,a:7,f:7,w:1.5},&quot;ESC&quot;,{a:4,f:3},&quot;!\n1&quot;,{x:14.5},&quot;)\n0&quot;,{a:7,w:1.5},&quot;&quot;],
-                                    [{y:-0.375,x:3.5,a:4},&quot;E&quot;,{x:10.5},&quot;I&quot;],
-                                    [{y:-0.875,x:2.5},&quot;W&quot;,{x:1},&quot;R&quot;,{x:8.5},&quot;U&quot;,{x:1},&quot;O&quot;],
-                                    [{y:-0.875,x:5.5},&quot;T&quot;,{a:0,h:1.5},&quot;1\n7\n3\n9\n10\n12\n4\n6\n2\n5\n8\n11&quot;,{x:4.5,a:7,h:1.5},&quot;&quot;,{a:4},&quot;Y&quot;],
-                                    [{y:-0.875,a:7,w:1.5},&quot;&quot;,{a:4},&quot;Q&quot;,{x:14.5},&quot;P&quot;,{a:7,w:1.5},&quot;&quot;],
-                                    [{y:-0.375,x:3.5,a:4},&quot;D&quot;,{x:10.5},&quot;K&quot;],
-                                    [{y:-0.875,x:2.5},&quot;S&quot;,{x:1},&quot;F&quot;,{x:8.5},&quot;J&quot;,{x:1},&quot;L&quot;],
-                                    [{y:-0.875,x:5.5},&quot;G&quot;,{x:6.5},&quot;H&quot;],
-                                    [{y:-0.875,w2:1.5,l:true},&quot;Tab&quot;,{x:0.5},&quot;A&quot;,{x:14.5},&quot;:\n;&quot;,{a:7,w:1.5},&quot;&quot;],
-                                    [{y:-0.625,x:6.5,h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;],
-                                    [{y:-0.75,x:3.5,a:4},&quot;C&quot;,{x:10.5},&quot;\n,&quot;],
-                                    [{y:-0.875,x:2.5},&quot;X&quot;,{x:1},&quot;V&quot;,{x:8.5},&quot;M&quot;,{x:1},&quot;\n.&quot;],
-                                    [{y:-0.875,x:5.5},&quot;B&quot;,{x:6.5},&quot;N&quot;],
-                                    [{y:-0.875,a:7,w:1.5},&quot;Shift&quot;,{a:4},&quot;Z&quot;,{x:14.5},&quot;?\n/&quot;,{a:7,w:1.5},&quot;&quot;],
-                                    [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;],
-                                    [{y:-0.875,x:2.5},&quot;\n\n\n\nHidden&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;],
-                                    [{y:-0.75,x:0.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,&quot;&quot;],
-                                    [{r:30,rx:6.5,ry:4.25,y:-1,x:1},&quot;&quot;,&quot;&quot;],
-                                    [{c:&quot;#e0cbcb&quot;,h:2},&quot;&quot;,{x:1,c:&quot;#f5f5f5&quot;},&quot;&quot;],
-                                    [{y:-0.5,x:1.25,w:0.5,w2:1,h2:2,x2:-0.25,y2:-0.5,l:true},&quot;&quot;],
-                                    [{y:-0.5,x:2},&quot;&quot;],
-                                    [{r:-30,rx:13,y:-1,x:-3},&quot;&quot;,&quot;&quot;],
-                                    [{x:-3},&quot;&quot;,{a:0,h:2,w2:2,h2:1,x2:-1,y2:1},&quot;\nTest\n\n\nALIGNMENT&quot;,{a:7,h:2},&quot;&quot;]
-                                </TextBox.Text>
-                            </TextBox>
-                        </StackPanel>
-                        <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource FormSpacing}">
-                            <Button HorizontalAlignment="Stretch"
-                                    Command="{Binding ParseKleRawDataCommand}"
-                                    CommandParameter="{Binding Text, ElementName=KleInput}"
-                                    Content="Parse raw data" />
-                            <Button HorizontalAlignment="Stretch"
-                                    Command="{Binding ParseKleJsonCommand}"
-                                    CommandParameter="{Binding Text, ElementName=KleInput}"
-                                    Content="Parse json" />
-                        </ui:SimpleStackPanel>
-                    </ui:SimpleStackPanel>
-                </ScrollViewer>
-            </TabItem>
-            <TabItem Header="Properties">
-                <ui:TabItemHelper.Icon>
-                    <ui:FontIcon Glyph="&#xE946;" />
-                </ui:TabItemHelper.Icon>
-                <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
-                    <ui:SimpleStackPanel DataContext="{Binding Board.Form}"
-                                         IsEnabled="{Binding IsSet}"
-                                         Style="{StaticResource FormContainerStackPanelStyle}">
-                        <Label Content="General" Style="{StaticResource FormContentGroupStyle}" />
-                        <TextBox ui:ControlHelper.Header="Name" Text="{Binding Name.Value, Mode=TwoWay}" />
-                        <TextBox ui:ControlHelper.Header="Author" Text="{Binding Author.Value, Mode=TwoWay}" />
-                        <TextBox Height="150"
-                                 ui:ControlHelper.Header="Notes"
-                                 AcceptsReturn="True"
-                                 HorizontalScrollBarVisibility="Auto"
-                                 Text="{Binding Notes.Value, Mode=TwoWay}"
-                                 TextWrapping="Wrap"
-                                 VerticalScrollBarVisibility="Auto" />
-                    </ui:SimpleStackPanel>
-                </ScrollViewer>
-            </TabItem>
-            <TabItem Header="Board">
-                <ui:TabItemHelper.Icon>
-                    <ui:FontIcon Glyph="&#xE809;" />
-                </ui:TabItemHelper.Icon>
-                <a:TabItemHelper.Header>
-                    <TextBlock Style="{StaticResource FormTabItemGroupTextStyle}" Text="Layout" />
-                </a:TabItemHelper.Header>
-                <TabItem.Content>
-                    <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
-                        <ui:SimpleStackPanel DataContext="{Binding Board.Form}"
-                                             IsEnabled="{Binding IsSet}"
-                                             Style="{StaticResource FormContainerStackPanelStyle}">
-                            <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBox ui:ControlHelper.Header="Background" Text="{Binding Background.Value, Mode=TwoWay}" />
-                                <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
-                                    <ui:FontIcon Glyph="&#xE790;" />
-                                    <ui:FlyoutService.Flyout>
-                                        <ui:Flyout>
-                                            <color:ColorPicker SelectedHex="{Binding Background.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
-                                        </ui:Flyout>
-                                    </ui:FlyoutService.Flyout>
-                                </Button>
-                            </Grid>
-                        </ui:SimpleStackPanel>
-                    </ScrollViewer>
-                </TabItem.Content>
-            </TabItem>
-            <TabItem Header="Key">
-                <ui:TabItemHelper.Icon>
-                    <ui:FontIcon Glyph="&#xF158;" />
-                </ui:TabItemHelper.Icon>
-                <a:TabItemHelper.Footer>
-                    <DockPanel>
-                        <ui:HyperlinkButton DockPanel.Dock="Right" Padding="10">
-                            <ui:FontIcon FontSize="16" Glyph="&#xE109;" />
-                        </ui:HyperlinkButton>
-                        <TextBlock Style="{StaticResource FormTabItemGroupTextStyle}" Text="Layers" />
-                    </DockPanel>
-                </a:TabItemHelper.Footer>
-                <TabItem.Content>
-                    <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
-                        <ui:SimpleStackPanel DataContext="{Binding Board.KeyForm}"
-                                             IsEnabled="{Binding IsSet}"
-                                             Style="{StaticResource FormContainerStackPanelStyle}">
-                            <Label Content="Position" Style="{StaticResource FormContentGroupStyle}" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ui:NumberBox Grid.Column="0"
-                                              Header="X"
-                                              LargeChange="0.25"
-                                              Maximum="200"
-                                              Minimum="-200"
-                                              SmallChange="0.05"
-                                              Value="{Binding X.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                <ui:NumberBox Grid.Column="2"
-                                              Header="Y"
-                                              LargeChange="0.25"
-                                              Maximum="200"
-                                              Minimum="-200"
-                                              SmallChange="0.05"
-                                              Value="{Binding Y.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            </Grid>
-                            <Label Content="Shape" Style="{StaticResource FormContentGroupStyle}" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ui:NumberBox Grid.Column="0"
-                                              Header="Width"
-                                              LargeChange="0.25"
-                                              Maximum="20"
-                                              Minimum="0.25"
-                                              SmallChange="0.05"
-                                              Value="{Binding Width.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                <ui:NumberBox Grid.Column="2"
-                                              Header="Height"
-                                              LargeChange="0.25"
-                                              Maximum="20"
-                                              Minimum="0.25"
-                                              SmallChange="0.05"
-                                              Value="{Binding Height.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBox HorizontalContentAlignment="Left"
-                                         ui:ControlHelper.Header="Custom shape"
-                                         IsEnabled="{Binding UseShape.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}"
-                                         Text="{Binding Shape.Value, Mode=TwoWay}" />
-                                <CheckBox Grid.Column="2"
-                                          IsChecked="{Binding UseShape.Value, Mode=TwoWay}"
-                                          Style="{StaticResource FormEnableCheckBoxStyle}" />
-                            </Grid>
-                            <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource FormSpacing}">
-                                <Label Content="Stepped shape" Style="{StaticResource FormContentGroupStyle}" />
-                                <CheckBox Margin="0,-8"
-                                          IsChecked="{Binding IsStepped.Value, Mode=TwoWay}"
-                                          Style="{StaticResource FormEnableCheckBoxStyle}" />
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Left"
+                        MinWidth="150"
+                        Background="{DynamicResource TabViewBackground}">
+                <ListBox ItemsSource="{Binding Board.GeneralTabs}" Style="{StaticResource FormListBoxStyle}" />
+                <DockPanel Style="{StaticResource FormGroupDockPanelStyle}">
+                    <TextBlock Style="{StaticResource FormGroupTextStyle}" Text="Layout" />
+                </DockPanel>
+                <ListBox ItemsSource="{Binding Board.LayoutTabs}" Style="{StaticResource FormListBoxStyle}" />
+                <DockPanel Style="{StaticResource FormGroupDockPanelStyle}">
+                    <ui:HyperlinkButton Command="{Binding Board.SelectAllLayersCommand}"
+                                        Style="{StaticResource FormGroupButtonStyle}"
+                                        ToolTip="Select all">
+                        <ui:FontIcon FontSize="16" Glyph="&#xE762;" />
+                    </ui:HyperlinkButton>
+                    <ui:HyperlinkButton Command="{Binding Board.AddLayerCommand}"
+                                        Style="{StaticResource FormGroupButtonStyle}"
+                                        ToolTip="Add">
+                        <ui:FontIcon FontSize="16" Glyph="&#xE109;" />
+                    </ui:HyperlinkButton>
+                    <TextBlock VerticalAlignment="Bottom"
+                               Style="{StaticResource FormGroupTextStyle}"
+                               Text="Layers" />
+                </DockPanel>
+                <ListBox ItemsSource="{Binding Board.LayerTabs}"
+                         SelectionMode="Extended"
+                         Style="{StaticResource FormListBoxStyle}" />
+            </StackPanel>
+            <ContentControl x:Name="FooBar"
+                            DataContext="{Binding .}"
+                            Content="{Binding Board.CurrentForm}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type vmf:FileFormViewModel}">
+                        <ScrollViewer DataContext="{Binding DataContext, ElementName=FooBar}"
+                                      d:DataContext="{d:DesignInstance vm:MainViewModel}"
+                                      Style="{StaticResource FormContainerScrollViewerStyle}">
+                            <ui:SimpleStackPanel Style="{StaticResource FormContainerStackPanelStyle}">
+                                <Label Content="Keyboard" Style="{StaticResource FormContentGroupStyle}" />
+                                <ui:SplitButton VerticalAlignment="Top"
+                                                Command="{Binding NewKeyboardCommand}"
+                                                Content="New">
+                                    <ui:SplitButton.Flyout>
+                                        <ui:MenuFlyout Placement="BottomEdgeAlignedLeft">
+                                            <MenuItem Header="Standard" Style="{StaticResource GroupMenuItemStyle}" />
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ANSI 104">
+                                                <MenuItem.CommandParameter>
+                                                    [{a:7},&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.25},&quot;&quot;,{x:3.5},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:2.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;,{x:1.25},&quot;&quot;,{x:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:2},&quot;&quot;,&quot;&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ISO 105">
+                                                <MenuItem.CommandParameter>
+                                                    [{a:7},&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:0.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:4.75},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;,{x:1.25},&quot;&quot;,{x:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{h:2},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{x:0.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:2},&quot;&quot;,&quot;&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ANSI 60%">
+                                                <MenuItem.CommandParameter>
+                                                    [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:1.5},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.25},&quot;&quot;], [{w:2.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ISO 60%">
+                                                <MenuItem.CommandParameter>
+                                                    [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;], [{w:1.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,w:1.25,h:2,w2:1.5,h2:1,x2:-0.25},&quot;&quot;], [{w:1.75},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{w:1.25},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2.75},&quot;&quot;], [{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:6.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;,{w:1.25},&quot;&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Header="Matrix" Style="{StaticResource GroupMenuItemStyle}" />
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Planck">
+                                                <MenuItem.CommandParameter>
+                                                    [{a:7},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{w:2},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Header="Split" Style="{StaticResource GroupMenuItemStyle}" />
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Atreus">
+                                                <MenuItem.CommandParameter>
+                                                    [{r:10,rx:1,y:-0.1,x:2,a:7},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{y:-0.75,x:5,h:1.5},&quot;&quot;], [{y:-0.95,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75},&quot;&quot;], [{y:-0.9,x:4},&quot;&quot;], [{r:-10,rx:7,ry:0.965,y:-0.2,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;], [{y:-0.7,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;], [{y:-0.75,x:-1,h:1.5},&quot;&quot;], [{y:-0.95,x:2},&quot;&quot;], [{y:-0.65,x:1},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:4},&quot;&quot;], [{y:-0.9},&quot;&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="ErgoDox">
+                                                <MenuItem.CommandParameter>
+                                                    [{x:3.5,a:7},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,&quot;&quot;,{x:4.5},&quot;&quot;,&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,{h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;,&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,{x:6.5},&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.625,x:6.5,h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;], [{y:-0.75,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.875,x:5.5},&quot;&quot;,{x:6.5},&quot;&quot;], [{y:-0.875,w:1.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,{w:1.5},&quot;&quot;], [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;], [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.75,x:0.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,&quot;&quot;], [{r:30,rx:6.5,ry:4.25,y:-1,x:1},&quot;&quot;,&quot;&quot;], [{h:2},&quot;&quot;,{h:2},&quot;&quot;,&quot;&quot;], [{x:2},&quot;&quot;], [{r:-30,rx:13,y:-1,x:-3},&quot;&quot;,&quot;&quot;], [{x:-3},&quot;&quot;,{h:2},&quot;&quot;,{h:2},&quot;&quot;], [{x:-3},&quot;&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Kinesis Advantage">
+                                                <MenuItem.CommandParameter>
+                                                    [{a:7,f:1,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:4.825,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;,{x:0.075,w:0.675,h:0.85},&quot;&quot;], [{x:2.25,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:-0.75,w:1.25},&quot;&quot;,&quot;&quot;,{x:13.5},&quot;&quot;,{w:1.25},&quot;&quot;], [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:-0.75,f:3,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5},&quot;&quot;,{f:3,w:1.25},&quot;&quot;], [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:-0.75,f:3,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5,f:3},&quot;&quot;,{w:1.25},&quot;&quot;], [{y:-0.25,x:2.25,f:6},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:5.5},&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;,&quot;&quot;], [{y:-0.75,w:1.25},&quot;&quot;,{f:6},&quot;&quot;,{x:13.5,f:3},&quot;&quot;,{w:1.25},&quot;&quot;], [{y:-0.25,x:2.25},&quot;&quot;,{f:5},&quot;&quot;,&quot;&quot;,{x:7.5},&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;], [{y:-0.75,x:1.25},&quot;&quot;,{x:13.5},&quot;&quot;], [{r:15,rx:5.25,ry:4,x:1.5},&quot;&quot;,&quot;&quot;], [{x:0.5,h:2},&quot;&quot;,{h:2},&quot;&quot;,&quot;&quot;], [{x:2.5},&quot;&quot;], [{r:-15,rx:12.75,x:-3.5},&quot;&quot;,&quot;&quot;], [{x:-3.5},&quot;&quot;,{h:2},&quot;&quot;,{h:2},&quot;&quot;], [{x:-3.5},&quot;&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Programmer's Keyboard">
+                                                <MenuItem.CommandParameter>
+                                                    [{y:0.38,x:1.25,c:&quot;#857eb1&quot;,a:7,f:6},&quot;&quot;,{c:&quot;#b81b24&quot;,f:5},&quot;&quot;,&quot;&quot;,{x:0.75,c:&quot;#d9dae0&quot;,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:1},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.75,c:&quot;#857eb1&quot;,f:5},&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:3},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;], [{y:0.75,x:9.5,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:9.5},&quot;&quot;,{c:&quot;#95bfe8&quot;,t:&quot;#7f007f&quot;,f:2},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;,t:&quot;#000000&quot;},&quot;&quot;], [{x:9.5,c:&quot;#95bfe8&quot;,t:&quot;#7f007f&quot;,f:3},&quot;&quot;,&quot;&quot;,{f:2},&quot;&quot;,&quot;&quot;,&quot;&quot;], [{y:0.25,x:9.5,c:&quot;#c4c8c5&quot;,t:&quot;#000000&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{f:3},&quot;&quot;], [{y:0,x:9.5},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{f:5},&quot;&quot;], [{r:15,y:-8.53,x:3,c:&quot;#c7c3b4&quot;,f:3},&quot;&quot;], [{y:-1,x:4},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,f:9,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;,f:3},&quot;&quot;,&quot;&quot;,&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#00833e&quot;,t:&quot;#00000&quot;,h:2},&quot;&quot;], [{x:2.5,c:&quot;#c4c8c5&quot;,t:&quot;#000000&quot;,w:1.5},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;,{c:&quot;#45b866&quot;},&quot;&quot;,{c:&quot;#857eb1&quot;,f:5,w:1.5},&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:3,w:1.5},&quot;&quot;], [{x:4,c:&quot;#45b866&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{x:0.25,c:&quot;#e5dbca&quot;,w:2.75},&quot;&quot;], [{r:-15,y:0.18,x:14.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;], [{y:0,x:13.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;], [{x:13.15,c:&quot;#c7c3b4&quot;},&quot;&quot;,{c:&quot;#e5dbca&quot;},&quot;&quot;,{n:true},&quot;&quot;,&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c4c8c5&quot;,f:9,w:1.5},&quot;&quot;], [{x:13.15,c:&quot;#00833e&quot;,f:5,h:2},&quot;&quot;,{c:&quot;#e5dbca&quot;,f:3},&quot;&quot;,&quot;&quot;,{c:&quot;#c7c3b4&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;], [{x:14.15,c:&quot;#909596&quot;,w:1.5},&quot;&quot;,{c:&quot;#857eb1&quot;,f:5,w:1.5},&quot;&quot;,{c:&quot;#45b866&quot;,f:3},&quot;&quot;,{c:&quot;#857eb1&quot;},&quot;&quot;,{c:&quot;#c4c8c5&quot;,w:1.5},&quot;&quot;], [{x:13.13,c:&quot;#e5dbca&quot;,w:2.75},&quot;&quot;,{x:0.27,c:&quot;#45b866&quot;},&quot;&quot;,&quot;&quot;,&quot;&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Klave rev1">
+                                                <MenuItem.CommandParameter>
+                                                    [{x:3,p:&quot;SA&quot;,a:7},&quot;&quot;,{x:9},&quot;&quot;], [{y:-0.75,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4,n:true},&quot;&quot;,{x:7,n:true},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:1},&quot;&quot;,{x:9},&quot;&quot;,{x:1},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{y:-0.85,x:2},&quot;&quot;,{x:11},&quot;&quot;], [{y:-0.85,x:4},&quot;&quot;,{x:7},&quot;&quot;], [{y:-0.9,x:5},&quot;&quot;,{x:5},&quot;&quot;], [{y:-0.5,x:1},&quot;&quot;,{x:13},&quot;&quot;], [{y:-0.9},&quot;&quot;,{x:15},&quot;&quot;], [{rx:3.95,ry:9.4,y:-5,x:-1.5},&quot;&quot;,&quot;&quot;], [{rx:13.05,y:-5,x:-0.5},&quot;&quot;,&quot;&quot;], [{r:14,rx:3.95,y:-5,x:-0.5},&quot;&quot;], [{r:28,y:-2,x:-0.5},&quot;&quot;,&quot;&quot;], [{x:-0.5},&quot;&quot;,&quot;&quot;], [{r:-28,rx:13.05,y:-6,x:-1.5},&quot;&quot;,&quot;&quot;], [{x:-1.5},&quot;&quot;,&quot;&quot;], [{r:-14,y:-1,x:-0.5},&quot;&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                            <MenuItem Header="Other" Style="{StaticResource GroupMenuItemStyle}" />
+                                            <MenuItem Command="{Binding ParseKleRawDataCommand}" Header="Rekog">
+                                                <MenuItem.CommandParameter>
+                                                    [{p:&quot;FLAT&quot;,a:7,f:9,n:true},&quot;A&quot;,{c:&quot;#ffffff&quot;,t:&quot;#0ca800&quot;,f:1},&quot;B&quot;,{c:&quot;#cccccc&quot;,t:&quot;#000000&quot;,f:3,fa:[1]},&quot;C&quot;,{f:3,n:true},&quot;D&quot;,{t:&quot;#000000\n\n\n#d91c1c\n\n\n\n\n#201cd9&quot;,a:4,fa:[1,0,0,9,0,0,0,0,4]},&quot;\n\n\ne\n\n\n\n\ně\nE&quot;,{t:&quot;#000000&quot;,g:true,a:3,f:3,n:true},&quot;FX\n\n\n\nuxx2&quot;], [{t:&quot;#000000\n\n\n#aa07f5\n\n#a824d6\n#ffd600\n\n\n\n\n#a624d4&quot;,g:false,a:0,f:7,w:1.5},&quot;0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11&quot;], [{y:-0.75,x:4.75,t:&quot;#000000&quot;,f:3,w:1.25,w2:1.75,x2:-0.25,l:true},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n+\n+&quot;], [{y:-0.5,x:2,a:5,d:true},&quot;WUT&quot;], [{y:-0.75,a:0,f:6,n:true},&quot;A\nB\nC\nD\n\nok&quot;], [{y:-0.5,x:7.25,p:&quot;CHICKLET&quot;,a:7,f:3,w:1.25,w2:1.75,l:true},&quot;&quot;], [{r:15,h:0.5},&quot;&quot;], [{rx:5,ry:3,y:-0.5,h:1.5},&quot;&quot;,&quot;&quot;], [{x:1,w:1.25},&quot;&quot;], [{r:-15,rx:1,ry:2,y:0.5,x:1.5,c:&quot;#a5a5a5&quot;,a:0,w:1.5,h:2,w2:2.25,h2:1,x2:-0.5,y2:0.75,n:true,l:true},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@&quot;], [{rx:8,y:-1.5,x:0.75,w:2.25,h:1.25,w2:1.5,h2:2.5,x2:0.25,y2:-0.5},&quot;+\n+\n+\n+\n+\n+\n+\n+\n+\n@\n+\n+&quot;]
+                                                </MenuItem.CommandParameter>
+                                            </MenuItem>
+                                        </ui:MenuFlyout>
+                                    </ui:SplitButton.Flyout>
+                                </ui:SplitButton>
+                                <Label Content="KLE" Style="{StaticResource FormContentGroupStyle}" />
+                                <StackPanel>
+                                    <Label Content="Input" Style="{StaticResource FormContentHeaderStyle}" />
+                                    <TextBox x:Name="KleInput"
+                                             Height="100"
+                                             AcceptsReturn="True"
+                                             FontFamily="{StaticResource MonospaceFontFamily}"
+                                             HorizontalScrollBarVisibility="Auto"
+                                             TextWrapping="NoWrap"
+                                             VerticalScrollBarVisibility="Auto">
+                                        <TextBox.InputBindings>
+                                            <KeyBinding Key="Enter"
+                                                        Command="{Binding ParseKleRawDataCommand}"
+                                                        CommandParameter="{Binding Text, ElementName=KleInput}"
+                                                        Modifiers="Ctrl" />
+                                        </TextBox.InputBindings>
+                                        <TextBox.Text>
+                                            [{x:3.5,c:&quot;#f5f5f5&quot;},&quot;#\n3&quot;,{x:10.5},&quot;*\n8&quot;],
+                                            [{y:-0.875,x:2.5},&quot;@\n2&quot;,{x:1},&quot;$\n4&quot;,{x:8.5},&quot;Oops\n7&quot;,{x:1},&quot;(\n9&quot;],
+                                            [{y:-0.875,x:5.5},&quot;%\n5&quot;,{a:7},&quot;&quot;,{x:4.5},&quot;&quot;,{a:4},&quot;^\n6&quot;],
+                                            [{y:-0.875,a:7,f:7,w:1.5},&quot;ESC&quot;,{a:4,f:3},&quot;!\n1&quot;,{x:14.5},&quot;)\n0&quot;,{a:7,w:1.5},&quot;&quot;],
+                                            [{y:-0.375,x:3.5,a:4},&quot;E&quot;,{x:10.5},&quot;I&quot;],
+                                            [{y:-0.875,x:2.5},&quot;W&quot;,{x:1},&quot;R&quot;,{x:8.5},&quot;U&quot;,{x:1},&quot;O&quot;],
+                                            [{y:-0.875,x:5.5},&quot;T&quot;,{a:0,h:1.5},&quot;1\n7\n3\n9\n10\n12\n4\n6\n2\n5\n8\n11&quot;,{x:4.5,a:7,h:1.5},&quot;&quot;,{a:4},&quot;Y&quot;],
+                                            [{y:-0.875,a:7,w:1.5},&quot;&quot;,{a:4},&quot;Q&quot;,{x:14.5},&quot;P&quot;,{a:7,w:1.5},&quot;&quot;],
+                                            [{y:-0.375,x:3.5,a:4},&quot;D&quot;,{x:10.5},&quot;K&quot;],
+                                            [{y:-0.875,x:2.5},&quot;S&quot;,{x:1},&quot;F&quot;,{x:8.5},&quot;J&quot;,{x:1},&quot;L&quot;],
+                                            [{y:-0.875,x:5.5},&quot;G&quot;,{x:6.5},&quot;H&quot;],
+                                            [{y:-0.875,w2:1.5,l:true},&quot;Tab&quot;,{x:0.5},&quot;A&quot;,{x:14.5},&quot;:\n;&quot;,{a:7,w:1.5},&quot;&quot;],
+                                            [{y:-0.625,x:6.5,h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;],
+                                            [{y:-0.75,x:3.5,a:4},&quot;C&quot;,{x:10.5},&quot;\n,&quot;],
+                                            [{y:-0.875,x:2.5},&quot;X&quot;,{x:1},&quot;V&quot;,{x:8.5},&quot;M&quot;,{x:1},&quot;\n.&quot;],
+                                            [{y:-0.875,x:5.5},&quot;B&quot;,{x:6.5},&quot;N&quot;],
+                                            [{y:-0.875,a:7,w:1.5},&quot;Shift&quot;,{a:4},&quot;Z&quot;,{x:14.5},&quot;?\n/&quot;,{a:7,w:1.5},&quot;&quot;],
+                                            [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;],
+                                            [{y:-0.875,x:2.5},&quot;\n\n\n\nHidden&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;],
+                                            [{y:-0.75,x:0.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,&quot;&quot;],
+                                            [{r:30,rx:6.5,ry:4.25,y:-1,x:1},&quot;&quot;,&quot;&quot;],
+                                            [{c:&quot;#e0cbcb&quot;,h:2},&quot;&quot;,{x:1,c:&quot;#f5f5f5&quot;},&quot;&quot;],
+                                            [{y:-0.5,x:1.25,w:0.5,w2:1,h2:2,x2:-0.25,y2:-0.5,l:true},&quot;&quot;],
+                                            [{y:-0.5,x:2},&quot;&quot;],
+                                            [{r:-30,rx:13,y:-1,x:-3},&quot;&quot;,&quot;&quot;],
+                                            [{x:-3},&quot;&quot;,{a:0,h:2,w2:2,h2:1,x2:-1,y2:1},&quot;\nTest\n\n\nALIGNMENT&quot;,{a:7,h:2},&quot;&quot;]
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </StackPanel>
+                                <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource FormSpacing}">
+                                    <Button HorizontalAlignment="Stretch"
+                                            Command="{Binding ParseKleRawDataCommand}"
+                                            CommandParameter="{Binding Text, ElementName=KleInput}"
+                                            Content="Parse raw data" />
+                                    <Button HorizontalAlignment="Stretch"
+                                            Command="{Binding ParseKleJsonCommand}"
+                                            CommandParameter="{Binding Text, ElementName=KleInput}"
+                                            Content="Parse json" />
+                                </ui:SimpleStackPanel>
                             </ui:SimpleStackPanel>
-                            <ui:SimpleStackPanel IsEnabled="{Binding IsStepped.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}" Spacing="{StaticResource FormSpacing}">
+                        </ScrollViewer>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmf:PropertiesFormViewModel}">
+                        <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
+                            <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
+                                <Label Content="General" Style="{StaticResource FormContentGroupStyle}" />
+                                <TextBox ui:ControlHelper.Header="Name" Text="{Binding Name.Value, Mode=TwoWay}" />
+                                <TextBox ui:ControlHelper.Header="Author" Text="{Binding Author.Value, Mode=TwoWay}" />
+                                <TextBox Height="150"
+                                         ui:ControlHelper.Header="Notes"
+                                         AcceptsReturn="True"
+                                         HorizontalScrollBarVisibility="Auto"
+                                         Text="{Binding Notes.Value, Mode=TwoWay}"
+                                         TextWrapping="Wrap"
+                                         VerticalScrollBarVisibility="Auto" />
+                            </ui:SimpleStackPanel>
+                        </ScrollViewer>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmf:BoardFormViewModel}">
+                        <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
+                            <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
+                                <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox ui:ControlHelper.Header="Background" Text="{Binding Background.Value, Mode=TwoWay}" />
+                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
+                                        <ui:FontIcon Glyph="&#xE790;" />
+                                        <ui:FlyoutService.Flyout>
+                                            <ui:Flyout AreOpenCloseAnimationsEnabled="False">
+                                                <color:ColorPicker SelectedHex="{Binding Background.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
+                                            </ui:Flyout>
+                                        </ui:FlyoutService.Flyout>
+                                    </Button>
+                                </Grid>
+                            </ui:SimpleStackPanel>
+                        </ScrollViewer>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmf:KeyFormViewModel}">
+                        <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
+                            <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
+                                <Label Content="Position" Style="{StaticResource FormContentGroupStyle}" />
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -460,20 +447,49 @@
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <ui:NumberBox Grid.Column="0"
-                                                  Header="Offset X"
+                                                  Header="X"
                                                   LargeChange="0.25"
                                                   Maximum="200"
                                                   Minimum="-200"
                                                   SmallChange="0.05"
-                                                  Value="{Binding SteppedOffsetX.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                                  Value="{Binding X.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                                     <ui:NumberBox Grid.Column="2"
-                                                  Header="Offset Y"
+                                                  Header="Y"
                                                   LargeChange="0.25"
                                                   Maximum="200"
                                                   Minimum="-200"
                                                   SmallChange="0.05"
-                                                  Value="{Binding SteppedOffsetY.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                                  Value="{Binding Y.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                                 </Grid>
+                                <Label Content="Rotation" Style="{StaticResource FormContentGroupStyle}" />
+                                <ui:NumberBox Header="Angle"
+                                              LargeChange="5"
+                                              Maximum="360"
+                                              Minimum="-360"
+                                              SmallChange="1"
+                                              Value="{Binding RotationAngle.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ui:NumberBox Grid.Column="0"
+                                                  Header="Origin X"
+                                                  LargeChange="0.25"
+                                                  Maximum="200"
+                                                  Minimum="-200"
+                                                  SmallChange="0.05"
+                                                  Value="{Binding RotationOriginX.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    <ui:NumberBox Grid.Column="2"
+                                                  Header="Origin Y"
+                                                  LargeChange="0.25"
+                                                  Maximum="200"
+                                                  Minimum="-200"
+                                                  SmallChange="0.05"
+                                                  Value="{Binding RotationOriginY.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                </Grid>
+                                <Label Content="Shape" Style="{StaticResource FormContentGroupStyle}" />
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -486,14 +502,14 @@
                                                   Maximum="20"
                                                   Minimum="0.25"
                                                   SmallChange="0.05"
-                                                  Value="{Binding SteppedWidth.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                                  Value="{Binding Width.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                                     <ui:NumberBox Grid.Column="2"
                                                   Header="Height"
                                                   LargeChange="0.25"
                                                   Maximum="20"
                                                   Minimum="0.25"
                                                   SmallChange="0.05"
-                                                  Value="{Binding SteppedHeight.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                                  Value="{Binding Height.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                                 </Grid>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -501,255 +517,272 @@
                                         <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBox ui:ControlHelper.Header="Custom shape"
-                                             IsEnabled="{Binding UseSteppedShape.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}"
-                                             Text="{Binding SteppedShape.Value, Mode=TwoWay}" />
+                                    <TextBox HorizontalContentAlignment="Left"
+                                             ui:ControlHelper.Header="Custom shape"
+                                             IsEnabled="{Binding UseShape.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}"
+                                             Text="{Binding Shape.Value, Mode=TwoWay}" />
                                     <CheckBox Grid.Column="2"
-                                              IsChecked="{Binding UseSteppedShape.Value, Mode=TwoWay}"
+                                              IsChecked="{Binding UseShape.Value, Mode=TwoWay}"
                                               Style="{StaticResource FormEnableCheckBoxStyle}" />
                                 </Grid>
-                            </ui:SimpleStackPanel>
-                            <Label Content="Rotation" Style="{StaticResource FormContentGroupStyle}" />
-                            <ui:NumberBox Header="Angle"
-                                          LargeChange="5"
-                                          Maximum="360"
-                                          Minimum="-360"
-                                          SmallChange="1"
-                                          Value="{Binding RotationAngle.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ui:NumberBox Grid.Column="0"
-                                              Header="Origin X"
-                                              LargeChange="0.25"
-                                              Maximum="200"
-                                              Minimum="-200"
-                                              SmallChange="0.05"
-                                              Value="{Binding RotationOriginX.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                <ui:NumberBox Grid.Column="2"
-                                              Header="Origin Y"
-                                              LargeChange="0.25"
-                                              Maximum="200"
-                                              Minimum="-200"
-                                              SmallChange="0.05"
-                                              Value="{Binding RotationOriginY.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            </Grid>
-                            <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
-                                <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
-                                    <ui:FontIcon Glyph="&#xE790;" />
-                                    <ui:FlyoutService.Flyout>
-                                        <ui:Flyout>
-                                            <color:ColorPicker SelectedHex="{Binding Color.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
-                                        </ui:Flyout>
-                                    </ui:FlyoutService.Flyout>
-                                </Button>
-                            </Grid>
-                            <ui:NumberBox Header="Roundness"
-                                          LargeChange="0.025"
-                                          Maximum="0.2"
-                                          Minimum="0"
-                                          SmallChange="0.005"
-                                          Value="{Binding Roundness.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ui:NumberBox Grid.Column="0"
-                                              Header="Margin"
-                                              LargeChange="0.025"
-                                              Maximum="0.2"
-                                              Minimum="0"
-                                              SmallChange="0.005"
-                                              Value="{Binding Margin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                <ui:NumberBox Grid.Column="2"
-                                              Header="Padding"
-                                              LargeChange="0.025"
-                                              Maximum="0.2"
-                                              Minimum="0"
-                                              SmallChange="0.005"
-                                              Value="{Binding Padding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ui:NumberBox Grid.Column="0"
-                                              VerticalAlignment="Bottom"
-                                              Header="Inner vertical offset"
-                                              LargeChange="0.025"
-                                              Maximum="0.1"
-                                              Minimum="-0.1"
-                                              SmallChange="0.005"
-                                              Value="{Binding InnerVerticalOffset.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                <ui:NumberBox Grid.Column="2"
-                                              VerticalAlignment="Bottom"
-                                              Header="Inner padding"
-                                              LargeChange="0.025"
-                                              Maximum="0.2"
-                                              Minimum="0"
-                                              SmallChange="0.005"
-                                              Value="{Binding InnerPadding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            </Grid>
-                            <CheckBox Content="Round concave corner" IsChecked="{Binding RoundConcaveCorner.Value, Mode=TwoWay}" />
-                            <Label Content="Misc" Style="{StaticResource FormContentGroupStyle}" />
-                            <StackPanel>
-                                <CheckBox Content="Homing" IsChecked="{Binding IsHoming.Value, Mode=TwoWay}" />
-                                <CheckBox Content="Decal" IsChecked="{Binding IsDecal.Value, Mode=TwoWay}" />
-                                <CheckBox Content="Ghosted" IsChecked="{Binding IsGhosted.Value, Mode=TwoWay}" />
-                            </StackPanel>
-                        </ui:SimpleStackPanel>
-                    </ScrollViewer>
-                </TabItem.Content>
-            </TabItem>
-            <TabItem Header="Top left">
-                <ui:TabItemHelper.Icon>
-                    <ui:FontIcon Glyph="&#xE81E;" />
-                </ui:TabItemHelper.Icon>
-                <TabItem.Content>
-                    <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
-                        <ui:SimpleStackPanel DataContext="{Binding Board.LegendForm}"
-                                             IsEnabled="{Binding IsSet}"
-                                             Style="{StaticResource FormContainerStackPanelStyle}">
-                            <Label Content="Legend" Style="{StaticResource FormContentGroupStyle}" />
-                            <TextBox ui:ControlHelper.Header="Value" Text="{Binding Value.Value, Mode=TwoWay}" />
-                            <Label Content="Layout" Style="{StaticResource FormContentGroupStyle}" />
-                            <StackPanel>
-                                <Label Content="Alignment" Style="{StaticResource FormContentHeaderStyle}" />
-                                <c:LegendAlignmentPicker Alignment="{Binding Alignment.Value, Mode=TwoWay}" AllowNull="True" />
-                            </StackPanel>
-                            <Label Content="Margin" Style="{StaticResource FormContentGroupStyle}" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ui:NumberBox Grid.Column="0"
-                                              Header="Left"
-                                              LargeChange="0.05"
-                                              Maximum="20"
-                                              Minimum="-20"
-                                              SmallChange="0.01"
-                                              Value="{Binding Left.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                <ui:NumberBox Grid.Column="2"
-                                              Header="Right"
-                                              LargeChange="0.05"
-                                              Maximum="20"
-                                              Minimum="-20"
-                                              SmallChange="0.01"
-                                              Value="{Binding Right.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            </Grid>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ui:NumberBox Grid.Column="0"
-                                              Header="Top"
-                                              LargeChange="0.05"
-                                              Maximum="20"
-                                              Minimum="-20"
-                                              SmallChange="0.01"
-                                              Value="{Binding Top.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                <ui:NumberBox Grid.Column="2"
-                                              Header="Bottom"
-                                              LargeChange="0.05"
-                                              Maximum="20"
-                                              Minimum="-20"
-                                              SmallChange="0.01"
-                                              Value="{Binding Bottom.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                            </Grid>
-                            <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
-                                <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
-                                    <ui:FontIcon Glyph="&#xE790;" />
-                                    <ui:FlyoutService.Flyout>
-                                        <ui:Flyout>
-                                            <color:ColorPicker SelectedHex="{Binding Color.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
-                                        </ui:Flyout>
-                                    </ui:FlyoutService.Flyout>
-                                </Button>
-                            </Grid>
-                            <ComboBox HorizontalAlignment="Stretch"
-                                      ui:ControlHelper.Header="Font"
-                                      ItemTemplate="{DynamicResource FontTemplate}"
-                                      SelectedValue="{Binding Font.Value, Mode=TwoWay, Converter={StaticResource StringToFontFamilyConverter}}">
-                                <ComboBox.Resources>
-                                    <CollectionViewSource x:Key="SystemFontFamilies" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
-                                        <CollectionViewSource.SortDescriptions>
-                                            <cm:SortDescription PropertyName="Source" />
-                                        </CollectionViewSource.SortDescriptions>
-                                    </CollectionViewSource>
-                                    <DataTemplate x:Key="FontTemplate" DataType="{x:Type FontFamily}">
-                                        <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
-                                            <TextBlock FontFamily="{Binding Source}"
-                                                       FontSize="16"
-                                                       Text="{Binding Source}"
-                                                       ToolTip="{Binding Source}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.Resources>
-                                <ComboBox.ItemsSource>
-                                    <Binding Source="{StaticResource SystemFontFamilies}" />
-                                </ComboBox.ItemsSource>
-                            </ComboBox>
-                            <StackPanel>
-                                <Label Content="Size" Style="{StaticResource FormContentHeaderStyle}" />
                                 <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource FormSpacing}">
-                                    <ui:NumberBox Width="100"
-                                                  LargeChange="0.4"
-                                                  Maximum="96"
-                                                  Minimum="4"
-                                                  SmallChange="1"
-                                                  Value="{Binding Size.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
-                                    <ToggleButton IsChecked="{Binding Bold.Value}">
-                                        <ui:FontIcon Glyph="&#xE8DD;" />
-                                    </ToggleButton>
-                                    <ToggleButton IsChecked="{Binding Italic.Value}">
-                                        <ui:FontIcon Glyph="&#xE8DB;" />
-                                    </ToggleButton>
-                                    <ToggleButton Visibility="Collapsed">
-                                        <ui:FontIcon Glyph="&#xE8DC;" />
-                                    </ToggleButton>
+                                    <Label Content="Stepped shape" Style="{StaticResource FormContentGroupStyle}" />
+                                    <CheckBox Margin="0,-8"
+                                              IsChecked="{Binding IsStepped.Value, Mode=TwoWay}"
+                                              Style="{StaticResource FormEnableCheckBoxStyle}" />
                                 </ui:SimpleStackPanel>
-                            </StackPanel>
-                        </ui:SimpleStackPanel>
-                    </ScrollViewer>
-                </TabItem.Content>
-            </TabItem>
-            <TabItem Header="Top center">
-                <ui:TabItemHelper.Icon>
-                    <ui:FontIcon Glyph="&#xE81E;" />
-                </ui:TabItemHelper.Icon>
-                <ScrollViewer />
-            </TabItem>
-            <TabItem Header="Bottom center">
-                <ui:TabItemHelper.Icon>
-                    <ui:FontIcon Glyph="&#xE81E;" />
-                </ui:TabItemHelper.Icon>
-                <ScrollViewer />
-            </TabItem>
-        </TabControl>
+                                <ui:SimpleStackPanel IsEnabled="{Binding IsStepped.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}" Spacing="{StaticResource FormSpacing}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:NumberBox Grid.Column="0"
+                                                      Header="Offset X"
+                                                      LargeChange="0.25"
+                                                      Maximum="200"
+                                                      Minimum="-200"
+                                                      SmallChange="0.05"
+                                                      Value="{Binding SteppedOffsetX.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                        <ui:NumberBox Grid.Column="2"
+                                                      Header="Offset Y"
+                                                      LargeChange="0.25"
+                                                      Maximum="200"
+                                                      Minimum="-200"
+                                                      SmallChange="0.05"
+                                                      Value="{Binding SteppedOffsetY.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+                                        <ui:NumberBox Grid.Column="0"
+                                                      Header="Width"
+                                                      LargeChange="0.25"
+                                                      Maximum="20"
+                                                      Minimum="0.25"
+                                                      SmallChange="0.05"
+                                                      Value="{Binding SteppedWidth.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                        <ui:NumberBox Grid.Column="2"
+                                                      Header="Height"
+                                                      LargeChange="0.25"
+                                                      Maximum="20"
+                                                      Minimum="0.25"
+                                                      SmallChange="0.05"
+                                                      Value="{Binding SteppedHeight.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    </Grid>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox ui:ControlHelper.Header="Custom shape"
+                                                 IsEnabled="{Binding UseSteppedShape.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}"
+                                                 Text="{Binding SteppedShape.Value, Mode=TwoWay}" />
+                                        <CheckBox Grid.Column="2"
+                                                  IsChecked="{Binding UseSteppedShape.Value, Mode=TwoWay}"
+                                                  Style="{StaticResource FormEnableCheckBoxStyle}" />
+                                    </Grid>
+                                </ui:SimpleStackPanel>
+                                <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
+                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
+                                        <ui:FontIcon Glyph="&#xE790;" />
+                                        <ui:FlyoutService.Flyout>
+                                            <ui:Flyout AreOpenCloseAnimationsEnabled="False">
+                                                <color:ColorPicker SelectedHex="{Binding Color.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
+                                            </ui:Flyout>
+                                        </ui:FlyoutService.Flyout>
+                                    </Button>
+                                </Grid>
+                                <ui:NumberBox Header="Roundness"
+                                              LargeChange="0.025"
+                                              Maximum="0.2"
+                                              Minimum="0"
+                                              SmallChange="0.005"
+                                              Value="{Binding Roundness.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ui:NumberBox Grid.Column="0"
+                                                  Header="Margin"
+                                                  LargeChange="0.025"
+                                                  Maximum="0.2"
+                                                  Minimum="0"
+                                                  SmallChange="0.005"
+                                                  Value="{Binding Margin.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    <ui:NumberBox Grid.Column="2"
+                                                  Header="Padding"
+                                                  LargeChange="0.025"
+                                                  Maximum="0.2"
+                                                  Minimum="0"
+                                                  SmallChange="0.005"
+                                                  Value="{Binding Padding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ui:NumberBox Grid.Column="0"
+                                                  VerticalAlignment="Bottom"
+                                                  Header="Inner vertical offset"
+                                                  LargeChange="0.025"
+                                                  Maximum="0.1"
+                                                  Minimum="-0.1"
+                                                  SmallChange="0.005"
+                                                  Value="{Binding InnerVerticalOffset.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    <ui:NumberBox Grid.Column="2"
+                                                  VerticalAlignment="Bottom"
+                                                  Header="Inner padding"
+                                                  LargeChange="0.025"
+                                                  Maximum="0.2"
+                                                  Minimum="0"
+                                                  SmallChange="0.005"
+                                                  Value="{Binding InnerPadding.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                </Grid>
+                                <CheckBox Content="Round concave corner" IsChecked="{Binding RoundConcaveCorner.Value, Mode=TwoWay}" />
+                                <Label Content="Misc" Style="{StaticResource FormContentGroupStyle}" />
+                                <StackPanel>
+                                    <CheckBox Content="Homing" IsChecked="{Binding IsHoming.Value, Mode=TwoWay}" />
+                                    <CheckBox Content="Decal" IsChecked="{Binding IsDecal.Value, Mode=TwoWay}" />
+                                    <CheckBox Content="Ghosted" IsChecked="{Binding IsGhosted.Value, Mode=TwoWay}" />
+                                </StackPanel>
+                            </ui:SimpleStackPanel>
+                        </ScrollViewer>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmf:LegendFormViewModel}">
+                        <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
+                            <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
+                                <Label Content="Legend" Style="{StaticResource FormContentGroupStyle}" />
+                                <TextBox ui:ControlHelper.Header="Value" Text="{Binding Value.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Label Content="Layout" Style="{StaticResource FormContentGroupStyle}" />
+                                <StackPanel>
+                                    <Label Content="Alignment" Style="{StaticResource FormContentHeaderStyle}" />
+                                    <c:LegendAlignmentPicker Alignment="{Binding Alignment.Value, Mode=TwoWay}" AllowNull="True" />
+                                </StackPanel>
+                                <Label Content="Margin" Style="{StaticResource FormContentGroupStyle}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ui:NumberBox Grid.Column="0"
+                                                  Header="Left"
+                                                  LargeChange="0.05"
+                                                  Maximum="20"
+                                                  Minimum="-20"
+                                                  SmallChange="0.01"
+                                                  Value="{Binding Left.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    <ui:NumberBox Grid.Column="2"
+                                                  Header="Right"
+                                                  LargeChange="0.05"
+                                                  Maximum="20"
+                                                  Minimum="-20"
+                                                  SmallChange="0.01"
+                                                  Value="{Binding Right.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <ui:NumberBox Grid.Column="0"
+                                                  Header="Top"
+                                                  LargeChange="0.05"
+                                                  Maximum="20"
+                                                  Minimum="-20"
+                                                  SmallChange="0.01"
+                                                  Value="{Binding Top.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                    <ui:NumberBox Grid.Column="2"
+                                                  Header="Bottom"
+                                                  LargeChange="0.05"
+                                                  Maximum="20"
+                                                  Minimum="-20"
+                                                  SmallChange="0.01"
+                                                  Value="{Binding Bottom.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                </Grid>
+                                <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
+                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}">
+                                        <ui:FontIcon Glyph="&#xE790;" />
+                                        <ui:FlyoutService.Flyout>
+                                            <ui:Flyout AreOpenCloseAnimationsEnabled="False">
+                                                <color:ColorPicker SelectedHex="{Binding Color.Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
+                                            </ui:Flyout>
+                                        </ui:FlyoutService.Flyout>
+                                    </Button>
+                                </Grid>
+                                <ComboBox HorizontalAlignment="Stretch"
+                                          ui:ControlHelper.Header="Font"
+                                          ItemTemplate="{DynamicResource FontTemplate}"
+                                          SelectedValue="{Binding Font.Value, Mode=TwoWay, Converter={StaticResource StringToFontFamilyConverter}}">
+                                    <ComboBox.Resources>
+                                        <CollectionViewSource x:Key="SystemFontFamilies" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                                            <CollectionViewSource.SortDescriptions>
+                                                <cm:SortDescription PropertyName="Source" />
+                                            </CollectionViewSource.SortDescriptions>
+                                        </CollectionViewSource>
+                                        <DataTemplate x:Key="FontTemplate" DataType="{x:Type FontFamily}">
+                                            <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
+                                                <TextBlock FontFamily="{Binding Source}"
+                                                           FontSize="16"
+                                                           Text="{Binding Source}"
+                                                           ToolTip="{Binding Source}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.Resources>
+                                    <ComboBox.ItemsSource>
+                                        <Binding Source="{StaticResource SystemFontFamilies}" />
+                                    </ComboBox.ItemsSource>
+                                </ComboBox>
+                                <StackPanel>
+                                    <Label Content="Size" Style="{StaticResource FormContentHeaderStyle}" />
+                                    <ui:SimpleStackPanel Orientation="Horizontal" Spacing="{StaticResource FormSpacing}">
+                                        <ui:NumberBox Width="100"
+                                                      LargeChange="0.4"
+                                                      Maximum="96"
+                                                      Minimum="4"
+                                                      SmallChange="1"
+                                                      Value="{Binding Size.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
+                                        <ToggleButton IsChecked="{Binding Bold.Value}">
+                                            <ui:FontIcon Glyph="&#xE8DD;" />
+                                        </ToggleButton>
+                                        <ToggleButton IsChecked="{Binding Italic.Value}">
+                                            <ui:FontIcon Glyph="&#xE8DB;" />
+                                        </ToggleButton>
+                                        <ToggleButton Visibility="Collapsed">
+                                            <ui:FontIcon Glyph="&#xE8DC;" />
+                                        </ToggleButton>
+                                    </ui:SimpleStackPanel>
+                                </StackPanel>
+                            </ui:SimpleStackPanel>
+                        </ScrollViewer>
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </DockPanel>
     </Grid>
 </UserControl>

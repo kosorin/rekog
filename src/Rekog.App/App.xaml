@@ -37,6 +37,11 @@
             <cx:NullableBooleanConverter x:Key="NullableBooleanConverter" />
             <cx:ObjectToListConverter x:Key="ObjectToListConverter" />
 
+            <cx:ValueConverterChain x:Key="NegationBooleanToVisibilityConverter">
+                <cx:ValueConverterChainItem Converter="{StaticResource BooleanNegationConverter}" />
+                <cx:ValueConverterChainItem Converter="{StaticResource BooleanToVisibilityConverter}" />
+            </cx:ValueConverterChain>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

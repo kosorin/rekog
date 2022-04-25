@@ -38,6 +38,11 @@ namespace Rekog.App.ViewModel.Forms
             Models = models.ToArray();
         }
 
+        public void Clear()
+        {
+            Models = Array.Empty<TModel>();
+        }
+
         public void Update()
         {
             foreach (var property in Properties)

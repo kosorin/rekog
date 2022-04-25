@@ -84,23 +84,7 @@
             </Border>
         </ui:ThemeShadowChrome>
         <ui:ThemeShadowChrome Grid.Column="2" Depth="64">
-            <ui:NavigationView IsBackButtonVisible="Collapsed" PaneDisplayMode="Top">
-                <ui:NavigationView.MenuItems>
-                    <ui:NavigationViewItem Content="Designer"
-                                           IsSelected="True"
-                                           Tag="Design">
-                        <ui:NavigationViewItem.Icon>
-                            <ui:FontIcon Glyph="&#xEB3C;" />
-                        </ui:NavigationViewItem.Icon>
-                    </ui:NavigationViewItem>
-                    <ui:NavigationViewItem Content="Analyzer" Tag="Analysis">
-                        <ui:NavigationViewItem.Icon>
-                            <ui:FontIcon Glyph="&#xE9D2;" />
-                        </ui:NavigationViewItem.Icon>
-                    </ui:NavigationViewItem>
-                </ui:NavigationView.MenuItems>
-                <designer:BoardPane />
-            </ui:NavigationView>
+            <designer:BoardPane />
         </ui:ThemeShadowChrome>
         <GridSplitter Grid.Column="1"
                       HorizontalAlignment="Stretch"

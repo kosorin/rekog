@@ -121,7 +121,6 @@
                     <DataTemplate x:Key="KeyTemplate" DataType="{x:Type vm:KeyViewModel}">
                         <v:KeyView />
                     </DataTemplate>
-                    <!--  RotationOrigin  -->
                     <CollectionViewSource x:Key="RotationOriginCollection" Source="{Binding SelectedKeysRotationOrigin, Converter={StaticResource ObjectToListConverter}}" />
                     <Style x:Key="RotationOriginStyle"
                            d:DataContext="{d:DesignInstance vmv:PointValueSource}"

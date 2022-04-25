@@ -31,7 +31,11 @@ namespace Rekog.App.ViewModel
         public KeyViewModel(KeyModel model)
             : base(model)
         {
-            UpdateAll();
+            SubscribeModelLegends();
+
+            UpdateLayout();
+            UpdateColor();
+            UpdateLegends();
         }
 
         public bool IsSelected
@@ -91,7 +95,7 @@ namespace Rekog.App.ViewModel
         public ObservableObjectCollection<LegendViewModel> Legends
         {
             get => _legends;
-            private set => SetCollection<ObservableObjectCollection<LegendViewModel>, LegendViewModel>(ref _legends, value);
+            private set => Set(ref _legends, value);
         }
 
         protected override void OnModelPropertyChanging(object? sender, PropertyChangingEventArgs args)
@@ -145,12 +149,16 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void UpdateAll()
+        private void SubscribeModelLegends()
         {
-            UpdateLayout();
-            UpdateColor();
-            UpdateLegends();
-            SubscribeModelLegends();
+            UnsubscribeModelLegends();
+
+            Model.Legends.CollectionItemChanged += ModelLegends_CollectionItemChanged;
+        }
+
+        private void UnsubscribeModelLegends()
+        {
+            Model.Legends.CollectionItemChanged -= ModelLegends_CollectionItemChanged;
         }
 
         private void UpdateLayout()
@@ -182,32 +190,16 @@ namespace Rekog.App.ViewModel
             Legends = new ObservableObjectCollection<LegendViewModel>(Model.Legends.Select(x => new LegendViewModel(x)));
         }
 
-        private void SubscribeModelLegends()
-        {
-            Model.Legends.CollectionItemChanged += ModelLegends_CollectionItemChanged;
-        }
-
-        private void UnsubscribeModelLegends()
-        {
-            Model.Legends.CollectionItemChanged -= ModelLegends_CollectionItemChanged;
-        }
-
         private void ModelLegends_CollectionItemChanged(IObservableObjectCollection<LegendModel> collection, CollectionItemChangedEventArgs<LegendModel> args)
         {
-            foreach (var oldLegendModel in args.OldItems)
+            if (args.OldItems.Count > 0)
             {
-                for (var i = Legends.Count - 1; i >= 0; i--)
-                {
-                    if (Legends[i].Model == oldLegendModel)
-                    {
-                        Legends.RemoveAt(i);
-                    }
-                }
+                Legends.RemoveRange(Legends.Where(x => args.OldItems.Contains(x.Model)));
             }
 
-            foreach (var newLegendModel in args.NewItems)
+            if (args.NewItems.Count > 0)
             {
-                Legends.Add(new LegendViewModel(newLegendModel));
+                Legends.AddRange(args.NewItems.Select(x => new LegendViewModel(x)));
             }
         }
 

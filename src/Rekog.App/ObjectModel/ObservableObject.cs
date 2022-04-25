@@ -31,49 +31,6 @@ namespace Rekog.App.ObjectModel
             return true;
         }
 
-        protected bool SetCollection<TCollection, TItem>(ref TCollection field, TCollection value,
-            CollectionItemChangedEventHandler<TItem>? onCollectionItemChanged = null,
-            CollectionItemPropertyChangedEventHandler<TItem>? onCollectionItemPropertyChanged = null,
-            [CallerMemberName] string? propertyName = null)
-            where TCollection : IObservableObjectCollection<TItem>
-            where TItem : ObservableObject
-        {
-            if (EqualityComparer<TCollection>.Default.Equals(field, value))
-            {
-                return false;
-            }
-
-            OnPropertyChanging(propertyName);
-            var oldValue = field;
-            field = value;
-            var newValue = field;
-            OnPropertyChanged(propertyName);
-
-            // Unregister events
-            if (onCollectionItemChanged != null)
-            {
-                oldValue.CollectionItemChanged -= onCollectionItemChanged;
-            }
-            if (onCollectionItemPropertyChanged != null)
-            {
-                oldValue.CollectionItemPropertyChanged -= onCollectionItemPropertyChanged;
-            }
-
-            // Register events
-            if (onCollectionItemChanged != null)
-            {
-                newValue.CollectionItemChanged -= onCollectionItemChanged;
-                newValue.CollectionItemChanged += onCollectionItemChanged;
-            }
-            if (onCollectionItemPropertyChanged != null)
-            {
-                newValue.CollectionItemPropertyChanged -= onCollectionItemPropertyChanged;
-                newValue.CollectionItemPropertyChanged += onCollectionItemPropertyChanged;
-            }
-
-            return true;
-        }
-
         public event PropertyChangingEventHandler? PropertyChanging;
 
         public event PropertyChangedEventHandler? PropertyChanged;

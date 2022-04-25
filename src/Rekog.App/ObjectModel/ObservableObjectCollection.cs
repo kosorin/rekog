@@ -23,8 +23,14 @@ namespace Rekog.App.ObjectModel
 
         public void ReplaceUsingClear(IEnumerable<T> items)
         {
-            var oldItems = Items.ToArray();
             var newItems = items.ToArray();
+
+            if (newItems.Length == 0 && Count == 0)
+            {
+                return;
+            }
+            
+            var oldItems = Items.ToArray();
 
             UnsubscribePropertyChanged(oldItems);
 
@@ -43,12 +49,12 @@ namespace Rekog.App.ObjectModel
             SubscribePropertyChanged(newItems);
         }
 
-        public void ReplaceUsingMerge(IEnumerable<T> items)
+        public void ReplaceUsingMerge(IEnumerable<T> items, IEqualityComparer<T>? comparer = null)
         {
             items = items.ToList();
 
             var oldItemsData = new SortedList<int, T>(DescendingIndexComparer);
-            foreach (var oldItem in Items.Except(items))
+            foreach (var oldItem in Items.Except(items, comparer))
             {
                 if (IndexOf(oldItem) is >= 0 and var oldItemIndex)
                 {
@@ -56,8 +62,14 @@ namespace Rekog.App.ObjectModel
                 }
             }
 
+            var newItems = items.Except(Items, comparer).ToArray();
+
+            if (newItems.Length == 0 && oldItemsData.Count == 0)
+            {
+                return;
+            }
+            
             var oldItems = oldItemsData.Values.ToArray();
-            var newItems = items.Except(Items).ToArray();
 
             UnsubscribePropertyChanged(oldItems);
 
@@ -79,9 +91,14 @@ namespace Rekog.App.ObjectModel
             SubscribePropertyChanged(newItems);
         }
 
-        public void MergeRange(IEnumerable<T> items)
+        public void MergeRange(IEnumerable<T> items, IEqualityComparer<T>? comparer = null)
         {
-            var newItems = items.Except(Items).ToArray();
+            var newItems = items.Except(Items, comparer).ToArray();
+
+            if (newItems.Length == 0)
+            {
+                return;
+            }
 
             var newItemIndex = Count;
             foreach (var newItem in newItems)
@@ -96,6 +113,11 @@ namespace Rekog.App.ObjectModel
         public void AddRange(IEnumerable<T> items)
         {
             var newItems = items.ToArray();
+
+            if (newItems.Length == 0)
+            {
+                return;
+            }
 
             var newItemIndex = Count;
             foreach (var newItem in newItems)
@@ -116,6 +138,11 @@ namespace Rekog.App.ObjectModel
                 {
                     oldItemsData.Add(index, item);
                 }
+            }
+
+            if (oldItemsData.Count == 0)
+            {
+                return;
             }
 
             var oldItems = oldItemsData.Values.ToArray();
