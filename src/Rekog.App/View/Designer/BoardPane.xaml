@@ -165,7 +165,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
                         <ui:ThemeShadowChrome x:Name="Shadow"
-                                              CornerRadius="{Binding CornerRadius, ElementName=TabContainer}"
+                                              CornerRadius="{Binding CornerRadius, ElementName=ItemBorder}"
                                               Depth="{DynamicResource TabViewShadowDepth}"
                                               IsShadowEnabled="False">
                             <Border x:Name="ItemBorder"
@@ -220,6 +220,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="FormSingleListBoxItemStyle"
+               BasedOn="{StaticResource FormListBoxItemStyle}"
+               TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Content" Value="{Binding Path=DataContext, RelativeSource={RelativeSource Self}, Mode=TwoWay}" />
+            <Setter Property="ContentTemplate" Value="{StaticResource FormListBoxItemDataTemplate}" />
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="FormTab_OnPreviewMouseLeftButtonDown" />
+            <EventSetter Event="PreviewKeyDown" Handler="FormTab_OnPreviewKeyDown" />
+        </Style>
         <Style x:Key="FormListBoxStyle" TargetType="{x:Type ListBox}">
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="ItemContainerStyle" Value="{StaticResource FormListBoxItemStyle}" />
@@ -257,17 +265,24 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="LayerFormListBoxStyle"
+               BasedOn="{StaticResource FormListBoxStyle}"
+               TargetType="{x:Type ListBox}">
+            <Setter Property="SelectionMode" Value="Extended" />
+            <Setter Property="ItemTemplate" Value="{StaticResource LayerFormListBoxItemDataTemplate}" />
+        </Style>
     </UserControl.Resources>
     <Grid>
         <DockPanel>
             <StackPanel DockPanel.Dock="Left"
                         Width="180"
                         Background="{DynamicResource TabViewBackground}">
-                <ListBox ItemsSource="{Binding Board.GeneralTabs}" Style="{StaticResource FormListBoxStyle}" />
-                <DockPanel Style="{StaticResource FormGroupDockPanelStyle}">
-                    <TextBlock Style="{StaticResource FormGroupTextStyle}" Text="Layout" />
-                </DockPanel>
-                <ListBox ItemsSource="{Binding Board.LayoutTabs}" Style="{StaticResource FormListBoxStyle}" />
+                <ListBox Style="{StaticResource FormListBoxStyle}">
+                    <ListBoxItem DataContext="{Binding Board.FileTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
+                    <ListBoxItem DataContext="{Binding Board.PropertiesTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
+                    <ListBoxItem DataContext="{Binding Board.BoardTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
+                    <ListBoxItem DataContext="{Binding Board.KeyTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
+                </ListBox>
                 <DockPanel Style="{StaticResource FormGroupDockPanelStyle}">
                     <ui:HyperlinkButton Command="{Binding Board.SelectAllLayersCommand}"
                                         Style="{StaticResource FormGroupButtonStyle}"
@@ -283,10 +298,7 @@
                                Style="{StaticResource FormGroupTextStyle}"
                                Text="Layers" />
                 </DockPanel>
-                <ListBox ItemsSource="{Binding Board.LayerTabs}"
-                         ItemTemplate="{StaticResource LayerFormListBoxItemDataTemplate}"
-                         SelectionMode="Extended"
-                         Style="{StaticResource FormListBoxStyle}" />
+                <ListBox ItemsSource="{Binding Board.LayerTabs}" Style="{StaticResource LayerFormListBoxStyle}" />
             </StackPanel>
             <ContentControl x:Name="FooBar"
                             MinWidth="300"

@@ -37,11 +37,6 @@ namespace Rekog.App.ViewModel
         private readonly KeyFormViewModel _keyForm = new KeyFormViewModel();
         private readonly LayerFormViewModel _layerForm = new LayerFormViewModel();
 
-        private readonly FormTabViewModel _fileTab;
-        private readonly FormTabViewModel _propertiesTab;
-        private readonly FormTabViewModel _boardTab;
-        private readonly FormTabViewModel _keyTab;
-
         private Thickness _canvasOffset;
         private Size _canvasSize;
         private Color _background = DefaultBackground;
@@ -72,17 +67,13 @@ namespace Rekog.App.ViewModel
             _keyForm.Clear();
             _layerForm.Clear();
 
-            GeneralTabs.AddRange(new[]
+            _tabs.AddRange(new[]
             {
-                _fileTab = new FormTabViewModel("File", "\uE130", _fileForm) { IsSelected = true, },
-                _propertiesTab = new FormTabViewModel("Properties", "\uE946", _propertiesForm),
+                FileTab = new FormTabViewModel("File", "\uE130", _fileForm) { IsSelected = true, },
+                PropertiesTab = new FormTabViewModel("Properties", "\uE946", _propertiesForm),
+                BoardTab = new FormTabViewModel("Board", "\uE809", _boardForm),
+                KeyTab = new FormTabViewModel("Key", "\uF158", _keyForm),
             });
-            LayoutTabs.AddRange(new[]
-            {
-                _boardTab = new FormTabViewModel("Board", "\uE809", _boardForm),
-                _keyTab = new FormTabViewModel("Key", "\uF158", _keyForm),
-            });
-            _tabs.AddRange(GeneralTabs.Concat(LayoutTabs));
 
             UpdateLayers();
             UpdateKeys();
@@ -111,9 +102,13 @@ namespace Rekog.App.ViewModel
             private set => Set(ref _currentForm, value);
         }
 
-        public ObservableObjectCollection<FormTabViewModel> GeneralTabs { get; } = new ObservableObjectCollection<FormTabViewModel>();
+        public FormTabViewModel FileTab { get; }
 
-        public ObservableObjectCollection<FormTabViewModel> LayoutTabs { get; } = new ObservableObjectCollection<FormTabViewModel>();
+        public FormTabViewModel PropertiesTab { get; }
+
+        public FormTabViewModel BoardTab { get; }
+
+        public FormTabViewModel KeyTab { get; }
 
         public ObservableObjectCollection<LayerFormTabViewModel> LayerTabs { get; } = new ObservableObjectCollection<LayerFormTabViewModel>();
 
@@ -351,7 +346,7 @@ namespace Rekog.App.ViewModel
         {
             if (_selectedTabs.Count == 0)
             {
-                _selectedTabs.Add(_fileTab);
+                _selectedTabs.Add(FileTab);
             }
             else
             {
