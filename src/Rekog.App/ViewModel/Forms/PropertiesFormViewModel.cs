@@ -10,9 +10,9 @@ namespace Rekog.App.ViewModel.Forms
         {
             Properties = new FormProperty<BoardModel>[]
             {
-                Name = FormProperty<BoardModel>.Reference(this, x => x.Name),
-                Author = FormProperty<BoardModel>.Reference(this, x => x.Author),
-                Notes = FormProperty<BoardModel>.Reference(this, x => x.Notes),
+                Name = FormProperty.Reference(this, x => x.Name),
+                Author = FormProperty.Reference(this, x => x.Author),
+                Notes = FormProperty.Reference(this, x => x.Notes),
             };
         }
 

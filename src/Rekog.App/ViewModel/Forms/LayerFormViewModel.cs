@@ -12,7 +12,7 @@ namespace Rekog.App.ViewModel.Forms
 
             Properties = new FormProperty<LayerModel>[]
             {
-                Name = FormProperty<LayerModel>.Reference(this, x => x.Name),
+                Name = FormProperty.Reference(this, x => x.Name),
             };
         }
 

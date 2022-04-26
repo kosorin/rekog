@@ -18,10 +18,10 @@ namespace Rekog.App.ViewModel.Values
 
         public string Key { get; }
 
-        public T Value
+        public int Version
         {
-            get => _value;
-            set => Set(ref _value, value);
+            get => _version;
+            set => Set(ref _version, value);
         }
 
         public bool IsSet
@@ -30,10 +30,10 @@ namespace Rekog.App.ViewModel.Values
             set => Set(ref _isSet, value);
         }
 
-        public int Version
+        public T Value
         {
-            get => _version;
-            set => Set(ref _version, value);
+            get => _value;
+            set => Set(ref _value, value);
         }
     }
 }

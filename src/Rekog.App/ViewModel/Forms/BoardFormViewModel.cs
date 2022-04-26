@@ -10,7 +10,7 @@ namespace Rekog.App.ViewModel.Forms
         {
             Properties = new FormProperty<BoardModel>[]
             {
-                Background = FormProperty<BoardModel>.Reference(this, x => x.Background),
+                Background = FormProperty.Reference(this, x => x.Background),
             };
         }
 

@@ -13,32 +13,9 @@ namespace Rekog.App.ObjectModel.Forms
             Form = form;
         }
 
-        public IForm<TModel> Form { get; }
+        protected IForm<TModel> Form { get; }
 
         public abstract void Update();
-
-        public static FormProperty<TModel, T?> Value<T>(IForm<TModel> form, Expression<Func<TModel, T>> propertySelector)
-            where T : struct
-        {
-            return new ValueFormProperty<TModel, T>(form, propertySelector);
-        }
-
-        public static FormProperty<TModel, T?> NullableValue<T>(IForm<TModel> form, Expression<Func<TModel, T?>> propertySelector)
-        {
-            return new NullableValueFormProperty<TModel, T?>(form, propertySelector);
-        }
-
-        public static FormProperty<TModel, T?> Reference<T>(IForm<TModel> form, Expression<Func<TModel, T>> propertySelector)
-            where T : class
-        {
-            return new ReferenceFormProperty<TModel, T>(form, propertySelector);
-        }
-
-        public static FormProperty<TModel, T?> NullableReference<T>(IForm<TModel> form, Expression<Func<TModel, T?>> propertySelector)
-            where T : class?
-        {
-            return new NullableReferenceFormProperty<TModel, T?>(form, propertySelector);
-        }
     }
 
     public abstract class FormProperty<TModel, T> : FormProperty<TModel>
@@ -90,9 +67,38 @@ namespace Rekog.App.ObjectModel.Forms
             }
         }
 
-        // Warning: This method returns not null value for "Value" property even if isSet is false
         protected abstract (bool isSet, T? value) GetValue(IReadOnlyCollection<TModel> models);
 
         protected abstract bool TrySetValue(IReadOnlyCollection<TModel> models, T? value);
+    }
+
+    public static class FormProperty
+    {
+        public static FormProperty<TModel, T?> Value<TModel, T>(IForm<TModel> form, Expression<Func<TModel, T>> propertySelector)
+            where TModel : ModelBase
+            where T : struct
+        {
+            return new ValueFormProperty<TModel, T>(form, propertySelector);
+        }
+
+        public static FormProperty<TModel, T?> NullableValue<TModel, T>(IForm<TModel> form, Expression<Func<TModel, T?>> propertySelector)
+            where TModel : ModelBase
+        {
+            return new NullableValueFormProperty<TModel, T?>(form, propertySelector);
+        }
+
+        public static FormProperty<TModel, T?> Reference<TModel, T>(IForm<TModel> form, Expression<Func<TModel, T>> propertySelector)
+            where TModel : ModelBase
+            where T : class
+        {
+            return new ReferenceFormProperty<TModel, T>(form, propertySelector);
+        }
+
+        public static FormProperty<TModel, T?> NullableReference<TModel, T>(IForm<TModel> form, Expression<Func<TModel, T?>> propertySelector)
+            where TModel : ModelBase
+            where T : class?
+        {
+            return new NullableReferenceFormProperty<TModel, T?>(form, propertySelector);
+        }
     }
 }

@@ -10,17 +10,17 @@ namespace Rekog.App.ViewModel.Forms
         {
             Properties = new FormProperty<LegendModel>[]
             {
-                Value = FormProperty<LegendModel>.Reference(this, x => x.Value),
-                Alignment = FormProperty<LegendModel>.Value(this, x => x.Alignment),
-                Left = FormProperty<LegendModel>.Value(this, x => x.Left),
-                Top = FormProperty<LegendModel>.Value(this, x => x.Top),
-                Right = FormProperty<LegendModel>.Value(this, x => x.Right),
-                Bottom = FormProperty<LegendModel>.Value(this, x => x.Bottom),
-                Font = FormProperty<LegendModel>.Reference(this, x => x.Font),
-                Bold = FormProperty<LegendModel>.Value(this, x => x.Bold),
-                Italic = FormProperty<LegendModel>.Value(this, x => x.Italic),
-                Size = FormProperty<LegendModel>.Value(this, x => x.Size),
-                Color = FormProperty<LegendModel>.Reference(this, x => x.Color),
+                Value = FormProperty.Reference(this, x => x.Value),
+                Alignment = FormProperty.Value(this, x => x.Alignment),
+                Left = FormProperty.Value(this, x => x.Left),
+                Top = FormProperty.Value(this, x => x.Top),
+                Right = FormProperty.Value(this, x => x.Right),
+                Bottom = FormProperty.Value(this, x => x.Bottom),
+                Font = FormProperty.Reference(this, x => x.Font),
+                Bold = FormProperty.Value(this, x => x.Bold),
+                Italic = FormProperty.Value(this, x => x.Italic),
+                Size = FormProperty.Value(this, x => x.Size),
+                Color = FormProperty.Reference(this, x => x.Color),
             };
         }
 

@@ -20,7 +20,7 @@ namespace Rekog.App.ViewModel.Forms
             {
                 if (Set(ref _models, value))
                 {
-                    Update();
+                    UpdateProperties();
                     OnPropertyChanged(nameof(IsSet));
                 }
             }
@@ -43,7 +43,7 @@ namespace Rekog.App.ViewModel.Forms
             Models = Array.Empty<TModel>();
         }
 
-        public void Update()
+        private void UpdateProperties()
         {
             foreach (var property in Properties)
             {
