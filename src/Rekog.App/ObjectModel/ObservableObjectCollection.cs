@@ -12,7 +12,7 @@ namespace Rekog.App.ObjectModel
         // ReSharper disable once StaticMemberInGenericType
         private static readonly IComparer<int> DescendingIndexComparer = Comparer<int>.Create((a, b) => b.CompareTo(a));
 
-        public ObservableObjectCollection()
+        public ObservableObjectCollection() : this(Array.Empty<T>())
         {
         }
 
@@ -38,7 +38,7 @@ namespace Rekog.App.ObjectModel
             base.ClearItems();
 
             // Add new
-            var newItemIndex = 0;
+            var newItemIndex = Count;
             foreach (var newItem in newItems)
             {
                 base.InsertItem(newItemIndex, newItem);
@@ -48,12 +48,12 @@ namespace Rekog.App.ObjectModel
             EndSubscribe(oldItems, newItems);
         }
 
-        public void ReplaceUsingMerge(IEnumerable<T> items, IEqualityComparer<T>? comparer = null)
+        public void ReplaceUsingMerge(IEnumerable<T> items)
         {
             items = items.ToList();
 
             var oldItemsData = new SortedList<int, T>(DescendingIndexComparer);
-            foreach (var oldItem in Items.Except(items, comparer))
+            foreach (var oldItem in Items.Except(items))
             {
                 if (IndexOf(oldItem) is >= 0 and var oldItemIndex)
                 {
@@ -61,7 +61,7 @@ namespace Rekog.App.ObjectModel
                 }
             }
 
-            var newItems = items.Except(Items, comparer).ToArray();
+            var newItems = items.Except(Items).ToArray();
 
             if (newItems.Length == 0 && oldItemsData.Count == 0)
             {
@@ -79,7 +79,7 @@ namespace Rekog.App.ObjectModel
             }
 
             // Add new
-            var newItemIndex = 0;
+            var newItemIndex = Count;
             foreach (var newItem in newItems)
             {
                 base.InsertItem(newItemIndex, newItem);
@@ -89,9 +89,9 @@ namespace Rekog.App.ObjectModel
             EndSubscribe(oldItems, newItems);
         }
 
-        public void MergeRange(IEnumerable<T> items, IEqualityComparer<T>? comparer = null)
+        public void MergeRange(IEnumerable<T> items)
         {
-            var newItems = items.Except(Items, comparer).ToArray();
+            var newItems = items.Except(Items).ToArray();
 
             if (newItems.Length == 0)
             {
@@ -212,12 +212,12 @@ namespace Rekog.App.ObjectModel
         private void Subscribe(T[] newItems)
         {
             OnCollectionItemChanged(new CollectionItemChangedEventArgs<T>(Array.Empty<T>(), newItems));
-            SubscribePropertyChanged(newItems);
+            SubscribeItemPropertyChanged(newItems);
         }
 
         private void BeginSubscribe(T[] oldItems)
         {
-            UnsubscribePropertyChanged(oldItems);
+            UnsubscribeItemPropertyChanged(oldItems);
         }
 
         private void EndSubscribe(T[] oldItems)
@@ -228,10 +228,10 @@ namespace Rekog.App.ObjectModel
         private void EndSubscribe(T[] oldItems, T[] newItems)
         {
             OnCollectionItemChanged(new CollectionItemChangedEventArgs<T>(oldItems, newItems));
-            SubscribePropertyChanged(newItems);
+            SubscribeItemPropertyChanged(newItems);
         }
 
-        private void SubscribePropertyChanged(T[] items)
+        private void SubscribeItemPropertyChanged(T[] items)
         {
             foreach (var item in items)
             {
@@ -240,7 +240,7 @@ namespace Rekog.App.ObjectModel
             }
         }
 
-        private void UnsubscribePropertyChanged(T[] items)
+        private void UnsubscribeItemPropertyChanged(T[] items)
         {
             foreach (var item in items)
             {
