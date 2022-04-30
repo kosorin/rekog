@@ -41,8 +41,8 @@ namespace Rekog.App.ObjectModel
         public ObservableDictionary(IEnumerable<KeyValuePair<TKey, TValue>> entries, IEqualityComparer<TValue> equalityComparer)
         {
             _equalityComparer = equalityComparer;
-            var normalizedEntries = NormalizeEntries(entries);
 
+            var normalizedEntries = NormalizeEntries(entries);
             _keys = new ObservableCollection<TKey>(normalizedEntries.Select(x => x.Key));
             _values = new ObservableCollection<TValue>(normalizedEntries.Select(x => x.Value));
             _indices = normalizedEntries.Select((x, i) => (key: x.Key, index: i)).ToDictionary(x => x.key, x => x.index);
@@ -321,6 +321,24 @@ namespace Rekog.App.ObjectModel
             return entries.Reverse().DistinctBy(x => x.Key).ToList();
         }
 
+        private bool ReplaceEntry(TKey key, TValue newValue, [MaybeNullWhen(false)] out TValue oldValue)
+        {
+            if (_indices.TryGetValue(key, out var index))
+            {
+                oldValue = _values[index];
+
+                _values[index] = newValue;
+
+                OnIndexerPropertyChanged();
+                OnReplaceCollectionChanged(key, newValue, oldValue, index);
+
+                return true;
+            }
+
+            oldValue = default;
+            return false;
+        }
+
         private void AddEntry(TKey key, TValue value)
         {
             if (_indices.ContainsKey(key))
@@ -328,7 +346,7 @@ namespace Rekog.App.ObjectModel
                 throw new ArgumentException("An element with the same key already exists.", nameof(key));
             }
 
-            var index = _indices.Count;
+            var index = Count;
 
             _keys.Add(key);
             _values.Add(value);
@@ -363,24 +381,6 @@ namespace Rekog.App.ObjectModel
             }
 
             value = default;
-            return false;
-        }
-
-        private bool ReplaceEntry(TKey key, TValue newValue, [MaybeNullWhen(false)] out TValue oldValue)
-        {
-            if (_indices.TryGetValue(key, out var index))
-            {
-                oldValue = _values[index];
-
-                _values[index] = newValue;
-
-                OnIndexerPropertyChanged();
-                OnReplaceCollectionChanged(key, newValue, oldValue, index);
-
-                return true;
-            }
-
-            oldValue = default;
             return false;
         }
 
