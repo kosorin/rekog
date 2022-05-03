@@ -32,9 +32,8 @@ namespace Rekog.Controllers
                 return;
             }
 
-            new LayoutAnalyzer()
-                .Analyze(corpusAnalysisData, layout)
-                .Print();
+            var result = new LayoutAnalyzer().Analyze(corpusAnalysisData, layout);
+            _logger.Information("Analysis result: {Result:N3}", result.Effort);
         }
 
         private Layout? BuildLayout(Rune[] characters)
