@@ -277,6 +277,15 @@ namespace Rekog.App.View
                     case Key.Down:
                         Move(Orientation.Vertical, 1);
                         break;
+                    case Key.Space:
+                        Center();
+                        break;
+                    case Key.Delete:
+                        ViewModel.DeleteSelectedKeys();
+                        break;
+                    case Key.Insert:
+                        ViewModel.AddKey(NewKeyTemplate.None);
+                        break;
                     default:
                         args.Handled = false;
                         break;

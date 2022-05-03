@@ -276,20 +276,28 @@
         <DockPanel>
             <StackPanel DockPanel.Dock="Left"
                         Width="180"
-                        Background="{DynamicResource TabViewBackground}">
-                <ListBox Style="{StaticResource FormListBoxStyle}">
+                        Background="{DynamicResource TabViewBackground}"
+                        KeyboardNavigation.ControlTabNavigation="Once"
+                        KeyboardNavigation.DirectionalNavigation="Contained"
+                        KeyboardNavigation.TabNavigation="Once">
+                <ListBox KeyboardNavigation.ControlTabNavigation="Continue"
+                         KeyboardNavigation.DirectionalNavigation="Continue"
+                         KeyboardNavigation.TabIndex="1"
+                         Style="{StaticResource FormListBoxStyle}">
                     <ListBoxItem DataContext="{Binding Board.FileTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
                     <ListBoxItem DataContext="{Binding Board.PropertiesTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
                     <ListBoxItem DataContext="{Binding Board.BoardTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
                     <ListBoxItem DataContext="{Binding Board.KeyTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
                 </ListBox>
-                <DockPanel Style="{StaticResource FormGroupDockPanelStyle}">
+                <DockPanel KeyboardNavigation.TabIndex="2" Style="{StaticResource FormGroupDockPanelStyle}">
                     <ui:HyperlinkButton Command="{Binding Board.SelectAllLayersCommand}"
+                                        KeyboardNavigation.TabIndex="2"
                                         Style="{StaticResource FormGroupButtonStyle}"
                                         ToolTip="Select all layers">
                         <ui:FontIcon FontSize="16" Glyph="&#xE762;" />
                     </ui:HyperlinkButton>
                     <ui:HyperlinkButton Command="{Binding Board.AddLayerCommand}"
+                                        KeyboardNavigation.TabIndex="1"
                                         Style="{StaticResource FormGroupButtonStyle}"
                                         ToolTip="Add layer">
                         <ui:FontIcon FontSize="16" Glyph="&#xE109;" />
@@ -298,14 +306,19 @@
                                Style="{StaticResource FormGroupTextStyle}"
                                Text="Layers" />
                 </DockPanel>
-                <ListBox ItemsSource="{Binding Board.LayerTabs}" Style="{StaticResource LayerFormListBoxStyle}" />
+                <ListBox ItemsSource="{Binding Board.LayerTabs}"
+                         KeyboardNavigation.ControlTabNavigation="Continue"
+                         KeyboardNavigation.DirectionalNavigation="Continue"
+                         KeyboardNavigation.TabIndex="3"
+                         Style="{StaticResource LayerFormListBoxStyle}" />
             </StackPanel>
-            <ContentControl x:Name="FooBar"
+            <ContentControl x:Name="FormContainer"
                             MinWidth="300"
-                            Content="{Binding Board.CurrentForm}">
+                            Content="{Binding Board.CurrentForm}"
+                            KeyboardNavigation.IsTabStop="False">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type vmf:FileFormViewModel}">
-                        <ScrollViewer DataContext="{Binding DataContext, ElementName=FooBar}"
+                        <ScrollViewer DataContext="{Binding DataContext, ElementName=FormContainer}"
                                       d:DataContext="{d:DesignInstance vm:MainViewModel}"
                                       Style="{StaticResource FormContainerScrollViewerStyle}">
                             <ui:SimpleStackPanel Style="{StaticResource FormContainerStackPanelStyle}">

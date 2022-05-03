@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:a="clr-namespace:Rekog.App.Behaviors.AttachedProperties"
              xmlns:mx="clr-namespace:Rekog.App.Markup"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:v="clr-namespace:Rekog.App.View"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
              xmlns:vmv="clr-namespace:Rekog.App.ViewModel.Values"
+             FocusVisualStyle="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}"
+             ui:FocusVisualHelper.UseSystemFocusVisuals="{DynamicResource UseSystemFocusVisuals}"
              d:DataContext="{d:DesignInstance vm:BoardViewModel, IsDesignTimeCreatable=False}"
              d:Height="200"
              d:Width="200"
@@ -23,21 +26,6 @@
     <UserControl.Background>
         <SolidColorBrush Color="{Binding Background}" />
     </UserControl.Background>
-    <UserControl.FocusVisualStyle>
-        <Style>
-            <Setter Property="Control.Template">
-                <Setter.Value>
-                    <ControlTemplate>
-                        <Rectangle Margin="0"
-                                   Opacity="0.5"
-                                   SnapsToDevicePixels="True"
-                                   Stroke="{x:Static SystemColors.HotTrackBrush}"
-                                   StrokeThickness="5" />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.FocusVisualStyle>
     <Canvas x:Name="LayoutRoot"
             ClipToBounds="True"
             SizeChanged="LayoutRoot_SizeChanged">

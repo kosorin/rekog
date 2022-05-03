@@ -11,10 +11,11 @@
         d:DataContext="{d:DesignInstance vm:MainViewModel}"
         Width="1600"
         Height="1000"
+        PreviewKeyDown="MainWindow_PreviewKeyDown"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         mc:Ignorable="d">
-    <Grid>
+    <Grid KeyboardNavigation.TabNavigation="Local">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="12" />
@@ -23,13 +24,16 @@
         <v:BoardView x:Name="Board"
                      DataContext="{Binding Board}"
                      Grid.Column="0"
-                     Grid.ColumnSpan="2" />
+                     Grid.ColumnSpan="2"
+                     KeyboardNavigation.TabIndex="1"
+                     KeyboardNavigation.TabNavigation="Once" />
         <ui:ThemeShadowChrome Grid.Column="0"
                               Margin="8,16"
                               HorizontalAlignment="Right"
                               VerticalAlignment="Bottom"
                               Depth="8"
                               IsHitTestVisible="False"
+                              KeyboardNavigation.IsTabStop="False"
                               Opacity="0.6"
                               Visibility="{Binding Board, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Border Padding="12" Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
@@ -48,6 +52,8 @@
                               HorizontalAlignment="Right"
                               VerticalAlignment="Top"
                               Depth="8"
+                              KeyboardNavigation.TabIndex="2"
+                              KeyboardNavigation.TabNavigation="Local"
                               Visibility="{Binding Board, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Border Padding="12" Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
                 <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
@@ -84,12 +90,18 @@
                 </ui:SimpleStackPanel>
             </Border>
         </ui:ThemeShadowChrome>
-        <ui:ThemeShadowChrome Grid.Column="2" Depth="64">
+        <ui:ThemeShadowChrome Grid.Column="2"
+                              Depth="64"
+                              KeyboardNavigation.TabIndex="4"
+                              KeyboardNavigation.TabNavigation="Local">
             <designer:BoardPane />
         </ui:ThemeShadowChrome>
         <GridSplitter Grid.Column="1"
                       HorizontalAlignment="Stretch"
+                      ui:FocusVisualHelper.UseSystemFocusVisuals="{DynamicResource UseSystemFocusVisuals}"
                       Background="Transparent"
+                      FocusVisualStyle="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}"
+                      KeyboardNavigation.TabIndex="3"
                       ResizeDirection="Columns" />
     </Grid>
 </Window>

@@ -631,7 +631,7 @@ namespace Rekog.App.ViewModel
             _selectedTabs.ReplaceUsingClear(LayerTabs);
         }
 
-        private void AddKey(NewKeyTemplate template)
+        public void AddKey(NewKeyTemplate template)
         {
             var y = _keys.OrderByDescending(x => x.ActualBounds.Bottom).FirstOrDefault()?.ActualBounds.Bottom ?? 0;
             var keyModel = template switch
@@ -696,7 +696,7 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void DeleteSelectedKeys()
+        public void DeleteSelectedKeys()
         {
             Model.Keys.RemoveRange(_selectedKeys.Select(x => x.Model));
         }
