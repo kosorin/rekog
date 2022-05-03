@@ -13,9 +13,9 @@
              xmlns:vmf="clr-namespace:Rekog.App.ViewModel.Forms"
              xmlns:vmft="clr-namespace:Rekog.App.ViewModel.Forms.Tabs"
              d:DataContext="{d:DesignInstance vm:MainViewModel}"
-             d:DesignHeight="2000"
+             d:DesignHeight="600"
              d:DesignWidth="450"
-             Background="{StaticResource SystemControlBackgroundAltHighBrush}"
+             Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ui:Flyout x:Key="FormColorPickerFlyout">
@@ -23,14 +23,14 @@
         </ui:Flyout>
         <ui:Flyout x:Key="DeleteLayerFlyout" d:DataContext="{d:DesignInstance vmft:LayerFormTabViewModel, IsDesignTimeCreatable=False}">
             <StackPanel>
-                <TextBlock Style="{StaticResource BodyTextBlockStyle}">
+                <TextBlock Style="{DynamicResource BodyTextBlockStyle}">
                     <Run Text="Do you want to delete the layer " /><Run FontWeight="Medium" Text="{Binding Header}" /><Run Text="?" />
                     <LineBreak />
                     <Run Text="All legends on that layer will be deleted." />
                 </TextBlock>
                 <Button Margin="0,12,0,0"
-                        Click="HideFlyoutButton_OnClick"
                         ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}"
+                        Click="HideFlyoutButton_OnClick"
                         Command="{Binding DeleteCommand}"
                         Content="Yes, delete layer" />
             </StackPanel>
@@ -88,6 +88,7 @@
                TargetType="{x:Type TextBlock}">
             <Setter Property="IsHitTestVisible" Value="False" />
             <Setter Property="Margin" Value="12,0" />
+            <Setter Property="Foreground" Value="{DynamicResource SystemControlBackgroundBaseHighBrush}" />
         </Style>
         <Style x:Key="FormGroupButtonStyle" TargetType="{x:Type ui:HyperlinkButton}">
             <Setter Property="Margin" Value="0,6,8,0" />
@@ -103,12 +104,12 @@
                 <Viewbox MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
                          MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
                          Margin="{DynamicResource TabViewItemHeaderIconMargin}">
-                    <ui:FontIcon Glyph="{Binding Icon}" />
+                    <ui:FontIcon Foreground="{DynamicResource TabViewItemIconForeground}" Glyph="{Binding Icon}" />
                 </Viewbox>
                 <TextBlock Grid.Column="1"
                            Margin="0,0,8,0"
-                           TextTrimming="CharacterEllipsis"
-                           Text="{Binding Header}" />
+                           Text="{Binding Header}"
+                           TextTrimming="CharacterEllipsis" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="LayerFormListBoxItemDataTemplate" DataType="vmft:LayerFormTabViewModel">
@@ -121,22 +122,21 @@
                 <Viewbox MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
                          MaxHeight="{DynamicResource TabViewItemHeaderIconSize}"
                          Margin="{DynamicResource TabViewItemHeaderIconMargin}">
-                    <ui:FontIcon Glyph="{Binding Icon}" />
+                    <ui:FontIcon Foreground="{DynamicResource TabViewItemIconForeground}" Glyph="{Binding Icon}" />
                 </Viewbox>
                 <TextBlock Grid.Column="1"
                            Margin="0,0,8,0"
-                           TextTrimming="CharacterEllipsis"
-                           Text="{Binding Header}" />
+                           Text="{Binding Header}"
+                           TextTrimming="CharacterEllipsis" />
                 <ui:SimpleStackPanel x:Name="ButtonStackPanel"
-                                     Visibility="Collapsed"
                                      Grid.Column="2"
                                      Orientation="Horizontal"
-                                     Spacing="8">
-                    <Viewbox MaxWidth="{DynamicResource TabViewItemHeaderIconSize}"
-                             MaxHeight="{DynamicResource TabViewItemHeaderIconSize}">
-                        <ui:HyperlinkButton Click="ShowFlyoutButton_OnClick"
-                                            ToolTip="Delete layer"
-                                            ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}">
+                                     Spacing="8"
+                                     Visibility="Collapsed">
+                    <Viewbox MaxWidth="{DynamicResource TabViewItemHeaderIconSize}" MaxHeight="{DynamicResource TabViewItemHeaderIconSize}">
+                        <ui:HyperlinkButton ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}"
+                                            Click="ShowFlyoutButton_OnClick"
+                                            ToolTip="Delete layer">
                             <ui:FontIcon Glyph="&#xE106;" />
                         </ui:HyperlinkButton>
                     </Viewbox>
@@ -231,9 +231,9 @@
         <Style x:Key="FormListBoxStyle" TargetType="{x:Type ListBox}">
             <Setter Property="OverridesDefaultStyle" Value="True" />
             <Setter Property="ItemContainerStyle" Value="{StaticResource FormListBoxItemStyle}" />
-            <Setter Property="Foreground" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource SystemControlForegroundBaseMediumHighBrush}" />
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderBrush" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
@@ -302,7 +302,6 @@
             </StackPanel>
             <ContentControl x:Name="FooBar"
                             MinWidth="300"
-                            DataContext="{Binding .}"
                             Content="{Binding Board.CurrentForm}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type vmf:FileFormViewModel}">
@@ -464,7 +463,9 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBox ui:ControlHelper.Header="Background" Text="{Binding Background.Value, Mode=TwoWay}" />
-                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}" DataContext="{Binding Background}" />
+                                    <Button DataContext="{Binding Background}"
+                                            Grid.Column="2"
+                                            Style="{StaticResource FormColorPickerButtonStyle}" />
                                 </Grid>
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
@@ -564,8 +565,7 @@
                                               IsChecked="{Binding IsStepped.Value, Mode=TwoWay}"
                                               Style="{StaticResource FormEnableCheckBoxStyle}" />
                                 </ui:SimpleStackPanel>
-                                <ui:SimpleStackPanel IsEnabled="{Binding IsStepped.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}"
-                                                     Spacing="{StaticResource FormSpacing}">
+                                <ui:SimpleStackPanel IsEnabled="{Binding IsStepped.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}" Spacing="{StaticResource FormSpacing}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition />
@@ -630,7 +630,9 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
-                                    <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}" DataContext="{Binding Color}" />
+                                    <Button DataContext="{Binding Color}"
+                                            Grid.Column="2"
+                                            Style="{StaticResource FormColorPickerButtonStyle}" />
                                 </Grid>
                                 <ui:NumberBox Header="Roundness"
                                               LargeChange="0.025"
@@ -760,7 +762,9 @@
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <TextBox ui:ControlHelper.Header="Color" Text="{Binding Color.Value, Mode=TwoWay}" />
-                                        <Button Grid.Column="2" Style="{StaticResource FormColorPickerButtonStyle}" DataContext="{Binding Color}" />
+                                        <Button DataContext="{Binding Color}"
+                                                Grid.Column="2"
+                                                Style="{StaticResource FormColorPickerButtonStyle}" />
                                     </Grid>
                                     <ComboBox HorizontalAlignment="Stretch"
                                               ui:ControlHelper.Header="Font"

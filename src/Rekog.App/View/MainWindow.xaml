@@ -32,9 +32,10 @@
                               IsHitTestVisible="False"
                               Opacity="0.6"
                               Visibility="{Binding Board, Converter={StaticResource NotNullToVisibilityConverter}}">
-            <Border Padding="12" Background="{StaticResource SystemControlBackgroundAltHighBrush}">
+            <Border Padding="12" Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
                 <TextBlock DataContext="{Binding ElementName=Board}"
                            FontFamily="{StaticResource MonospaceFontFamily}"
+                           Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"
                            TextAlignment="Right">
                     <Run Text="{Binding Coords.X, StringFormat=N2, Mode=OneWay}" />
                     <Run>|</Run>
@@ -48,7 +49,7 @@
                               VerticalAlignment="Top"
                               Depth="8"
                               Visibility="{Binding Board, Converter={StaticResource NotNullToVisibilityConverter}}">
-            <Border Padding="12" Background="{StaticResource SystemControlBackgroundAltHighBrush}">
+            <Border Padding="12" Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
                 <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
                     <ui:SplitButton Command="{Binding Board.AddKeyCommand}" Content="Add key">
                         <ui:SplitButton.CommandParameter>
