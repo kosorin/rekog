@@ -141,7 +141,7 @@ namespace Rekog.App.ObjectModel
             OnAddOrInsertCollectionChanged(item, index);
         }
 
-        private void ReplaceItem(int index, TItem newItem, [MaybeNullWhen(false)] out TItem oldItem)
+        private void ReplaceItem(int index, TItem newItem, out TItem oldItem)
         {
             if (index < 0 && index >= Count)
             {
