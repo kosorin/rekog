@@ -21,6 +21,8 @@ namespace Rekog.App.ObjectModel.Forms
             _descriptor = new FormPropertyDescriptor<TModel, T>(propertySelector, true);
         }
 
+        public override string Name => _descriptor.Name;
+
         protected override (bool isSet, T? value) GetValue(IReadOnlyCollection<TModel> models)
         {
             return _descriptor.GetValue(models);

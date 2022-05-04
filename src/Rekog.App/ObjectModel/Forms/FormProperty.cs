@@ -15,6 +15,8 @@ namespace Rekog.App.ObjectModel.Forms
 
         protected IForm<TModel> Form { get; }
 
+        public abstract string Name { get; }
+
         public abstract void Update();
     }
 
