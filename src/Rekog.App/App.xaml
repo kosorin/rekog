@@ -1,13 +1,15 @@
 ﻿<Application x:Class="Rekog.App.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dt="clr-namespace:Rekog.App.DesignTime"
              xmlns:clr="clr-namespace:System;assembly=mscorlib"
              xmlns:cx="clr-namespace:Rekog.App.Converters"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:color="clr-namespace:Koda.ColorTools.Wpf;assembly=Koda.ColorTools.Wpf"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dt="clr-namespace:Rekog.App.DesignTime"
-             ShutdownMode="OnMainWindowClose">
+             ShutdownMode="OnMainWindowClose"
+             mc:Ignorable="d">
     <Application.Resources>
         <ResourceDictionary>
 
@@ -44,8 +46,10 @@
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanToVisibilityConverter}" />
             </cx:ValueConverterChain>
 
-            <ui:Flyout x:Key="ColorPickerFlyout" Opened="ColorPickerFlyout_OnOpened" d:DataContext="{d:DesignInstance dt:ColorFormProperty, IsDesignTimeCreatable=False}">
-                <color:ColorPicker SelectedHex="{Binding Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
+            <ui:Flyout x:Key="ColorPickerFlyout" Opened="ColorPickerFlyout_OnOpened">
+                <color:ColorPicker Style="{StaticResource ModernColorPicker}"
+                                   SelectedHex="{Binding Value, Mode=TwoWay}"
+                                   d:DataContext="{d:DesignInstance dt:ColorFormProperty, IsDesignTimeCreatable=False}" />
             </ui:Flyout>
 
         </ResourceDictionary>
