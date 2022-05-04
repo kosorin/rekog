@@ -4,6 +4,7 @@
              xmlns:clr="clr-namespace:System;assembly=mscorlib"
              xmlns:cx="clr-namespace:Rekog.App.Converters"
              xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:color="clr-namespace:Koda.ColorTools.Wpf;assembly=Koda.ColorTools.Wpf"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
@@ -40,6 +41,10 @@
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanNegationConverter}" />
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanToVisibilityConverter}" />
             </cx:ValueConverterChain>
+            
+            <ui:Flyout x:Key="ColorPickerFlyout" Opened="ColorPickerFlyout_OnOpened">
+                <color:ColorPicker SelectedHex="{Binding Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
+            </ui:Flyout>
 
         </ResourceDictionary>
     </Application.Resources>

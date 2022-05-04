@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:behaviors="clr-namespace:Koda.ColorTools.Wpf.Behaviors;assembly=Koda.ColorTools.Wpf"
                     xmlns:brushSources="clr-namespace:Koda.ColorTools.Wpf.BrushSources;assembly=Koda.ColorTools.Wpf"
+                    xmlns:ct="clr-namespace:Koda.ColorTools;assembly=Koda.ColorTools"
                     xmlns:color="clr-namespace:Koda.ColorTools.Wpf;assembly=Koda.ColorTools.Wpf"
                     xmlns:components="clr-namespace:Koda.ColorTools.Wpf.Components;assembly=Koda.ColorTools.Wpf"
                     xmlns:converters="clr-namespace:Koda.ColorTools.Wpf.Converters;assembly=Koda.ColorTools.Wpf"
@@ -9,6 +10,8 @@
                     xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <converters:NullableColorConverter x:Key="NullableColorConverter" />
+
+    <Thickness x:Key="ModernColorHeaderMargin">0,0,0,4</Thickness>
 
     <DrawingBrush x:Key="AlphaBrush"
                   TileMode="Tile"
@@ -64,11 +67,14 @@
     </DrawingBrush>
 
     <Style x:Key="ModernColorSlider" TargetType="{x:Type components:ColorSlider}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="AlphaBrush" Value="{StaticResource AlphaBrush}" />
         <Setter Property="Height" Value="{x:Static system:Double.NaN}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
+        <Setter Property="ui:ControlHelper.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="BorderBrush" Value="Gray" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type components:ColorSlider}">
@@ -87,8 +93,7 @@
                                           Grid.Row="0"
                                           Grid.Column="0"
                                           Grid.ColumnSpan="3"
-                                          Margin="0,0,0,4"
-                                          VerticalAlignment="Center"
+                                          Margin="{StaticResource ModernColorHeaderMargin}"
                                           Content="{TemplateBinding Header}"
                                           ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <TextBox x:Name="ValueBox"
@@ -104,17 +109,18 @@
                         <Border Grid.Row="1"
                                 Grid.Column="1"
                                 Background="{TemplateBinding AlphaBrush}"
-                                CornerRadius="{DynamicResource ControlCornerRadius}"
+                                CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                                Margin="{TemplateBinding BorderThickness}"
                                 IsHitTestVisible="False"
-                                UseLayoutRounding="True" />
+                                SnapsToDevicePixels="True" />
                         <Border x:Name="ComponentContainer"
                                 Grid.Row="1"
                                 Grid.Column="1"
                                 Background="{Binding Path=CanvasBrushSource.Value, RelativeSource={RelativeSource TemplatedParent}}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{DynamicResource ControlCornerRadius}"
-                                UseLayoutRounding="True">
+                                CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                                SnapsToDevicePixels="True">
                             <Canvas x:Name="ComponentCanvas"
                                     Background="Transparent"
                                     Cursor="SizeWE">
@@ -131,17 +137,21 @@
                                     <Border Margin="-2"
                                             BorderBrush="Black"
                                             BorderThickness="1"
-                                            CornerRadius="{DynamicResource ControlCornerRadius}">
+                                            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
                                         <Border Background="Transparent"
                                                 BorderBrush="White"
                                                 BorderThickness="1"
-                                                CornerRadius="{DynamicResource ControlCornerRadius}" />
+                                                CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
                                     </Border>
                                 </Border>
                             </Canvas>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="ComponentContainer" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
+                            <Setter TargetName="ComponentContainer" Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
+                        </Trigger>
                         <Trigger Property="Header" Value="{x:Null}">
                             <Setter TargetName="HeaderPresenter" Property="Visibility" Value="Collapsed" />
                         </Trigger>
@@ -168,12 +178,15 @@
         </Setter>
     </Style>
 
-
     <Style x:Key="ModernColorCanvas" TargetType="{x:Type components:ColorCanvas}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="AlphaBrush" Value="{StaticResource AlphaBrush}" />
+        <Setter Property="Height" Value="200" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
+        <Setter Property="ui:ControlHelper.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="BorderBrush" Value="Gray" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type components:ColorCanvas}">
@@ -184,22 +197,22 @@
                         </Grid.RowDefinitions>
                         <ContentPresenter x:Name="HeaderPresenter"
                                           Grid.Row="0"
-                                          Margin="0,0,0,4"
-                                          VerticalAlignment="Center"
+                                          Margin="{StaticResource ModernColorHeaderMargin}"
                                           Content="{TemplateBinding Header}"
                                           ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <Border Grid.Row="1"
                                 Background="{TemplateBinding AlphaBrush}"
-                                CornerRadius="{DynamicResource ControlCornerRadius}"
+                                CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                                Margin="{TemplateBinding BorderThickness}"
                                 IsHitTestVisible="False"
-                                UseLayoutRounding="True" />
+                                SnapsToDevicePixels="True" />
                         <Border Grid.Row="1"
                                 Background="{Binding CanvasBrushSource.Value, RelativeSource={RelativeSource TemplatedParent}}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 ClipToBounds="False"
-                                CornerRadius="{DynamicResource ControlCornerRadius}"
-                                UseLayoutRounding="True">
+                                CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                                SnapsToDevicePixels="True">
                             <Canvas x:Name="ComponentCanvas"
                                     Background="Transparent"
                                     Cursor="Cross">
@@ -237,10 +250,13 @@
     </Style>
 
     <Style x:Key="ModernColorPreview" TargetType="{x:Type components:ColorPreview}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="AlphaBrush" Value="{StaticResource AlphaBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
+        <Setter Property="ui:ControlHelper.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="BorderBrush" Value="Gray" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type components:ColorPreview}">
@@ -251,60 +267,42 @@
                         </Grid.RowDefinitions>
                         <ContentPresenter x:Name="HeaderPresenter"
                                           Grid.Row="0"
-                                          Margin="0,0,0,4"
-                                          VerticalAlignment="Center"
+                                          Margin="{StaticResource ModernColorHeaderMargin}"
                                           Content="{TemplateBinding Header}"
                                           ContentTemplate="{TemplateBinding HeaderTemplate}" />
                         <Border Grid.Row="1"
+                                Height="100"
                                 Background="{TemplateBinding AlphaBrush}"
-                                CornerRadius="{DynamicResource ControlCornerRadius}"
-                                IsHitTestVisible="False"
-                                UseLayoutRounding="True" />
-                        <Border x:Name="BrushBorder"
-                                Grid.Row="1"
-                                Height="200"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{DynamicResource ControlCornerRadius}"
-                                UseLayoutRounding="True">
-                            <Border.Background>
-                                <DrawingBrush Viewport="0,0 100,200" ViewportUnits="Absolute">
-                                    <DrawingBrush.Drawing>
-                                        <DrawingGroup>
-                                            <GeometryDrawing Brush="{Binding SelectedColorBrushSource.Value, RelativeSource={RelativeSource TemplatedParent}}">
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry Rect="0,0 1,1" />
-                                                </GeometryDrawing.Geometry>
-                                            </GeometryDrawing>
-                                            <GeometryDrawing>
-                                                <GeometryDrawing.Geometry>
-                                                    <RectangleGeometry Rect="0,1 1,1" />
-                                                </GeometryDrawing.Geometry>
-                                                <GeometryDrawing.Brush>
-                                                    <SolidColorBrush Color="{Binding OriginalColor, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableColorConverter}}" />
-                                                </GeometryDrawing.Brush>
-                                            </GeometryDrawing>
-                                        </DrawingGroup>
-                                    </DrawingBrush.Drawing>
-                                </DrawingBrush>
-                            </Border.Background>
+                                CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition x:Name="OriginalColorColumnDefinition" Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0"
+                                        SnapsToDevicePixels="True"
+                                        Background="{Binding SelectedColorBrushSource.Value, RelativeSource={RelativeSource TemplatedParent}}" />
+                                <Border x:Name="OriginalColorBorder"
+                                        Grid.Column="1"
+                                        SnapsToDevicePixels="True"
+                                        Cursor="Hand"
+                                        ToolTip="Reset color">
+                                    <Border.Background>
+                                        <SolidColorBrush Color="{Binding OriginalColor, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullableColorConverter}}" />
+                                    </Border.Background>
+                                </Border>
+                            </Grid>
                         </Border>
-                        <Border x:Name="OriginalColorBorder"
-                                Grid.Row="1"
-                                Height="100"
-                                Margin="0,100,0,0"
-                                Background="Transparent"
-                                CornerRadius="{DynamicResource ControlCornerRadius}"
-                                Cursor="Hand"
-                                ToolTip="Reset color"
-                                UseLayoutRounding="True" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Header" Value="{x:Null}">
                             <Setter TargetName="HeaderPresenter" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="OriginalColor" Value="{x:Null}">
-                            <Setter TargetName="BrushBorder" Property="Height" Value="100" />
+                            <Setter TargetName="OriginalColorColumnDefinition" Property="Width" Value="0" />
                             <Setter TargetName="OriginalColorBorder" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -314,6 +312,7 @@
     </Style>
 
     <Style x:Key="ModernColorPicker" TargetType="{x:Type color:ColorPicker}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="AllowAlpha" Value="False" />
         <Setter Property="AllowEmpty" Value="False" />
         <Setter Property="Padding" Value="0" />
@@ -329,8 +328,35 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">
-                        <StackPanel>
-                            <components:HslHueSlider Margin="0,0,0,8"
+                        <ui:SimpleStackPanel Spacing="8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <components:HsbSaturationBrightnessCanvas Style="{StaticResource ModernColorCanvas}" Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                    <components:ColorCanvas.CanvasBrushSource>
+                                        <brushSources:HsbCanvasBrushSource Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </components:ColorCanvas.CanvasBrushSource>
+                                </components:HsbSaturationBrightnessCanvas>
+                                <components:HsbHueSlider Grid.Column="1"
+                                                         Style="{StaticResource ModernColorSlider}"
+                                                         Margin="8,0,0,0"
+                                                         DisplayRange="360"
+                                                         ShowValue="False"
+                                                         Orientation="Vertical"
+                                                         Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                    <components:ColorSlider.CanvasBrushSource>
+                                        <brushSources:HueGradientBrushSource Orientation="Vertical" Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </components:ColorSlider.CanvasBrushSource>
+                                </components:HsbHueSlider>
+                            </Grid>
+                            <ComboBox x:Name="ModelComboBox" ui:ControlHelper.Header="Model">
+                                <ComboBoxItem Content="HSL" Tag="{x:Static ct:ColorModel.Hsl}" IsSelected="True" />
+                                <ComboBoxItem Content="RGB" Tag="{x:Static ct:ColorModel.Rgb}" />
+                            </ComboBox>
+                            <components:HslHueSlider x:Name="HslHueSlider"
+                                                     Visibility="Collapsed"
                                                      DisplayRange="360"
                                                      Header="Hue"
                                                      Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}"
@@ -339,7 +365,8 @@
                                     <brushSources:HslHueGradientBrushSource Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
                                 </components:ColorSlider.CanvasBrushSource>
                             </components:HslHueSlider>
-                            <components:HslSaturationSlider Margin="0,0,0,8"
+                            <components:HslSaturationSlider x:Name="HslSaturationSlider"
+                                                            Visibility="Collapsed"
                                                             Header="Saturation"
                                                             Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                                             Style="{StaticResource ModernColorSlider}">
@@ -347,7 +374,8 @@
                                     <brushSources:HslSaturationGradientBrushSource Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
                                 </components:ColorSlider.CanvasBrushSource>
                             </components:HslSaturationSlider>
-                            <components:HslLightnessSlider Margin="0,0,0,8"
+                            <components:HslLightnessSlider x:Name="HslLightnessSlider"
+                                                           Visibility="Collapsed"
                                                            Header="Lightness"
                                                            Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                                            Style="{StaticResource ModernColorSlider}">
@@ -355,8 +383,40 @@
                                     <brushSources:HslLightnessGradientBrushSource Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
                                 </components:ColorSlider.CanvasBrushSource>
                             </components:HslLightnessSlider>
+                            <components:RgbRedSlider x:Name="RgbRedSlider"
+                                                     Visibility="Collapsed"
+                                                     Header="Red"
+                                                     DisplayDecimalPlaces="0"
+                                                     DisplayRange="255"
+                                                     Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                     Style="{StaticResource ModernColorSlider}">
+                                <components:ColorSlider.CanvasBrushSource>
+                                    <brushSources:RgbRedGradientBrushSource Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+                                </components:ColorSlider.CanvasBrushSource>
+                            </components:RgbRedSlider>
+                            <components:RgbGreenSlider x:Name="RgbGreenSlider"
+                                                       Visibility="Collapsed"
+                                                       Header="Green"
+                                                       DisplayDecimalPlaces="0"
+                                                       DisplayRange="255"
+                                                       Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                       Style="{StaticResource ModernColorSlider}">
+                                <components:ColorSlider.CanvasBrushSource>
+                                    <brushSources:RgbGreenGradientBrushSource Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+                                </components:ColorSlider.CanvasBrushSource>
+                            </components:RgbGreenSlider>
+                            <components:RgbBlueSlider x:Name="RgbBlueSlider"
+                                                      Visibility="Collapsed"
+                                                      Header="Blue"
+                                                      DisplayDecimalPlaces="0"
+                                                      DisplayRange="255"
+                                                      Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                                                      Style="{StaticResource ModernColorSlider}">
+                                <components:ColorSlider.CanvasBrushSource>
+                                    <brushSources:RgbBlueGradientBrushSource Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+                                </components:ColorSlider.CanvasBrushSource>
+                            </components:RgbBlueSlider>
                             <components:AlphaSlider x:Name="AlphaSlider"
-                                                    Margin="0,0,0,8"
                                                     AlphaBrush="{TemplateBinding AlphaBrush}"
                                                     Header="Opacity"
                                                     Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}"
@@ -365,14 +425,35 @@
                                     <brushSources:AlphaGradientBrushSource Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
                                 </components:ColorSlider.CanvasBrushSource>
                             </components:AlphaSlider>
-                            <TextBlock Margin="0,0,0,4" Text="Hex" />
-                            <TextBox behaviors:ColorTextBoxBehavior.Enable="True"
-                                     ui:TextBoxHelper.IsDeleteButtonVisible="False"
-                                     Text="{Binding SelectedHex, RelativeSource={RelativeSource TemplatedParent}}" />
-
-                        </StackPanel>
+                            <StackPanel>
+                                <TextBlock Margin="{StaticResource ModernColorHeaderMargin}" Text="Hex" />
+                                <TextBox behaviors:ColorTextBoxBehavior.Enable="True"
+                                         ui:TextBoxHelper.IsDeleteButtonVisible="False"
+                                         Text="{Binding SelectedHex, RelativeSource={RelativeSource TemplatedParent}}" />
+                            </StackPanel>
+                            <components:ColorPreview Style="{StaticResource ModernColorPreview}"
+                                                     AlphaBrush="{TemplateBinding AlphaBrush}"
+                                                     Header="Preview"
+                                                     OriginalColor="{TemplateBinding OriginalColor}"
+                                                     Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                <components:ColorPreview.SelectedColorBrushSource>
+                                    <brushSources:SelectedColorBrushSource EmptyBrush="{Binding EmptyBrush, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                           Picker="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
+                                </components:ColorPreview.SelectedColorBrushSource>
+                            </components:ColorPreview>
+                        </ui:SimpleStackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding SelectedItem.Tag, ElementName=ModelComboBox}" Value="{x:Static ct:ColorModel.Hsl}">
+                            <Setter TargetName="HslHueSlider" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="HslSaturationSlider" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="HslLightnessSlider" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectedItem.Tag, ElementName=ModelComboBox}" Value="{x:Static ct:ColorModel.Rgb}">
+                            <Setter TargetName="RgbRedSlider" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="RgbGreenSlider" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="RgbBlueSlider" Property="Visibility" Value="Visible" />
+                        </DataTrigger>
                         <Trigger Property="AllowAlpha" Value="False">
                             <Setter TargetName="AlphaSlider" Property="Visibility" Value="Collapsed" />
                         </Trigger>
