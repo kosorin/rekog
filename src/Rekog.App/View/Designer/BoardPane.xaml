@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:c="clr-namespace:Rekog.App.Controls"
              xmlns:cm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-             xmlns:color="clr-namespace:Koda.ColorTools.Wpf;assembly=Koda.ColorTools.Wpf"
              xmlns:mx="clr-namespace:Rekog.App.Markup"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:ui="http://schemas.modernwpf.com/2019"

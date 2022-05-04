@@ -5,6 +5,8 @@
              xmlns:cx="clr-namespace:Rekog.App.Converters"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:color="clr-namespace:Koda.ColorTools.Wpf;assembly=Koda.ColorTools.Wpf"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dt="clr-namespace:Rekog.App.DesignTime"
              ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
@@ -41,8 +43,8 @@
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanNegationConverter}" />
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanToVisibilityConverter}" />
             </cx:ValueConverterChain>
-            
-            <ui:Flyout x:Key="ColorPickerFlyout" Opened="ColorPickerFlyout_OnOpened">
+
+            <ui:Flyout x:Key="ColorPickerFlyout" Opened="ColorPickerFlyout_OnOpened" d:DataContext="{d:DesignInstance dt:ColorFormProperty, IsDesignTimeCreatable=False}">
                 <color:ColorPicker SelectedHex="{Binding Value, Mode=TwoWay}" Style="{StaticResource ModernColorPicker}" />
             </ui:Flyout>
 
