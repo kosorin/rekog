@@ -42,7 +42,7 @@ namespace Rekog.App.ObjectModel
         {
             _equalityComparer = equalityComparer;
 
-            var normalizedEntries = NormalizeEntries(entries);
+            var normalizedEntries = GetNormalizeEntries(entries);
             _keys = new ObservableCollection<TKey>(normalizedEntries.Select(x => x.Key));
             _values = new ObservableCollection<TValue>(normalizedEntries.Select(x => x.Value));
             _indices = normalizedEntries.Select((x, i) => (key: x.Key, index: i)).ToDictionary(x => x.key, x => x.index);
@@ -184,7 +184,7 @@ namespace Rekog.App.ObjectModel
 
         public void MergeRange(IEnumerable<KeyValuePair<TKey, TValue>> entries)
         {
-            var normalizedEntries = NormalizeEntries(entries);
+            var normalizedEntries = GetNormalizeEntries(entries);
 
             if (normalizedEntries.Count == 0)
             {
@@ -220,7 +220,7 @@ namespace Rekog.App.ObjectModel
 
         public void ReplaceUsingMerge(IEnumerable<KeyValuePair<TKey, TValue>> entries)
         {
-            var normalizedEntries = NormalizeEntries(entries);
+            var normalizedEntries = GetNormalizeEntries(entries);
 
             if (normalizedEntries.Count == 0 && Count == 0)
             {
@@ -264,7 +264,7 @@ namespace Rekog.App.ObjectModel
 
         public void ReplaceUsingClear(IEnumerable<KeyValuePair<TKey, TValue>> entries)
         {
-            var normalizedEntries = NormalizeEntries(entries);
+            var normalizedEntries = GetNormalizeEntries(entries);
 
             if (normalizedEntries.Count == 0 && Count == 0)
             {
@@ -315,7 +315,7 @@ namespace Rekog.App.ObjectModel
             return _keys.Zip(_values, (k, v) => new KeyValuePair<TKey, TValue>(k, v)).GetEnumerator();
         }
 
-        private static IList<KeyValuePair<TKey, TValue>> NormalizeEntries(IEnumerable<KeyValuePair<TKey, TValue>> entries)
+        private static List<KeyValuePair<TKey, TValue>> GetNormalizeEntries(IEnumerable<KeyValuePair<TKey, TValue>> entries)
         {
             // Make sure entries contains last value of each key
             return entries.Reverse().DistinctBy(x => x.Key).ToList();
