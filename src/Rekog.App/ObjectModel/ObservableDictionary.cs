@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,6 +14,7 @@ namespace Rekog.App.ObjectModel
 {
     public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue>, INotifyCollectionChanged, INotifyPropertyChanged
         where TKey : notnull
+        where TValue : ObservableObject
     {
         private const string IndexerName = "Item";
         private static readonly PropertyChangedEventArgs CountPropertyChangedEventArgs = new PropertyChangedEventArgs(nameof(Count));
@@ -25,6 +27,8 @@ namespace Rekog.App.ObjectModel
         private readonly ObservableCollection<TKey> _keys;
         private readonly ObservableCollection<TValue> _values;
         private readonly Dictionary<TKey, int> _indices;
+
+        private Dictionary<TKey, PropertyChangedEventHandler>? _observeEntriesHandlers;
 
         public ObservableDictionary() : this(EqualityComparer<TValue>.Default)
         {
@@ -437,7 +441,50 @@ namespace Rekog.App.ObjectModel
 
         private void OnDictionaryChanged(IReadOnlyDictionary<TKey, TValue> newEntries, IReadOnlyDictionary<TKey, TValue> oldEntries)
         {
+            if (_observeEntriesHandlers != null)
+            {
+                UnsubscribeEntryPropertyChanged(oldEntries);
+                SubscribeEntryPropertyChanged(newEntries);
+            }
+
             DictionaryChanged?.Invoke(this, new DictionaryChangedEventArgs<TKey, TValue>(newEntries, oldEntries));
+        }
+
+        private void SubscribeEntryPropertyChanged(IReadOnlyDictionary<TKey, TValue> entries)
+        {
+            if (_observeEntriesHandlers == null)
+            {
+                return;
+            }
+
+            foreach (var (key, value) in entries)
+            {
+                void Handler(object? _, PropertyChangedEventArgs args)
+                {
+                    EntryPropertyChangedCore?.Invoke(this, new EntryPropertyChangedEventArgs<TKey, TValue>(key, value, args.PropertyName));
+                }
+
+                if (_observeEntriesHandlers.TryAdd(key, Handler))
+                {
+                    value.PropertyChanged += Handler;
+                }
+            }
+        }
+
+        private void UnsubscribeEntryPropertyChanged(IReadOnlyDictionary<TKey, TValue> entries)
+        {
+            if (_observeEntriesHandlers == null)
+            {
+                return;
+            }
+
+            foreach (var (key, value) in entries)
+            {
+                if (_observeEntriesHandlers.Remove(key, out var handler))
+                {
+                    value.PropertyChanged -= handler;
+                }
+            }
         }
 
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
@@ -476,10 +523,49 @@ namespace Rekog.App.ObjectModel
             return GetEnumerator();
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public event NotifyCollectionChangedEventHandler? CollectionChanged;
-
         public event DictionaryChangedEventHandler<TKey, TValue>? DictionaryChanged;
+
+        public event EntryPropertyChangedEventHandler<TKey, TValue>? EntryPropertyChanged
+        {
+            add
+            {
+                if (_observeEntriesHandlers == null)
+                {
+                    _observeEntriesHandlers = new Dictionary<TKey, PropertyChangedEventHandler>();
+                    SubscribeEntryPropertyChanged(this);
+                }
+
+                EntryPropertyChangedCore += value;
+            }
+            remove
+            {
+                EntryPropertyChangedCore -= value;
+
+                if (_observeEntriesHandlers != null && EntryPropertyChangedCore == null)
+                {
+                    UnsubscribeEntryPropertyChanged(this);
+                    Debug.Assert(_observeEntriesHandlers.Count == 0);
+                    _observeEntriesHandlers = null;
+                }
+            }
+        }
+
+        private event EntryPropertyChangedEventHandler<TKey, TValue>? EntryPropertyChangedCore;
+
+        private event PropertyChangedEventHandler? PropertyChanged;
+
+        private event NotifyCollectionChangedEventHandler? CollectionChanged;
+
+        event PropertyChangedEventHandler? INotifyPropertyChanged.PropertyChanged
+        {
+            add => PropertyChanged += value;
+            remove => PropertyChanged -= value;
+        }
+
+        event NotifyCollectionChangedEventHandler? INotifyCollectionChanged.CollectionChanged
+        {
+            add => CollectionChanged += value;
+            remove => CollectionChanged -= value;
+        }
     }
 }

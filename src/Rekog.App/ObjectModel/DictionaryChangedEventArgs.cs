@@ -4,6 +4,7 @@ namespace Rekog.App.ObjectModel
 {
     public class DictionaryChangedEventArgs<TKey, TValue>
         where TKey : notnull
+        where TValue : ObservableObject
     {
         public DictionaryChangedEventArgs(IReadOnlyDictionary<TKey, TValue> newEntries, IReadOnlyDictionary<TKey, TValue> oldEntries)
         {
