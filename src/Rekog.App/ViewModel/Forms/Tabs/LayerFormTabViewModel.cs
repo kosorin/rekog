@@ -1,6 +1,8 @@
 using System.ComponentModel;
 using System.Windows.Input;
 using Rekog.App.Model;
+using Rekog.App.ObjectModel;
+using Rekog.App.ObjectModel.Forms;
 
 namespace Rekog.App.ViewModel.Forms.Tabs
 {
@@ -8,10 +10,10 @@ namespace Rekog.App.ViewModel.Forms.Tabs
     {
         private ICommand? _deleteCommand;
 
-        public LayerFormTabViewModel(LayerModel model, string icon, ViewModelBase form) : base(model.Name, icon, form)
+        public LayerFormTabViewModel(LayerModel model, string icon, ModelForm form) : base(model.Name, icon, form)
         {
             Model = model;
-            Model.PropertyChanged += Model_PropertyChanged;
+            Model.PropertyChanged += OnModelPropertyChanged;
         }
 
         public ICommand? DeleteCommand
@@ -22,7 +24,7 @@ namespace Rekog.App.ViewModel.Forms.Tabs
 
         public LayerModel Model { get; }
 
-        private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs args)
+        private void OnModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
         {
             switch (args.PropertyName)
             {

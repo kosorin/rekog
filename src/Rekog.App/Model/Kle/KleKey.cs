@@ -50,7 +50,7 @@ namespace Rekog.App.Model.Kle
 
         public int DefaultTextSize { get; set; }
 
-        public int LegendTextSize => 2;
+        public int FrontLegendTextSize => 2;
 
         public string?[] TextColors { get; set; } = Array.Empty<string?>();
 

@@ -1,5 +1,13 @@
 ﻿namespace Rekog.App.Model
 {
+    public record LegendId(KeyId KeyId, LayerId LayerId)
+    {
+        public static implicit operator LegendId((KeyId keyId, LayerId layerId) value)
+        {
+            return new LegendId(value.keyId, value.layerId);
+        }
+    }
+
     public class LegendModel : ModelBase
     {
         private string _value = string.Empty;
@@ -13,6 +21,13 @@
         private bool _italic;
         private double _size = 20;
         private string _color = "#000000";
+
+        public LegendModel(LegendId id)
+        {
+            Id = id;
+        }
+
+        public LegendId Id { get; }
 
         public string Value
         {

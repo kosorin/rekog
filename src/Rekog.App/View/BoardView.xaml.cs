@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Rekog.App.Extensions;
+using Rekog.App.Model;
 using Rekog.App.ViewModel;
 
 namespace Rekog.App.View
@@ -155,7 +156,7 @@ namespace Rekog.App.View
             }
         }
 
-        private void BoardView_PreviewMouseDown(object? sender, MouseButtonEventArgs args)
+        private void OnBoardViewPreviewMouseDown(object? sender, MouseButtonEventArgs args)
         {
             args.Handled = true;
             Coords = GetCoords(args);
@@ -177,7 +178,7 @@ namespace Rekog.App.View
             }
         }
 
-        private void BoardView_PreviewMouseMove(object? sender, MouseEventArgs args)
+        private void OnBoardViewPreviewMouseMove(object? sender, MouseEventArgs args)
         {
             Coords = GetCoords(args);
 
@@ -191,7 +192,7 @@ namespace Rekog.App.View
             }
         }
 
-        private void BoardView_PreviewMouseUp(object? sender, MouseButtonEventArgs args)
+        private void OnBoardViewPreviewMouseUp(object? sender, MouseButtonEventArgs args)
         {
             args.Handled = true;
             Coords = GetCoords(args);
@@ -211,12 +212,12 @@ namespace Rekog.App.View
             }
         }
 
-        private void BoardView_LostMouseCapture(object? sender, MouseEventArgs args)
+        private void OnBoardViewLostMouseCapture(object? sender, MouseEventArgs args)
         {
             Reset();
         }
 
-        private void BoardView_PreviewMouseWheel(object? sender, MouseWheelEventArgs args)
+        private void OnBoardViewPreviewMouseWheel(object? sender, MouseWheelEventArgs args)
         {
             args.Handled = true;
 
@@ -239,7 +240,7 @@ namespace Rekog.App.View
             }
         }
 
-        private void BoardView_PreviewKeyDown(object? sender, KeyEventArgs args)
+        private void OnBoardViewPreviewKeyDown(object? sender, KeyEventArgs args)
         {
             args.Handled = true;
 
@@ -293,12 +294,12 @@ namespace Rekog.App.View
             }
         }
 
-        private void LayoutRoot_SizeChanged(object? sender, SizeChangedEventArgs args)
+        private void OnLayoutRootSizeChanged(object? sender, SizeChangedEventArgs args)
         {
             Coerce();
         }
 
-        private void Plate_SizeChanged(object? sender, SizeChangedEventArgs args)
+        private void OnPlateSizeChanged(object? sender, SizeChangedEventArgs args)
         {
             Coerce();
         }
@@ -395,18 +396,18 @@ namespace Rekog.App.View
 
             if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
             {
-                if (ViewModel.SelectedKeys.Contains(keyViewModel))
+                if (ViewModel.SelectedKeys.ContainsKey(keyViewModel.Model.Id))
                 {
-                    ViewModel.SelectedKeys.Remove(keyViewModel);
+                    ViewModel.SelectedKeys.Remove(keyViewModel.Model.Id);
                 }
                 else
                 {
-                    ViewModel.SelectedKeys.Add(keyViewModel);
+                    ViewModel.SelectedKeys.Add(keyViewModel.Model.Id, keyViewModel);
                 }
             }
             else
             {
-                ViewModel.SelectedKeys.ReplaceUsingClear(new[] { keyViewModel, });
+                ViewModel.SelectedKeys.ClearOverwrite(new[] { new KeyValuePair<KeyId, KeyViewModel>(keyViewModel.Model.Id, keyViewModel), });
             }
         }
 
@@ -418,23 +419,23 @@ namespace Rekog.App.View
             }
 
             var selectionBox = ClipArea(_selectContext.InitialCoords, GetCoords(args), GetCoordBounds(), SelectionBoxInflateSize);
-            var toSelect = _selectContext.Keys.Where(x => selectionBox.Contains(x.ViewModel.ActualBounds)).Select(x => x.ViewModel);
+            var toSelect = _selectContext.Keys
+                .Where(x => selectionBox.Contains(x.ViewModel.ActualBounds))
+                .ToDictionary(x => x.ViewModel.Model.Id, x => x.ViewModel);
 
             if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
             {
-                ViewModel.SelectedKeys.MergeRange(toSelect);
+                ViewModel.SelectedKeys.AddOrReplaceRange(toSelect);
             }
             else
             {
-                ViewModel.SelectedKeys.ReplaceUsingMerge(toSelect);
+                ViewModel.SelectedKeys.MergeOverwrite(toSelect);
             }
         }
 
         private void SelectAll()
         {
-            var toSelect = GetKeys().Select(x => x.ViewModel);
-
-            ViewModel.SelectedKeys.ReplaceUsingMerge(toSelect);
+            ViewModel.SelectedKeys.AddOrReplaceRange(ViewModel.Keys.ToDictionary(x => x.Model.Id, x => x));
         }
 
         private void UnselectAll()

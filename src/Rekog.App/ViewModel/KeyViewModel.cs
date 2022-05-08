@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Koda.ColorTools;
@@ -26,16 +25,13 @@ namespace Rekog.App.ViewModel
         private Rect _actualBounds;
         private Geometry _actualShape = EmptyGeometry;
         private Color _color = DefaultColor;
-        private ObservableObjectCollection<LegendViewModel> _legends = new ObservableObjectCollection<LegendViewModel>();
+        private ObservableDictionary<LegendId, LegendViewModel> _legends = new ObservableDictionary<LegendId, LegendViewModel>();
 
         public KeyViewModel(KeyModel model)
             : base(model)
         {
-            SubscribeModelLegends();
-
             UpdateLayout();
             UpdateColor();
-            UpdateLegends();
         }
 
         public bool IsSelected
@@ -92,22 +88,10 @@ namespace Rekog.App.ViewModel
             set => Set(ref _color, value);
         }
 
-        public ObservableObjectCollection<LegendViewModel> Legends
+        public ObservableDictionary<LegendId, LegendViewModel> Legends
         {
             get => _legends;
             private set => Set(ref _legends, value);
-        }
-
-        protected override void OnModelPropertyChanging(object? sender, PropertyChangingEventArgs args)
-        {
-            base.OnModelPropertyChanging(sender, args);
-
-            switch (args.PropertyName)
-            {
-                case nameof(KeyModel.Legends):
-                    UnsubscribeModelLegends();
-                    break;
-            }
         }
 
         protected override void OnModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
@@ -142,28 +126,14 @@ namespace Rekog.App.ViewModel
                 case nameof(KeyModel.Color):
                     UpdateColor();
                     break;
-                case nameof(KeyModel.Legends):
-                    UpdateLegends();
-                    SubscribeModelLegends();
-                    break;
             }
-        }
-
-        private void SubscribeModelLegends()
-        {
-            UnsubscribeModelLegends();
-
-            Model.Legends.CollectionItemChanged += ModelLegends_CollectionItemChanged;
-        }
-
-        private void UnsubscribeModelLegends()
-        {
-            Model.Legends.CollectionItemChanged -= ModelLegends_CollectionItemChanged;
         }
 
         private void UpdateLayout()
         {
-            Rotation = new RotateTransform(Model.RotationAngle, Model.RotationOriginX - Model.X, Model.RotationOriginY - Model.Y);
+            var unitSize = App.UnitSize;
+
+            Rotation = new RotateTransform(Model.RotationAngle, (Model.RotationOriginX - Model.X) * unitSize, (Model.RotationOriginY - Model.Y) * unitSize);
 
             Shape = GetShape(Model.GetGeometry());
             SteppedShape = Model.IsStepped ? GetShape(Model.GetSteppedGeometry()) : null;
@@ -172,7 +142,7 @@ namespace Rekog.App.ViewModel
             InnerShapeOffset = new Point(Model.InnerVerticalOffset * -Math.Sin(Math.PI * Model.RotationAngle / 180d), Model.InnerVerticalOffset * -Math.Cos(Math.PI * Model.RotationAngle / 180d));
 
             var actualTransform = new TransformGroup();
-            actualTransform.Children.Add(Rotation);
+            actualTransform.Children.Add(new RotateTransform(Model.RotationAngle, Model.RotationOriginX - Model.X, Model.RotationOriginY - Model.Y));
             actualTransform.Children.Add(new TranslateTransform(Model.X, Model.Y));
             var actualShape = Model.GetGeometry().Clone();
             actualShape.Transform = actualTransform;
@@ -185,47 +155,29 @@ namespace Rekog.App.ViewModel
             Color = HexColor.TryParse(Model.Color, out var color) ? color.ToColor() : DefaultColor;
         }
 
-        private void UpdateLegends()
-        {
-            Legends = new ObservableObjectCollection<LegendViewModel>(Model.Legends.Select(x => new LegendViewModel(x)));
-        }
-
-        private void ModelLegends_CollectionItemChanged(IObservableObjectCollection<LegendModel> collection, CollectionItemChangedEventArgs<LegendModel> args)
-        {
-            if (args.OldItems.Count > 0)
-            {
-                Legends.RemoveRange(Legends.Where(x => args.OldItems.Contains(x.Model)));
-            }
-
-            if (args.NewItems.Count > 0)
-            {
-                Legends.AddRange(args.NewItems.Select(x => new LegendViewModel(x)));
-            }
-        }
-
         private PathGeometry GetShape(PathGeometry shape)
         {
-            var scale = App.UnitSize;
+            var unitSize = App.UnitSize;
 
             shape = shape.Clone();
-            shape.Transform = new ScaleTransform(scale, scale);
+            shape.Transform = new ScaleTransform(unitSize, unitSize);
 
             return shape
-                .GetEnlargedPathGeometry(scale * -(Model.Roundness + Model.Margin), Model.RoundConcaveCorner)
-                .GetEnlargedPathGeometry(scale * Model.Roundness, true);
+                .GetEnlargedPathGeometry(unitSize * -(Model.Roundness + Model.Margin), Model.RoundConcaveCorner)
+                .GetEnlargedPathGeometry(unitSize * Model.Roundness, true);
         }
 
         private PathGeometry GetInnerShape(PathGeometry shape)
         {
-            var scale = App.UnitSize;
+            var unitSize = App.UnitSize;
 
             shape = shape.Clone();
-            shape.Transform = new ScaleTransform(scale, scale);
+            shape.Transform = new ScaleTransform(unitSize, unitSize);
 
             return shape
-                .GetEnlargedPathGeometry(scale * -Model.Padding, false)
-                .GetEnlargedPathGeometry(scale * -(Model.Roundness + Model.Margin), Model.RoundConcaveCorner)
-                .GetEnlargedPathGeometry(scale * Model.Roundness, true);
+                .GetEnlargedPathGeometry(unitSize * -Model.Padding, false)
+                .GetEnlargedPathGeometry(unitSize * -(Model.Roundness + Model.Margin), Model.RoundConcaveCorner)
+                .GetEnlargedPathGeometry(unitSize * Model.Roundness, true);
         }
     }
 }

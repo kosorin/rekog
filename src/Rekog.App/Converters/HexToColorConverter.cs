@@ -8,7 +8,7 @@ using Koda.ColorTools.Wpf;
 
 namespace Rekog.App.Converters
 {
-    [ValueConversion(typeof(string), typeof(Color))]
+    [ValueConversion(typeof(string), typeof(Color), ParameterType = typeof(Color))]
     public class HexToColorConverter : IValueConverter
     {
         public bool WithAlpha { get; set; }

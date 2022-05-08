@@ -18,18 +18,10 @@
               Data="{Binding Shape}">
             <Path.Style>
                 <Style TargetType="{x:Type Path}">
-                    <Setter Property="Fill">
-                        <Setter.Value>
-                            <SolidColorBrush Color="{Binding Color, Converter={StaticResource LightenConverter}, ConverterParameter={mx:Double 0.90}}" />
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Fill" Value="{Binding Color, Converter={StaticResource LightenColorToSolidColorBrushConverter}, ConverterParameter={mx:Double 0.90}}" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding SteppedShape, Converter={StaticResource NotNullToBooleanConverter}}" Value="True">
-                            <Setter Property="Fill">
-                                <Setter.Value>
-                                    <SolidColorBrush Color="{Binding Color, Converter={StaticResource LightenConverter}, ConverterParameter={mx:Double 0.82}}" />
-                                </Setter.Value>
-                            </Setter>
+                            <Setter Property="Fill" Value="{Binding Color, Converter={StaticResource LightenColorToSolidColorBrushConverter}, ConverterParameter={mx:Double 0.82}}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -37,29 +29,19 @@
         </Path>
         <Path Clip="{Binding Data, RelativeSource={RelativeSource Self}}"
               Data="{Binding SteppedShape}"
-              StrokeThickness="{Binding Source={mx:Double 0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}"
-              Visibility="{Binding SteppedShape, Converter={StaticResource NotNullToVisibilityConverter}}">
-            <Path.Fill>
-                <SolidColorBrush Color="{Binding Color, Converter={StaticResource LightenConverter}, ConverterParameter={mx:Double 0.90}}" />
-            </Path.Fill>
-            <Path.Stroke>
-                <SolidColorBrush Color="{Binding Color, Converter={StaticResource LightenConverter}, ConverterParameter={mx:Double 0.70}}" />
-            </Path.Stroke>
-        </Path>
+              Fill="{Binding Color, Converter={StaticResource LightenColorToSolidColorBrushConverter}, ConverterParameter={mx:Double 0.90}}"
+              StrokeThickness="0"
+              Visibility="{Binding SteppedShape, Converter={StaticResource NotNullToVisibilityConverter}}" />
         <Path x:Name="InnerPath"
               Clip="{Binding Data, RelativeSource={RelativeSource Self}}"
               Data="{Binding InnerShape}"
+              Fill="{Binding Color, Converter={StaticResource ColorToSolidColorBrushConverter}}"
+              Stroke="{Binding Color, Converter={StaticResource LightenColorToSolidColorBrushConverter}, ConverterParameter={mx:Double 0.85}}"
               RenderTransformOrigin="0.5,0.5"
               StrokeThickness="{Binding Source={mx:Double 0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}">
             <Path.RenderTransform>
                 <TranslateTransform X="{Binding InnerShapeOffset.X, Converter={StaticResource ScaleConverter}}" Y="{Binding InnerShapeOffset.Y, Converter={StaticResource ScaleConverter}}" />
             </Path.RenderTransform>
-            <Path.Fill>
-                <SolidColorBrush Color="{Binding Color}" />
-            </Path.Fill>
-            <Path.Stroke>
-                <SolidColorBrush Color="{Binding Color, Converter={StaticResource LightenConverter}, ConverterParameter={mx:Double 0.85}}" />
-            </Path.Stroke>
         </Path>
         <ItemsControl Canvas.Left="{Binding Data.Bounds.X, ElementName=InnerPath}"
                       Canvas.Top="{Binding Data.Bounds.Y, ElementName=InnerPath}"
@@ -70,7 +52,7 @@
                       VerticalAlignment="Stretch"
                       IsHitTestVisible="False"
                       IsTabStop="False"
-                      ItemsSource="{Binding Legends}">
+                      ItemsSource="{Binding Legends.Values}">
             <ItemsControl.RenderTransform>
                 <TranslateTransform X="{Binding InnerShapeOffset.X, Converter={StaticResource ScaleConverter}}" Y="{Binding InnerShapeOffset.Y, Converter={StaticResource ScaleConverter}}" />
             </ItemsControl.RenderTransform>
@@ -84,23 +66,18 @@
                     <TextBlock Margin="{Binding Margin, Converter={StaticResource ScaleConverter}}"
                                HorizontalAlignment="{Binding Model.Alignment, ConverterParameter=H, Converter={StaticResource LegendAlignmentConverter}}"
                                VerticalAlignment="{Binding Model.Alignment, ConverterParameter=V, Converter={StaticResource LegendAlignmentConverter}}"
+                               Foreground="{Binding Color, Converter={StaticResource ColorToSolidColorBrushConverter}}"
                                FontFamily="{Binding Font}"
                                FontSize="{Binding Model.Size}"
                                FontStyle="{Binding Model.Italic, Converter={StaticResource BooleanToFontStyleConverter}}"
                                FontWeight="{Binding Model.Bold, Converter={StaticResource BooleanToFontWeightConverter}}"
                                IsHitTestVisible="True"
                                Text="{Binding Model.Value}"
-                               TextWrapping="Wrap">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{Binding Color}" />
-                        </TextBlock.Foreground>
-                    </TextBlock>
+                               TextWrapping="Wrap" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Path x:Name="OverlayPath"
-              Clip="{Binding Clip, ElementName=MainPath}"
-              Data="{Binding Data, ElementName=MainPath}">
+        <Path Clip="{Binding Clip, ElementName=MainPath}" Data="{Binding Data, ElementName=MainPath}">
             <Path.Resources>
                 <SolidColorBrush x:Key="MouseOverFillBrush">#10000000</SolidColorBrush>
                 <SolidColorBrush x:Key="PreviewSelectedFillBrush">#2a000000</SolidColorBrush>
@@ -109,11 +86,7 @@
             <Path.Style>
                 <Style TargetType="{x:Type Path}">
                     <Setter Property="Fill" Value="Transparent" />
-                    <Setter Property="Stroke">
-                        <Setter.Value>
-                            <SolidColorBrush Color="{Binding Color, Converter={StaticResource LightenConverter}, ConverterParameter={mx:Double 0.55}}" />
-                        </Setter.Value>
-                    </Setter>
+                    <Setter Property="Stroke" Value="{Binding Color, Converter={StaticResource LightenColorToSolidColorBrushConverter}, ConverterParameter={mx:Double 0.55}}" />
                     <Setter Property="StrokeThickness" Value="{Binding Source={mx:Double 0.03}, Converter={StaticResource ScaleConverter}, Mode=OneTime}" />
                     <Style.Triggers>
                         <MultiDataTrigger>

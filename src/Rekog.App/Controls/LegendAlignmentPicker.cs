@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -51,8 +52,8 @@ namespace Rekog.App.Controls
             {
                 foreach (var button in _buttons.Values)
                 {
-                    button.Checked -= Button_Checked;
-                    button.Unchecked -= Button_Unchecked;
+                    button.Checked -= OnButtonChecked;
+                    button.Unchecked -= OnButtonUnchecked;
                 }
             }
 
@@ -71,8 +72,8 @@ namespace Rekog.App.Controls
 
             foreach (var button in _buttons.Values)
             {
-                button.Checked += Button_Checked;
-                button.Unchecked += Button_Unchecked;
+                button.Checked += OnButtonChecked;
+                button.Unchecked += OnButtonUnchecked;
             }
 
             UpdateData();
@@ -85,15 +86,9 @@ namespace Rekog.App.Controls
                 return;
             }
 
+            _manual = true;
             try
             {
-                _manual = true;
-
-                if (!Alignment.HasValue && !AllowNull)
-                {
-                    Alignment = LegendAlignment.TopLeft;
-                }
-
                 foreach (var (alignment, button) in _buttons)
                 {
                     button.IsChecked = alignment == Alignment;
@@ -105,77 +100,57 @@ namespace Rekog.App.Controls
             }
         }
 
-        private static void OnAllowNullChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnAllowNullChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            if (d is LegendAlignmentPicker picker)
+            if (obj is LegendAlignmentPicker picker)
             {
                 picker.UpdateData();
             }
         }
 
-        private static void OnAlignmentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnAlignmentChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            if (d is LegendAlignmentPicker picker)
+            if (obj is LegendAlignmentPicker picker)
             {
                 picker.UpdateData();
             }
         }
 
-        private void Button_Checked(object sender, RoutedEventArgs e)
+        private void OnButtonChecked(object sender, RoutedEventArgs args)
         {
             if (_manual || _buttons == null)
             {
                 return;
             }
 
-            try
-            {
-                _manual = true;
-
-                foreach (var (alignment, button) in _buttons)
-                {
-                    if (button == sender)
-                    {
-                        Alignment = alignment;
-                    }
-                    else
-                    {
-                        button.IsChecked = false;
-                    }
-                }
-            }
-            finally
-            {
-                _manual = false;
-            }
+            Alignment = _buttons.First(x => x.Value == sender).Key;
         }
 
-        private void Button_Unchecked(object sender, RoutedEventArgs e)
+        private void OnButtonUnchecked(object sender, RoutedEventArgs args)
         {
             if (_manual || _buttons == null)
             {
                 return;
             }
 
-            try
+            if (AllowNull)
             {
-                _manual = true;
-
+                Alignment = null;
+            }
+            else
+            {
                 if (sender is ToggleButton button)
                 {
-                    if (AllowNull)
-                    {
-                        Alignment = null;
-                    }
-                    else
+                    _manual = true;
+                    try
                     {
                         button.IsChecked = true;
                     }
+                    finally
+                    {
+                        _manual = false;
+                    }
                 }
-            }
-            finally
-            {
-                _manual = false;
             }
         }
     }

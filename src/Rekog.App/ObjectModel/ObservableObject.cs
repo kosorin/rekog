@@ -6,18 +6,7 @@ namespace Rekog.App.ObjectModel
 {
     public abstract class ObservableObject : IObservableObject
     {
-        protected virtual void OnPropertyChanging(string? propertyName)
-        {
-            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
-        }
-
-        protected virtual void OnPropertyChanged(string? propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        protected bool Set<T>(ref T field, T value,
-            [CallerMemberName] string? propertyName = null)
+        protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value))
             {
@@ -29,6 +18,16 @@ namespace Rekog.App.ObjectModel
             OnPropertyChanged(propertyName);
 
             return true;
+        }
+
+        protected virtual void OnPropertyChanging(string? propertyName)
+        {
+            PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(propertyName));
+        }
+
+        protected virtual void OnPropertyChanged(string? propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangingEventHandler? PropertyChanging;

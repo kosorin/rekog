@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Rekog.App.ObjectModel
 {
+    [Obsolete("Use ObservableList instead")]
     public class ObservableObjectCollection<T> : ObservableCollection<T>, IObservableObjectCollection<T>
         where T : ObservableObject
     {
@@ -235,7 +236,6 @@ namespace Rekog.App.ObjectModel
         {
             foreach (var item in items)
             {
-                item.PropertyChanged -= Item_PropertyChanged;
                 item.PropertyChanged += Item_PropertyChanged;
             }
         }

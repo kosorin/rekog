@@ -10,7 +10,7 @@ namespace Rekog.App.View
             InitializeComponent();
         }
 
-        private void MainWindow_PreviewKeyDown(object? sender, KeyEventArgs args)
+        private void OnMainWindowPreviewKeyDown(object? sender, KeyEventArgs args)
         {
             args.Handled = true;
 

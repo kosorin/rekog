@@ -26,7 +26,7 @@
                 </TextBlock>
                 <Button Margin="0,12,0,0"
                         ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}"
-                        Click="HideFlyoutButton_OnClick"
+                        Click="OnHideFlyoutButtonClick"
                         Command="{Binding DeleteCommand}"
                         Content="Yes, delete layer" />
             </StackPanel>
@@ -55,6 +55,18 @@
                BasedOn="{StaticResource {x:Type Label}}"
                TargetType="{x:Type Label}">
             <Setter Property="Margin" Value="0,0,0,4" />
+        </Style>
+        <Style x:Key="FormShapeEditorButtonStyle"
+               BasedOn="{StaticResource {x:Type Button}}"
+               TargetType="{x:Type Button}">
+            <Setter Property="ToolTip" Value="Edit a shape" />
+            <Setter Property="Content">
+                <Setter.Value>
+                    <ui:FontIcon Glyph="&#xE70F;" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ui:FlyoutService.Flyout" Value="{StaticResource ShapeEditorFlyout}" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
         </Style>
         <Style x:Key="FormColorPickerButtonStyle"
                BasedOn="{StaticResource {x:Type Button}}"
@@ -131,7 +143,7 @@
                                      Visibility="Collapsed">
                     <Viewbox MaxWidth="{DynamicResource TabViewItemHeaderIconSize}" MaxHeight="{DynamicResource TabViewItemHeaderIconSize}">
                         <ui:HyperlinkButton ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}"
-                                            Click="ShowFlyoutButton_OnClick"
+                                            Click="OnShowFlyoutButtonClick"
                                             ToolTip="Delete layer">
                             <ui:FontIcon Glyph="&#xE106;" />
                         </ui:HyperlinkButton>
@@ -221,8 +233,8 @@
                TargetType="{x:Type ListBoxItem}">
             <Setter Property="Content" Value="{Binding Path=DataContext, RelativeSource={RelativeSource Self}, Mode=TwoWay}" />
             <Setter Property="ContentTemplate" Value="{StaticResource FormListBoxItemDataTemplate}" />
-            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="FormTab_OnPreviewMouseLeftButtonDown" />
-            <EventSetter Event="PreviewKeyDown" Handler="FormTab_OnPreviewKeyDown" />
+            <EventSetter Event="PreviewMouseLeftButtonDown" Handler="OnFormTabPreviewMouseLeftButtonDown" />
+            <EventSetter Event="PreviewKeyDown" Handler="OnFormTabPreviewKeyDown" />
         </Style>
         <Style x:Key="FormListBoxStyle" TargetType="{x:Type ListBox}">
             <Setter Property="OverridesDefaultStyle" Value="True" />
@@ -276,15 +288,11 @@
                         KeyboardNavigation.ControlTabNavigation="Once"
                         KeyboardNavigation.DirectionalNavigation="Contained"
                         KeyboardNavigation.TabNavigation="Once">
-                <ListBox KeyboardNavigation.ControlTabNavigation="Continue"
+                <ListBox ItemsSource="{Binding Board.StaticTabs}"
+                         KeyboardNavigation.ControlTabNavigation="Continue"
                          KeyboardNavigation.DirectionalNavigation="Continue"
                          KeyboardNavigation.TabIndex="1"
-                         Style="{StaticResource FormListBoxStyle}">
-                    <ListBoxItem DataContext="{Binding Board.FileTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
-                    <ListBoxItem DataContext="{Binding Board.PropertiesTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
-                    <ListBoxItem DataContext="{Binding Board.BoardTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
-                    <ListBoxItem DataContext="{Binding Board.KeyTab}" Style="{StaticResource FormSingleListBoxItemStyle}" />
-                </ListBox>
+                         Style="{StaticResource FormListBoxStyle}" />
                 <DockPanel KeyboardNavigation.TabIndex="2" Style="{StaticResource FormGroupDockPanelStyle}">
                     <ui:HyperlinkButton Command="{Binding Board.SelectAllLayersCommand}"
                                         KeyboardNavigation.TabIndex="2"
@@ -302,7 +310,7 @@
                                Style="{StaticResource FormGroupTextStyle}"
                                Text="Layers" />
                 </DockPanel>
-                <ListBox ItemsSource="{Binding Board.LayerTabs}"
+                <ListBox ItemsSource="{Binding Board.LayerTabs.Values}"
                          KeyboardNavigation.ControlTabNavigation="Continue"
                          KeyboardNavigation.DirectionalNavigation="Continue"
                          KeyboardNavigation.TabIndex="3"
@@ -313,7 +321,7 @@
                             Content="{Binding Board.CurrentForm}"
                             KeyboardNavigation.IsTabStop="False">
                 <ContentControl.Resources>
-                    <DataTemplate DataType="{x:Type vmf:FileFormViewModel}">
+                    <DataTemplate DataType="{x:Type vmf:BoardFileModelForm}">
                         <ScrollViewer DataContext="{Binding DataContext, ElementName=FormContainer}"
                                       d:DataContext="{d:DesignInstance vm:MainViewModel}"
                                       Style="{StaticResource FormContainerScrollViewerStyle}">
@@ -445,7 +453,7 @@
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vmf:PropertiesFormViewModel}">
+                    <DataTemplate DataType="{x:Type vmf:BoardPropertiesModelForm}">
                         <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                             <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
                                 <Label Content="General" Style="{StaticResource FormContentGroupStyle}" />
@@ -461,7 +469,7 @@
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vmf:BoardFormViewModel}">
+                    <DataTemplate DataType="{x:Type vmf:BoardModelForm}">
                         <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                             <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
                                 <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
@@ -479,7 +487,7 @@
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vmf:KeyFormViewModel}">
+                    <DataTemplate DataType="{x:Type vmf:KeyModelForm}">
                         <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                             <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
                                 <Label Content="Position" Style="{StaticResource FormContentGroupStyle}" />
@@ -533,7 +541,7 @@
                                                   Value="{Binding RotationOriginY.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                                 </Grid>
                                 <Label Content="Shape" Style="{StaticResource FormContentGroupStyle}" />
-                                <Grid>
+                                <Grid IsEnabled="{Binding UseShape.Value, Converter={StaticResource NegationNullableBooleanConverter}, ConverterParameter={mx:Bool True}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
@@ -574,8 +582,9 @@
                                               IsChecked="{Binding IsStepped.Value, Mode=TwoWay}"
                                               Style="{StaticResource FormEnableCheckBoxStyle}" />
                                 </ui:SimpleStackPanel>
-                                <ui:SimpleStackPanel IsEnabled="{Binding IsStepped.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}" Spacing="{StaticResource FormSpacing}">
-                                    <Grid>
+                                <ui:SimpleStackPanel IsEnabled="{Binding IsStepped.Value, Converter={StaticResource NullableBooleanConverter}, ConverterParameter={mx:Bool False}}"
+                                                     Spacing="{StaticResource FormSpacing}">
+                                    <Grid IsEnabled="{Binding UseSteppedShape.Value, Converter={StaticResource NegationNullableBooleanConverter}, ConverterParameter={mx:Bool True}}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition />
                                             <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
@@ -596,7 +605,7 @@
                                                       SmallChange="0.05"
                                                       Value="{Binding SteppedOffsetY.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                                     </Grid>
-                                    <Grid>
+                                    <Grid IsEnabled="{Binding UseSteppedShape.Value, Converter={StaticResource NegationNullableBooleanConverter}, ConverterParameter={mx:Bool True}}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition />
                                             <ColumnDefinition Width="{StaticResource FormGridSpacing}" />
@@ -703,7 +712,7 @@
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vmf:LayerFormViewModel}">
+                    <DataTemplate DataType="{x:Type vmf:LayerModelForm}">
                         <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                             <StackPanel>
                                 <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
@@ -718,7 +727,7 @@
                                     <Label Content="Layout" Style="{StaticResource FormContentGroupStyle}" />
                                     <StackPanel>
                                         <Label Content="Alignment" Style="{StaticResource FormContentHeaderStyle}" />
-                                        <c:LegendAlignmentPicker Alignment="{Binding Alignment.Value, Mode=TwoWay}" AllowNull="True" />
+                                        <c:LegendAlignmentPicker Alignment="{Binding Alignment.Value, Mode=TwoWay}" AllowNull="False" />
                                     </StackPanel>
                                     <Label Content="Margin" Style="{StaticResource FormContentGroupStyle}" />
                                     <Grid>

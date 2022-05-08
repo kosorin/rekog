@@ -59,7 +59,7 @@ namespace Rekog.App.ObjectModel
         {
             _action = action;
             _canExecute = canExecute;
-            CommandManager.RequerySuggested += CommandManager_RequerySuggested;
+            CommandManager.RequerySuggested += OnCommandManagerRequerySuggested;
         }
 
         public void RaiseCanExecuteChanged()
@@ -87,7 +87,7 @@ namespace Rekog.App.ObjectModel
             ExecuteCore((T?)parameter);
         }
 
-        private void CommandManager_RequerySuggested(object? sender, EventArgs e)
+        private void OnCommandManagerRequerySuggested(object? sender, EventArgs args)
         {
             RaiseCanExecuteChanged();
         }

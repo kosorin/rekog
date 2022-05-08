@@ -4,7 +4,7 @@ namespace Rekog.App.ObjectModel
         where TKey : notnull
         where TValue : ObservableObject
     {
-        public EntryPropertyChangedEventArgs(TKey key, TValue value, string? propertyName)
+        public EntryPropertyChangedEventArgs(TKey key, TValue value, string propertyName)
         {
             Key = key;
             Value = value;
@@ -15,6 +15,6 @@ namespace Rekog.App.ObjectModel
 
         public TValue Value { get; }
 
-        public string? PropertyName { get; }
+        public string PropertyName { get; }
     }
 }

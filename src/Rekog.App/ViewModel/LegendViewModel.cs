@@ -19,7 +19,9 @@ namespace Rekog.App.ViewModel
         public LegendViewModel(LegendModel model)
             : base(model)
         {
-            UpdateAll();
+            UpdateMargin();
+            UpdateColor();
+            UpdateFont();
         }
 
         public Thickness Margin
@@ -59,13 +61,6 @@ namespace Rekog.App.ViewModel
                     UpdateFont();
                     break;
             }
-        }
-
-        private void UpdateAll()
-        {
-            UpdateMargin();
-            UpdateColor();
-            UpdateFont();
         }
 
         private void UpdateMargin()

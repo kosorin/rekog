@@ -1,13 +1,16 @@
+using Rekog.App.ObjectModel;
+using Rekog.App.ObjectModel.Forms;
+
 namespace Rekog.App.ViewModel.Forms.Tabs
 {
     public class FormTabViewModel : ViewModelBase
     {
         private string _header;
         private string _icon;
-        private ViewModelBase _form;
+        private ModelForm _form;
         private bool _isSelected;
 
-        public FormTabViewModel(string header, string icon, ViewModelBase form)
+        public FormTabViewModel(string header, string icon, ModelForm form)
         {
             _header = header;
             _icon = icon;
@@ -26,7 +29,7 @@ namespace Rekog.App.ViewModel.Forms.Tabs
             set => Set(ref _icon, value);
         }
 
-        public ViewModelBase Form
+        public ModelForm Form
         {
             get => _form;
             set => Set(ref _form, value);

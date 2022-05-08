@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:dt="clr-namespace:Rekog.App.DesignTime"
+             xmlns:ap="clr-namespace:Rekog.App.Behaviors.AttachedProperties"
+             xmlns:f="clr-namespace:Rekog.App.ObjectModel.Forms"
              xmlns:clr="clr-namespace:System;assembly=mscorlib"
              xmlns:cx="clr-namespace:Rekog.App.Converters"
              xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -43,15 +44,32 @@
             <cx:ObjectToListConverter x:Key="ObjectToListConverter" />
             <cx:HexToColorConverter x:Key="HexToColorConverter" WithAlpha="False" />
             <cx:HexToColorConverter x:Key="HexWithAlphaToColorConverter" WithAlpha="True" />
+            <cx:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
             <cx:ValueConverterChain x:Key="NegationBooleanToVisibilityConverter">
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanNegationConverter}" />
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanToVisibilityConverter}" />
             </cx:ValueConverterChain>
+            <cx:ValueConverterChain x:Key="NegationNullableBooleanConverter">
+                <cx:ValueConverterChainItem Converter="{StaticResource NullableBooleanConverter}" PassRootConverterParameter="True" />
+                <cx:ValueConverterChainItem Converter="{StaticResource BooleanNegationConverter}" />
+            </cx:ValueConverterChain>
+            <cx:ValueConverterChain x:Key="LightenColorToSolidColorBrushConverter">
+                <cx:ValueConverterChainItem Converter="{StaticResource LightenConverter}" PassRootConverterParameter="True" />
+                <cx:ValueConverterChainItem Converter="{StaticResource ColorToSolidColorBrushConverter}" />
+            </cx:ValueConverterChain>
 
-            <ui:Flyout x:Key="ColorPickerFlyout" Opened="ColorPickerFlyout_OnOpened">
-                <color:ColorPicker Style="{StaticResource ModernColorPicker}"
-                                   SelectedHex="{Binding Value, Mode=TwoWay}"
-                                   d:DataContext="{d:DesignInstance dt:ColorFormProperty, IsDesignTimeCreatable=False}" />
+            <ui:Flyout x:Key="ColorPickerFlyout" Opened="OnColorPickerFlyoutOpened" d:DataContext="{d:DesignInstance f:ModelFormProperty, IsDesignTimeCreatable=False}">
+                <color:ColorPicker Style="{StaticResource ModernColorPicker}" SelectedHex="{Binding Value, Mode=TwoWay}" />
+            </ui:Flyout>
+
+            <ui:Flyout x:Key="ShapeEditorFlyout" d:DataContext="{d:DesignInstance f:ModelFormProperty, IsDesignTimeCreatable=False}">
+                <TextBox Text="{Binding Value, Mode=TwoWay}"
+                         ap:InputBindingManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"
+                         ap:InputBindingManager.UpdatePropertySourceWhenModifierKeys="Control"
+                         AcceptsReturn="True"
+                         Height="400"
+                         Width="400"
+                         FontFamily="{StaticResource MonospaceFontFamily}" />
             </ui:Flyout>
 
         </ResourceDictionary>

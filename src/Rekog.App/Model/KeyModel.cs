@@ -1,11 +1,16 @@
-﻿using System.Globalization;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
-using Rekog.App.Model.Kle;
-using Rekog.App.ObjectModel;
 
 namespace Rekog.App.Model
 {
+    public record KeyId(int Value)
+    {
+        public static implicit operator KeyId(int value)
+        {
+            return new KeyId(value);
+        }
+    }
+
     public class KeyModel : ModelBase
     {
         private double _x;
@@ -34,7 +39,13 @@ namespace Rekog.App.Model
         private bool _isHoming;
         private bool _isGhosted;
         private bool _isDecal;
-        private ObservableObjectCollection<LegendModel> _legends = new ObservableObjectCollection<LegendModel>();
+
+        public KeyModel(KeyId id)
+        {
+            Id = id;
+        }
+
+        public KeyId Id { get; }
 
         public double X
         {
@@ -193,12 +204,6 @@ namespace Rekog.App.Model
             set => Set(ref _isDecal, value);
         }
 
-        public ObservableObjectCollection<LegendModel> Legends
-        {
-            get => _legends;
-            set => Set(ref _legends, value);
-        }
-
         public PathGeometry GetGeometry()
         {
             var geometry = CreateGeometry(UseShape, Shape, 0, 0, Width, Height);
@@ -239,112 +244,6 @@ namespace Rekog.App.Model
             while (pathGeometry.Figures.Count > 1)
             {
                 pathGeometry.Figures.RemoveAt(1);
-            }
-        }
-
-        public static KeyModel FromKle(KleKey kleKey)
-        {
-            var x = kleKey.X;
-            var y = kleKey.Y;
-            var width = kleKey.Width;
-            var height = kleKey.Height;
-            var steppedOffsetX = 0d;
-            var steppedOffsetY = 0d;
-            var steppedWidth = kleKey.Width;
-            var steppedHeight = kleKey.Height;
-            string? shape = null;
-
-            if (!kleKey.IsSimple)
-            {
-                if (kleKey.IsSimpleInverted)
-                {
-                    x = kleKey.X + kleKey.X2;
-                    y = kleKey.Y + kleKey.Y2;
-                    width = kleKey.Width2;
-                    height = kleKey.Height2;
-                    steppedOffsetX = -kleKey.X2;
-                    steppedOffsetY = -kleKey.Y2;
-                    steppedWidth = kleKey.Width;
-                    steppedHeight = kleKey.Height;
-                }
-                else
-                {
-                    var geometry1 = new RectangleGeometry(new Rect(0, 0, kleKey.Width, kleKey.Height));
-                    var geometry2 = new RectangleGeometry(new Rect(kleKey.X2, kleKey.Y2, kleKey.Width2, kleKey.Height2));
-                    shape = new CombinedGeometry(GeometryCombineMode.Union, geometry1, geometry2).GetFlattenedPathGeometry().ToString(CultureInfo.InvariantCulture);
-
-                    // Delete "fill rule"
-                    if (shape[0] == 'F')
-                    {
-                        shape = shape[2..];
-                    }
-                }
-            }
-
-            var key = new KeyModel
-            {
-                X = x,
-                Y = y,
-
-                RotationAngle = kleKey.RotationAngle,
-                RotationOriginX = kleKey.RotationX,
-                RotationOriginY = kleKey.RotationY,
-
-                Width = width,
-                Height = height,
-                UseShape = shape != null,
-                Shape = shape,
-
-                IsStepped = kleKey.IsStepped,
-                SteppedOffsetX = steppedOffsetX,
-                SteppedOffsetY = steppedOffsetY,
-                SteppedWidth = steppedWidth,
-                SteppedHeight = steppedHeight,
-                UseSteppedShape = false,
-                SteppedShape = null,
-
-                Color = kleKey.Color,
-
-                IsHoming = kleKey.IsHoming,
-                IsGhosted = kleKey.IsGhosted,
-                IsDecal = kleKey.IsDecal,
-            };
-
-            for (var i = 0; i < 9; i++)
-            {
-                var legend = new LegendModel
-                {
-                    Value = kleKey.Legends[i] ?? string.Empty,
-
-                    Alignment = (LegendAlignment)i,
-
-                    Size = GetSize(kleKey.TextSizes[i] ?? kleKey.DefaultTextSize),
-                    Color = kleKey.TextColors[i] ?? kleKey.DefaultTextColor,
-                };
-                key.Legends.Add(legend);
-            }
-
-            for (var i = 9; i < 12; i++)
-            {
-                var legend = new LegendModel
-                {
-                    Value = kleKey.Legends[i] ?? string.Empty,
-
-                    Alignment = LegendAlignment.BottomLeft + (i - 9),
-                    Bottom = -0.22,
-
-                    Size = GetSize(kleKey.LegendTextSize),
-                    Color = kleKey.TextColors[i] ?? kleKey.DefaultTextColor,
-                };
-                key.Legends.Add(legend);
-            }
-
-            return key;
-
-            static double GetSize(double kleTextSize)
-            {
-                // Just trial and error
-                return 8 + 4 * kleTextSize;
             }
         }
     }

@@ -14,8 +14,8 @@ namespace Rekog.App.ViewModel
         protected ViewModelBase(TModel model)
         {
             Model = model;
-            Model.PropertyChanging += Model_PropertyChanging;
-            Model.PropertyChanged += Model_PropertyChanged;
+            Model.PropertyChanging += OnModelPropertyChanging;
+            Model.PropertyChanged += OnModelPropertyChanged;
         }
 
         public TModel Model { get; }
@@ -26,16 +26,6 @@ namespace Rekog.App.ViewModel
 
         protected virtual void OnModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
         {
-        }
-
-        private void Model_PropertyChanging(object? sender, PropertyChangingEventArgs args)
-        {
-            OnModelPropertyChanging(sender, args);
-        }
-
-        private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs args)
-        {
-            OnModelPropertyChanged(sender, args);
         }
     }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -22,19 +21,19 @@ namespace Rekog.App.ObjectModel
         private static readonly NotifyCollectionChangedEventArgs ResetCollectionChangedEventArgs = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
         private static readonly IReadOnlyDictionary<TKey, TValue> NoEntries = new ReadOnlyDictionary<TKey, TValue>(new Dictionary<TKey, TValue>());
 
-        private readonly IEqualityComparer<TValue> _equalityComparer;
+        private readonly IEqualityComparer<TValue> _valueEqualityComparer;
 
         private readonly ObservableCollection<TKey> _keys;
         private readonly ObservableCollection<TValue> _values;
         private readonly Dictionary<TKey, int> _indices;
 
-        private Dictionary<TKey, PropertyChangedEventHandler>? _observeEntriesHandlers;
+        private Dictionary<TKey, PropertyChangedEventHandler>? _observedEntriesHandlers;
 
         public ObservableDictionary() : this(EqualityComparer<TValue>.Default)
         {
         }
 
-        public ObservableDictionary(IEqualityComparer<TValue> equalityComparer) : this(Array.Empty<KeyValuePair<TKey, TValue>>(), equalityComparer)
+        public ObservableDictionary(IEqualityComparer<TValue> valueEqualityComparer) : this(Array.Empty<KeyValuePair<TKey, TValue>>(), valueEqualityComparer)
         {
         }
 
@@ -42,9 +41,9 @@ namespace Rekog.App.ObjectModel
         {
         }
 
-        public ObservableDictionary(IEnumerable<KeyValuePair<TKey, TValue>> entries, IEqualityComparer<TValue> equalityComparer)
+        public ObservableDictionary(IEnumerable<KeyValuePair<TKey, TValue>> entries, IEqualityComparer<TValue> valueEqualityComparer)
         {
-            _equalityComparer = equalityComparer;
+            _valueEqualityComparer = valueEqualityComparer;
 
             var normalizedEntries = GetNormalizeEntries(entries);
             _keys = new ObservableCollection<TKey>(normalizedEntries.Select(x => x.Key));
@@ -75,7 +74,7 @@ namespace Rekog.App.ObjectModel
         public TValue this[TKey key]
         {
             get => Values[_indices[key]];
-            set => Merge(key, value);
+            set => AddOrReplace(key, value);
         }
 
         public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value)
@@ -107,28 +106,11 @@ namespace Rekog.App.ObjectModel
             OnDictionaryChanged(newEntries, NoEntries);
         }
 
-        public bool Remove(TKey key)
-        {
-            if (RemoveEntry(key, out var value))
-            {
-                var oldEntries = new Dictionary<TKey, TValue>(1)
-                {
-                    [key] = value,
-                };
-
-                OnDictionaryChanged(NoEntries, oldEntries);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public void Merge(TKey key, TValue value)
+        public void AddOrReplace(TKey key, TValue value)
         {
             if (ReplaceEntry(key, value, out var oldValue))
             {
-                if (!_equalityComparer.Equals(value, oldValue))
+                if (!_valueEqualityComparer.Equals(value, oldValue))
                 {
                     var newEntries = new Dictionary<TKey, TValue>(1)
                     {
@@ -148,16 +130,28 @@ namespace Rekog.App.ObjectModel
             }
         }
 
+        public bool Remove(TKey key)
+        {
+            if (RemoveEntry(key, out var value))
+            {
+                var oldEntries = new Dictionary<TKey, TValue>(1)
+                {
+                    [key] = value,
+                };
+
+                OnDictionaryChanged(NoEntries, oldEntries);
+
+                return true;
+            }
+
+            return false;
+        }
+
         public void AddRange(IEnumerable<KeyValuePair<TKey, TValue>> entries)
         {
             var newEntries = new Dictionary<TKey, TValue>();
 
-            foreach (var (key, newValue) in entries)
-            {
-                AddEntry(key, newValue);
-
-                newEntries.Add(key, newValue);
-            }
+            AddRangeCore(entries, newEntries);
 
             if (newEntries.Count > 0)
             {
@@ -165,28 +159,7 @@ namespace Rekog.App.ObjectModel
             }
         }
 
-        public bool RemoveRange(IEnumerable<TKey> keys)
-        {
-            var oldEntries = new Dictionary<TKey, TValue>();
-
-            foreach (var key in keys)
-            {
-                if (RemoveEntry(key, out var oldValue))
-                {
-                    oldEntries.Add(key, oldValue);
-                }
-            }
-
-            if (oldEntries.Count > 0)
-            {
-                OnDictionaryChanged(NoEntries, oldEntries);
-                return true;
-            }
-
-            return false;
-        }
-
-        public void MergeRange(IEnumerable<KeyValuePair<TKey, TValue>> entries)
+        public void AddOrReplaceRange(IEnumerable<KeyValuePair<TKey, TValue>> entries)
         {
             var normalizedEntries = GetNormalizeEntries(entries);
 
@@ -198,23 +171,7 @@ namespace Rekog.App.ObjectModel
             var newEntries = new Dictionary<TKey, TValue>();
             var oldEntries = new Dictionary<TKey, TValue>();
 
-            foreach (var (key, newValue) in normalizedEntries)
-            {
-                if (ReplaceEntry(key, newValue, out var oldValue))
-                {
-                    if (!_equalityComparer.Equals(newValue, oldValue))
-                    {
-                        newEntries.Add(key, newValue);
-                        oldEntries.Add(key, oldValue);
-                    }
-                }
-                else
-                {
-                    AddEntry(key, newValue);
-
-                    newEntries.Add(key, newValue);
-                }
-            }
+            AddOrReplaceRangeCore(normalizedEntries, newEntries, oldEntries);
 
             if (newEntries.Count > 0 || oldEntries.Count > 0)
             {
@@ -222,7 +179,48 @@ namespace Rekog.App.ObjectModel
             }
         }
 
-        public void ReplaceUsingMerge(IEnumerable<KeyValuePair<TKey, TValue>> entries)
+        public void RemoveRange(IEnumerable<TKey> keys)
+        {
+            var oldEntries = new Dictionary<TKey, TValue>();
+
+            RemoveRangeCore(keys, oldEntries);
+
+            if (oldEntries.Count > 0)
+            {
+                OnDictionaryChanged(NoEntries, oldEntries);
+            }
+        }
+
+        public void Merge(IEnumerable<KeyValuePair<TKey, TValue>> addEntries, IEnumerable<TKey> removeKeys)
+        {
+            var normalizedAddEntries = GetNormalizeEntries(addEntries);
+            var actualRemoveKeys = removeKeys.Except(normalizedAddEntries.Select(x => x.Key)).ToList();
+
+            if (normalizedAddEntries.Count == 0 && actualRemoveKeys.Count == 0)
+            {
+                return;
+            }
+
+            var newEntries = new Dictionary<TKey, TValue>();
+            var oldEntries = new Dictionary<TKey, TValue>();
+
+            RemoveRangeCore(actualRemoveKeys, oldEntries);
+            AddOrReplaceRangeCore(normalizedAddEntries, newEntries, oldEntries);
+
+            if (newEntries.Count > 0 || oldEntries.Count > 0)
+            {
+                OnDictionaryChanged(newEntries, oldEntries);
+            }
+        }
+
+        /// <summary>
+        /// Replaces whole dictionary with new entries.
+        /// </summary>
+        /// <remarks>
+        /// Removes entries from the dictionary that are not in <see cref="entries"/> and add or replace new entries.
+        /// Same as <see cref="ClearOverwrite"/> but produce different <see cref="INotifyCollectionChanged"/> and <see cref="INotifyPropertyChanged"/> events. 
+        /// </remarks>
+        public void MergeOverwrite(IEnumerable<KeyValuePair<TKey, TValue>> entries)
         {
             var normalizedEntries = GetNormalizeEntries(entries);
 
@@ -230,35 +228,14 @@ namespace Rekog.App.ObjectModel
             {
                 return;
             }
+
+            var removeKeys = _keys.Except(normalizedEntries.Select(x => x.Key)).ToList();
 
             var newEntries = new Dictionary<TKey, TValue>(normalizedEntries.Count);
             var oldEntries = new Dictionary<TKey, TValue>();
 
-            foreach (var key in _keys.Except(normalizedEntries.Select(x => x.Key)).ToList())
-            {
-                if (RemoveEntry(key, out var oldValue))
-                {
-                    oldEntries.Add(key, oldValue);
-                }
-            }
-
-            foreach (var (key, newValue) in normalizedEntries)
-            {
-                if (ReplaceEntry(key, newValue, out var oldValue))
-                {
-                    if (!_equalityComparer.Equals(newValue, oldValue))
-                    {
-                        newEntries.Add(key, newValue);
-                        oldEntries.Add(key, oldValue);
-                    }
-                }
-                else
-                {
-                    AddEntry(key, newValue);
-
-                    newEntries.Add(key, newValue);
-                }
-            }
+            RemoveRangeCore(removeKeys, oldEntries);
+            AddOrReplaceRangeCore(normalizedEntries, newEntries, oldEntries);
 
             if (newEntries.Count > 0 || oldEntries.Count > 0)
             {
@@ -266,7 +243,14 @@ namespace Rekog.App.ObjectModel
             }
         }
 
-        public void ReplaceUsingClear(IEnumerable<KeyValuePair<TKey, TValue>> entries)
+        /// <summary>
+        /// Replaces whole dictionary with new entries.
+        /// </summary>
+        /// <remarks>
+        /// Removes all entries from the dictionary and then add new entries.
+        /// Same as <see cref="MergeOverwrite"/> but produce different <see cref="INotifyCollectionChanged"/> and <see cref="INotifyPropertyChanged"/> events. 
+        /// </remarks>
+        public void ClearOverwrite(IEnumerable<KeyValuePair<TKey, TValue>> entries)
         {
             var normalizedEntries = GetNormalizeEntries(entries);
 
@@ -276,7 +260,7 @@ namespace Rekog.App.ObjectModel
             }
 
             var newEntries = new Dictionary<TKey, TValue>(normalizedEntries.Count);
-            var oldEntries = this.ToDictionary(x => x.Key, x => x.Value);
+            var oldEntries = ToDictionary();
 
             ClearEntries();
 
@@ -284,7 +268,7 @@ namespace Rekog.App.ObjectModel
             {
                 AddEntry(key, newValue);
 
-                if (oldEntries.TryGetValue(key, out var oldValue) && _equalityComparer.Equals(newValue, oldValue))
+                if (oldEntries.TryGetValue(key, out var oldValue) && _valueEqualityComparer.Equals(newValue, oldValue))
                 {
                     oldEntries.Remove(key);
                 }
@@ -307,11 +291,16 @@ namespace Rekog.App.ObjectModel
                 return;
             }
 
-            var oldEntries = this.ToDictionary(x => x.Key, x => x.Value);
+            var oldEntries = ToDictionary();
 
             ClearEntries();
 
             OnDictionaryChanged(NoEntries, oldEntries);
+        }
+
+        public Dictionary<TKey, TValue> ToDictionary()
+        {
+            return new Dictionary<TKey, TValue>(this);
         }
 
         public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
@@ -325,22 +314,46 @@ namespace Rekog.App.ObjectModel
             return entries.Reverse().DistinctBy(x => x.Key).ToList();
         }
 
-        private bool ReplaceEntry(TKey key, TValue newValue, [MaybeNullWhen(false)] out TValue oldValue)
+        private void AddRangeCore(IEnumerable<KeyValuePair<TKey, TValue>> entries, Dictionary<TKey, TValue> newEntries)
         {
-            if (_indices.TryGetValue(key, out var index))
+            foreach (var (key, newValue) in entries)
             {
-                oldValue = _values[index];
+                AddEntry(key, newValue);
 
-                _values[index] = newValue;
-
-                OnIndexerPropertyChanged();
-                OnReplaceCollectionChanged(key, newValue, oldValue, index);
-
-                return true;
+                newEntries.Add(key, newValue);
             }
+        }
 
-            oldValue = default;
-            return false;
+        private void AddOrReplaceRangeCore(IEnumerable<KeyValuePair<TKey, TValue>> normalizedEntries, Dictionary<TKey, TValue> newEntries, Dictionary<TKey, TValue> oldEntries)
+        {
+            foreach (var (key, newValue) in normalizedEntries)
+            {
+                if (ReplaceEntry(key, newValue, out var oldValue))
+                {
+                    if (!_valueEqualityComparer.Equals(newValue, oldValue))
+                    {
+                        newEntries.Add(key, newValue);
+                        oldEntries.Add(key, oldValue);
+                    }
+                }
+                else
+                {
+                    AddEntry(key, newValue);
+
+                    newEntries.Add(key, newValue);
+                }
+            }
+        }
+
+        private void RemoveRangeCore(IEnumerable<TKey> removeKeys, Dictionary<TKey, TValue> oldEntries)
+        {
+            foreach (var key in removeKeys)
+            {
+                if (RemoveEntry(key, out var oldValue))
+                {
+                    oldEntries.Add(key, oldValue);
+                }
+            }
         }
 
         private void AddEntry(TKey key, TValue value)
@@ -359,6 +372,24 @@ namespace Rekog.App.ObjectModel
             OnCountPropertyChanged();
             OnIndexerPropertyChanged();
             OnAddCollectionChanged(key, value, index);
+        }
+
+        private bool ReplaceEntry(TKey key, TValue newValue, [MaybeNullWhen(false)] out TValue oldValue)
+        {
+            if (_indices.TryGetValue(key, out var index))
+            {
+                oldValue = _values[index];
+
+                _values[index] = newValue;
+
+                OnIndexerPropertyChanged();
+                OnReplaceCollectionChanged(key, newValue, oldValue, index);
+
+                return true;
+            }
+
+            oldValue = default;
+            return false;
         }
 
         private bool RemoveEntry(TKey key, [MaybeNullWhen(false)] out TValue value)
@@ -441,7 +472,7 @@ namespace Rekog.App.ObjectModel
 
         private void OnDictionaryChanged(IReadOnlyDictionary<TKey, TValue> newEntries, IReadOnlyDictionary<TKey, TValue> oldEntries)
         {
-            if (_observeEntriesHandlers != null)
+            if (_observedEntriesHandlers != null)
             {
                 UnsubscribeEntryPropertyChanged(oldEntries);
                 SubscribeEntryPropertyChanged(newEntries);
@@ -452,7 +483,7 @@ namespace Rekog.App.ObjectModel
 
         private void SubscribeEntryPropertyChanged(IReadOnlyDictionary<TKey, TValue> entries)
         {
-            if (_observeEntriesHandlers == null)
+            if (_observedEntriesHandlers == null)
             {
                 return;
             }
@@ -461,26 +492,24 @@ namespace Rekog.App.ObjectModel
             {
                 void Handler(object? _, PropertyChangedEventArgs args)
                 {
-                    EntryPropertyChangedCore?.Invoke(this, new EntryPropertyChangedEventArgs<TKey, TValue>(key, value, args.PropertyName));
+                    EntryPropertyChangedCore?.Invoke(this, new EntryPropertyChangedEventArgs<TKey, TValue>(key, value, args.PropertyName ?? throw new ArgumentNullException(nameof(args.PropertyName))));
                 }
 
-                if (_observeEntriesHandlers.TryAdd(key, Handler))
-                {
-                    value.PropertyChanged += Handler;
-                }
+                _observedEntriesHandlers.Add(key, Handler);
+                value.PropertyChanged += Handler;
             }
         }
 
         private void UnsubscribeEntryPropertyChanged(IReadOnlyDictionary<TKey, TValue> entries)
         {
-            if (_observeEntriesHandlers == null)
+            if (_observedEntriesHandlers == null)
             {
                 return;
             }
 
             foreach (var (key, value) in entries)
             {
-                if (_observeEntriesHandlers.Remove(key, out var handler))
+                if (_observedEntriesHandlers.Remove(key, out var handler))
                 {
                     value.PropertyChanged -= handler;
                 }
@@ -490,7 +519,7 @@ namespace Rekog.App.ObjectModel
         bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
         {
             return _indices.TryGetValue(item.Key, out var index)
-                && _equalityComparer.Equals(_values[index], item.Value);
+                && _valueEqualityComparer.Equals(_values[index], item.Value);
         }
 
         void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
@@ -501,7 +530,7 @@ namespace Rekog.App.ObjectModel
         bool ICollection<KeyValuePair<TKey, TValue>>.Remove(KeyValuePair<TKey, TValue> item)
         {
             return _indices.TryGetValue(item.Key, out var index)
-                && _equalityComparer.Equals(_values[index], item.Value)
+                && _valueEqualityComparer.Equals(_values[index], item.Value)
                 && Remove(item.Key);
         }
 
@@ -529,9 +558,9 @@ namespace Rekog.App.ObjectModel
         {
             add
             {
-                if (_observeEntriesHandlers == null)
+                if (_observedEntriesHandlers == null)
                 {
-                    _observeEntriesHandlers = new Dictionary<TKey, PropertyChangedEventHandler>();
+                    _observedEntriesHandlers = new Dictionary<TKey, PropertyChangedEventHandler>();
                     SubscribeEntryPropertyChanged(this);
                 }
 
@@ -541,11 +570,10 @@ namespace Rekog.App.ObjectModel
             {
                 EntryPropertyChangedCore -= value;
 
-                if (_observeEntriesHandlers != null && EntryPropertyChangedCore == null)
+                if (_observedEntriesHandlers != null && EntryPropertyChangedCore == null)
                 {
                     UnsubscribeEntryPropertyChanged(this);
-                    Debug.Assert(_observeEntriesHandlers.Count == 0);
-                    _observeEntriesHandlers = null;
+                    _observedEntriesHandlers = null;
                 }
             }
         }

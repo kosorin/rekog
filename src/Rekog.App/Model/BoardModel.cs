@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Rekog.App.Model.Kle;
-using Rekog.App.ObjectModel;
+﻿using Rekog.App.ObjectModel;
 
 namespace Rekog.App.Model
 {
@@ -9,9 +7,10 @@ namespace Rekog.App.Model
         private string _name = string.Empty;
         private string _author = string.Empty;
         private string _notes = string.Empty;
-        private string _background = "#808080";
-        private ObservableObjectCollection<LayerModel> _layers = new ObservableObjectCollection<LayerModel>();
-        private ObservableObjectCollection<KeyModel> _keys = new ObservableObjectCollection<KeyModel>();
+        private string _background = "#EEEEEE";
+        private ObservableDictionary<KeyId, KeyModel> _keys = new ObservableDictionary<KeyId, KeyModel>();
+        private ObservableDictionary<LayerId, LayerModel> _layers = new ObservableDictionary<LayerId, LayerModel>();
+        private ObservableDictionary<LegendId, LegendModel> _legends = new ObservableDictionary<LegendId, LegendModel>();
 
         public string Name
         {
@@ -37,43 +36,22 @@ namespace Rekog.App.Model
             set => Set(ref _background, value);
         }
 
-        public ObservableObjectCollection<LayerModel> Layers
-        {
-            get => _layers;
-            set => Set(ref _layers, value);
-        }
-
-        public ObservableObjectCollection<KeyModel> Keys
+        public ObservableDictionary<KeyId, KeyModel> Keys
         {
             get => _keys;
             set => Set(ref _keys, value);
         }
 
-        public static BoardModel FromKle(KleBoard kleBoard)
+        public ObservableDictionary<LayerId, LayerModel> Layers
         {
-            return new BoardModel
-            {
-                Name = kleBoard.Name,
-                Author = kleBoard.Author,
-                Notes = kleBoard.Notes,
-                Background = kleBoard.Background,
-                Layers = new ObservableObjectCollection<LayerModel>(new[]
-                {
-                    new LayerModel { Name = "Top Left", },
-                    new LayerModel { Name = "Top Center", },
-                    new LayerModel { Name = "Top Right", },
-                    new LayerModel { Name = "Middle Left", },
-                    new LayerModel { Name = "Middle Center", },
-                    new LayerModel { Name = "Middle Right", },
-                    new LayerModel { Name = "Bottom Left", },
-                    new LayerModel { Name = "Bottom Center", },
-                    new LayerModel { Name = "Bottom Right", },
-                    new LayerModel { Name = "Front Left", },
-                    new LayerModel { Name = "Front Center", },
-                    new LayerModel { Name = "Front Right", },
-                }),
-                Keys = new ObservableObjectCollection<KeyModel>(kleBoard.Keys.Select(KeyModel.FromKle)),
-            };
+            get => _layers;
+            set => Set(ref _layers, value);
+        }
+
+        public ObservableDictionary<LegendId, LegendModel> Legends
+        {
+            get => _legends;
+            set => Set(ref _legends, value);
         }
     }
 }

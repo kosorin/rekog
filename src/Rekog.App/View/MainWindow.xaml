@@ -11,7 +11,7 @@
         d:DataContext="{d:DesignInstance vm:MainViewModel}"
         Width="1600"
         Height="1000"
-        PreviewKeyDown="MainWindow_PreviewKeyDown"
+        PreviewKeyDown="OnMainWindowPreviewKeyDown"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         mc:Ignorable="d">
@@ -87,6 +87,9 @@
                         </ui:SplitButton.Flyout>
                     </ui:SplitButton>
                     <Button Command="{Binding Board.DeleteSelectedKeysCommand}" Content="Delete keys" />
+                    <ui:AppBarSeparator />
+                    <Button Command="{Binding Board.UndoContext.UndoCommand}" Content="Undo" />
+                    <Button Command="{Binding Board.UndoContext.RedoCommand}" Content="Redo" />
                 </ui:SimpleStackPanel>
             </Border>
         </ui:ThemeShadowChrome>

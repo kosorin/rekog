@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -8,6 +9,8 @@ using Koda.ColorTools.Wpf;
 using Rekog.App.Extensions;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel;
+using Rekog.App.ObjectModel.Forms;
+using Rekog.App.ObjectModel.Undo;
 using Rekog.App.ViewModel.Forms;
 using Rekog.App.ViewModel.Forms.Tabs;
 using Rekog.App.ViewModel.Values;
@@ -18,24 +21,23 @@ namespace Rekog.App.ViewModel
     {
         private static readonly Color DefaultBackground = Colors.White;
 
-        private ViewModelBase? _currentForm;
-
         // Each item is in the collection only once.
         private readonly ObservableObjectCollection<FormTabViewModel> _tabs = new ObservableObjectCollection<FormTabViewModel>();
-        private readonly ObservableObjectCollection<LayerViewModel> _layers = new ObservableObjectCollection<LayerViewModel>();
-        private readonly ObservableObjectCollection<KeyViewModel> _keys = new ObservableObjectCollection<KeyViewModel>();
+        private readonly ObservableDictionary<KeyId, KeyViewModel> _keys = new ObservableDictionary<KeyId, KeyViewModel>();
+        private readonly ObservableDictionary<LayerId, LayerViewModel> _layers = new ObservableDictionary<LayerId, LayerViewModel>();
 
         // The selected collections are subsets of the respective collections. 
         // IsSelected properties are for caching, however can be used to select items.
         private readonly ObservableObjectCollection<FormTabViewModel> _selectedTabs = new ObservableObjectCollection<FormTabViewModel>();
-        private readonly ObservableObjectCollection<LayerViewModel> _selectedLayers = new ObservableObjectCollection<LayerViewModel>();
-        private readonly ObservableObjectCollection<KeyViewModel> _selectedKeys = new ObservableObjectCollection<KeyViewModel>();
+        private readonly ObservableDictionary<KeyId, KeyViewModel> _selectedKeys = new ObservableDictionary<KeyId, KeyViewModel>();
+        private readonly ObservableDictionary<LayerId, LayerViewModel> _selectedLayers = new ObservableDictionary<LayerId, LayerViewModel>();
 
-        private readonly FileFormViewModel _fileForm = new FileFormViewModel();
-        private readonly PropertiesFormViewModel _propertiesForm = new PropertiesFormViewModel();
-        private readonly BoardFormViewModel _boardForm = new BoardFormViewModel();
-        private readonly KeyFormViewModel _keyForm = new KeyFormViewModel();
-        private readonly LayerFormViewModel _layerForm = new LayerFormViewModel();
+        private ModelForm? _currentForm;
+        private readonly BoardFileModelForm _boardFileForm;
+        private readonly BoardPropertiesModelForm _boardPropertiesForm;
+        private readonly BoardModelForm _boardForm;
+        private readonly KeyModelForm _keyForm;
+        private readonly LayerModelForm _layerForm;
 
         private Thickness _canvasOffset;
         private Size _canvasSize;
@@ -44,59 +46,68 @@ namespace Rekog.App.ViewModel
         public BoardViewModel(BoardModel model)
             : base(model)
         {
-            SubscribeModelLayers();
+            model.UndoActionExecuted += OnModelUndoActionExecuted;
+
             SubscribeModelKeys();
+            SubscribeModelLayers();
+            SubscribeModelLegends();
 
             _tabs.Subscribe<ObservableObjectCollection<FormTabViewModel>, FormTabViewModel>(Tabs_CollectionItemChanged, Tabs_CollectionItemPropertyChanged);
-            _layers.Subscribe<ObservableObjectCollection<LayerViewModel>, LayerViewModel>(Layers_CollectionItemChanged, Layers_CollectionItemPropertyChanged);
-            _keys.Subscribe<ObservableObjectCollection<KeyViewModel>, KeyViewModel>(Keys_CollectionItemChanged, Keys_CollectionItemPropertyChanged);
+            _keys.DictionaryChanged += OnKeysDictionaryChanged;
+            _keys.EntryPropertyChanged += OnKeysEntryPropertyChanged;
+            _layers.DictionaryChanged += OnLayersDictionaryChanged;
+            _layers.EntryPropertyChanged += OnLayersEntryPropertyChanged;
             _selectedTabs.Subscribe<ObservableObjectCollection<FormTabViewModel>, FormTabViewModel>(SelectedTabs_CollectionItemChanged, SelectedTabs_CollectionItemPropertyChanged);
-            _selectedLayers.Subscribe<ObservableObjectCollection<LayerViewModel>, LayerViewModel>(SelectedLayers_CollectionItemChanged, SelectedLayers_CollectionItemPropertyChanged);
-            _selectedKeys.Subscribe<ObservableObjectCollection<KeyViewModel>, KeyViewModel>(SelectedKeys_CollectionItemChanged, SelectedKeys_CollectionItemPropertyChanged);
+            _selectedKeys.DictionaryChanged += OnSelectedKeysDictionaryChanged;
+            _selectedKeys.EntryPropertyChanged += OnSelectedKeysEntryPropertyChanged;
+            _selectedLayers.DictionaryChanged += OnSelectedLayersDictionaryChanged;
+            _selectedLayers.EntryPropertyChanged += OnSelectedLayersEntryPropertyChanged;
 
-            Tabs = new ReadOnlyObservableCollection<FormTabViewModel>(_tabs);
-            Layers = new ReadOnlyObservableCollection<LayerViewModel>(_layers);
-            Keys = new ReadOnlyObservableCollection<KeyViewModel>(_keys);
-            SelectedTabs = _selectedTabs;
-            SelectedLayers = _selectedLayers;
+            Keys = _keys.Values;
             SelectedKeys = _selectedKeys;
 
-            _fileForm.Set(Model);
-            _propertiesForm.Set(Model);
-            _boardForm.Set(Model);
-            _keyForm.Clear();
-            _layerForm.Clear();
+            _boardFileForm = new BoardFileModelForm(UndoContext);
+            _boardPropertiesForm = new BoardPropertiesModelForm(UndoContext);
+            _boardForm = new BoardModelForm(UndoContext);
+            _keyForm = new KeyModelForm(UndoContext);
+            _layerForm = new LayerModelForm(UndoContext);
+
+            _boardFileForm.SetModel(Model);
+            _boardPropertiesForm.SetModel(Model);
+            _boardForm.SetModel(Model);
 
             _tabs.AddRange(new[]
             {
-                FileTab = new FormTabViewModel("File", "\uE130", _fileForm) { IsSelected = true, },
-                PropertiesTab = new FormTabViewModel("Properties", "\uE946", _propertiesForm),
+                FileTab = new FormTabViewModel("File", "\uE130", _boardFileForm) { IsSelected = true, },
+                PropertiesTab = new FormTabViewModel("Properties", "\uE946", _boardPropertiesForm),
                 BoardTab = new FormTabViewModel("Board", "\uE809", _boardForm),
                 KeyTab = new FormTabViewModel("Key", "\uF158", _keyForm),
             });
+            StaticTabs = new ObservableCollection<FormTabViewModel>(_tabs);
+            LayerTabs = new ObservableDictionary<LayerId, LayerFormTabViewModel>();
 
-            UpdateLayers();
             UpdateKeys();
+            UpdateLayers();
+            UpdateLegends();
             UpdateBackground();
 
-            AddLayerCommand = new DelegateCommand(AddLayer);
-            DeleteLayerCommand = new DelegateCommand<LayerModel>(DeleteLayer);
-            SelectAllLayersCommand = new DelegateCommand(SelectAllLayers);
             AddKeyCommand = new DelegateCommand<NewKeyTemplate>(AddKey);
             DeleteSelectedKeysCommand = new DelegateCommand(DeleteSelectedKeys, CanDeleteSelectedKeys);
+            AddLayerCommand = new DelegateCommand(AddLayer);
+            SelectAllLayersCommand = new DelegateCommand(SelectAllLayers);
         }
 
-        public DelegateCommand AddLayerCommand { get; }
-
-        public DelegateCommand<LayerModel> DeleteLayerCommand { get; }
-
-        public DelegateCommand SelectAllLayersCommand { get; }
+        public UndoContext UndoContext { get; } = new UndoContext();
 
         public DelegateCommand<NewKeyTemplate> AddKeyCommand { get; }
 
         public DelegateCommand DeleteSelectedKeysCommand { get; }
 
-        public ViewModelBase? CurrentForm
+        public DelegateCommand AddLayerCommand { get; }
+
+        public DelegateCommand SelectAllLayersCommand { get; }
+
+        public ModelForm? CurrentForm
         {
             get => _currentForm;
             private set => Set(ref _currentForm, value);
@@ -110,19 +121,13 @@ namespace Rekog.App.ViewModel
 
         public FormTabViewModel KeyTab { get; }
 
-        public ObservableObjectCollection<LayerFormTabViewModel> LayerTabs { get; } = new ObservableObjectCollection<LayerFormTabViewModel>();
+        public ObservableCollection<FormTabViewModel> StaticTabs { get; }
 
-        public ReadOnlyObservableCollection<FormTabViewModel> Tabs { get; }
-
-        public ReadOnlyObservableCollection<LayerViewModel> Layers { get; }
+        public ObservableDictionary<LayerId, LayerFormTabViewModel> LayerTabs { get; }
 
         public ReadOnlyObservableCollection<KeyViewModel> Keys { get; }
 
-        public ObservableObjectCollection<FormTabViewModel> SelectedTabs { get; }
-
-        public ObservableObjectCollection<LayerViewModel> SelectedLayers { get; }
-
-        public ObservableObjectCollection<KeyViewModel> SelectedKeys { get; }
+        public ObservableDictionary<KeyId, KeyViewModel> SelectedKeys { get; }
 
         // TODO: Rework
         public PointValueSource SelectedKeysRotationOrigin { get; } = new PointValueSource(new Point());
@@ -151,11 +156,14 @@ namespace Rekog.App.ViewModel
 
             switch (args.PropertyName)
             {
+                case nameof(BoardModel.Keys):
+                    UnsubscribeModelKeys();
+                    break;
                 case nameof(BoardModel.Layers):
                     UnsubscribeModelLayers();
                     break;
-                case nameof(BoardModel.Keys):
-                    UnsubscribeModelKeys();
+                case nameof(BoardModel.Legends):
+                    UnsubscribeModelLegends();
                     break;
             }
         }
@@ -166,13 +174,17 @@ namespace Rekog.App.ViewModel
 
             switch (args.PropertyName)
             {
+                case nameof(BoardModel.Keys):
+                    UpdateKeys();
+                    SubscribeModelKeys();
+                    break;
                 case nameof(BoardModel.Layers):
                     UpdateLayers();
                     SubscribeModelLayers();
                     break;
-                case nameof(BoardModel.Keys):
-                    UpdateKeys();
-                    SubscribeModelKeys();
+                case nameof(BoardModel.Legends):
+                    UpdateLegends();
+                    SubscribeModelLegends();
                     break;
                 case nameof(BoardModel.Background):
                     UpdateBackground();
@@ -180,60 +192,112 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void SubscribeModelLayers()
+        private void OnModelUndoActionExecuted(object sender, IUndoAction action)
         {
-            UnsubscribeModelLayers();
-
-            Model.Layers.CollectionItemChanged += ModelLayers_CollectionItemChanged;
-            Model.Layers.CollectionItemPropertyChanged += ModelLayers_CollectionItemPropertyChanged;
-        }
-
-        private void UnsubscribeModelLayers()
-        {
-            Model.Layers.CollectionItemChanged -= ModelLayers_CollectionItemChanged;
-            Model.Layers.CollectionItemPropertyChanged -= ModelLayers_CollectionItemPropertyChanged;
+            UndoContext.PushAction(action);
         }
 
         private void SubscribeModelKeys()
         {
-            UnsubscribeModelKeys();
+            Model.Keys.DictionaryChanged += OnModelKeysDictionaryChanged;
+            Model.Keys.EntryPropertyChanged += OnModelKeysEntryPropertyChanged;
 
-            Model.Keys.CollectionItemChanged += ModelKeys_CollectionItemChanged;
-            Model.Keys.CollectionItemPropertyChanged += ModelKeys_CollectionItemPropertyChanged;
+            foreach (var model in Model.Keys.Values)
+            {
+                model.UndoActionExecuted += OnModelUndoActionExecuted;
+            }
         }
 
         private void UnsubscribeModelKeys()
         {
-            Model.Keys.CollectionItemChanged -= ModelKeys_CollectionItemChanged;
-            Model.Keys.CollectionItemPropertyChanged -= ModelKeys_CollectionItemPropertyChanged;
+            Model.Keys.DictionaryChanged -= OnModelKeysDictionaryChanged;
+            Model.Keys.EntryPropertyChanged -= OnModelKeysEntryPropertyChanged;
+
+            foreach (var model in Model.Keys.Values)
+            {
+                model.UndoActionExecuted -= OnModelUndoActionExecuted;
+            }
         }
 
-        private void UpdateLayers()
+        private void SubscribeModelLayers()
         {
-            _layers.ReplaceUsingClear(Model.Layers.Select(x => new LayerViewModel(x)));
+            Model.Layers.DictionaryChanged += OnModelLayersDictionaryChanged;
+
+            foreach (var model in Model.Layers.Values)
+            {
+                model.UndoActionExecuted += OnModelUndoActionExecuted;
+            }
+        }
+
+        private void UnsubscribeModelLayers()
+        {
+            Model.Layers.DictionaryChanged -= OnModelLayersDictionaryChanged;
+
+            foreach (var model in Model.Layers.Values)
+            {
+                model.UndoActionExecuted -= OnModelUndoActionExecuted;
+            }
+        }
+
+        private void SubscribeModelLegends()
+        {
+            Model.Legends.DictionaryChanged += OnModelLegendsDictionaryChanged;
+
+            foreach (var model in Model.Legends.Values)
+            {
+                model.UndoActionExecuted += OnModelUndoActionExecuted;
+            }
+        }
+
+        private void UnsubscribeModelLegends()
+        {
+            Model.Legends.DictionaryChanged -= OnModelLegendsDictionaryChanged;
+
+            foreach (var model in Model.Legends.Values)
+            {
+                model.UndoActionExecuted -= OnModelUndoActionExecuted;
+            }
         }
 
         private void UpdateKeys()
         {
-            _keys.ReplaceUsingClear(Model.Keys.Select(x => new KeyViewModel(x)));
+            _keys.ClearOverwrite(Model.Keys.ToDictionary(x => x.Key, x => new KeyViewModel(x.Value)));
         }
 
-        private void UpdateRotationOrigin(bool alwaysIncrementVersion)
+        private void UpdateLayers()
         {
-            if (_keyForm.RotationOriginX.IsSet && _keyForm.RotationOriginY.IsSet &&
-                (_keyForm.RotationOriginX.Value != 0 || _keyForm.RotationOriginY.Value != 0 || (_keyForm.RotationAngle.IsSet && _keyForm.RotationAngle.Value != 0)))
+            _layers.ClearOverwrite(Model.Layers.ToDictionary(x => x.Key, x => new LayerViewModel(x.Value)));
+        }
+
+        private void UpdateLegends()
+        {
+            foreach (var (keyId, key) in _keys)
             {
-                if (alwaysIncrementVersion || !SelectedKeysRotationOrigin.IsSet)
+                key.Legends.ClearOverwrite(Model.Layers.Keys.Select(layerId =>
                 {
-                    SelectedKeysRotationOrigin.Version++;
-                }
-                SelectedKeysRotationOrigin.Value = new Point(_keyForm.RotationOriginX.Value!.Value, _keyForm.RotationOriginY.Value!.Value);
-                SelectedKeysRotationOrigin.IsSet = true;
+                    var legendId = new LegendId(keyId, layerId);
+                    return new KeyValuePair<LegendId, LegendViewModel>(legendId, new LegendViewModel(Model.Legends[legendId]));
+                }));
             }
-            else
-            {
-                SelectedKeysRotationOrigin.IsSet = false;
-            }
+        }
+
+        private void UpdateRotationOrigin(bool incrementVersion)
+        {
+            // TODO: Rework
+            // if (_keyForm.RotationOriginX.IsSet && _keyForm.RotationOriginY.IsSet &&
+            //     (_keyForm.RotationOriginX.Value != 0 || _keyForm.RotationOriginY.Value != 0 || (_keyForm.RotationAngle.IsSet && _keyForm.RotationAngle.Value != 0)))
+            // {
+            //     if (incrementVersion || !SelectedKeysRotationOrigin.IsSet)
+            //     {
+            //         SelectedKeysRotationOrigin.Version++;
+            //     }
+            //     SelectedKeysRotationOrigin.Value = new Point(_keyForm.RotationOriginX.Value!.Value, _keyForm.RotationOriginY.Value!.Value);
+            //     SelectedKeysRotationOrigin.IsSet = true;
+            // }
+            // else
+            // {
+            //     SelectedKeysRotationOrigin.IsSet = false;
+            // }
         }
 
         private void UpdateCanvas()
@@ -245,10 +309,10 @@ namespace Rekog.App.ViewModel
                 return;
             }
 
-            var left = _keys.Min(x => x.ActualBounds.Left);
-            var top = _keys.Min(x => x.ActualBounds.Top);
-            var right = _keys.Max(x => x.ActualBounds.Right);
-            var bottom = _keys.Max(x => x.ActualBounds.Bottom);
+            var left = _keys.Values.Min(x => x.ActualBounds.Left);
+            var top = _keys.Values.Min(x => x.ActualBounds.Top);
+            var right = _keys.Values.Max(x => x.ActualBounds.Right);
+            var bottom = _keys.Values.Max(x => x.ActualBounds.Bottom);
 
             CanvasOffset = new Thickness(-left, -top, left, top);
             CanvasSize = new Size(right - left, bottom - top);
@@ -295,34 +359,18 @@ namespace Rekog.App.ViewModel
             foreach (var item in args.OldItems)
             {
                 item.IsSelected = false;
-
-                // TODO: Ugly
-                if (item is LayerFormTabViewModel layerTab)
+                if (item is LayerFormTabViewModel layerTab && _layers.TryGetValue(layerTab.Model.Id, out var layer))
                 {
-                    foreach (var layer in _layers)
-                    {
-                        if (layer.Model == layerTab.Model)
-                        {
-                            layer.IsSelected = false;
-                        }
-                    }
+                    layer.IsSelected = false;
                 }
             }
 
             foreach (var item in args.NewItems)
             {
                 item.IsSelected = true;
-
-                // TODO: Ugly
-                if (item is LayerFormTabViewModel layerTab)
+                if (item is LayerFormTabViewModel layerTab && _layers.TryGetValue(layerTab.Model.Id, out var layer))
                 {
-                    foreach (var layer in _layers)
-                    {
-                        if (layer.Model == layerTab.Model)
-                        {
-                            layer.IsSelected = true;
-                        }
-                    }
+                    layer.IsSelected = true;
                 }
             }
 
@@ -354,124 +402,24 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void ModelLayers_CollectionItemChanged(IObservableObjectCollection<LayerModel> collection, CollectionItemChangedEventArgs<LayerModel> args)
+        private void OnModelKeysDictionaryChanged(ObservableDictionary<KeyId, KeyModel> dictionary, DictionaryChangedEventArgs<KeyId, KeyModel> args)
         {
-            _layers.ReplaceUsingMerge(_layers
-                .Except(args.OldItems.Join(_layers, model => model, layer => layer.Model, (_, layer) => layer))
-                .Concat(args.NewItems.Select(x => new LayerViewModel(x))));
-        }
-
-        private void ModelLayers_CollectionItemPropertyChanged(LayerModel item, CollectionItemPropertyChangedEventArgs args)
-        {
-        }
-
-        private void Layers_CollectionItemChanged(IObservableObjectCollection<LayerViewModel> collection, CollectionItemChangedEventArgs<LayerViewModel> args)
-        {
-            var newSelectedItems = args.NewItems.Where(x => x.IsSelected).ToList();
-            if (newSelectedItems.Count > 0)
+            foreach (var model in args.OldEntries.Values)
             {
-                _selectedLayers.ReplaceUsingMerge(_selectedLayers
-                    .Except(args.OldItems)
-                    .Concat(newSelectedItems));
-            }
-            else
-            {
-                _selectedLayers.RemoveRange(args.OldItems);
+                model.UndoActionExecuted -= OnModelUndoActionExecuted;
             }
 
-            // TODO: Ugly
-            if (args.OldItems.Count > 0)
+            foreach (var model in args.NewEntries.Values)
             {
-                var tabs = LayerTabs.Where(x => args.OldItems.Any(a => a.Model == x.Model)).ToList();
-                LayerTabs.RemoveRange(tabs);
-                _tabs.RemoveRange(tabs);
+                model.UndoActionExecuted += OnModelUndoActionExecuted;
             }
 
-            // TODO: Ugly
-            if (args.NewItems.Count > 0)
-            {
-                var tabs = args.NewItems.Select(x => new LayerFormTabViewModel(x.Model, "\uE81E", _layerForm)
-                {
-                    DeleteCommand = new DelegateCommand(() => DeleteLayer(x.Model)),
-                }).ToList();
-                LayerTabs.AddRange(tabs);
-                _tabs.AddRange(tabs);
-            }
+            UndoContext.PushAction(new ChangeEntriesUndoAction<KeyId, KeyModel>(dictionary, args));
+
+            _keys.Merge(args.NewEntries.ToDictionary(x => x.Key, x => new KeyViewModel(x.Value)), args.OldEntries.Keys);
         }
 
-        private void Layers_CollectionItemPropertyChanged(LayerViewModel item, CollectionItemPropertyChangedEventArgs args)
-        {
-            switch (args.PropertyName)
-            {
-                case nameof(LayerViewModel.IsSelected):
-                    if (item.IsSelected)
-                    {
-                        _selectedLayers.Merge(item);
-                    }
-                    break;
-            }
-        }
-
-        private void SelectedLayers_CollectionItemChanged(IObservableObjectCollection<LayerViewModel> collection, CollectionItemChangedEventArgs<LayerViewModel> args)
-        {
-            foreach (var item in args.OldItems)
-            {
-                item.IsSelected = false;
-
-                // TODO: Ugly
-                foreach (var layerTab in LayerTabs)
-                {
-                    if (layerTab.Model == item.Model)
-                    {
-                        layerTab.IsSelected = false;
-                    }
-                }
-            }
-
-            foreach (var item in args.NewItems)
-            {
-                item.IsSelected = true;
-
-                // TODO: Ugly
-                foreach (var layerTab in LayerTabs)
-                {
-                    if (layerTab.Model == item.Model)
-                    {
-                        layerTab.IsSelected = true;
-                    }
-                }
-            }
-
-            OnSelectedLayersChanged();
-        }
-
-        private void SelectedLayers_CollectionItemPropertyChanged(LayerViewModel item, CollectionItemPropertyChangedEventArgs args)
-        {
-            switch (args.PropertyName)
-            {
-                case nameof(LayerViewModel.IsSelected):
-                    if (!item.IsSelected)
-                    {
-                        _selectedLayers.Remove(item);
-                    }
-                    break;
-            }
-        }
-
-        private void OnSelectedLayersChanged()
-        {
-            UpdateLayerForm();
-            UpdateLegendForm();
-        }
-
-        private void ModelKeys_CollectionItemChanged(IObservableObjectCollection<KeyModel> collection, CollectionItemChangedEventArgs<KeyModel> args)
-        {
-            _keys.ReplaceUsingMerge(_keys
-                .Except(args.OldItems.Join(_keys, model => model, key => key.Model, (_, key) => key))
-                .Concat(args.NewItems.Select(x => new KeyViewModel(x))));
-        }
-
-        private void ModelKeys_CollectionItemPropertyChanged(KeyModel item, CollectionItemPropertyChangedEventArgs args)
+        private void OnModelKeysEntryPropertyChanged(ObservableDictionary<KeyId, KeyModel> dictionary, EntryPropertyChangedEventArgs<KeyId, KeyModel> args)
         {
             switch (args.PropertyName)
             {
@@ -483,24 +431,14 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void Keys_CollectionItemChanged(IObservableObjectCollection<KeyViewModel> collection, CollectionItemChangedEventArgs<KeyViewModel> args)
+        private void OnKeysDictionaryChanged(ObservableDictionary<KeyId, KeyViewModel> dictionary, DictionaryChangedEventArgs<KeyId, KeyViewModel> args)
         {
-            var newSelectedItems = args.NewItems.Where(x => x.IsSelected).ToList();
-            if (newSelectedItems.Count > 0)
-            {
-                _selectedKeys.ReplaceUsingMerge(_selectedKeys
-                    .Except(args.OldItems)
-                    .Concat(newSelectedItems));
-            }
-            else
-            {
-                _selectedKeys.RemoveRange(args.OldItems);
-            }
+            _selectedKeys.Merge(args.NewEntries.Where(x => x.Value.IsSelected), args.OldEntries.Keys);
 
             UpdateCanvas();
         }
 
-        private void Keys_CollectionItemPropertyChanged(KeyViewModel item, CollectionItemPropertyChangedEventArgs args)
+        private void OnKeysEntryPropertyChanged(ObservableDictionary<KeyId, KeyViewModel> dictionary, EntryPropertyChangedEventArgs<KeyId, KeyViewModel> args)
         {
             switch (args.PropertyName)
             {
@@ -508,135 +446,221 @@ namespace Rekog.App.ViewModel
                     UpdateCanvas();
                     break;
                 case nameof(KeyViewModel.IsSelected):
-                    if (item.IsSelected)
+                    if (args.Value.IsSelected)
                     {
-                        _selectedKeys.Merge(item);
+                        _selectedKeys.AddOrReplace(args.Key, args.Value);
                     }
                     break;
             }
         }
 
-        private void SelectedKeys_CollectionItemChanged(IObservableObjectCollection<KeyViewModel> collection, CollectionItemChangedEventArgs<KeyViewModel> args)
+        private void OnSelectedKeysDictionaryChanged(ObservableDictionary<KeyId, KeyViewModel> dictionary, DictionaryChangedEventArgs<KeyId, KeyViewModel> args)
         {
-            foreach (var item in args.OldItems)
+            foreach (var key in args.OldEntries.Values)
             {
-                item.IsSelected = false;
+                key.IsSelected = false;
             }
 
-            foreach (var item in args.NewItems)
+            foreach (var key in args.NewEntries.Values)
             {
-                item.IsSelected = true;
+                key.IsSelected = true;
             }
 
-            OnSelectedKeysChanged();
+            UpdateKeyForm();
+            UpdateLegendForm();
+
+            UpdateRotationOrigin(true);
+
+            DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
         }
 
-        private void SelectedKeys_CollectionItemPropertyChanged(KeyViewModel item, CollectionItemPropertyChangedEventArgs args)
+        private void OnSelectedKeysEntryPropertyChanged(ObservableDictionary<KeyId, KeyViewModel> dictionary, EntryPropertyChangedEventArgs<KeyId, KeyViewModel> args)
         {
             switch (args.PropertyName)
             {
                 case nameof(KeyViewModel.IsSelected):
-                    if (!item.IsSelected)
+                    if (!args.Value.IsSelected)
                     {
-                        _selectedKeys.Remove(item);
+                        _selectedKeys.Remove(args.Key);
                     }
                     break;
             }
         }
 
-        private void OnSelectedKeysChanged()
+        private void OnModelLayersDictionaryChanged(ObservableDictionary<LayerId, LayerModel> dictionary, DictionaryChangedEventArgs<LayerId, LayerModel> args)
         {
-            UpdateKeyForm();
+            foreach (var model in args.OldEntries.Values)
+            {
+                model.UndoActionExecuted -= OnModelUndoActionExecuted;
+            }
+
+            foreach (var model in args.NewEntries.Values)
+            {
+                model.UndoActionExecuted += OnModelUndoActionExecuted;
+            }
+
+            UndoContext.PushAction(new ChangeEntriesUndoAction<LayerId, LayerModel>(dictionary, args));
+
+            _layers.Merge(args.NewEntries.ToDictionary(x => x.Key, x => new LayerViewModel(x.Value)), args.OldEntries.Keys);
+        }
+
+        private void OnLayersDictionaryChanged(ObservableDictionary<LayerId, LayerViewModel> dictionary, DictionaryChangedEventArgs<LayerId, LayerViewModel> args)
+        {
+            _selectedLayers.Merge(args.NewEntries.Where(x => x.Value.IsSelected), args.OldEntries.Keys);
+
+            LayerTabs.Merge(args.NewEntries.ToDictionary(x => x.Key, x => new LayerFormTabViewModel(x.Value.Model, "\uE81E", _layerForm)
+            {
+                DeleteCommand = new DelegateCommand(() => DeleteLayer(x.Key)),
+            }), args.OldEntries.Keys);
+
+            _tabs.ReplaceUsingMerge(_tabs
+                .Where(x => x is not LayerFormTabViewModel)
+                .Concat(LayerTabs.Select(x => x.Value)));
+        }
+
+        private void OnLayersEntryPropertyChanged(ObservableDictionary<LayerId, LayerViewModel> dictionary, EntryPropertyChangedEventArgs<LayerId, LayerViewModel> args)
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(LayerViewModel.IsSelected):
+                    if (args.Value.IsSelected)
+                    {
+                        _selectedLayers.AddOrReplace(args.Key, args.Value);
+                    }
+                    break;
+            }
+        }
+
+        private void OnSelectedLayersDictionaryChanged(ObservableDictionary<LayerId, LayerViewModel> dictionary, DictionaryChangedEventArgs<LayerId, LayerViewModel> args)
+        {
+            foreach (var (layerId, layer) in args.OldEntries)
+            {
+                layer.IsSelected = false;
+                if (LayerTabs.TryGetValue(layerId, out var layerTab))
+                {
+                    layerTab.IsSelected = false;
+                }
+            }
+
+            foreach (var (layerId, layer) in args.NewEntries)
+            {
+                layer.IsSelected = true;
+                if (LayerTabs.TryGetValue(layerId, out var layerTab))
+                {
+                    layerTab.IsSelected = true;
+                }
+            }
+
+            UpdateLayerForm();
             UpdateLegendForm();
+        }
 
-            DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
+        private void OnSelectedLayersEntryPropertyChanged(ObservableDictionary<LayerId, LayerViewModel> dictionary, EntryPropertyChangedEventArgs<LayerId, LayerViewModel> args)
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(LayerViewModel.IsSelected):
+                    if (!args.Value.IsSelected)
+                    {
+                        _selectedLayers.Remove(args.Key);
+                    }
+                    break;
+            }
+        }
 
-            UpdateRotationOrigin(true);
+        private void OnModelLegendsDictionaryChanged(ObservableDictionary<LegendId, LegendModel> dictionary, DictionaryChangedEventArgs<LegendId, LegendModel> args)
+        {
+            foreach (var model in args.OldEntries.Values)
+            {
+                model.UndoActionExecuted -= OnModelUndoActionExecuted;
+            }
+
+            foreach (var model in args.NewEntries.Values)
+            {
+                model.UndoActionExecuted += OnModelUndoActionExecuted;
+            }
+
+            UndoContext.PushAction(new ChangeEntriesUndoAction<LegendId, LegendModel>(dictionary, args));
+
+            foreach (var group in args.OldEntries.GroupBy(x => x.Key.KeyId, x => x.Key))
+            {
+                _keys[group.Key].Legends.RemoveRange(group);
+            }
+
+            foreach (var group in args.NewEntries.GroupBy(x => x.Key.KeyId))
+            {
+                _keys[group.Key].Legends.AddRange(group.ToDictionary(x => x.Key, x => new LegendViewModel(x.Value)));
+            }
         }
 
         private void UpdateKeyForm()
         {
-            _keyForm.Set(_selectedKeys.Select(x => x.Model));
+            _keyForm.SetModels(_selectedKeys.Values.Select(x => x.Model));
         }
 
         private void UpdateLayerForm()
         {
             if (_selectedLayers.Count == 1)
             {
-                _layerForm.Set(_selectedLayers.Single().Model);
+                _layerForm.SetModel(_selectedLayers.Values.Single().Model);
             }
             else
             {
-                _layerForm.Clear();
+                _layerForm.ClearModels();
             }
         }
 
         private void UpdateLegendForm()
         {
-            var selectedModels = _layers.Where(x => x.IsSelected).Select(x => x.Model).ToHashSet();
-            var selectedLayerIndices = Model.Layers
-                .Select((x, i) => (isSelected: selectedModels.Contains(x), index: i))
-                .Where(x => x.isSelected)
-                .Select(x => x.index)
-                .ToList();
-            _layerForm.LegendForm.Set(SelectedKeys.SelectMany(x => x.Model.Legends.Where((_, i) => selectedLayerIndices.Contains(i))));
+            _layerForm.LegendForm.SetModels(_selectedKeys.Keys.SelectMany(_ => _selectedLayers.Keys, (keyId, layerId) => Model.Legends[new LegendId(keyId, layerId)]));
         }
 
         private void AddLayer()
         {
-            var layerModel = new LayerModel { Name = $"Layer {Model.Layers.Count}", };
-
-            Model.Layers.Add(layerModel);
-            foreach (var keyModel in Model.Keys)
+            var layerId = new LayerId(Model.Layers.Keys.DefaultIfEmpty(new LayerId(0)).Max(x => x.Value) + 1);
+            var layerModel = new LayerModel(layerId)
             {
-                keyModel.Legends.Add(new LegendModel());
-            }
+                Name = $"Layer {layerId.Value}",
+            };
+            var legendModels = Model.Keys.Values.ToDictionary(x => new LegendId(x.Id, layerId), x => new LegendModel(new LegendId(x.Id, layerId)));
 
-            SelectLayerModel(layerModel);
-        }
-
-        private void DeleteLayer(LayerModel? model)
-        {
-            if (model == null)
+            using (UndoContext.Batch())
             {
-                return;
-            }
-
-            var index = Model.Layers.IndexOf(model);
-            if (index < 0)
-            {
-                return;
-            }
-
-            Model.Layers.RemoveAt(index);
-            foreach (var keyModel in Model.Keys)
-            {
-                if (keyModel.Legends.Count > index)
-                {
-                    keyModel.Legends.RemoveAt(index);
-                }
+                Model.Layers.Add(layerId, layerModel);
+                Model.Legends.AddRange(legendModels);
+                SelectLayer(layerId);
             }
         }
 
-        private void SelectLayerModel(LayerModel model)
+        private void DeleteLayer(LayerId id)
         {
-            if (_layers.FirstOrDefault(x => x.Model == model) is { } layer)
+            using (UndoContext.Batch())
             {
-                _selectedLayers.ReplaceUsingClear(new[] { layer, });
+                Model.Legends.RemoveRange(Model.Keys.Keys.Select(x => new LegendId(x, id)));
+                Model.Layers.Remove(id);
+            }
+        }
+
+        private void SelectLayer(LayerId id)
+        {
+            if (_layers.TryGetValue(id, out var layer))
+            {
+                _selectedLayers.ClearOverwrite(new[] { new KeyValuePair<LayerId, LayerViewModel>(id, layer), });
             }
         }
 
         private void SelectAllLayers()
         {
-            _selectedTabs.ReplaceUsingClear(LayerTabs);
+            _selectedTabs.ReplaceUsingClear(LayerTabs.Values);
         }
 
         public void AddKey(NewKeyTemplate template)
         {
-            var y = _keys.OrderByDescending(x => x.ActualBounds.Bottom).FirstOrDefault()?.ActualBounds.Bottom ?? 0;
+            var keyId = new KeyId(Model.Keys.Keys.DefaultIfEmpty(new KeyId(0)).Max(x => x.Value) + 1);
+            var y = _keys.Values.OrderByDescending(x => x.ActualBounds.Bottom).FirstOrDefault()?.ActualBounds.Bottom ?? 0;
             var keyModel = template switch
             {
-                NewKeyTemplate.IsoEnter => new KeyModel
+                NewKeyTemplate.IsoEnter => new KeyModel(keyId)
                 {
                     Y = y,
                     Width = 1.25,
@@ -646,7 +670,7 @@ namespace Rekog.App.ViewModel
                     SteppedWidth = 1.25,
                     SteppedHeight = 2.0,
                 },
-                NewKeyTemplate.BigAssEnter => new KeyModel
+                NewKeyTemplate.BigAssEnter => new KeyModel(keyId)
                 {
                     Y = y,
                     Width = 1.5,
@@ -656,7 +680,7 @@ namespace Rekog.App.ViewModel
                     SteppedWidth = 1.5,
                     SteppedHeight = 2.0,
                 },
-                NewKeyTemplate.SteppedCapsLock => new KeyModel
+                NewKeyTemplate.SteppedCapsLock => new KeyModel(keyId)
                 {
                     Y = y,
                     Width = 1.75,
@@ -665,7 +689,7 @@ namespace Rekog.App.ViewModel
                     SteppedWidth = 1.25,
                     SteppedHeight = 1,
                 },
-                NewKeyTemplate.CenterStepped => new KeyModel
+                NewKeyTemplate.CenterStepped => new KeyModel(keyId)
                 {
                     Y = y,
                     Width = 1.55,
@@ -676,29 +700,36 @@ namespace Rekog.App.ViewModel
                     SteppedWidth = 1,
                     SteppedHeight = 1,
                 },
-                _ => new KeyModel
+                _ => new KeyModel(keyId)
                 {
                     Y = y,
                 },
             };
-            keyModel.Legends.AddRange(Model.Layers.Select(_ => new LegendModel()));
 
-            Model.Keys.Add(keyModel);
+            using (UndoContext.Batch())
+            {
+                Model.Keys.Add(keyId, keyModel);
+                Model.Legends.AddRange(Model.Layers.Keys.ToDictionary(x => new LegendId(keyId, x), x => new LegendModel(new LegendId(keyId, x))));
 
-            SelectKeyModel(keyModel);
+                SelectKey(keyId);
+            }
         }
 
-        private void SelectKeyModel(KeyModel model)
+        private void SelectKey(KeyId id)
         {
-            if (_keys.FirstOrDefault(x => x.Model == model) is { } key)
+            if (_keys.TryGetValue(id, out var key))
             {
-                _selectedKeys.ReplaceUsingClear(new[] { key, });
+                _selectedKeys.ClearOverwrite(new[] { new KeyValuePair<KeyId, KeyViewModel>(id, key), });
             }
         }
 
         public void DeleteSelectedKeys()
         {
-            Model.Keys.RemoveRange(_selectedKeys.Select(x => x.Model));
+            using (UndoContext.Batch())
+            {
+                Model.Legends.RemoveRange(_selectedKeys.Keys.SelectMany(_ => Model.Layers.Keys, (keyId, layerId) => new LegendId(keyId, layerId)));
+                Model.Keys.RemoveRange(_selectedKeys.Keys);
+            }
         }
 
         private bool CanDeleteSelectedKeys()

@@ -13,7 +13,7 @@ namespace Rekog.App.View.Designer
             InitializeComponent();
         }
 
-        private void ShowFlyoutButton_OnClick(object sender, RoutedEventArgs args)
+        private void OnShowFlyoutButtonClick(object sender, RoutedEventArgs args)
         {
             if (sender is ButtonBase button && FlyoutBase.GetAttachedFlyout(button) is { } flyout)
             {
@@ -21,7 +21,7 @@ namespace Rekog.App.View.Designer
             }
         }
 
-        private void HideFlyoutButton_OnClick(object sender, RoutedEventArgs args)
+        private void OnHideFlyoutButtonClick(object sender, RoutedEventArgs args)
         {
             if (sender is ButtonBase button && FlyoutBase.GetAttachedFlyout(button) is { } flyout)
             {
@@ -29,7 +29,7 @@ namespace Rekog.App.View.Designer
             }
         }
 
-        private void FormTab_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs args)
+        private void OnFormTabPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs args)
         {
             if (sender is ListBoxItem { IsSelected: false, Parent: not ListBox, } item)
             {
@@ -37,7 +37,7 @@ namespace Rekog.App.View.Designer
             }
         }
 
-        private void FormTab_OnPreviewKeyDown(object sender, KeyEventArgs args)
+        private void OnFormTabPreviewKeyDown(object sender, KeyEventArgs args)
         {
             if (sender is ListBoxItem { IsSelected: false, Parent: not ListBox, } item && args.Key == Key.Space)
             {

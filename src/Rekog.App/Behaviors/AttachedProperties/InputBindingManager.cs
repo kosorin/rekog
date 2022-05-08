@@ -10,9 +10,8 @@ namespace Rekog.App.Behaviors.AttachedProperties
         public static readonly DependencyProperty UpdatePropertySourceWhenEnterPressedProperty =
             DependencyProperty.RegisterAttached("UpdatePropertySourceWhenEnterPressed", typeof(DependencyProperty), typeof(InputBindingManager), new PropertyMetadata(null, OnUpdatePropertySourceWhenEnterPressedPropertyChanged));
 
-        static InputBindingManager()
-        {
-        }
+        public static readonly DependencyProperty UpdatePropertySourceWhenModifierKeysProperty =
+            DependencyProperty.RegisterAttached("UpdatePropertySourceWhenModifierKeys", typeof(ModifierKeys), typeof(InputBindingManager), new PropertyMetadata(ModifierKeys.None));
 
         public static DependencyProperty? GetUpdatePropertySourceWhenEnterPressed(DependencyObject obj)
         {
@@ -24,29 +23,43 @@ namespace Rekog.App.Behaviors.AttachedProperties
             obj.SetValue(UpdatePropertySourceWhenEnterPressedProperty, value);
         }
 
-        private static void OnUpdatePropertySourceWhenEnterPressedPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        public static ModifierKeys GetUpdatePropertySourceWhenModifierKeys(DependencyObject obj)
+        {
+            return (ModifierKeys)obj.GetValue(UpdatePropertySourceWhenModifierKeysProperty);
+        }
+
+        public static void SetUpdatePropertySourceWhenModifierKeys(DependencyObject obj, ModifierKeys value)
+        {
+            obj.SetValue(UpdatePropertySourceWhenModifierKeysProperty, value);
+        }
+
+        private static void OnUpdatePropertySourceWhenEnterPressedPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             if (obj is not UIElement element)
             {
                 return;
             }
 
-            if (e.OldValue != null)
+            if (args.OldValue != null)
             {
                 element.PreviewKeyDown -= HandlePreviewKeyDown;
             }
 
-            if (e.NewValue != null)
+            if (args.NewValue != null)
             {
                 element.PreviewKeyDown += HandlePreviewKeyDown;
             }
         }
 
-        private static void HandlePreviewKeyDown(object sender, KeyEventArgs e)
+        private static void HandlePreviewKeyDown(object sender, KeyEventArgs args)
         {
-            if (e.Source is DependencyObject obj && e.Key == Key.Enter)
+            if (args.Source is DependencyObject obj && args.Key == Key.Enter)
             {
-                DoUpdateSource(obj);
+                var modifierKeys = GetUpdatePropertySourceWhenModifierKeys(obj);
+                if (modifierKeys == ModifierKeys.None || args.KeyboardDevice.Modifiers.HasFlag(modifierKeys))
+                {
+                    DoUpdateSource(obj);
+                }
             }
         }
 

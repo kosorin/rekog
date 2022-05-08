@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using Rekog.App.Model;
 using Rekog.App.Model.Kle;
 using Rekog.App.ObjectModel;
@@ -39,49 +39,37 @@ namespace Rekog.App.ViewModel
         {
             return new BoardViewModel(new BoardModel
             {
-                Layers = new ObservableObjectCollection<LayerModel>(new[]
+                Layers = new ObservableDictionary<LayerId, LayerModel>(new[]
                 {
-                    new LayerModel { Name = "Base", },
-                    new LayerModel { Name = "Lower", },
-                    new LayerModel { Name = "Raise", },
-                    new LayerModel { Name = "Adjust", },
-                }),
+                    new LayerModel(0) { Name = "Base", },
+                    new LayerModel(1) { Name = "Lower", },
+                    new LayerModel(2) { Name = "Raise", },
+                    new LayerModel(3) { Name = "Adjust", },
+                }.ToDictionary(x => x.Id, x => x)),
             });
         }
 
         private void ParseKleRawData(string? kleRawData)
         {
-            TrySetBoard(kleRawData, KleParser.ParseRawData);
+            if (!string.IsNullOrWhiteSpace(kleRawData) && KleConverter.ConvertRawData(kleRawData) is { } boardModel)
+            {
+                Board = new BoardViewModel(boardModel);
+            }
+            else
+            {
+                NewBoard();
+            }
         }
 
         private void ParseKleJson(string? kleJson)
         {
-            TrySetBoard(kleJson, KleParser.ParseJson);
-        }
-
-        private void TrySetBoard(string? kleInput, Func<string, KleBoard> parser)
-        {
-            var kleBoard = ParseKle(kleInput, parser);
-            if (kleBoard != null)
+            if (!string.IsNullOrWhiteSpace(kleJson) && KleConverter.ConvertJson(kleJson) is { } boardModel)
             {
-                Board = new BoardViewModel(BoardModel.FromKle(kleBoard));
+                Board = new BoardViewModel(boardModel);
             }
-        }
-
-        private KleBoard? ParseKle(string? kleInput, Func<string, KleBoard> parser)
-        {
-            if (string.IsNullOrWhiteSpace(kleInput))
+            else
             {
-                return new KleBoard();
-            }
-
-            try
-            {
-                return parser.Invoke(kleInput);
-            }
-            catch
-            {
-                return null;
+                NewBoard();
             }
         }
     }
