@@ -9,7 +9,6 @@
 
     <ItemGroup>
         <PackageReference Include="Koda.ColorTools.Wpf" Version="1.1.0" />
-        <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
         <PackageReference Include="ModernWpfUI" Version="0.9.4" />
         <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     </ItemGroup>

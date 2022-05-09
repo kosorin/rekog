@@ -7,13 +7,12 @@ using System.Windows.Media;
 using Koda.ColorTools;
 using Koda.ColorTools.Wpf;
 using Rekog.App.Extensions;
+using Rekog.App.Forms;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel;
-using Rekog.App.ObjectModel.Forms;
-using Rekog.App.ObjectModel.Undo;
+using Rekog.App.Undo;
+using Rekog.App.Undo.Actions;
 using Rekog.App.ViewModel.Forms;
-using Rekog.App.ViewModel.Forms.Tabs;
-using Rekog.App.ViewModel.Values;
 
 namespace Rekog.App.ViewModel
 {
@@ -22,22 +21,22 @@ namespace Rekog.App.ViewModel
         private static readonly Color DefaultBackground = Colors.White;
 
         // Each item is in the collection only once.
-        private readonly ObservableObjectCollection<FormTabViewModel> _tabs = new ObservableObjectCollection<FormTabViewModel>();
+        private readonly ObservableObjectCollection<FormTab> _tabs = new ObservableObjectCollection<FormTab>();
         private readonly ObservableDictionary<KeyId, KeyViewModel> _keys = new ObservableDictionary<KeyId, KeyViewModel>();
         private readonly ObservableDictionary<LayerId, LayerViewModel> _layers = new ObservableDictionary<LayerId, LayerViewModel>();
 
         // The selected collections are subsets of the respective collections. 
         // IsSelected properties are for caching, however can be used to select items.
-        private readonly ObservableObjectCollection<FormTabViewModel> _selectedTabs = new ObservableObjectCollection<FormTabViewModel>();
+        private readonly ObservableObjectCollection<FormTab> _selectedTabs = new ObservableObjectCollection<FormTab>();
         private readonly ObservableDictionary<KeyId, KeyViewModel> _selectedKeys = new ObservableDictionary<KeyId, KeyViewModel>();
         private readonly ObservableDictionary<LayerId, LayerViewModel> _selectedLayers = new ObservableDictionary<LayerId, LayerViewModel>();
 
-        private ModelForm? _currentForm;
-        private readonly BoardFileModelForm _boardFileForm;
-        private readonly BoardPropertiesModelForm _boardPropertiesForm;
-        private readonly BoardModelForm _boardForm;
-        private readonly KeyModelForm _keyForm;
-        private readonly LayerModelForm _layerForm;
+        private Form? _currentForm;
+        private readonly BoardFileForm _boardFileForm;
+        private readonly BoardPropertiesForm _boardPropertiesForm;
+        private readonly BoardForm _boardForm;
+        private readonly KeyForm _keyForm;
+        private readonly LayerForm _layerForm;
 
         private Thickness _canvasOffset;
         private Size _canvasSize;
@@ -52,12 +51,12 @@ namespace Rekog.App.ViewModel
             SubscribeModelLayers();
             SubscribeModelLegends();
 
-            _tabs.Subscribe<ObservableObjectCollection<FormTabViewModel>, FormTabViewModel>(Tabs_CollectionItemChanged, Tabs_CollectionItemPropertyChanged);
+            _tabs.Subscribe<ObservableObjectCollection<FormTab>, FormTab>(Tabs_CollectionItemChanged, Tabs_CollectionItemPropertyChanged);
             _keys.DictionaryChanged += OnKeysDictionaryChanged;
             _keys.EntryPropertyChanged += OnKeysEntryPropertyChanged;
             _layers.DictionaryChanged += OnLayersDictionaryChanged;
             _layers.EntryPropertyChanged += OnLayersEntryPropertyChanged;
-            _selectedTabs.Subscribe<ObservableObjectCollection<FormTabViewModel>, FormTabViewModel>(SelectedTabs_CollectionItemChanged, SelectedTabs_CollectionItemPropertyChanged);
+            _selectedTabs.Subscribe<ObservableObjectCollection<FormTab>, FormTab>(SelectedTabs_CollectionItemChanged, SelectedTabs_CollectionItemPropertyChanged);
             _selectedKeys.DictionaryChanged += OnSelectedKeysDictionaryChanged;
             _selectedKeys.EntryPropertyChanged += OnSelectedKeysEntryPropertyChanged;
             _selectedLayers.DictionaryChanged += OnSelectedLayersDictionaryChanged;
@@ -66,11 +65,11 @@ namespace Rekog.App.ViewModel
             Keys = _keys.Values;
             SelectedKeys = _selectedKeys;
 
-            _boardFileForm = new BoardFileModelForm(UndoContext);
-            _boardPropertiesForm = new BoardPropertiesModelForm(UndoContext);
-            _boardForm = new BoardModelForm(UndoContext);
-            _keyForm = new KeyModelForm(UndoContext);
-            _layerForm = new LayerModelForm(UndoContext);
+            _boardFileForm = new BoardFileForm(UndoContext);
+            _boardPropertiesForm = new BoardPropertiesForm(UndoContext);
+            _boardForm = new BoardForm(UndoContext);
+            _keyForm = new KeyForm(UndoContext);
+            _layerForm = new LayerForm(UndoContext);
 
             _boardFileForm.SetModel(Model);
             _boardPropertiesForm.SetModel(Model);
@@ -78,13 +77,13 @@ namespace Rekog.App.ViewModel
 
             _tabs.AddRange(new[]
             {
-                FileTab = new FormTabViewModel("File", "\uE130", _boardFileForm) { IsSelected = true, },
-                PropertiesTab = new FormTabViewModel("Properties", "\uE946", _boardPropertiesForm),
-                BoardTab = new FormTabViewModel("Board", "\uE809", _boardForm),
-                KeyTab = new FormTabViewModel("Key", "\uF158", _keyForm),
+                FileTab = new FormTab("File", "\uE130", _boardFileForm) { IsSelected = true, },
+                PropertiesTab = new FormTab("Properties", "\uE946", _boardPropertiesForm),
+                BoardTab = new FormTab("Board", "\uE809", _boardForm),
+                KeyTab = new FormTab("Key", "\uF158", _keyForm),
             });
-            StaticTabs = new ObservableCollection<FormTabViewModel>(_tabs);
-            LayerTabs = new ObservableDictionary<LayerId, LayerFormTabViewModel>();
+            StaticTabs = new ObservableCollection<FormTab>(_tabs);
+            LayerTabs = new ObservableDictionary<LayerId, LayerFormTab>();
 
             UpdateKeys();
             UpdateLayers();
@@ -107,23 +106,23 @@ namespace Rekog.App.ViewModel
 
         public DelegateCommand SelectAllLayersCommand { get; }
 
-        public ModelForm? CurrentForm
+        public Form? CurrentForm
         {
             get => _currentForm;
             private set => Set(ref _currentForm, value);
         }
 
-        public FormTabViewModel FileTab { get; }
+        public FormTab FileTab { get; }
 
-        public FormTabViewModel PropertiesTab { get; }
+        public FormTab PropertiesTab { get; }
 
-        public FormTabViewModel BoardTab { get; }
+        public FormTab BoardTab { get; }
 
-        public FormTabViewModel KeyTab { get; }
+        public FormTab KeyTab { get; }
 
-        public ObservableCollection<FormTabViewModel> StaticTabs { get; }
+        public ObservableCollection<FormTab> StaticTabs { get; }
 
-        public ObservableDictionary<LayerId, LayerFormTabViewModel> LayerTabs { get; }
+        public ObservableDictionary<LayerId, LayerFormTab> LayerTabs { get; }
 
         public ReadOnlyObservableCollection<KeyViewModel> Keys { get; }
 
@@ -323,7 +322,7 @@ namespace Rekog.App.ViewModel
             Background = HexColor.TryParse(Model.Background, out var color) ? color.ToColor() : DefaultBackground;
         }
 
-        private void Tabs_CollectionItemChanged(IObservableObjectCollection<FormTabViewModel> collection, CollectionItemChangedEventArgs<FormTabViewModel> args)
+        private void Tabs_CollectionItemChanged(IObservableObjectCollection<FormTab> collection, CollectionItemChangedEventArgs<FormTab> args)
         {
             var newSelectedItems = args.NewItems.Where(x => x.IsSelected).ToList();
             if (newSelectedItems.Count > 0)
@@ -341,11 +340,11 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void Tabs_CollectionItemPropertyChanged(FormTabViewModel item, CollectionItemPropertyChangedEventArgs args)
+        private void Tabs_CollectionItemPropertyChanged(FormTab item, CollectionItemPropertyChangedEventArgs args)
         {
             switch (args.PropertyName)
             {
-                case nameof(FormTabViewModel.IsSelected):
+                case nameof(FormTab.IsSelected):
                     if (item.IsSelected)
                     {
                         _selectedTabs.ReplaceUsingMerge(_selectedTabs.Where(x => x.Form == item.Form).Append(item));
@@ -354,12 +353,12 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void SelectedTabs_CollectionItemChanged(IObservableObjectCollection<FormTabViewModel> collection, CollectionItemChangedEventArgs<FormTabViewModel> args)
+        private void SelectedTabs_CollectionItemChanged(IObservableObjectCollection<FormTab> collection, CollectionItemChangedEventArgs<FormTab> args)
         {
             foreach (var item in args.OldItems)
             {
                 item.IsSelected = false;
-                if (item is LayerFormTabViewModel layerTab && _layers.TryGetValue(layerTab.Model.Id, out var layer))
+                if (item is LayerFormTab layerTab && _layers.TryGetValue(layerTab.Model.Id, out var layer))
                 {
                     layer.IsSelected = false;
                 }
@@ -368,7 +367,7 @@ namespace Rekog.App.ViewModel
             foreach (var item in args.NewItems)
             {
                 item.IsSelected = true;
-                if (item is LayerFormTabViewModel layerTab && _layers.TryGetValue(layerTab.Model.Id, out var layer))
+                if (item is LayerFormTab layerTab && _layers.TryGetValue(layerTab.Model.Id, out var layer))
                 {
                     layer.IsSelected = true;
                 }
@@ -377,11 +376,11 @@ namespace Rekog.App.ViewModel
             OnSelectedTabsChanged();
         }
 
-        private void SelectedTabs_CollectionItemPropertyChanged(FormTabViewModel item, CollectionItemPropertyChangedEventArgs args)
+        private void SelectedTabs_CollectionItemPropertyChanged(FormTab item, CollectionItemPropertyChangedEventArgs args)
         {
             switch (args.PropertyName)
             {
-                case nameof(FormTabViewModel.IsSelected):
+                case nameof(FormTab.IsSelected):
                     if (!item.IsSelected)
                     {
                         _selectedTabs.Remove(item);
@@ -508,13 +507,13 @@ namespace Rekog.App.ViewModel
         {
             _selectedLayers.Merge(args.NewEntries.Where(x => x.Value.IsSelected), args.OldEntries.Keys);
 
-            LayerTabs.Merge(args.NewEntries.ToDictionary(x => x.Key, x => new LayerFormTabViewModel(x.Value.Model, "\uE81E", _layerForm)
+            LayerTabs.Merge(args.NewEntries.ToDictionary(x => x.Key, x => new LayerFormTab(x.Value.Model, "\uE81E", _layerForm)
             {
                 DeleteCommand = new DelegateCommand(() => DeleteLayer(x.Key)),
             }), args.OldEntries.Keys);
 
             _tabs.ReplaceUsingMerge(_tabs
-                .Where(x => x is not LayerFormTabViewModel)
+                .Where(x => x is not LayerFormTab)
                 .Concat(LayerTabs.Select(x => x.Value)));
         }
 

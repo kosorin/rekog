@@ -217,8 +217,8 @@ namespace Rekog.App.ObjectModel
         /// Replaces whole dictionary with new entries.
         /// </summary>
         /// <remarks>
-        /// Removes entries from the dictionary that are not in <see cref="entries"/> and add or replace new entries.
-        /// Same as <see cref="ClearOverwrite"/> but produce different <see cref="INotifyCollectionChanged"/> and <see cref="INotifyPropertyChanged"/> events. 
+        /// Removes entries from the dictionary that are not in <see cref="entries" /> and add or replace new entries.
+        /// Same as <see cref="ClearOverwrite" /> but produce different <see cref="INotifyCollectionChanged" /> and <see cref="INotifyPropertyChanged" /> events.
         /// </remarks>
         public void MergeOverwrite(IEnumerable<KeyValuePair<TKey, TValue>> entries)
         {
@@ -248,7 +248,7 @@ namespace Rekog.App.ObjectModel
         /// </summary>
         /// <remarks>
         /// Removes all entries from the dictionary and then add new entries.
-        /// Same as <see cref="MergeOverwrite"/> but produce different <see cref="INotifyCollectionChanged"/> and <see cref="INotifyPropertyChanged"/> events. 
+        /// Same as <see cref="MergeOverwrite" /> but produce different <see cref="INotifyCollectionChanged" /> and <see cref="INotifyPropertyChanged" /> events.
         /// </remarks>
         public void ClearOverwrite(IEnumerable<KeyValuePair<TKey, TValue>> entries)
         {

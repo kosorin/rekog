@@ -1,6 +1,6 @@
 ﻿using System.Linq;
+using Rekog.App.Kle;
 using Rekog.App.Model;
-using Rekog.App.Model.Kle;
 using Rekog.App.ObjectModel;
 
 namespace Rekog.App.ViewModel

@@ -10,14 +10,14 @@
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
              xmlns:vmf="clr-namespace:Rekog.App.ViewModel.Forms"
-             xmlns:vmft="clr-namespace:Rekog.App.ViewModel.Forms.Tabs"
+             xmlns:forms="clr-namespace:Rekog.App.Forms"
              d:DataContext="{d:DesignInstance vm:MainViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="450"
              Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <ui:Flyout x:Key="DeleteLayerFlyout" d:DataContext="{d:DesignInstance vmft:LayerFormTabViewModel, IsDesignTimeCreatable=False}">
+        <ui:Flyout x:Key="DeleteLayerFlyout" d:DataContext="{d:DesignInstance vmf:LayerFormTab, IsDesignTimeCreatable=False}">
             <StackPanel>
                 <TextBlock Style="{DynamicResource BodyTextBlockStyle}">
                     <Run Text="Do you want to delete the layer " /><Run FontWeight="Medium" Text="{Binding Header}" /><Run Text="?" />
@@ -103,7 +103,7 @@
             <Setter Property="Padding" Value="0,0" />
             <Setter Property="DockPanel.Dock" Value="Right" />
         </Style>
-        <DataTemplate x:Key="FormListBoxItemDataTemplate" DataType="vmft:FormTabViewModel">
+        <DataTemplate x:Key="FormListBoxItemDataTemplate" DataType="forms:FormTab">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -120,7 +120,7 @@
                            TextTrimming="CharacterEllipsis" />
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="LayerFormListBoxItemDataTemplate" DataType="vmft:LayerFormTabViewModel">
+        <DataTemplate x:Key="LayerFormListBoxItemDataTemplate" DataType="vmf:LayerFormTab">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -321,7 +321,7 @@
                             Content="{Binding Board.CurrentForm}"
                             KeyboardNavigation.IsTabStop="False">
                 <ContentControl.Resources>
-                    <DataTemplate DataType="{x:Type vmf:BoardFileModelForm}">
+                    <DataTemplate DataType="{x:Type vmf:BoardFileForm}">
                         <ScrollViewer DataContext="{Binding DataContext, ElementName=FormContainer}"
                                       d:DataContext="{d:DesignInstance vm:MainViewModel}"
                                       Style="{StaticResource FormContainerScrollViewerStyle}">
@@ -453,7 +453,7 @@
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vmf:BoardPropertiesModelForm}">
+                    <DataTemplate DataType="{x:Type vmf:BoardPropertiesForm}">
                         <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                             <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
                                 <Label Content="General" Style="{StaticResource FormContentGroupStyle}" />
@@ -469,7 +469,7 @@
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vmf:BoardModelForm}">
+                    <DataTemplate DataType="{x:Type vmf:BoardForm}">
                         <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                             <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
                                 <Label Content="Style" Style="{StaticResource FormContentGroupStyle}" />
@@ -487,7 +487,7 @@
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vmf:KeyModelForm}">
+                    <DataTemplate DataType="{x:Type vmf:KeyForm}">
                         <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                             <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">
                                 <Label Content="Position" Style="{StaticResource FormContentGroupStyle}" />
@@ -712,7 +712,7 @@
                             </ui:SimpleStackPanel>
                         </ScrollViewer>
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type vmf:LayerModelForm}">
+                    <DataTemplate DataType="{x:Type vmf:LayerForm}">
                         <ScrollViewer Style="{StaticResource FormContainerScrollViewerStyle}">
                             <StackPanel>
                                 <ui:SimpleStackPanel IsEnabled="{Binding IsSet}" Style="{StaticResource FormContainerStackPanelStyle}">

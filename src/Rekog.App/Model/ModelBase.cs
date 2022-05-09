@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using Rekog.App.ObjectModel;
-using Rekog.App.ObjectModel.Undo;
+using Rekog.App.Undo;
+using Rekog.App.Undo.Actions;
 
 namespace Rekog.App.Model
 {

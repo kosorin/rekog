@@ -244,12 +244,78 @@ namespace Rekog.App.View
         {
             args.Handled = true;
 
-            if (State != BoardViewState.None)
+            if (State == BoardViewState.None)
             {
                 switch (args.Key)
                 {
                     case Key.Escape:
-                        Reset();
+                        UnselectAll();
+                        break;
+                    case Key.A when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
+                        SelectAll();
+                        break;
+                    case Key.Left:
+                        using (ViewModel.UndoContext.Batch())
+                        {
+                            foreach (var key in ViewModel.SelectedKeys.Values)
+                            {
+                                key.Model.X -= 0.25;
+                            }
+                        }
+                        break;
+                    case Key.Right:
+                        using (ViewModel.UndoContext.Batch())
+                        {
+                            foreach (var key in ViewModel.SelectedKeys.Values)
+                            {
+                                key.Model.X += 0.25;
+                            }
+                        }
+                        break;
+                    case Key.Up:
+                        using (ViewModel.UndoContext.Batch())
+                        {
+                            foreach (var key in ViewModel.SelectedKeys.Values)
+                            {
+                                key.Model.Y -= 0.25;
+                            }
+                        }
+                        break;
+                    case Key.Down:
+                        using (ViewModel.UndoContext.Batch())
+                        {
+                            foreach (var key in ViewModel.SelectedKeys.Values)
+                            {
+                                key.Model.Y += 0.25;
+                            }
+                        }
+                        break;
+                    case Key.PageUp:
+                        using (ViewModel.UndoContext.Batch())
+                        {
+                            foreach (var key in ViewModel.SelectedKeys.Values)
+                            {
+                                key.Model.RotationAngle += 5;
+                            }
+                        }
+                        break;
+                    case Key.PageDown:
+                        using (ViewModel.UndoContext.Batch())
+                        {
+                            foreach (var key in ViewModel.SelectedKeys.Values)
+                            {
+                                key.Model.RotationAngle -= 5;
+                            }
+                        }
+                        break;
+                    case Key.Space:
+                        Center();
+                        break;
+                    case Key.Delete:
+                        ViewModel.DeleteSelectedKeys();
+                        break;
+                    case Key.Insert:
+                        ViewModel.AddKey(NewKeyTemplate.None);
                         break;
                     default:
                         args.Handled = false;
@@ -261,31 +327,7 @@ namespace Rekog.App.View
                 switch (args.Key)
                 {
                     case Key.Escape:
-                        UnselectAll();
-                        break;
-                    case Key.A when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
-                        SelectAll();
-                        break;
-                    case Key.Left:
-                        Move(Orientation.Horizontal, -1);
-                        break;
-                    case Key.Right:
-                        Move(Orientation.Horizontal, 1);
-                        break;
-                    case Key.Up:
-                        Move(Orientation.Vertical, -1);
-                        break;
-                    case Key.Down:
-                        Move(Orientation.Vertical, 1);
-                        break;
-                    case Key.Space:
-                        Center();
-                        break;
-                    case Key.Delete:
-                        ViewModel.DeleteSelectedKeys();
-                        break;
-                    case Key.Insert:
-                        ViewModel.AddKey(NewKeyTemplate.None);
+                        Reset();
                         break;
                     default:
                         args.Handled = false;

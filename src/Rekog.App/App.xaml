@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ap="clr-namespace:Rekog.App.Behaviors.AttachedProperties"
-             xmlns:f="clr-namespace:Rekog.App.ObjectModel.Forms"
              xmlns:clr="clr-namespace:System;assembly=mscorlib"
              xmlns:cx="clr-namespace:Rekog.App.Converters"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:color="clr-namespace:Koda.ColorTools.Wpf;assembly=Koda.ColorTools.Wpf"
+             xmlns:b="clr-namespace:Rekog.App.Behaviors"
+             xmlns:forms="clr-namespace:Rekog.App.Forms"
              ShutdownMode="OnMainWindowClose"
              mc:Ignorable="d">
     <Application.Resources>
@@ -58,14 +58,14 @@
                 <cx:ValueConverterChainItem Converter="{StaticResource ColorToSolidColorBrushConverter}" />
             </cx:ValueConverterChain>
 
-            <ui:Flyout x:Key="ColorPickerFlyout" Opened="OnColorPickerFlyoutOpened" d:DataContext="{d:DesignInstance f:ModelFormProperty, IsDesignTimeCreatable=False}">
+            <ui:Flyout x:Key="ColorPickerFlyout" Opened="OnColorPickerFlyoutOpened" d:DataContext="{d:DesignInstance forms:ModelFormProperty, IsDesignTimeCreatable=False}">
                 <color:ColorPicker Style="{StaticResource ModernColorPicker}" SelectedHex="{Binding Value, Mode=TwoWay}" />
             </ui:Flyout>
 
-            <ui:Flyout x:Key="ShapeEditorFlyout" d:DataContext="{d:DesignInstance f:ModelFormProperty, IsDesignTimeCreatable=False}">
+            <ui:Flyout x:Key="ShapeEditorFlyout" d:DataContext="{d:DesignInstance forms:ModelFormProperty, IsDesignTimeCreatable=False}">
                 <TextBox Text="{Binding Value, Mode=TwoWay}"
-                         ap:InputBindingManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"
-                         ap:InputBindingManager.UpdatePropertySourceWhenModifierKeys="Control"
+                         b:InputBindingManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text"
+                         b:InputBindingManager.UpdatePropertySourceWhenModifierKeys="Control"
                          AcceptsReturn="True"
                          Height="400"
                          Width="400"

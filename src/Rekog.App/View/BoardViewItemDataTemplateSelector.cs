@@ -2,7 +2,6 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using Rekog.App.ViewModel;
-using Rekog.App.ViewModel.Values;
 
 namespace Rekog.App.View
 {
