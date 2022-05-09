@@ -17,20 +17,6 @@
              Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <ui:Flyout x:Key="DeleteLayerFlyout" d:DataContext="{d:DesignInstance vmf:LayerFormTab, IsDesignTimeCreatable=False}">
-            <StackPanel>
-                <TextBlock Style="{DynamicResource BodyTextBlockStyle}">
-                    <Run Text="Do you want to delete the layer " /><Run FontWeight="Medium" Text="{Binding Header}" /><Run Text="?" />
-                    <LineBreak />
-                    <Run Text="All legends on that layer will be deleted." />
-                </TextBlock>
-                <Button Margin="0,12,0,0"
-                        ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}"
-                        Click="OnHideFlyoutButtonClick"
-                        Command="{Binding DeleteCommand}"
-                        Content="Yes, delete layer" />
-            </StackPanel>
-        </ui:Flyout>
         <Style x:Key="GroupMenuItemStyle"
                BasedOn="{StaticResource {x:Type MenuItem}}"
                TargetType="{x:Type MenuItem}">
@@ -142,9 +128,7 @@
                                      Spacing="8"
                                      Visibility="Collapsed">
                     <Viewbox MaxWidth="{DynamicResource TabViewItemHeaderIconSize}" MaxHeight="{DynamicResource TabViewItemHeaderIconSize}">
-                        <ui:HyperlinkButton ui:FlyoutBase.AttachedFlyout="{DynamicResource DeleteLayerFlyout}"
-                                            Click="OnShowFlyoutButtonClick"
-                                            ToolTip="Delete layer">
+                        <ui:HyperlinkButton Command="{Binding DeleteCommand}" ToolTip="Delete layer">
                             <ui:FontIcon Glyph="&#xE106;" />
                         </ui:HyperlinkButton>
                     </Viewbox>
