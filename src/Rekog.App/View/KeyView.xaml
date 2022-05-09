@@ -64,7 +64,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type vm:LegendViewModel}">
                     <TextBlock Margin="{Binding Margin, Converter={StaticResource ScaleConverter}}"
-                               HorizontalAlignment="{Binding Model.Alignment, ConverterParameter=H, Converter={StaticResource LegendAlignmentConverter}}"
+                               TextAlignment="{Binding Model.Alignment, ConverterParameter=T, Converter={StaticResource LegendAlignmentConverter}}"
                                VerticalAlignment="{Binding Model.Alignment, ConverterParameter=V, Converter={StaticResource LegendAlignmentConverter}}"
                                Foreground="{Binding Color, Converter={StaticResource ColorToSolidColorBrushConverter}}"
                                FontFamily="{Binding Font}"
