@@ -38,8 +38,7 @@ namespace Rekog.App.ViewModel
         private readonly KeyForm _keyForm;
         private readonly LayerForm _layerForm;
 
-        private Thickness _canvasOffset;
-        private Size _canvasSize;
+        private Rect _actualBounds;
         private Color _background = DefaultBackground;
 
         public BoardViewModel(BoardModel model)
@@ -134,16 +133,10 @@ namespace Rekog.App.ViewModel
         // TODO: Rework
         public PointValueSource SelectedKeysRotationOrigin { get; } = new PointValueSource(new Point());
 
-        public Thickness CanvasOffset
+        public Rect ActualBounds
         {
-            get => _canvasOffset;
-            private set => Set(ref _canvasOffset, value);
-        }
-
-        public Size CanvasSize
-        {
-            get => _canvasSize;
-            private set => Set(ref _canvasSize, value);
+            get => _actualBounds;
+            private set => Set(ref _actualBounds, value);
         }
 
         public Color Background
@@ -306,8 +299,7 @@ namespace Rekog.App.ViewModel
         {
             if (!_keys.Any())
             {
-                CanvasOffset = new Thickness();
-                CanvasSize = new Size();
+                ActualBounds = new Rect();
                 return;
             }
 
@@ -316,8 +308,7 @@ namespace Rekog.App.ViewModel
             var right = _keys.Values.Max(x => x.ActualBounds.Right);
             var bottom = _keys.Values.Max(x => x.ActualBounds.Bottom);
 
-            CanvasOffset = new Thickness(-left, -top, left, top);
-            CanvasSize = new Size(right - left, bottom - top);
+            ActualBounds = new Rect(new Point(left, top), new Point(right, bottom));
         }
 
         private void UpdateBackground()

@@ -28,7 +28,6 @@
             ClipToBounds="True"
             SizeChanged="OnLayoutRootSizeChanged">
         <Border x:Name="Plate"
-                Padding="{Binding Source={mx:Double 0.5}, Converter={StaticResource ScaleConverter}, Mode=OneTime}"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 SizeChanged="OnPlateSizeChanged">
@@ -36,14 +35,12 @@
                 <MatrixTransform x:Name="PlateMatrixTransform" />
             </Border.RenderTransform>
             <ItemsControl x:Name="CanvasContainer"
-                          Width="{Binding CanvasSize.Width, Converter={StaticResource ScaleConverter}}"
-                          Height="{Binding CanvasSize.Height, Converter={StaticResource ScaleConverter}}"
                           HorizontalContentAlignment="Stretch"
                           VerticalContentAlignment="Stretch"
                           Focusable="False">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Margin="{Binding CanvasOffset, Converter={StaticResource ScaleConverter}}" />
+                        <Canvas />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.Resources>

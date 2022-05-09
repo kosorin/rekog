@@ -33,6 +33,8 @@ namespace Rekog.App.View
         public BoardView()
         {
             InitializeComponent();
+
+            DataContextChanged += OnDataContextChanged;
         }
 
         public BoardViewModel ViewModel => (BoardViewModel)DataContext;
@@ -154,6 +156,11 @@ namespace Rekog.App.View
             {
                 ReleaseMouseCapture();
             }
+        }
+
+        private void OnDataContextChanged(object? sender, DependencyPropertyChangedEventArgs args)
+        {
+            Center();
         }
 
         private void OnBoardViewPreviewMouseDown(object? sender, MouseButtonEventArgs args)
@@ -600,17 +607,6 @@ namespace Rekog.App.View
 
         #region View manipulation
 
-        private void Center()
-        {
-            var matrix = PlateMatrixTransform.Matrix;
-
-            var (layoutRootBounds, plateBounds, plateOffset) = GetBounds();
-            matrix.OffsetX = (layoutRootBounds.Width - plateBounds.Width) / 2 - plateOffset.X;
-            matrix.OffsetY = (layoutRootBounds.Height - plateBounds.Height) / 2 - plateOffset.Y;
-
-            PlateMatrixTransform.Matrix = matrix;
-        }
-
         private void Move(Orientation orientation, int sign)
         {
             if (sign == 0)
@@ -636,15 +632,21 @@ namespace Rekog.App.View
             Coerce();
         }
 
-        private void Zoom(Point center, int delta)
+        private void Zoom(Point center, int sign)
         {
+            if (sign == 0)
+            {
+                return;
+            }
+
             var matrix = PlateMatrixTransform.Matrix;
 
-            var factor = 1.2;
-            var scale = delta >= 0 ? factor : 1.0 / factor;
+            const double factor = 1.2;
+            const double maxScale = 5.0;
+            var scale = sign > 0 ? factor : 1.0 / factor;
 
             matrix.ScaleAtPrepend(scale, scale, center.X, center.Y);
-            if (matrix.M11 is < 0.2 or > 5.0)
+            if (matrix.M11 is < 1 / maxScale or > maxScale)
             {
                 return;
             }
@@ -654,35 +656,43 @@ namespace Rekog.App.View
             Coerce();
         }
 
+        private void Center()
+        {
+            var matrix = PlateMatrixTransform.Matrix;
+
+            var (layoutRootBounds, plateBounds) = GetBounds();
+            matrix.OffsetX += (layoutRootBounds.Width - plateBounds.Width) / 2 - plateBounds.X;
+            matrix.OffsetY += (layoutRootBounds.Height - plateBounds.Height) / 2 - plateBounds.Y;
+
+            PlateMatrixTransform.Matrix = matrix;
+        }
+
         private void Coerce()
         {
             var coerced = false;
             var matrix = PlateMatrixTransform.Matrix;
 
-            var (layoutRootBounds, plateBounds, plateOffset) = GetBounds();
+            var (layoutRootBounds, plateBounds) = GetBounds();
 
-            var minVisibleSize = new Size(Math.Min(plateBounds.Width, layoutRootBounds.Width),
-                Math.Min(plateBounds.Height, layoutRootBounds.Height));
-
-            if (layoutRootBounds.Left + minVisibleSize.Width > plateBounds.Right)
+            if (layoutRootBounds.Left > plateBounds.Right)
             {
-                matrix.OffsetX = minVisibleSize.Width - plateBounds.Width - plateOffset.X;
+                matrix.OffsetX += -plateBounds.X - plateBounds.Width;
                 coerced = true;
             }
-            else if (layoutRootBounds.Right - minVisibleSize.Width < plateBounds.Left)
+            else if (layoutRootBounds.Right < plateBounds.Left)
             {
-                matrix.OffsetX = layoutRootBounds.Right - minVisibleSize.Width - plateOffset.X;
+                matrix.OffsetX += -plateBounds.X + layoutRootBounds.Right;
                 coerced = true;
             }
 
-            if (layoutRootBounds.Top + minVisibleSize.Height > plateBounds.Bottom)
+            if (layoutRootBounds.Top > plateBounds.Bottom)
             {
-                matrix.OffsetY = minVisibleSize.Height - plateBounds.Height - plateOffset.Y;
+                matrix.OffsetY += -plateBounds.Y - plateBounds.Height;
                 coerced = true;
             }
-            else if (layoutRootBounds.Bottom - minVisibleSize.Height < plateBounds.Top)
+            else if (layoutRootBounds.Bottom < plateBounds.Top)
             {
-                matrix.OffsetY = layoutRootBounds.Bottom - minVisibleSize.Height - plateOffset.Y;
+                matrix.OffsetY += -plateBounds.Y + layoutRootBounds.Bottom;
                 coerced = true;
             }
 
@@ -692,22 +702,21 @@ namespace Rekog.App.View
             }
         }
 
-        private (Rect layoutRootBounds, Rect plateBounds, Point plateOffset) GetBounds()
+        private (Rect layoutRootBounds, Rect plateBounds) GetBounds()
         {
+            var actualBounds = ViewModel.ActualBounds;
             var matrix = PlateMatrixTransform.Matrix;
-            var scale = matrix.M11;
+            var scale = matrix.M11 * App.UnitSize;
 
-            var platePosition = new Point(0, 0);
-            var layoutRootPosition = Plate.TranslatePoint(platePosition, LayoutRoot);
-
-            var plateBounds = new Rect(new Point(layoutRootPosition.X - platePosition.X * scale, layoutRootPosition.Y - platePosition.Y * scale),
-                new Size(Plate.ActualWidth * scale, Plate.ActualHeight * scale));
-            var layoutRootBounds = new Rect(new Point(0, 0),
+            var layoutRootPosition = new Point(0, 0);
+            var layoutRootBounds = new Rect(layoutRootPosition,
                 new Size(LayoutRoot.ActualWidth, LayoutRoot.ActualHeight));
 
-            var plateOffset = new Point(layoutRootPosition.X - (platePosition.X * scale + matrix.OffsetX), layoutRootPosition.Y - (platePosition.Y * scale + matrix.OffsetY));
+            var platePosition = Plate.TranslatePoint(layoutRootPosition, LayoutRoot);
+            var plateBounds = new Rect(new Point(platePosition.X + actualBounds.X * scale, platePosition.Y + actualBounds.Y * scale),
+                new Size(actualBounds.Width * scale, actualBounds.Height * scale));
 
-            return (layoutRootBounds, plateBounds, plateOffset);
+            return (layoutRootBounds, plateBounds);
         }
 
         #endregion
