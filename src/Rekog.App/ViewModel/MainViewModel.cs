@@ -41,10 +41,10 @@ namespace Rekog.App.ViewModel
             {
                 Layers = new ObservableDictionary<LayerId, LayerModel>(new[]
                 {
-                    new LayerModel(0) { Name = "Base", },
-                    new LayerModel(1) { Name = "Lower", },
-                    new LayerModel(2) { Name = "Raise", },
-                    new LayerModel(3) { Name = "Adjust", },
+                    new LayerModel(0) { Name = "Base", Order = 0, },
+                    new LayerModel(1) { Name = "Lower", Order = 1, },
+                    new LayerModel(2) { Name = "Raise", Order = 2, },
+                    new LayerModel(3) { Name = "Adjust", Order = 3, },
                 }.ToDictionary(x => x.Id, x => x)),
             });
         }

@@ -11,12 +11,23 @@
              xmlns:vm="clr-namespace:Rekog.App.ViewModel"
              xmlns:vmf="clr-namespace:Rekog.App.ViewModel.Forms"
              xmlns:forms="clr-namespace:Rekog.App.Forms"
+             xmlns:dd="urn:gong-wpf-dragdrop"
              d:DataContext="{d:DesignInstance vm:MainViewModel}"
              d:DesignHeight="600"
              d:DesignWidth="450"
              Background="{DynamicResource SystemControlBackgroundAltHighBrush}"
              mc:Ignorable="d">
     <UserControl.Resources>
+        <CollectionViewSource x:Key="LayerTabs"
+                              Source="{Binding Board.LayerTabs.Values, Mode=OneWay}"
+                              IsLiveSortingRequested="True">
+            <CollectionViewSource.SortDescriptions>
+                <cm:SortDescription PropertyName="Model.Order" Direction="Ascending" />
+            </CollectionViewSource.SortDescriptions>
+            <CollectionViewSource.LiveSortingProperties>
+                <sys:String>Model.Order</sys:String>
+            </CollectionViewSource.LiveSortingProperties>
+        </CollectionViewSource>
         <Style x:Key="GroupMenuItemStyle"
                BasedOn="{StaticResource {x:Type MenuItem}}"
                TargetType="{x:Type MenuItem}">
@@ -294,7 +305,11 @@
                                Style="{StaticResource FormGroupTextStyle}"
                                Text="Layers" />
                 </DockPanel>
-                <ListBox ItemsSource="{Binding Board.LayerTabs.Values}"
+                <ListBox ItemsSource="{Binding Source={StaticResource LayerTabs}}"
+                         dd:DragDrop.DragDropContext="LayerTabs"
+                         dd:DragDrop.IsDragSource="True"
+                         dd:DragDrop.IsDropTarget="True"
+                         dd:DragDrop.DropHandler="{Binding Board.LayerTabDropHandler}"
                          KeyboardNavigation.ControlTabNavigation="Continue"
                          KeyboardNavigation.DirectionalNavigation="Continue"
                          KeyboardNavigation.TabIndex="3"

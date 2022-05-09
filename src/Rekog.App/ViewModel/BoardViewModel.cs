@@ -84,6 +84,7 @@ namespace Rekog.App.ViewModel
             });
             StaticTabs = new ObservableCollection<FormTab>(_tabs);
             LayerTabs = new ObservableDictionary<LayerId, LayerFormTab>();
+            LayerTabDropHandler = new LayerFormTabDropHandler(Model, UndoContext);
 
             UpdateKeys();
             UpdateLayers();
@@ -123,6 +124,8 @@ namespace Rekog.App.ViewModel
         public ObservableCollection<FormTab> StaticTabs { get; }
 
         public ObservableDictionary<LayerId, LayerFormTab> LayerTabs { get; }
+
+        public LayerFormTabDropHandler LayerTabDropHandler { get; }
 
         public ReadOnlyObservableCollection<KeyViewModel> Keys { get; }
 
@@ -616,10 +619,11 @@ namespace Rekog.App.ViewModel
 
         private void AddLayer()
         {
-            var layerId = new LayerId(Model.Layers.Keys.DefaultIfEmpty(new LayerId(0)).Max(x => x.Value) + 1);
+            var layerId = new LayerId(Model.Layers.Count > 0 ? Model.Layers.Keys.Max(x => x.Value) + 1 : 0);
             var layerModel = new LayerModel(layerId)
             {
                 Name = $"Layer {layerId.Value}",
+                Order = Model.Layers.Count > 0 ? Model.Layers.Values.Max(x => x.Order) + 1 : 0,
             };
             var legendModels = Model.Keys.Values.ToDictionary(x => new LegendId(x.Id, layerId), x => new LegendModel(new LegendId(x.Id, layerId)));
 
@@ -655,7 +659,7 @@ namespace Rekog.App.ViewModel
 
         public void AddKey(NewKeyTemplate template)
         {
-            var keyId = new KeyId(Model.Keys.Keys.DefaultIfEmpty(new KeyId(0)).Max(x => x.Value) + 1);
+            var keyId = new KeyId(Model.Keys.Count > 0 ? Model.Keys.Keys.Max(x => x.Value) + 1 : 0);
             var y = _keys.Values.OrderByDescending(x => x.ActualBounds.Bottom).FirstOrDefault()?.ActualBounds.Bottom ?? 0;
             var keyModel = template switch
             {

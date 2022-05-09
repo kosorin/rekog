@@ -119,6 +119,7 @@ namespace Rekog.App.Kle
                 var layer = new LayerModel(i)
                 {
                     Name = verticalNames[i / horizontalNames.Length] + " " + horizontalNames[i % horizontalNames.Length],
+                    Order = i,
                 };
                 layers[i] = layer;
             }
