@@ -22,6 +22,10 @@ namespace Rekog.App.Kle
 
         private static BoardModel Convert(KleBoard kleBoard)
         {
+            var layerData = Enumerable.Range(0, 12)
+                .Where(layer => kleBoard.Keys.Any(key => !string.IsNullOrWhiteSpace(key.Legends[layer])))
+                .Select((x, i) => (id: i, index: x))
+                .ToList();
             return new BoardModel
             {
                 Name = kleBoard.Name,
@@ -29,8 +33,8 @@ namespace Rekog.App.Kle
                 Notes = kleBoard.Notes,
                 Background = kleBoard.Background,
                 Keys = ConvertKeys(kleBoard.Keys),
-                Layers = ConvertLayers(),
-                Legends = ConvertLegends(kleBoard.Keys),
+                Layers = ConvertLayers(layerData),
+                Legends = ConvertLegends(layerData, kleBoard.Keys),
             };
         }
 
@@ -108,56 +112,58 @@ namespace Rekog.App.Kle
             }
         }
 
-        private static ObservableDictionary<LayerId, LayerModel> ConvertLayers()
+        private static ObservableDictionary<LayerId, LayerModel> ConvertLayers(List<(int id, int index)> layerData)
         {
             var horizontalNames = new[] { "Left", "Center", "Right", };
             var verticalNames = new[] { "Top", "Middle", "Bottom", "Front", };
 
             var layers = new ObservableDictionary<LayerId, LayerModel>();
-            for (var i = 0; i < 12; i++)
+
+            foreach (var (id, index) in layerData)
             {
-                var layer = new LayerModel(i)
+                var layerId = new LayerId(id);
+                var layer = new LayerModel(layerId)
                 {
-                    Name = verticalNames[i / horizontalNames.Length] + " " + horizontalNames[i % horizontalNames.Length],
-                    Order = i,
+                    Name = verticalNames[index / horizontalNames.Length] + " " + horizontalNames[index % horizontalNames.Length],
+                    Order = id,
                 };
-                layers[i] = layer;
+                layers[layerId] = layer;
             }
 
             return layers;
         }
 
-        private static ObservableDictionary<LegendId, LegendModel> ConvertLegends(List<KleKey> kleKeys)
+        private static ObservableDictionary<LegendId, LegendModel> ConvertLegends(List<(int id, int index)> layerData, IEnumerable<KleKey> kleKeys)
         {
-            return new ObservableDictionary<LegendId, LegendModel>(Enumerable.Range(0, 12)
-                .Join(kleKeys.Select((x, i) => (keyId: i, kleKey: x)), _ => true, _ => true, (layerId, x) => (id: new LegendId(x.keyId, layerId), x.kleKey))
-                .Select(x => x.id.LayerId.Value < 9 ? ConvertLegend(x.id, x.kleKey) : ConvertFrontLegend(x.id, x.kleKey))
+            return new ObservableDictionary<LegendId, LegendModel>(layerData
+                .Join(kleKeys.Select((x, i) => (keyId: i, kleKey: x)), _ => true, _ => true, (lx, kx) => (id: new LegendId(kx.keyId, lx.id), index: lx.index, kx.kleKey))
+                .Select(x => x.id.LayerId.Value < 9 ? ConvertLegend(x.id, x.index, x.kleKey) : ConvertFrontLegend(x.id, x.index, x.kleKey))
                 .ToDictionary(x => x.Id, x => x));
 
-            static LegendModel ConvertLegend(LegendId id, KleKey kleKey)
+            static LegendModel ConvertLegend(LegendId id, int index, KleKey kleKey)
             {
                 return new LegendModel(id)
                 {
-                    Value = kleKey.Legends[id.LayerId.Value] ?? string.Empty,
+                    Value = kleKey.Legends[index] ?? string.Empty,
 
-                    Alignment = (LegendAlignment)id.LayerId.Value,
+                    Alignment = (LegendAlignment)index,
 
-                    Size = GetLegendSize(kleKey.TextSizes[id.LayerId.Value] ?? kleKey.DefaultTextSize),
-                    Color = kleKey.TextColors[id.LayerId.Value] ?? kleKey.DefaultTextColor,
+                    Size = GetLegendSize(kleKey.TextSizes[index] ?? kleKey.DefaultTextSize),
+                    Color = kleKey.TextColors[index] ?? kleKey.DefaultTextColor,
                 };
             }
 
-            static LegendModel ConvertFrontLegend(LegendId id, KleKey kleKey)
+            static LegendModel ConvertFrontLegend(LegendId id, int index, KleKey kleKey)
             {
                 return new LegendModel(id)
                 {
-                    Value = kleKey.Legends[id.LayerId.Value] ?? string.Empty,
+                    Value = kleKey.Legends[index] ?? string.Empty,
 
-                    Alignment = (LegendAlignment)(id.LayerId.Value - 3),
+                    Alignment = (LegendAlignment)(index - 3),
                     Bottom = -0.22,
 
                     Size = GetLegendSize(kleKey.FrontLegendTextSize),
-                    Color = kleKey.TextColors[id.LayerId.Value] ?? kleKey.DefaultTextColor,
+                    Color = kleKey.TextColors[index] ?? kleKey.DefaultTextColor,
                 };
             }
 
