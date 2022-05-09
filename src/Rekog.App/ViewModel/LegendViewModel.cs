@@ -16,13 +16,17 @@ namespace Rekog.App.ViewModel
         private Color _color = DefaultColor;
         private FontFamily _font = DefaultFont;
 
-        public LegendViewModel(LegendModel model)
+        public LegendViewModel(LegendModel model, LayerViewModel layer)
             : base(model)
         {
+            Layer = layer;
+
             UpdateMargin();
             UpdateColor();
             UpdateFont();
         }
+
+        public LayerViewModel Layer { get; }
 
         public Thickness Margin
         {

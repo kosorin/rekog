@@ -61,6 +61,11 @@
                     <Grid />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="{x:Type ContentPresenter}">
+                    <Setter Property="Panel.ZIndex" Value="{Binding Layer.Model.Order}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type vm:LegendViewModel}">
                     <TextBlock Margin="{Binding Margin, Converter={StaticResource ScaleConverter}}"

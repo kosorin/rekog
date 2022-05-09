@@ -271,7 +271,7 @@ namespace Rekog.App.ViewModel
                 key.Legends.ClearOverwrite(Model.Layers.Keys.Select(layerId =>
                 {
                     var legendId = new LegendId(keyId, layerId);
-                    return new KeyValuePair<LegendId, LegendViewModel>(legendId, new LegendViewModel(Model.Legends[legendId]));
+                    return new KeyValuePair<LegendId, LegendViewModel>(legendId, new LegendViewModel(Model.Legends[legendId], _layers[layerId]));
                 }));
             }
         }
@@ -582,7 +582,7 @@ namespace Rekog.App.ViewModel
 
             foreach (var group in args.NewEntries.GroupBy(x => x.Key.KeyId))
             {
-                _keys[group.Key].Legends.AddRange(group.ToDictionary(x => x.Key, x => new LegendViewModel(x.Value)));
+                _keys[group.Key].Legends.AddRange(group.ToDictionary(x => x.Key, x => new LegendViewModel(x.Value, _layers[x.Key.LayerId])));
             }
         }
 
