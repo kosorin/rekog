@@ -3,6 +3,7 @@ using System.Collections.Generic;
 namespace Rekog.App.ObjectModel
 {
     public class ListChangedEventArgs<TItem>
+        where TItem : ObservableObject
     {
         public ListChangedEventArgs(IReadOnlyList<TItem> newItems, IReadOnlyList<TItem> oldItems)
         {
