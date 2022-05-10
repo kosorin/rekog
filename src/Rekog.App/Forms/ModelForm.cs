@@ -121,6 +121,7 @@ namespace Rekog.App.Forms
             {
                 SetValue(value ?? property.DefaultValue, property.Name, _models);
 
+                // If default value was used, set it back to property
                 if (value == null && property.DefaultValue != null)
                 {
                     property.Value = property.DefaultValue;
