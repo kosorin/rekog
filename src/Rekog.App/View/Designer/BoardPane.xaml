@@ -412,32 +412,33 @@
                                                         Modifiers="Ctrl" />
                                         </TextBox.InputBindings>
                                         <TextBox.Text>
-                                            [{x:3.5,c:&quot;#f5f5f5&quot;},&quot;#\n3&quot;,{x:10.5},&quot;*\n8&quot;],
-                                            [{y:-0.875,x:2.5},&quot;@\n2&quot;,{x:1},&quot;$\n4&quot;,{x:8.5},&quot;Oops\n7&quot;,{x:1},&quot;(\n9&quot;],
+                                            [{x:3.5,c:&quot;#f6f6f6&quot;},&quot;#\n3&quot;,{x:10.5},&quot;*\n8&quot;],
+                                            [{y:-0.875,x:2.5},&quot;@\n2&quot;,{x:1},&quot;$\n4&quot;,{x:8.5},&quot;&amp;\n7&quot;,{x:1},&quot;(\n9&quot;],
                                             [{y:-0.875,x:5.5},&quot;%\n5&quot;,{a:7},&quot;&quot;,{x:4.5},&quot;&quot;,{a:4},&quot;^\n6&quot;],
-                                            [{y:-0.875,a:7,f:7,w:1.5},&quot;ESC&quot;,{a:4,f:3},&quot;!\n1&quot;,{x:14.5},&quot;)\n0&quot;,{a:7,w:1.5},&quot;&quot;],
+                                            [{y:-0.875,c:&quot;#e26757&quot;,t:&quot;#ffffff&quot;,a:7,w:1.5},&quot;ESC&quot;,{c:&quot;#f6f6f6&quot;,t:&quot;#000000&quot;,a:4},&quot;!\n1&quot;,{x:14.5},&quot;)\n0&quot;,{a:7,w:1.5},&quot;&quot;],
                                             [{y:-0.375,x:3.5,a:4},&quot;E&quot;,{x:10.5},&quot;I&quot;],
                                             [{y:-0.875,x:2.5},&quot;W&quot;,{x:1},&quot;R&quot;,{x:8.5},&quot;U&quot;,{x:1},&quot;O&quot;],
-                                            [{y:-0.875,x:5.5},&quot;T&quot;,{a:0,h:1.5},&quot;1\n7\n3\n9\n10\n12\n4\n6\n2\n5\n8\n11&quot;,{x:4.5,a:7,h:1.5},&quot;&quot;,{a:4},&quot;Y&quot;],
+                                            [{y:-0.875,x:5.5},&quot;T&quot;,{a:7,h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;,{a:4},&quot;Y&quot;],
                                             [{y:-0.875,a:7,w:1.5},&quot;&quot;,{a:4},&quot;Q&quot;,{x:14.5},&quot;P&quot;,{a:7,w:1.5},&quot;&quot;],
                                             [{y:-0.375,x:3.5,a:4},&quot;D&quot;,{x:10.5},&quot;K&quot;],
                                             [{y:-0.875,x:2.5},&quot;S&quot;,{x:1},&quot;F&quot;,{x:8.5},&quot;J&quot;,{x:1},&quot;L&quot;],
                                             [{y:-0.875,x:5.5},&quot;G&quot;,{x:6.5},&quot;H&quot;],
-                                            [{y:-0.875,w2:1.5,l:true},&quot;Tab&quot;,{x:0.5},&quot;A&quot;,{x:14.5},&quot;:\n;&quot;,{a:7,w:1.5},&quot;&quot;],
+                                            [{y:-0.875,a:7,w:1.5},&quot;&quot;,{a:4},&quot;A&quot;,{x:14.5},&quot;:\n;&quot;,{a:7,w:1.5},&quot;&quot;],
                                             [{y:-0.625,x:6.5,h:1.5},&quot;&quot;,{x:4.5,h:1.5},&quot;&quot;],
-                                            [{y:-0.75,x:3.5,a:4},&quot;C&quot;,{x:10.5},&quot;\n,&quot;],
-                                            [{y:-0.875,x:2.5},&quot;X&quot;,{x:1},&quot;V&quot;,{x:8.5},&quot;M&quot;,{x:1},&quot;\n.&quot;],
+                                            [{y:-0.75,x:3.5,a:4},&quot;C&quot;,{x:10.5},&quot;&lt;\n,&quot;],
+                                            [{y:-0.875,x:2.5},&quot;X&quot;,{x:1},&quot;V&quot;,{x:8.5},&quot;M&quot;,{x:1},&quot;&gt;\n.&quot;],
                                             [{y:-0.875,x:5.5},&quot;B&quot;,{x:6.5},&quot;N&quot;],
-                                            [{y:-0.875,a:7,w:1.5},&quot;Shift&quot;,{a:4},&quot;Z&quot;,{x:14.5},&quot;?\n/&quot;,{a:7,w:1.5},&quot;&quot;],
+                                            [{y:-0.875,a:7,w:1.5},&quot;&quot;,{a:4},&quot;Z&quot;,{x:14.5},&quot;?\n/&quot;,{a:7,w:1.5},&quot;&quot;],
                                             [{y:-0.375,x:3.5},&quot;&quot;,{x:10.5},&quot;&quot;],
-                                            [{y:-0.875,x:2.5},&quot;\n\n\n\nHidden&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;],
+                                            [{y:-0.875,x:2.5},&quot;&quot;,{x:1},&quot;&quot;,{x:8.5},&quot;&quot;,{x:1},&quot;&quot;],
                                             [{y:-0.75,x:0.5},&quot;&quot;,&quot;&quot;,{x:14.5},&quot;&quot;,&quot;&quot;],
                                             [{r:30,rx:6.5,ry:4.25,y:-1,x:1},&quot;&quot;,&quot;&quot;],
-                                            [{c:&quot;#e0cbcb&quot;,h:2},&quot;&quot;,{x:1,c:&quot;#f5f5f5&quot;},&quot;&quot;],
-                                            [{y:-0.5,x:1.25,w:0.5,w2:1,h2:2,x2:-0.25,y2:-0.5,l:true},&quot;&quot;],
-                                            [{y:-0.5,x:2},&quot;&quot;],
+                                            [{x:1,c:&quot;#408fb3&quot;,h:2},&quot;&quot;,{c:&quot;#f6f6f6&quot;},&quot;&quot;],
+                                            [{y:-0.5,c:&quot;#45b866&quot;,h2:2,y2:-0.5,l:true},&quot;&quot;],
+                                            [{y:-0.5,x:2,c:&quot;#f6f6f6&quot;},&quot;&quot;],
                                             [{r:-30,rx:13,y:-1,x:-3},&quot;&quot;,&quot;&quot;],
-                                            [{x:-3},&quot;&quot;,{a:0,h:2,w2:2,h2:1,x2:-1,y2:1},&quot;\nTest\n\n\nALIGNMENT&quot;,{a:7,h:2},&quot;&quot;]
+                                            [{x:-3},&quot;&quot;,{x:1,c:&quot;#45b866&quot;,h:2},&quot;&quot;],
+                                            [{x:-3,c:&quot;#e26757&quot;,t:&quot;#ffffff&quot;,w:2,w2:1,h2:2,x2:1,y2:-1},&quot;\n\n\n\nFront Test&quot;]
                                         </TextBox.Text>
                                     </TextBox>
                                 </StackPanel>
