@@ -157,8 +157,8 @@
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="KeyboardNavigation.TabNavigation" Value="Local" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Margin" Value="0,0,0,4" />
+            <Setter Property="Padding" Value="0,2" />
+            <Setter Property="Margin" Value="0" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="VerticalContentAlignment" Value="Stretch" />
             <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
@@ -167,29 +167,31 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <ui:ThemeShadowChrome x:Name="Shadow"
-                                              CornerRadius="{Binding CornerRadius, ElementName=ItemBorder}"
-                                              Depth="{DynamicResource TabViewShadowDepth}"
-                                              IsShadowEnabled="False">
-                            <Border x:Name="ItemBorder"
-                                    Padding="{DynamicResource TabViewItemHeaderPadding}"
-                                    ui:FocusVisualHelper.IsTemplateFocusTarget="True"
-                                    Background="{DynamicResource TabViewItemHeaderBackground}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
-                                    SnapsToDevicePixels="True">
-                                <ContentPresenter x:Name="ContentPresenter"
-                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                  Focusable="False"
-                                                  RecognizesAccessKey="True"
-                                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                  TextElement.FontSize="{DynamicResource TabViewItemHeaderFontSize}"
-                                                  TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                                  TextElement.Foreground="{DynamicResource TabViewItemHeaderForeground}" />
-                            </Border>
-                        </ui:ThemeShadowChrome>
+                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                            <ui:ThemeShadowChrome x:Name="Shadow"
+                                                  CornerRadius="{Binding CornerRadius, ElementName=ItemBorder}"
+                                                  Depth="{DynamicResource TabViewShadowDepth}"
+                                                  IsShadowEnabled="False">
+                                <Border x:Name="ItemBorder"
+                                        Padding="{DynamicResource TabViewItemHeaderPadding}"
+                                        ui:FocusVisualHelper.IsTemplateFocusTarget="True"
+                                        Background="{DynamicResource TabViewItemHeaderBackground}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                                        SnapsToDevicePixels="True">
+                                    <ContentPresenter x:Name="ContentPresenter"
+                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                      Focusable="False"
+                                                      RecognizesAccessKey="True"
+                                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                      TextElement.FontSize="{DynamicResource TabViewItemHeaderFontSize}"
+                                                      TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                                      TextElement.Foreground="{DynamicResource TabViewItemHeaderForeground}" />
+                                </Border>
+                            </ui:ThemeShadowChrome>
+                        </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundDisabled}" />
