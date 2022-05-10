@@ -136,8 +136,8 @@ namespace Rekog.App.Kle
         private static ObservableDictionary<LegendId, LegendModel> ConvertLegends(List<(int id, int index)> layerData, IEnumerable<KleKey> kleKeys)
         {
             return new ObservableDictionary<LegendId, LegendModel>(layerData
-                .Join(kleKeys.Select((x, i) => (keyId: i, kleKey: x)), _ => true, _ => true, (lx, kx) => (id: new LegendId(kx.keyId, lx.id), index: lx.index, kx.kleKey))
-                .Select(x => x.id.LayerId.Value < 9 ? ConvertLegend(x.id, x.index, x.kleKey) : ConvertFrontLegend(x.id, x.index, x.kleKey))
+                .Join(kleKeys.Select((x, i) => (keyId: i, kleKey: x)), _ => true, _ => true, (lx, kx) => (id: new LegendId(kx.keyId, lx.id), lx.index, kx.kleKey))
+                .Select(x => x.index < 9 ? ConvertLegend(x.id, x.index, x.kleKey) : ConvertFrontLegend(x.id, x.index, x.kleKey))
                 .ToDictionary(x => x.Id, x => x));
 
             static LegendModel ConvertLegend(LegendId id, int index, KleKey kleKey)
