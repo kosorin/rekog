@@ -15,12 +15,6 @@ namespace Rekog.App.Undo.Actions
         public ChangeEntriesUndoAction(ObservableDictionary<TKey, TValue> dictionary, DictionaryChangedEventArgs<TKey, TValue> args)
         {
             _dictionary = dictionary;
-            _newEntries = _dictionary.ToList();
-            _oldEntries = _dictionary
-                .Where(x => !args.NewEntries.ContainsKey(x.Key))
-                .Concat(args.OldEntries)
-                .ToList();
-
             _newEntries = args.NewEntries.ToList();
             _oldEntries = args.OldEntries.ToList();
         }
