@@ -47,6 +47,8 @@ namespace Rekog.App.Model
 
         public KeyId Id { get; }
 
+        public Point Position => new Point(X, Y);
+
         public double X
         {
             get => _x;
@@ -64,6 +66,8 @@ namespace Rekog.App.Model
             get => _rotationAngle;
             set => Set(ref _rotationAngle, value);
         }
+
+        public Point RotationOrigin => new Point(RotationOriginX, RotationOriginY);
 
         public double RotationOriginX
         {

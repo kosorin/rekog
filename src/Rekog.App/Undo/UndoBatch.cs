@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Rekog.App.Undo
 {
-    public class UndoBatch
+    public class UndoBatch : IUndoBatch
     {
         private readonly IUndoAction[] _actions;
 

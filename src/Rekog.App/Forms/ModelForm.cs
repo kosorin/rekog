@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Rekog.App.Model;
+using Rekog.App.Reflection;
 using Rekog.App.Undo;
+using Rekog.App.Undo.Batches;
 using Rekog.Common.Extensions;
 
 namespace Rekog.App.Forms
@@ -67,7 +69,22 @@ namespace Rekog.App.Forms
                 return property;
             }
 
-            property = new ModelFormProperty(name, GetDefaultValue(name), OnPropertyValueChanged);
+            return AddProperty(name, ReflectionCache.GetPropertyInfo<TModel>(name).GetDefaultValue());
+        }
+
+        protected ModelFormProperty GetProperty(string name, object? defaultValue)
+        {
+            if (_properties.TryGetValue(name, out var property))
+            {
+                return property;
+            }
+
+            return AddProperty(name, defaultValue);
+        }
+
+        private ModelFormProperty AddProperty(string name, object? defaultValue)
+        {
+            var property = new ModelFormProperty(name, defaultValue, OnPropertyValueChanged);
 
             UpdateProperty(property);
 
@@ -102,7 +119,9 @@ namespace Rekog.App.Forms
             _isUpdatingProperty = true;
             try
             {
-                property.Value = GetValue(property.Name, _models);
+                var propertyInfo = ReflectionCache.GetPropertyInfo<TModel>(property.Name);
+
+                property.Value = GetModelsValue(propertyInfo);
             }
             finally
             {
@@ -117,30 +136,32 @@ namespace Rekog.App.Forms
                 return;
             }
 
-            using (_undoContext.Batch())
+            var propertyInfo = ReflectionCache.GetPropertyInfo<TModel>(property.Name);
+
+            using (_undoContext.Batch(new ChangePropertyUndoBatchBuilder(new PropertyInfoChangePropertyGroupKey(propertyInfo))))
             {
-                SetValue(value ?? property.DefaultValue, property.Name, _models);
+                var usedDefaultValue = value == null;
+
+                SetModelsValue(propertyInfo, value ?? property.DefaultValue);
 
                 // If default value was used, set it back to property
-                if (value == null && property.DefaultValue != null)
+                if (usedDefaultValue)
                 {
                     property.Value = property.DefaultValue;
                 }
             }
         }
 
-        private static object? GetValue(string propertyName, TModel[] models)
+        private object? GetModelsValue(PropertyInfo propertyInfo)
         {
-            if (models.Length == 0)
+            if (_models.Length == 0)
             {
                 return null;
             }
 
-            var propertyInfo = GetPropertyInfo(propertyName);
+            var value = propertyInfo.GetValue(_models.First());
 
-            var value = propertyInfo.GetValue(models.First());
-
-            if (models.Length == 1 || models.Skip(1).All(model => Equals(propertyInfo.GetValue(model), value)))
+            if (_models.Length == 1 || _models.Skip(1).All(model => Equals(propertyInfo.GetValue(model), value)))
             {
                 return value;
             }
@@ -148,53 +169,12 @@ namespace Rekog.App.Forms
             return null;
         }
 
-        private static void SetValue(object? value, string propertyName, TModel[] models)
+        private void SetModelsValue(PropertyInfo propertyInfo, object? value)
         {
-            var propertyInfo = GetPropertyInfo(propertyName);
-
-            foreach (var model in models)
+            foreach (var model in _models)
             {
                 propertyInfo.SetValue(model, value);
             }
-        }
-
-        private static PropertyInfo GetPropertyInfo(string propertyName)
-        {
-            if (PropertyInfos.TryGetValue(propertyName, out var propertyInfo))
-            {
-                return propertyInfo;
-            }
-
-            propertyInfo = typeof(TModel).GetProperty(propertyName) ?? throw new ArgumentException(null, nameof(propertyName));
-
-            PropertyInfos.Add(propertyName, propertyInfo);
-
-            return propertyInfo;
-        }
-
-        private static object? GetDefaultValue(string propertyName)
-        {
-            object? defaultValue = null;
-
-            var propertyInfo = GetPropertyInfo(propertyName);
-            if (!propertyInfo.IsNullable())
-            {
-                var propertyType = propertyInfo.PropertyType;
-                if (propertyType.IsValueType)
-                {
-                    defaultValue = Activator.CreateInstance(propertyType);
-                }
-                else if (propertyType == typeof(string))
-                {
-                    defaultValue = string.Empty;
-                }
-                else
-                {
-                    throw new NotSupportedException($"Type {propertyType.FullName} is not supported as a type for model form property.");
-                }
-            }
-
-            return defaultValue;
         }
     }
 }

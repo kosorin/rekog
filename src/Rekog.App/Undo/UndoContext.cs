@@ -8,10 +8,11 @@ namespace Rekog.App.Undo
 {
     public class UndoContext : ObservableObject
     {
-        private readonly Stack<UndoBatch> _undoStack = new Stack<UndoBatch>();
-        private readonly Stack<UndoBatch> _redoStack = new Stack<UndoBatch>();
-        private readonly List<IUndoAction> _batchActions = new List<IUndoAction>();
-        private int _batchDepth;
+        private readonly Stack<IUndoBatch> _undoStack = new Stack<IUndoBatch>();
+        private readonly Stack<IUndoBatch> _redoStack = new Stack<IUndoBatch>();
+        private readonly UndoBatchBuilder _defaultBatchBuilder = new UndoBatchBuilder();
+        private IUndoBatchBuilder? _batchBuilder;
+        private IUndoBatch? _lastBatch;
         private bool _isProcessing;
 
         public UndoContext()
@@ -26,12 +27,33 @@ namespace Rekog.App.Undo
 
         public IDisposable Batch()
         {
-            return new BatchScope(this);
+            return Batch(_defaultBatchBuilder);
+        }
+
+        public void ClearCoalescing()
+        {
+            _lastBatch = null;
+        }
+
+        public IDisposable Batch(IUndoBatchBuilder batchBuilder)
+        {
+            return new BatchScope(this, batchBuilder);
         }
 
         public void BeginBatch()
         {
-            _batchDepth++;
+            BeginBatch(_defaultBatchBuilder);
+        }
+
+        public void BeginBatch(IUndoBatchBuilder batchBuilder)
+        {
+            if (_batchBuilder != null)
+            {
+                throw new InvalidOperationException("Nested batches are not supported.");
+            }
+
+            _batchBuilder = batchBuilder;
+            _batchBuilder.Initialize();
 
             UndoCommand.RaiseCanExecuteChanged();
             RedoCommand.RaiseCanExecuteChanged();
@@ -39,29 +61,49 @@ namespace Rekog.App.Undo
 
         public void EndBatch()
         {
-            _batchDepth--;
-
-            if (_batchDepth == 0 && _batchActions.Count > 0)
+            if (_batchBuilder == null)
             {
-                PushBatch(_batchActions);
-                _batchActions.Clear();
+                throw new InvalidOperationException();
             }
 
-            UndoCommand.RaiseCanExecuteChanged();
+            if (_lastBatch != null && _batchBuilder.TryCoalesce(_lastBatch))
+            {
+                _batchBuilder = null;
+            }
+            else
+            {
+                var batch = _batchBuilder.Build();
+
+                _batchBuilder = null;
+
+                if (batch != null)
+                {
+                    PushBatch(batch);
+                }
+            }
+
             RedoCommand.RaiseCanExecuteChanged();
+            UndoCommand.RaiseCanExecuteChanged();
         }
 
-        public void PushBatch(IEnumerable<IUndoAction> actions)
+        public void PushBatch(IUndoBatch batch)
         {
-            if (_isProcessing || _batchDepth > 0)
+            if (_isProcessing)
             {
                 return;
             }
 
-            _redoStack.Clear();
-            RedoCommand.RaiseCanExecuteChanged();
+            if (_batchBuilder != null)
+            {
+                throw new InvalidOperationException("Nested batches are not supported.");
+            }
 
-            _undoStack.Push(new UndoBatch(actions));
+            _lastBatch = batch;
+
+            _redoStack.Clear();
+            _undoStack.Push(batch);
+
+            RedoCommand.RaiseCanExecuteChanged();
             UndoCommand.RaiseCanExecuteChanged();
         }
 
@@ -72,13 +114,13 @@ namespace Rekog.App.Undo
                 return;
             }
 
-            if (_batchDepth > 0)
+            if (_batchBuilder != null)
             {
-                _batchActions.Add(action);
+                _batchBuilder.PushAction(action);
             }
             else
             {
-                PushBatch(new[] { action, });
+                PushBatch(new UndoBatch(new[] { action, }));
             }
         }
 
@@ -99,6 +141,8 @@ namespace Rekog.App.Undo
             {
                 if (_undoStack.TryPop(out var batch))
                 {
+                    ClearCoalescing();
+
                     batch.Undo();
 
                     _redoStack.Push(batch);
@@ -123,6 +167,8 @@ namespace Rekog.App.Undo
             {
                 if (_redoStack.TryPop(out var batch))
                 {
+                    ClearCoalescing();
+
                     batch.Redo();
 
                     _undoStack.Push(batch);
@@ -137,22 +183,22 @@ namespace Rekog.App.Undo
 
         private bool CanUndo()
         {
-            return !_isProcessing && _batchDepth == 0 && _undoStack.Any();
+            return !_isProcessing && _batchBuilder == null && _undoStack.Any();
         }
 
         private bool CanRedo()
         {
-            return !_isProcessing && _batchDepth == 0 && _redoStack.Any();
+            return !_isProcessing && _batchBuilder == null && _redoStack.Any();
         }
 
         private class BatchScope : IDisposable
         {
             private readonly UndoContext _context;
 
-            public BatchScope(UndoContext context)
+            public BatchScope(UndoContext context, IUndoBatchBuilder batchBuilder)
             {
                 _context = context;
-                _context.BeginBatch();
+                _context.BeginBatch(batchBuilder);
             }
 
             public void Dispose()

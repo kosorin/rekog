@@ -8,19 +8,45 @@ namespace Rekog.Common.Extensions
 {
     public static class ReflectionExtensions
     {
-        public static bool IsNullable(this PropertyInfo property)
+        public static object? GetDefaultValue(this PropertyInfo propertyInfo)
         {
-            return IsNullableCore(property.PropertyType, property.DeclaringType, property.CustomAttributes);
+            if (propertyInfo.IsNullable())
+            {
+                return null;
+            }
+
+            object? defaultValue;
+
+            var propertyType = propertyInfo.PropertyType;
+            if (propertyType.IsValueType)
+            {
+                defaultValue = Activator.CreateInstance(propertyType);
+            }
+            else if (propertyType == typeof(string))
+            {
+                defaultValue = string.Empty;
+            }
+            else
+            {
+                throw new NotSupportedException($"Type {propertyType.FullName} is not supported as a type for model form property.");
+            }
+
+            return defaultValue;
         }
 
-        public static bool IsNullable(this FieldInfo field)
+        public static bool IsNullable(this PropertyInfo propertyInfo)
         {
-            return IsNullableCore(field.FieldType, field.DeclaringType, field.CustomAttributes);
+            return IsNullableCore(propertyInfo.PropertyType, propertyInfo.DeclaringType, propertyInfo.CustomAttributes);
         }
 
-        public static bool IsNullable(this ParameterInfo parameter)
+        public static bool IsNullable(this FieldInfo fieldInfo)
         {
-            return IsNullableCore(parameter.ParameterType, parameter.Member, parameter.CustomAttributes);
+            return IsNullableCore(fieldInfo.FieldType, fieldInfo.DeclaringType, fieldInfo.CustomAttributes);
+        }
+
+        public static bool IsNullable(this ParameterInfo parameterInfo)
+        {
+            return IsNullableCore(parameterInfo.ParameterType, parameterInfo.Member, parameterInfo.CustomAttributes);
         }
 
         // https://stackoverflow.com/a/58454489/1933104

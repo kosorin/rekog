@@ -6,7 +6,6 @@ using System.Windows;
 using System.Windows.Media;
 using Koda.ColorTools;
 using Koda.ColorTools.Wpf;
-using Rekog.App.Extensions;
 using Rekog.App.Forms;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel;
@@ -461,6 +460,8 @@ namespace Rekog.App.ViewModel
                 key.IsSelected = true;
             }
 
+            UndoContext.ClearCoalescing();
+
             UpdateKeyForm();
             UpdateLegendForm();
 
@@ -545,6 +546,8 @@ namespace Rekog.App.ViewModel
                     layerTab.IsSelected = true;
                 }
             }
+
+            UndoContext.ClearCoalescing();
 
             UpdateLayerForm();
             UpdateLegendForm();

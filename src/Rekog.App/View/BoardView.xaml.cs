@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Rekog.App.Extensions;
 using Rekog.App.Model;
+using Rekog.App.Reflection;
+using Rekog.App.Undo.Batches;
 using Rekog.App.ViewModel;
 
 namespace Rekog.App.View
@@ -25,6 +27,23 @@ namespace Rekog.App.View
 
         public static readonly DependencyProperty SelectionBoxInflateSizeProperty =
             DependencyProperty.Register(nameof(SelectionBoxInflateSize), typeof(double), typeof(BoardView), new PropertyMetadata(0.25));
+
+        private static readonly ChangePropertyUndoBatchBuilder KeyPositionUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel.Position), new[]
+        {
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.X)),
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.Y)),
+        }));
+
+        private static readonly ChangePropertyUndoBatchBuilder KeyRotationOriginUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel.RotationOrigin), new[]
+        {
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationOriginX)),
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationOriginY)),
+        }));
+
+        private static readonly ChangePropertyUndoBatchBuilder KeyRotationAngleUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel.RotationAngle), new[]
+        {
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationAngle)),
+        }));
 
         private Canvas? _canvas;
         private SelectContext? _selectContext;
@@ -261,8 +280,44 @@ namespace Rekog.App.View
                     case Key.A when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
                         SelectAll();
                         break;
+                    case Key.Left when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
+                        using (ViewModel.UndoContext.Batch(KeyRotationOriginUndoBatchBuilder))
+                        {
+                            foreach (var key in ViewModel.SelectedKeys.Values)
+                            {
+                                key.Model.RotationOriginX -= 0.25;
+                            }
+                        }
+                        break;
+                    case Key.Right when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
+                        using (ViewModel.UndoContext.Batch(KeyRotationOriginUndoBatchBuilder))
+                        {
+                            foreach (var key in ViewModel.SelectedKeys.Values)
+                            {
+                                key.Model.RotationOriginX += 0.25;
+                            }
+                        }
+                        break;
+                    case Key.Up when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
+                        using (ViewModel.UndoContext.Batch(KeyRotationOriginUndoBatchBuilder))
+                        {
+                            foreach (var key in ViewModel.SelectedKeys.Values)
+                            {
+                                key.Model.RotationOriginY -= 0.25;
+                            }
+                        }
+                        break;
+                    case Key.Down when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
+                        using (ViewModel.UndoContext.Batch(KeyRotationOriginUndoBatchBuilder))
+                        {
+                            foreach (var key in ViewModel.SelectedKeys.Values)
+                            {
+                                key.Model.RotationOriginY += 0.25;
+                            }
+                        }
+                        break;
                     case Key.Left:
-                        using (ViewModel.UndoContext.Batch())
+                        using (ViewModel.UndoContext.Batch(KeyPositionUndoBatchBuilder))
                         {
                             foreach (var key in ViewModel.SelectedKeys.Values)
                             {
@@ -271,7 +326,7 @@ namespace Rekog.App.View
                         }
                         break;
                     case Key.Right:
-                        using (ViewModel.UndoContext.Batch())
+                        using (ViewModel.UndoContext.Batch(KeyPositionUndoBatchBuilder))
                         {
                             foreach (var key in ViewModel.SelectedKeys.Values)
                             {
@@ -280,7 +335,7 @@ namespace Rekog.App.View
                         }
                         break;
                     case Key.Up:
-                        using (ViewModel.UndoContext.Batch())
+                        using (ViewModel.UndoContext.Batch(KeyPositionUndoBatchBuilder))
                         {
                             foreach (var key in ViewModel.SelectedKeys.Values)
                             {
@@ -289,7 +344,7 @@ namespace Rekog.App.View
                         }
                         break;
                     case Key.Down:
-                        using (ViewModel.UndoContext.Batch())
+                        using (ViewModel.UndoContext.Batch(KeyPositionUndoBatchBuilder))
                         {
                             foreach (var key in ViewModel.SelectedKeys.Values)
                             {
@@ -298,20 +353,20 @@ namespace Rekog.App.View
                         }
                         break;
                     case Key.PageUp:
-                        using (ViewModel.UndoContext.Batch())
+                        using (ViewModel.UndoContext.Batch(KeyRotationAngleUndoBatchBuilder))
                         {
                             foreach (var key in ViewModel.SelectedKeys.Values)
                             {
-                                key.Model.RotationAngle += 5;
+                                key.Model.RotationAngle = (key.Model.RotationAngle + 5) % 360d;
                             }
                         }
                         break;
                     case Key.PageDown:
-                        using (ViewModel.UndoContext.Batch())
+                        using (ViewModel.UndoContext.Batch(KeyRotationAngleUndoBatchBuilder))
                         {
                             foreach (var key in ViewModel.SelectedKeys.Values)
                             {
-                                key.Model.RotationAngle -= 5;
+                                key.Model.RotationAngle = (key.Model.RotationAngle - 5) % 360d;
                             }
                         }
                         break;

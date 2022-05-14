@@ -17,7 +17,7 @@ namespace Rekog.App.Model
                 return false;
             }
 
-            OnUndoActionExecuted(new ChangePropertyUndoAction(propertyName ?? throw new ArgumentNullException(nameof(propertyName)), this, value, oldValue));
+            OnUndoActionExecuted(new ChangePropertyUndoAction(this, propertyName ?? throw new ArgumentNullException(nameof(propertyName)), value, oldValue));
 
             return true;
         }
