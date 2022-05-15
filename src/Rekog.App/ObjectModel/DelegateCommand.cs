@@ -15,14 +15,12 @@ namespace Rekog.App.ObjectModel
         {
         }
 
-        public bool CanExecute(T? parameter)
-        {
-            return CanExecuteCore(parameter);
-        }
-
         public void Execute(T? parameter)
         {
-            CanExecuteCore(parameter);
+            if (CanExecuteCore(parameter))
+            {
+                ExecuteCore(parameter);
+            }
         }
     }
 
@@ -38,14 +36,12 @@ namespace Rekog.App.ObjectModel
         {
         }
 
-        public bool CanExecute()
-        {
-            return CanExecuteCore(null);
-        }
-
         public void Execute()
         {
-            CanExecuteCore(null);
+            if (CanExecuteCore(null))
+            {
+                ExecuteCore(null);
+            }
         }
     }
 
