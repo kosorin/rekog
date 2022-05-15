@@ -75,6 +75,10 @@ namespace Rekog.App.ViewModel
             _boardPropertiesForm.SetModel(Model);
             _boardForm.SetModel(Model);
 
+            _keyForm.RotationAngle.PropertyChanged += OnKeyFormPropertyChanged;
+            _keyForm.RotationOriginX.PropertyChanged += OnKeyFormPropertyChanged;
+            _keyForm.RotationOriginY.PropertyChanged += OnKeyFormPropertyChanged;
+
             _tabs.AddRange(new[]
             {
                 FileTab = new FormTab("File", "\uE130", _boardFileForm) { IsSelected = true, },
@@ -193,10 +197,17 @@ namespace Rekog.App.ViewModel
             UndoContext.PushAction(action);
         }
 
+        private void OnKeyFormPropertyChanged(object? sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(ModelFormProperty.Value))
+            {
+                UpdateRotationOrigin(false);
+            }
+        }
+
         private void SubscribeModelKeys()
         {
             Model.Keys.DictionaryChanged += OnModelKeysDictionaryChanged;
-            Model.Keys.EntryPropertyChanged += OnModelKeysEntryPropertyChanged;
 
             foreach (var model in Model.Keys.Values)
             {
@@ -207,7 +218,6 @@ namespace Rekog.App.ViewModel
         private void UnsubscribeModelKeys()
         {
             Model.Keys.DictionaryChanged -= OnModelKeysDictionaryChanged;
-            Model.Keys.EntryPropertyChanged -= OnModelKeysEntryPropertyChanged;
 
             foreach (var model in Model.Keys.Values)
             {
@@ -280,20 +290,20 @@ namespace Rekog.App.ViewModel
         private void UpdateRotationOrigin(bool incrementVersion)
         {
             // TODO: Rework
-            // if (_keyForm.RotationOriginX.IsSet && _keyForm.RotationOriginY.IsSet &&
-            //     (_keyForm.RotationOriginX.Value != 0 || _keyForm.RotationOriginY.Value != 0 || (_keyForm.RotationAngle.IsSet && _keyForm.RotationAngle.Value != 0)))
-            // {
-            //     if (incrementVersion || !SelectedKeysRotationOrigin.IsSet)
-            //     {
-            //         SelectedKeysRotationOrigin.Version++;
-            //     }
-            //     SelectedKeysRotationOrigin.Value = new Point(_keyForm.RotationOriginX.Value!.Value, _keyForm.RotationOriginY.Value!.Value);
-            //     SelectedKeysRotationOrigin.IsSet = true;
-            // }
-            // else
-            // {
-            //     SelectedKeysRotationOrigin.IsSet = false;
-            // }
+            if (_keyForm.RotationOriginX.Value is double x && _keyForm.RotationOriginY.Value is double y &&
+                (x != 0 || y != 0 || _keyForm.RotationAngle.Value is double and not 0d))
+            {
+                if (incrementVersion || !SelectedKeysRotationOrigin.IsSet)
+                {
+                    SelectedKeysRotationOrigin.Version++;
+                }
+                SelectedKeysRotationOrigin.Value = new Point(x, y);
+                SelectedKeysRotationOrigin.IsSet = true;
+            }
+            else
+            {
+                SelectedKeysRotationOrigin.IsSet = false;
+            }
         }
 
         private void UpdateCanvas()
@@ -413,18 +423,6 @@ namespace Rekog.App.ViewModel
             _keys.Merge(args.NewEntries.ToDictionary(x => x.Key, x => new KeyViewModel(x.Value)), args.OldEntries.Keys);
         }
 
-        private void OnModelKeysEntryPropertyChanged(ObservableDictionary<KeyId, KeyModel> dictionary, EntryPropertyChangedEventArgs<KeyId, KeyModel> args)
-        {
-            switch (args.PropertyName)
-            {
-                case nameof(KeyModel.RotationAngle):
-                case nameof(KeyModel.RotationOriginX):
-                case nameof(KeyModel.RotationOriginY):
-                    UpdateRotationOrigin(false);
-                    break;
-            }
-        }
-
         private void OnKeysDictionaryChanged(ObservableDictionary<KeyId, KeyViewModel> dictionary, DictionaryChangedEventArgs<KeyId, KeyViewModel> args)
         {
             _selectedKeys.Merge(args.NewEntries.Where(x => x.Value.IsSelected), args.OldEntries.Keys);
@@ -464,8 +462,6 @@ namespace Rekog.App.ViewModel
 
             UpdateKeyForm();
             UpdateLegendForm();
-
-            UpdateRotationOrigin(true);
 
             DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
         }
