@@ -15,6 +15,11 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding Key="Z" Modifiers="Control" Command="{Binding Board.UndoContext.UndoCommand}" />
+        <KeyBinding Key="Z" Modifiers="Control+Shift" Command="{Binding Board.UndoContext.RedoCommand}" />
+        <KeyBinding Key="Y" Modifiers="Control" Command="{Binding Board.UndoContext.RedoCommand}" />
+    </Window.InputBindings>
     <Grid KeyboardNavigation.TabNavigation="Local">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -57,10 +62,7 @@
                               Visibility="{Binding Board, Converter={StaticResource NotNullToVisibilityConverter}}">
             <Border Padding="12" Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
                 <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
-                    <ui:SplitButton Command="{Binding Board.AddKeyCommand}" Content="Add key">
-                        <ui:SplitButton.CommandParameter>
-                            <vm:NewKeyTemplate>None</vm:NewKeyTemplate>
-                        </ui:SplitButton.CommandParameter>
+                    <ui:SplitButton Command="{Binding Board.AddKeyCommand}" CommandParameter="{x:Static vm:NewKeyTemplate.None}" Content="Add key">
                         <ui:SplitButton.Flyout>
                             <ui:MenuFlyout Placement="BottomEdgeAlignedLeft">
                                 <MenuItem Command="{Binding Board.AddKeyCommand}" Header="ISO Enter">

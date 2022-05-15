@@ -28,23 +28,6 @@ namespace Rekog.App.View
         public static readonly DependencyProperty SelectionBoxInflateSizeProperty =
             DependencyProperty.Register(nameof(SelectionBoxInflateSize), typeof(double), typeof(BoardView), new PropertyMetadata(0.25));
 
-        private static readonly ChangePropertyUndoBatchBuilder KeyPositionUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel.Position), new[]
-        {
-            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.X)),
-            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.Y)),
-        }));
-
-        private static readonly ChangePropertyUndoBatchBuilder KeyRotationOriginUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel.RotationOrigin), new[]
-        {
-            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationOriginX)),
-            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationOriginY)),
-        }));
-
-        private static readonly ChangePropertyUndoBatchBuilder KeyRotationAngleUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel.RotationAngle), new[]
-        {
-            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationAngle)),
-        }));
-
         private Canvas? _canvas;
         private SelectContext? _selectContext;
         private DragContext? _dragContext;
@@ -179,7 +162,7 @@ namespace Rekog.App.View
 
         private void OnDataContextChanged(object? sender, DependencyPropertyChangedEventArgs args)
         {
-            Center();
+            CenterView();
         }
 
         private void OnBoardViewPreviewMouseDown(object? sender, MouseButtonEventArgs args)
@@ -254,133 +237,27 @@ namespace Rekog.App.View
 
             if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
             {
-                Move(Orientation.Horizontal, args.Delta);
+                MoveView(Orientation.Horizontal, args.Delta);
             }
             else if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
             {
-                Move(Orientation.Vertical, args.Delta);
+                MoveView(Orientation.Vertical, args.Delta);
             }
             else
             {
-                Zoom(args.GetPosition(Plate), args.Delta);
+                ZoomView(args.GetPosition(Plate), args.Delta);
             }
         }
 
         private void OnBoardViewPreviewKeyDown(object? sender, KeyEventArgs args)
         {
-            args.Handled = true;
-
             if (State == BoardViewState.None)
             {
                 switch (args.Key)
                 {
-                    case Key.Escape:
-                        UnselectAll();
-                        break;
-                    case Key.A when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
-                        SelectAll();
-                        break;
-                    case Key.Left when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
-                        using (ViewModel.UndoContext.Batch(KeyRotationOriginUndoBatchBuilder))
-                        {
-                            foreach (var key in ViewModel.SelectedKeys.Values)
-                            {
-                                key.Model.RotationOriginX -= 0.25;
-                            }
-                        }
-                        break;
-                    case Key.Right when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
-                        using (ViewModel.UndoContext.Batch(KeyRotationOriginUndoBatchBuilder))
-                        {
-                            foreach (var key in ViewModel.SelectedKeys.Values)
-                            {
-                                key.Model.RotationOriginX += 0.25;
-                            }
-                        }
-                        break;
-                    case Key.Up when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
-                        using (ViewModel.UndoContext.Batch(KeyRotationOriginUndoBatchBuilder))
-                        {
-                            foreach (var key in ViewModel.SelectedKeys.Values)
-                            {
-                                key.Model.RotationOriginY -= 0.25;
-                            }
-                        }
-                        break;
-                    case Key.Down when Keyboard.Modifiers.HasFlag(ModifierKeys.Control):
-                        using (ViewModel.UndoContext.Batch(KeyRotationOriginUndoBatchBuilder))
-                        {
-                            foreach (var key in ViewModel.SelectedKeys.Values)
-                            {
-                                key.Model.RotationOriginY += 0.25;
-                            }
-                        }
-                        break;
-                    case Key.Left:
-                        using (ViewModel.UndoContext.Batch(KeyPositionUndoBatchBuilder))
-                        {
-                            foreach (var key in ViewModel.SelectedKeys.Values)
-                            {
-                                key.Model.X -= 0.25;
-                            }
-                        }
-                        break;
-                    case Key.Right:
-                        using (ViewModel.UndoContext.Batch(KeyPositionUndoBatchBuilder))
-                        {
-                            foreach (var key in ViewModel.SelectedKeys.Values)
-                            {
-                                key.Model.X += 0.25;
-                            }
-                        }
-                        break;
-                    case Key.Up:
-                        using (ViewModel.UndoContext.Batch(KeyPositionUndoBatchBuilder))
-                        {
-                            foreach (var key in ViewModel.SelectedKeys.Values)
-                            {
-                                key.Model.Y -= 0.25;
-                            }
-                        }
-                        break;
-                    case Key.Down:
-                        using (ViewModel.UndoContext.Batch(KeyPositionUndoBatchBuilder))
-                        {
-                            foreach (var key in ViewModel.SelectedKeys.Values)
-                            {
-                                key.Model.Y += 0.25;
-                            }
-                        }
-                        break;
-                    case Key.PageUp:
-                        using (ViewModel.UndoContext.Batch(KeyRotationAngleUndoBatchBuilder))
-                        {
-                            foreach (var key in ViewModel.SelectedKeys.Values)
-                            {
-                                key.Model.RotationAngle = (key.Model.RotationAngle + 5) % 360d;
-                            }
-                        }
-                        break;
-                    case Key.PageDown:
-                        using (ViewModel.UndoContext.Batch(KeyRotationAngleUndoBatchBuilder))
-                        {
-                            foreach (var key in ViewModel.SelectedKeys.Values)
-                            {
-                                key.Model.RotationAngle = (key.Model.RotationAngle - 5) % 360d;
-                            }
-                        }
-                        break;
                     case Key.Space:
-                        Center();
-                        break;
-                    case Key.Delete:
-                        ViewModel.DeleteSelectedKeys();
-                        break;
-                    case Key.Insert:
-                        ViewModel.AddKey(NewKeyTemplate.None);
-                        break;
-                    default:
-                        args.Handled = false;
+                        CenterView();
+                        args.Handled = true;
                         break;
                 }
             }
@@ -391,24 +268,24 @@ namespace Rekog.App.View
                     case Key.Escape:
                         Reset();
                         break;
-                    default:
-                        args.Handled = false;
-                        break;
                 }
+
+                // If State is not None, then all key bindings are "disabled"
+                args.Handled = true;
             }
         }
 
         private void OnLayoutRootSizeChanged(object? sender, SizeChangedEventArgs args)
         {
-            Coerce();
+            CoerceView();
         }
 
         private void OnPlateSizeChanged(object? sender, SizeChangedEventArgs args)
         {
-            Coerce();
+            CoerceView();
         }
 
-        #region Select
+        #region Selecting
 
         private void StartSelect(MouseEventArgs args)
         {
@@ -539,12 +416,12 @@ namespace Rekog.App.View
 
         private void SelectAll()
         {
-            ViewModel.SelectedKeys.AddOrReplaceRange(ViewModel.Keys.ToDictionary(x => x.Model.Id, x => x));
+            ViewModel.SelectAllKeys();
         }
 
         private void UnselectAll()
         {
-            ViewModel.SelectedKeys.Clear();
+            ViewModel.UnselectAllKeys();
         }
 
         private void PreviewSelectMany(MouseEventArgs args)
@@ -581,10 +458,12 @@ namespace Rekog.App.View
             Canvas.SetTop(SelectionBox, selectionBox.Y);
             SelectionBox.Width = selectionBox.Width;
             SelectionBox.Height = selectionBox.Height;
+            SelectionBox.Visibility = Visibility.Visible;
         }
 
         private void ClearSelectionBox()
         {
+            SelectionBox.Visibility = Visibility.Collapsed;
             SelectionBox.Width = 0;
             SelectionBox.Height = 0;
         }
@@ -602,7 +481,7 @@ namespace Rekog.App.View
 
         #endregion
 
-        #region Drag
+        #region Dragging
 
         private void StartDrag(MouseEventArgs args)
         {
@@ -650,7 +529,7 @@ namespace Rekog.App.View
 
             PlateMatrixTransform.Matrix = matrix;
 
-            Coerce();
+            CoerceView();
         }
 
         private class DragContext
@@ -662,7 +541,7 @@ namespace Rekog.App.View
 
         #region View manipulation
 
-        private void Move(Orientation orientation, int sign)
+        private void MoveView(Orientation orientation, int sign)
         {
             if (sign == 0)
             {
@@ -672,22 +551,16 @@ namespace Rekog.App.View
             var matrix = PlateMatrixTransform.Matrix;
 
             var delta = App.UnitSize * 0.5 * Math.Sign(sign) / matrix.M11;
-            switch (orientation)
-            {
-                case Orientation.Horizontal:
-                    matrix.TranslatePrepend(delta, 0);
-                    break;
-                case Orientation.Vertical:
-                    matrix.TranslatePrepend(0, delta);
-                    break;
-            }
+            var offsetX = orientation == Orientation.Horizontal ? delta : 0;
+            var offsetY = orientation == Orientation.Vertical ? delta : 0;
+            matrix.TranslatePrepend(offsetX, offsetY);
 
             PlateMatrixTransform.Matrix = matrix;
 
-            Coerce();
+            CoerceView();
         }
 
-        private void Zoom(Point center, int sign)
+        private void ZoomView(Point center, int sign)
         {
             if (sign == 0)
             {
@@ -708,26 +581,27 @@ namespace Rekog.App.View
 
             PlateMatrixTransform.Matrix = matrix;
 
-            Coerce();
+            CoerceView();
         }
 
-        private void Center()
+        private void CenterView()
         {
             var matrix = PlateMatrixTransform.Matrix;
+            var layoutRootBounds = GetLayoutRootBounds();
+            var plateBounds = GetPlateBounds();
 
-            var (layoutRootBounds, plateBounds) = GetBounds();
             matrix.OffsetX += (layoutRootBounds.Width - plateBounds.Width) / 2 - plateBounds.X;
             matrix.OffsetY += (layoutRootBounds.Height - plateBounds.Height) / 2 - plateBounds.Y;
 
             PlateMatrixTransform.Matrix = matrix;
         }
 
-        private void Coerce()
+        private void CoerceView()
         {
             var coerced = false;
             var matrix = PlateMatrixTransform.Matrix;
-
-            var (layoutRootBounds, plateBounds) = GetBounds();
+            var layoutRootBounds = GetLayoutRootBounds();
+            var plateBounds = GetPlateBounds();
 
             if (layoutRootBounds.Left > plateBounds.Right)
             {
@@ -757,21 +631,27 @@ namespace Rekog.App.View
             }
         }
 
-        private (Rect layoutRootBounds, Rect plateBounds) GetBounds()
+        private Rect GetLayoutRootBounds()
         {
-            var actualBounds = ViewModel.ActualBounds;
+            var layoutRootBounds = new Rect(new Point(0, 0),
+                new Size(LayoutRoot.ActualWidth, LayoutRoot.ActualHeight));
+
+            return layoutRootBounds;
+        }
+
+        private Rect GetPlateBounds()
+        {
             var matrix = PlateMatrixTransform.Matrix;
             var scale = matrix.M11 * App.UnitSize;
 
-            var layoutRootPosition = new Point(0, 0);
-            var layoutRootBounds = new Rect(layoutRootPosition,
-                new Size(LayoutRoot.ActualWidth, LayoutRoot.ActualHeight));
+            var bounds = ViewModel.ActualBounds;
+            bounds.Scale(scale, scale);
 
-            var platePosition = Plate.TranslatePoint(layoutRootPosition, LayoutRoot);
-            var plateBounds = new Rect(new Point(platePosition.X + actualBounds.X * scale, platePosition.Y + actualBounds.Y * scale),
-                new Size(actualBounds.Width * scale, actualBounds.Height * scale));
+            var platePosition = Plate.TranslatePoint(new Point(0, 0), LayoutRoot);
+            var plateBounds = new Rect(new Point(platePosition.X + bounds.X, platePosition.Y + bounds.Y),
+                new Size(bounds.Width, bounds.Height));
 
-            return (layoutRootBounds, plateBounds);
+            return plateBounds;
         }
 
         #endregion

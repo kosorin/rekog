@@ -9,8 +9,10 @@ using Koda.ColorTools.Wpf;
 using Rekog.App.Forms;
 using Rekog.App.Model;
 using Rekog.App.ObjectModel;
+using Rekog.App.Reflection;
 using Rekog.App.Undo;
 using Rekog.App.Undo.Actions;
+using Rekog.App.Undo.Batches;
 using Rekog.App.ViewModel.Forms;
 
 namespace Rekog.App.ViewModel
@@ -18,6 +20,23 @@ namespace Rekog.App.ViewModel
     public class BoardViewModel : ViewModelBase<BoardModel>
     {
         private static readonly Color DefaultBackground = Colors.White;
+
+        private static readonly ChangePropertyUndoBatchBuilder KeyPositionUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel) + "_" + nameof(KeyModel.Position), new[]
+        {
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.X)),
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.Y)),
+        }));
+
+        private static readonly ChangePropertyUndoBatchBuilder KeyRotationOriginUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel) + "_" + nameof(KeyModel.RotationOrigin), new[]
+        {
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationOriginX)),
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationOriginY)),
+        }));
+
+        private static readonly ChangePropertyUndoBatchBuilder KeyRotationAngleUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel) + "_" + nameof(KeyModel.RotationAngle), new[]
+        {
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationAngle)),
+        }));
 
         // Each item is in the collection only once.
         private readonly ObservableList<FormTab> _tabs = new ObservableList<FormTab>();
@@ -96,7 +115,12 @@ namespace Rekog.App.ViewModel
             UpdateBackground();
 
             AddKeyCommand = new DelegateCommand<NewKeyTemplate>(AddKey);
+            SelectAllKeysCommand = new DelegateCommand(SelectAllKeys);
+            UnselectAllKeysCommand = new DelegateCommand(UnselectAllKeys);
             DeleteSelectedKeysCommand = new DelegateCommand(DeleteSelectedKeys, CanDeleteSelectedKeys);
+            ChangeSelectedKeysPositionCommand = new DelegateCommand<Point>(ChangeSelectedKeysPosition, CanChangeSelectedKeysPosition);
+            ChangeSelectedKeysRotationOriginCommand = new DelegateCommand<Point>(ChangeSelectedKeysRotationOrigin, CanChangeSelectedKeysRotationOrigin);
+            ChangeSelectedKeysRotationAngleCommand = new DelegateCommand<double>(ChangeSelectedKeysRotationAngle, CanChangeSelectedKeysRotationAngle);
             AddLayerCommand = new DelegateCommand(AddLayer);
             SelectAllLayersCommand = new DelegateCommand(SelectAllLayers);
         }
@@ -105,7 +129,17 @@ namespace Rekog.App.ViewModel
 
         public DelegateCommand<NewKeyTemplate> AddKeyCommand { get; }
 
+        public DelegateCommand SelectAllKeysCommand { get; }
+
+        public DelegateCommand UnselectAllKeysCommand { get; }
+
         public DelegateCommand DeleteSelectedKeysCommand { get; }
+
+        public DelegateCommand<Point> ChangeSelectedKeysPositionCommand { get; }
+
+        public DelegateCommand<Point> ChangeSelectedKeysRotationOriginCommand { get; }
+
+        public DelegateCommand<double> ChangeSelectedKeysRotationAngleCommand { get; }
 
         public DelegateCommand AddLayerCommand { get; }
 
@@ -609,46 +643,6 @@ namespace Rekog.App.ViewModel
             _layerForm.LegendForm.SetModels(_selectedKeys.Keys.SelectMany(_ => _selectedLayers.Keys, (keyId, layerId) => Model.Legends[new LegendId(keyId, layerId)]));
         }
 
-        private void AddLayer()
-        {
-            var layerId = new LayerId(Model.Layers.Count > 0 ? Model.Layers.Keys.Max(x => x.Value) + 1 : 0);
-            var layerModel = new LayerModel(layerId)
-            {
-                Name = $"Layer {layerId.Value}",
-                Order = Model.Layers.Count > 0 ? Model.Layers.Values.Max(x => x.Order) + 1 : 0,
-            };
-            var legendModels = Model.Keys.Values.ToDictionary(x => new LegendId(x.Id, layerId), x => new LegendModel(new LegendId(x.Id, layerId)));
-
-            using (UndoContext.Batch())
-            {
-                Model.Layers.Add(layerId, layerModel);
-                Model.Legends.AddRange(legendModels);
-                SelectLayer(layerId);
-            }
-        }
-
-        private void DeleteLayer(LayerId id)
-        {
-            using (UndoContext.Batch())
-            {
-                Model.Legends.RemoveRange(Model.Keys.Keys.Select(x => new LegendId(x, id)));
-                Model.Layers.Remove(id);
-            }
-        }
-
-        private void SelectLayer(LayerId id)
-        {
-            if (_layers.TryGetValue(id, out var layer))
-            {
-                _selectedLayers.ClearOverwrite(new[] { new KeyValuePair<LayerId, LayerViewModel>(id, layer), });
-            }
-        }
-
-        private void SelectAllLayers()
-        {
-            _selectedTabs.ClearOverwrite(LayerTabs.Values);
-        }
-
         public void AddKey(NewKeyTemplate template)
         {
             var keyId = new KeyId(Model.Keys.Count > 0 ? Model.Keys.Keys.Max(x => x.Value) + 1 : 0);
@@ -705,17 +699,27 @@ namespace Rekog.App.ViewModel
             {
                 Model.Keys.Add(keyId, keyModel);
                 Model.Legends.AddRange(Model.Layers.Keys.ToDictionary(x => new LegendId(keyId, x), x => new LegendModel(new LegendId(keyId, x))));
-
-                SelectKey(keyId);
             }
+
+            SelectKey(keyId);
         }
 
-        private void SelectKey(KeyId id)
+        public void SelectKey(KeyId id)
         {
             if (_keys.TryGetValue(id, out var key))
             {
                 _selectedKeys.ClearOverwrite(new[] { new KeyValuePair<KeyId, KeyViewModel>(id, key), });
             }
+        }
+
+        public void SelectAllKeys()
+        {
+            _selectedKeys.AddOrReplaceRange(_keys);
+        }
+
+        public void UnselectAllKeys()
+        {
+            _selectedKeys.Clear();
         }
 
         public void DeleteSelectedKeys()
@@ -730,6 +734,97 @@ namespace Rekog.App.ViewModel
         private bool CanDeleteSelectedKeys()
         {
             return _selectedKeys.Any();
+        }
+
+        private void ChangeSelectedKeysPosition(Point offset)
+        {
+            using (UndoContext.Batch(KeyPositionUndoBatchBuilder))
+            {
+                foreach (var key in _selectedKeys.Values)
+                {
+                    key.Model.X += offset.X;
+                    key.Model.Y += offset.Y;
+                }
+            }
+        }
+
+        private bool CanChangeSelectedKeysPosition(Point offset)
+        {
+            return (offset.X != 0 || offset.Y != 0) && _selectedKeys.Any();
+        }
+
+        private void ChangeSelectedKeysRotationOrigin(Point offset)
+        {
+            using (UndoContext.Batch(KeyRotationOriginUndoBatchBuilder))
+            {
+                foreach (var key in _selectedKeys.Values)
+                {
+                    key.Model.RotationOriginX += offset.X;
+                    key.Model.RotationOriginY += offset.Y;
+                }
+            }
+        }
+
+        private bool CanChangeSelectedKeysRotationOrigin(Point offset)
+        {
+            return (offset.X != 0 || offset.Y != 0) && _selectedKeys.Any();
+        }
+
+        private void ChangeSelectedKeysRotationAngle(double change)
+        {
+            using (UndoContext.Batch(KeyRotationAngleUndoBatchBuilder))
+            {
+                foreach (var key in _selectedKeys.Values)
+                {
+                    key.Model.RotationAngle = (key.Model.RotationAngle + change) % 360d;
+                }
+            }
+        }
+
+        private bool CanChangeSelectedKeysRotationAngle(double change)
+        {
+            return change != 0 && _selectedKeys.Any();
+        }
+
+        public void AddLayer()
+        {
+            var layerId = new LayerId(Model.Layers.Count > 0 ? Model.Layers.Keys.Max(x => x.Value) + 1 : 0);
+            var layerModel = new LayerModel(layerId)
+            {
+                Name = $"Layer {layerId.Value}",
+                Order = Model.Layers.Count > 0 ? Model.Layers.Values.Max(x => x.Order) + 1 : 0,
+            };
+            var legendModels = Model.Keys.Values.ToDictionary(x => new LegendId(x.Id, layerId), x => new LegendModel(new LegendId(x.Id, layerId)));
+
+            using (UndoContext.Batch())
+            {
+                Model.Layers.Add(layerId, layerModel);
+                Model.Legends.AddRange(legendModels);
+            }
+
+            SelectLayer(layerId);
+        }
+
+        public void SelectLayer(LayerId id)
+        {
+            if (_layers.TryGetValue(id, out var layer))
+            {
+                _selectedLayers.ClearOverwrite(new[] { new KeyValuePair<LayerId, LayerViewModel>(id, layer), });
+            }
+        }
+
+        public void SelectAllLayers()
+        {
+            _selectedTabs.ClearOverwrite(LayerTabs.Values);
+        }
+
+        public void DeleteLayer(LayerId id)
+        {
+            using (UndoContext.Batch())
+            {
+                Model.Legends.RemoveRange(Model.Keys.Keys.Select(x => new LegendId(x, id)));
+                Model.Layers.Remove(id);
+            }
         }
     }
 }

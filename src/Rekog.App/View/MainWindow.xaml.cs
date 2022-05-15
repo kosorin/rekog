@@ -12,21 +12,15 @@ namespace Rekog.App.View
 
         private void OnMainWindowPreviewKeyDown(object? sender, KeyEventArgs args)
         {
-            args.Handled = true;
-
             switch (args.Key)
             {
-                case Key.Escape:
-                    if (!Board.IsFocused)
-                    {
-                        Board.Focus();
-                    }
+                case Key.Escape when !Board.IsFocused:
+                    Board.Focus();
+                    args.Handled = true;
                     break;
                 case Key.F8:
                     ToggleTheme();
-                    break;
-                default:
-                    args.Handled = false;
+                    args.Handled = true;
                     break;
             }
         }

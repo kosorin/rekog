@@ -24,6 +24,32 @@
     <UserControl.Background>
         <SolidColorBrush Color="{Binding Background}" />
     </UserControl.Background>
+    <UserControl.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding UnselectAllKeysCommand}" />
+        <KeyBinding Key="A" Modifiers="Control" Command="{Binding SelectAllKeysCommand}" />
+        <KeyBinding Key="Delete" Command="{Binding DeleteSelectedKeysCommand}" />
+        <KeyBinding Key="Insert" Command="{Binding AddKeyCommand}" CommandParameter="{x:Static vm:NewKeyTemplate.None}" />
+        <KeyBinding Key="Left" Command="{Binding ChangeSelectedKeysPositionCommand}" CommandParameter="{mx:Point X=-0.25, Y=0}" />
+        <KeyBinding Key="Right" Command="{Binding ChangeSelectedKeysPositionCommand}" CommandParameter="{mx:Point X=0.25, Y=0}" />
+        <KeyBinding Key="Up" Command="{Binding ChangeSelectedKeysPositionCommand}" CommandParameter="{mx:Point X=0, Y=-0.25}" />
+        <KeyBinding Key="Down" Command="{Binding ChangeSelectedKeysPositionCommand}" CommandParameter="{mx:Point X=0, Y=0.25}" />
+        <KeyBinding Key="Left" Modifiers="Shift" Command="{Binding ChangeSelectedKeysPositionCommand}" CommandParameter="{mx:Point X=-0.05, Y=0}" />
+        <KeyBinding Key="Right" Modifiers="Shift" Command="{Binding ChangeSelectedKeysPositionCommand}" CommandParameter="{mx:Point X=0.05, Y=0}" />
+        <KeyBinding Key="Up" Modifiers="Shift" Command="{Binding ChangeSelectedKeysPositionCommand}" CommandParameter="{mx:Point X=0, Y=-0.05}" />
+        <KeyBinding Key="Down" Modifiers="Shift" Command="{Binding ChangeSelectedKeysPositionCommand}" CommandParameter="{mx:Point X=0, Y=0.05}" />
+        <KeyBinding Key="Left" Modifiers="Control" Command="{Binding ChangeSelectedKeysRotationOriginCommand}" CommandParameter="{mx:Point X=-0.25, Y=0}" />
+        <KeyBinding Key="Right" Modifiers="Control" Command="{Binding ChangeSelectedKeysRotationOriginCommand}" CommandParameter="{mx:Point X=0.25, Y=0}" />
+        <KeyBinding Key="Up" Modifiers="Control" Command="{Binding ChangeSelectedKeysRotationOriginCommand}" CommandParameter="{mx:Point X=0, Y=-0.25}" />
+        <KeyBinding Key="Down" Modifiers="Control" Command="{Binding ChangeSelectedKeysRotationOriginCommand}" CommandParameter="{mx:Point X=0, Y=0.25}" />
+        <KeyBinding Key="Left" Modifiers="Control+Shift" Command="{Binding ChangeSelectedKeysRotationOriginCommand}" CommandParameter="{mx:Point X=-0.05, Y=0}" />
+        <KeyBinding Key="Right" Modifiers="Control+Shift" Command="{Binding ChangeSelectedKeysRotationOriginCommand}" CommandParameter="{mx:Point X=0.05, Y=0}" />
+        <KeyBinding Key="Up" Modifiers="Control+Shift" Command="{Binding ChangeSelectedKeysRotationOriginCommand}" CommandParameter="{mx:Point X=0, Y=-0.05}" />
+        <KeyBinding Key="Down" Modifiers="Control+Shift" Command="{Binding ChangeSelectedKeysRotationOriginCommand}" CommandParameter="{mx:Point X=0, Y=0.05}" />
+        <KeyBinding Key="PageUp" Command="{Binding ChangeSelectedKeysRotationAngleCommand}" CommandParameter="{mx:Double -5}" />
+        <KeyBinding Key="PageDown" Command="{Binding ChangeSelectedKeysRotationAngleCommand}" CommandParameter="{mx:Double 5}" />
+        <KeyBinding Key="PageUp" Modifiers="Shift" Command="{Binding ChangeSelectedKeysRotationAngleCommand}" CommandParameter="{mx:Double -1}" />
+        <KeyBinding Key="PageDown" Modifiers="Shift" Command="{Binding ChangeSelectedKeysRotationAngleCommand}" CommandParameter="{mx:Double 1}" />
+    </UserControl.InputBindings>
     <Canvas x:Name="LayoutRoot"
             ClipToBounds="True"
             SizeChanged="OnLayoutRootSizeChanged">
@@ -121,6 +147,7 @@
             </ItemsControl>
         </Border>
         <Rectangle x:Name="SelectionBox"
+                   Visibility="Collapsed"
                    IsHitTestVisible="False"
                    Stroke="{x:Static SystemColors.HighlightBrush}"
                    StrokeDashArray="4,2"
@@ -128,16 +155,6 @@
             <Rectangle.Fill>
                 <SolidColorBrush Opacity="0.2" Color="{x:Static SystemColors.HighlightColor}" />
             </Rectangle.Fill>
-            <Rectangle.Style>
-                <Style TargetType="{x:Type Rectangle}">
-                    <Setter Property="Visibility" Value="Collapsed" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding State, RelativeSource={RelativeSource AncestorType={x:Type v:BoardView}}}" Value="{x:Static v:BoardViewState.DragSelecting}">
-                            <Setter Property="Visibility" Value="Visible" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Rectangle.Style>
         </Rectangle>
     </Canvas>
 </UserControl>
