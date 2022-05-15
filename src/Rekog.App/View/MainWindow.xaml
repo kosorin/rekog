@@ -38,6 +38,7 @@
                               VerticalAlignment="Bottom"
                               Depth="8"
                               IsHitTestVisible="False"
+                              CornerRadius="{DynamicResource ControlCornerRadius}"
                               KeyboardNavigation.IsTabStop="False"
                               Opacity="0.6"
                               Visibility="{Binding Board, Converter={StaticResource NotNullToVisibilityConverter}}">
@@ -57,43 +58,51 @@
                               HorizontalAlignment="Right"
                               VerticalAlignment="Top"
                               Depth="8"
+                              CornerRadius="{DynamicResource ControlCornerRadius}"
                               KeyboardNavigation.TabIndex="2"
                               KeyboardNavigation.TabNavigation="Local"
                               Visibility="{Binding Board, Converter={StaticResource NotNullToVisibilityConverter}}">
-            <Border Padding="12" Background="{DynamicResource SystemControlBackgroundAltHighBrush}">
-                <ui:SimpleStackPanel Orientation="Horizontal" Spacing="12">
-                    <ui:SplitButton Command="{Binding Board.AddKeyCommand}" CommandParameter="{x:Static vm:NewKeyTemplate.None}" Content="Add key">
-                        <ui:SplitButton.Flyout>
-                            <ui:MenuFlyout Placement="BottomEdgeAlignedLeft">
-                                <MenuItem Command="{Binding Board.AddKeyCommand}" Header="ISO Enter">
-                                    <MenuItem.CommandParameter>
-                                        <vm:NewKeyTemplate>IsoEnter</vm:NewKeyTemplate>
-                                    </MenuItem.CommandParameter>
-                                </MenuItem>
-                                <MenuItem Command="{Binding Board.AddKeyCommand}" Header="BIG-ass Enter">
-                                    <MenuItem.CommandParameter>
-                                        <vm:NewKeyTemplate>BigAssEnter</vm:NewKeyTemplate>
-                                    </MenuItem.CommandParameter>
-                                </MenuItem>
-                                <MenuItem Command="{Binding Board.AddKeyCommand}" Header="Stepped Caps Lock">
-                                    <MenuItem.CommandParameter>
-                                        <vm:NewKeyTemplate>SteppedCapsLock</vm:NewKeyTemplate>
-                                    </MenuItem.CommandParameter>
-                                </MenuItem>
-                                <MenuItem Command="{Binding Board.AddKeyCommand}" Header="Center stepped">
-                                    <MenuItem.CommandParameter>
-                                        <vm:NewKeyTemplate>CenterStepped</vm:NewKeyTemplate>
-                                    </MenuItem.CommandParameter>
-                                </MenuItem>
-                            </ui:MenuFlyout>
-                        </ui:SplitButton.Flyout>
-                    </ui:SplitButton>
-                    <Button Command="{Binding Board.DeleteSelectedKeysCommand}" Content="Delete keys" />
-                    <ui:AppBarSeparator />
-                    <Button Command="{Binding Board.UndoContext.UndoCommand}" Content="Undo" />
-                    <Button Command="{Binding Board.UndoContext.RedoCommand}" Content="Redo" />
-                </ui:SimpleStackPanel>
-            </Border>
+            <ui:CommandBar CornerRadius="{DynamicResource ControlCornerRadius}">
+                <ui:AppBarButton Command="{Binding Board.AddKeyCommand}"
+                                 CommandParameter="{x:Static vm:NewKeyTemplate.None}"
+                                 Label="Add key"
+                                 InputGestureText="Insert"
+                                 ContextMenuService.Placement="Bottom">
+                    <ui:AppBarButton.Icon>
+                        <ui:SymbolIcon Symbol="Add" />
+                    </ui:AppBarButton.Icon>
+                    <ui:AppBarButton.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="{Binding Board.AddKeyCommand}" CommandParameter="{x:Static vm:NewKeyTemplate.IsoEnter}" Header="ISO Enter" />
+                            <MenuItem Command="{Binding Board.AddKeyCommand}" CommandParameter="{x:Static vm:NewKeyTemplate.BigAssEnter}" Header="BIG-ass Enter" />
+                            <MenuItem Command="{Binding Board.AddKeyCommand}" CommandParameter="{x:Static vm:NewKeyTemplate.SteppedCapsLock}" Header="Stepped Caps Lock" />
+                            <MenuItem Command="{Binding Board.AddKeyCommand}" CommandParameter="{x:Static vm:NewKeyTemplate.CenterStepped}" Header="Center stepped" />
+                        </ContextMenu>
+                    </ui:AppBarButton.ContextMenu>
+                </ui:AppBarButton>
+                <ui:AppBarButton Command="{Binding Board.DeleteSelectedKeysCommand}"
+                                 Label="Delete keys"
+                                 InputGestureText="Delete">
+                    <ui:AppBarButton.Icon>
+                        <ui:SymbolIcon Symbol="Delete" />
+                    </ui:AppBarButton.Icon>
+                </ui:AppBarButton>
+                <ui:AppBarSeparator />
+                <ui:AppBarButton Command="{Binding Board.UndoContext.UndoCommand}"
+                                 Label="Undo"
+                                 InputGestureText="Ctrl+Z">
+                    <ui:AppBarButton.Icon>
+                        <ui:SymbolIcon Symbol="Undo" />
+                    </ui:AppBarButton.Icon>
+                </ui:AppBarButton>
+                <ui:AppBarButton Command="{Binding Board.UndoContext.RedoCommand}"
+                                 Label="Redo"
+                                 InputGestureText="Ctrl+Y">
+                    <ui:AppBarButton.Icon>
+                        <ui:SymbolIcon Symbol="Redo" />
+                    </ui:AppBarButton.Icon>
+                </ui:AppBarButton>
+            </ui:CommandBar>
         </ui:ThemeShadowChrome>
         <ui:ThemeShadowChrome Grid.Column="2"
                               Depth="64"

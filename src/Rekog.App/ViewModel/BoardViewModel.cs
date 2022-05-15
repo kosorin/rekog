@@ -64,6 +64,16 @@ namespace Rekog.App.ViewModel
         {
             model.UndoActionExecuted += OnModelUndoActionExecuted;
 
+            AddKeyCommand = new DelegateCommand<NewKeyTemplate>(AddKey);
+            DeleteSelectedKeysCommand = new DelegateCommand(DeleteSelectedKeys, CanDeleteSelectedKeys);
+            SelectAllKeysCommand = new DelegateCommand(SelectAllKeys, CanSelectAllKeys);
+            UnselectAllKeysCommand = new DelegateCommand(UnselectAllKeys, CanUnselectAllKeys);
+            ChangeSelectedKeysPositionCommand = new DelegateCommand<Point>(ChangeSelectedKeysPosition, CanChangeSelectedKeysPosition);
+            ChangeSelectedKeysRotationOriginCommand = new DelegateCommand<Point>(ChangeSelectedKeysRotationOrigin, CanChangeSelectedKeysRotationOrigin);
+            ChangeSelectedKeysRotationAngleCommand = new DelegateCommand<double>(ChangeSelectedKeysRotationAngle, CanChangeSelectedKeysRotationAngle);
+            AddLayerCommand = new DelegateCommand(AddLayer);
+            SelectAllLayersCommand = new DelegateCommand(SelectAllLayers);
+
             SubscribeModelKeys();
             SubscribeModelLayers();
             SubscribeModelLegends();
@@ -113,27 +123,17 @@ namespace Rekog.App.ViewModel
             UpdateLayers();
             UpdateLegends();
             UpdateBackground();
-
-            AddKeyCommand = new DelegateCommand<NewKeyTemplate>(AddKey);
-            SelectAllKeysCommand = new DelegateCommand(SelectAllKeys);
-            UnselectAllKeysCommand = new DelegateCommand(UnselectAllKeys);
-            DeleteSelectedKeysCommand = new DelegateCommand(DeleteSelectedKeys, CanDeleteSelectedKeys);
-            ChangeSelectedKeysPositionCommand = new DelegateCommand<Point>(ChangeSelectedKeysPosition, CanChangeSelectedKeysPosition);
-            ChangeSelectedKeysRotationOriginCommand = new DelegateCommand<Point>(ChangeSelectedKeysRotationOrigin, CanChangeSelectedKeysRotationOrigin);
-            ChangeSelectedKeysRotationAngleCommand = new DelegateCommand<double>(ChangeSelectedKeysRotationAngle, CanChangeSelectedKeysRotationAngle);
-            AddLayerCommand = new DelegateCommand(AddLayer);
-            SelectAllLayersCommand = new DelegateCommand(SelectAllLayers);
         }
 
         public UndoContext UndoContext { get; } = new UndoContext();
 
         public DelegateCommand<NewKeyTemplate> AddKeyCommand { get; }
 
+        public DelegateCommand DeleteSelectedKeysCommand { get; }
+
         public DelegateCommand SelectAllKeysCommand { get; }
 
         public DelegateCommand UnselectAllKeysCommand { get; }
-
-        public DelegateCommand DeleteSelectedKeysCommand { get; }
 
         public DelegateCommand<Point> ChangeSelectedKeysPositionCommand { get; }
 
@@ -462,6 +462,8 @@ namespace Rekog.App.ViewModel
             _selectedKeys.Merge(args.NewEntries.Where(x => x.Value.IsSelected), args.OldEntries.Keys);
 
             UpdateCanvas();
+
+            SelectAllKeysCommand.RaiseCanExecuteChanged();
         }
 
         private void OnKeysEntryPropertyChanged(ObservableDictionary<KeyId, KeyViewModel> dictionary, EntryPropertyChangedEventArgs<KeyId, KeyViewModel> args)
@@ -497,6 +499,7 @@ namespace Rekog.App.ViewModel
             UpdateKeyForm();
             UpdateLegendForm();
 
+            UnselectAllKeysCommand.RaiseCanExecuteChanged();
             DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
         }
 
@@ -704,6 +707,20 @@ namespace Rekog.App.ViewModel
             SelectKey(keyId);
         }
 
+        public void DeleteSelectedKeys()
+        {
+            using (UndoContext.Batch())
+            {
+                Model.Legends.RemoveRange(_selectedKeys.Keys.SelectMany(_ => Model.Layers.Keys, (keyId, layerId) => new LegendId(keyId, layerId)));
+                Model.Keys.RemoveRange(_selectedKeys.Keys);
+            }
+        }
+
+        private bool CanDeleteSelectedKeys()
+        {
+            return _selectedKeys.Any();
+        }
+
         public void SelectKey(KeyId id)
         {
             if (_keys.TryGetValue(id, out var key))
@@ -717,21 +734,17 @@ namespace Rekog.App.ViewModel
             _selectedKeys.AddOrReplaceRange(_keys);
         }
 
+        private bool CanSelectAllKeys()
+        {
+            return _keys.Any();
+        }
+
         public void UnselectAllKeys()
         {
             _selectedKeys.Clear();
         }
 
-        public void DeleteSelectedKeys()
-        {
-            using (UndoContext.Batch())
-            {
-                Model.Legends.RemoveRange(_selectedKeys.Keys.SelectMany(_ => Model.Layers.Keys, (keyId, layerId) => new LegendId(keyId, layerId)));
-                Model.Keys.RemoveRange(_selectedKeys.Keys);
-            }
-        }
-
-        private bool CanDeleteSelectedKeys()
+        private bool CanUnselectAllKeys()
         {
             return _selectedKeys.Any();
         }
