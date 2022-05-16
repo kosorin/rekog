@@ -8,32 +8,25 @@ namespace Rekog.App.ViewModel
     {
         private T _value;
         private bool _isSet;
-        private int _version;
 
         public ValueSource(T value, [CallerMemberName] string? key = null)
         {
-            _value = value;
             Key = key ?? throw new ArgumentNullException(nameof(key));
+            _value = value;
         }
 
         public string Key { get; }
 
-        public int Version
+        public T Value
         {
-            get => _version;
-            set => Set(ref _version, value);
+            get => _value;
+            set => Set(ref _value, value);
         }
 
         public bool IsSet
         {
             get => _isSet;
             set => Set(ref _isSet, value);
-        }
-
-        public T Value
-        {
-            get => _value;
-            set => Set(ref _value, value);
         }
     }
 }

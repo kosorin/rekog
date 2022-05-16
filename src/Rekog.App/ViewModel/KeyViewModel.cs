@@ -133,7 +133,12 @@ namespace Rekog.App.ViewModel
         {
             var unitSize = App.UnitSize;
 
-            Rotation = new RotateTransform(Model.RotationAngle, (Model.RotationOriginX - Model.X) * unitSize, (Model.RotationOriginY - Model.Y) * unitSize);
+            var rotationOriginX = Model.RotationOriginX ?? Model.X;
+            var rotationOriginY = Model.RotationOriginY ?? Model.Y;
+            var offsetX = rotationOriginX - Model.X;
+            var offsetY = rotationOriginY - Model.Y;
+
+            Rotation = new RotateTransform(Model.RotationAngle, offsetX * unitSize, offsetY * unitSize);
 
             Shape = GetShape(Model.GetGeometry());
             SteppedShape = Model.IsStepped ? GetShape(Model.GetSteppedGeometry()) : null;
@@ -142,7 +147,7 @@ namespace Rekog.App.ViewModel
             InnerShapeOffset = new Point(Model.InnerVerticalOffset * -Math.Sin(Math.PI * Model.RotationAngle / 180d), Model.InnerVerticalOffset * -Math.Cos(Math.PI * Model.RotationAngle / 180d));
 
             var actualTransform = new TransformGroup();
-            actualTransform.Children.Add(new RotateTransform(Model.RotationAngle, Model.RotationOriginX - Model.X, Model.RotationOriginY - Model.Y));
+            actualTransform.Children.Add(new RotateTransform(Model.RotationAngle, offsetX, offsetY));
             actualTransform.Children.Add(new TranslateTransform(Model.X, Model.Y));
             var actualShape = Model.GetGeometry().Clone();
             actualShape.Transform = actualTransform;

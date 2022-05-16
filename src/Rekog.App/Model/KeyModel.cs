@@ -16,8 +16,8 @@ namespace Rekog.App.Model
         private double _x;
         private double _y;
         private double _rotationAngle;
-        private double _rotationOriginX;
-        private double _rotationOriginY;
+        private double? _rotationOriginX;
+        private double? _rotationOriginY;
         private double _width = 1;
         private double _height = 1;
         private bool _useShape;
@@ -67,15 +67,15 @@ namespace Rekog.App.Model
             set => Set(ref _rotationAngle, value);
         }
 
-        public Point RotationOrigin => new Point(RotationOriginX, RotationOriginY);
+        public Point RotationOrigin => new Point(RotationOriginX ?? X, RotationOriginY ?? Y);
 
-        public double RotationOriginX
+        public double? RotationOriginX
         {
             get => _rotationOriginX;
             set => Set(ref _rotationOriginX, value);
         }
 
-        public double RotationOriginY
+        public double? RotationOriginY
         {
             get => _rotationOriginY;
             set => Set(ref _rotationOriginY, value);

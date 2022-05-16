@@ -11,11 +11,8 @@
              d:Width="200"
              mc:Ignorable="d">
     <Canvas x:Name="LayoutRoot"
-            Background="{x:Null}"
-            Clip="{Binding Clip, ElementName=MainPath}">
-        <Path x:Name="MainPath"
-              Clip="{Binding Data, RelativeSource={RelativeSource Self}}"
-              Data="{Binding Shape}">
+            Background="{x:Null}">
+        <Path Clip="{Binding Shape}" Data="{Binding Shape}">
             <Path.Style>
                 <Style TargetType="{x:Type Path}">
                     <Setter Property="Fill" Value="{Binding Color, Converter={StaticResource LightenColorToSolidColorBrushConverter}, ConverterParameter={mx:Double 0.90}}" />
@@ -27,13 +24,13 @@
                 </Style>
             </Path.Style>
         </Path>
-        <Path Clip="{Binding Data, RelativeSource={RelativeSource Self}}"
+        <Path Clip="{Binding SteppedShape}"
               Data="{Binding SteppedShape}"
               Fill="{Binding Color, Converter={StaticResource LightenColorToSolidColorBrushConverter}, ConverterParameter={mx:Double 0.90}}"
               StrokeThickness="0"
               Visibility="{Binding SteppedShape, Converter={StaticResource NotNullToVisibilityConverter}}" />
         <Path x:Name="InnerPath"
-              Clip="{Binding Data, RelativeSource={RelativeSource Self}}"
+              Clip="{Binding InnerShape}"
               Data="{Binding InnerShape}"
               Fill="{Binding Color, Converter={StaticResource ColorToSolidColorBrushConverter}}"
               Stroke="{Binding Color, Converter={StaticResource LightenColorToSolidColorBrushConverter}, ConverterParameter={mx:Double 0.85}}"
@@ -45,6 +42,7 @@
         </Path>
         <ItemsControl Canvas.Left="{Binding Data.Bounds.X, ElementName=InnerPath}"
                       Canvas.Top="{Binding Data.Bounds.Y, ElementName=InnerPath}"
+                      Clip="{Binding Shape}"
                       Width="{Binding Data.Bounds.Width, ElementName=InnerPath}"
                       Height="{Binding Data.Bounds.Height, ElementName=InnerPath}"
                       Padding="{Binding Model.InnerPadding, Converter={StaticResource ScaleConverter}}"
@@ -82,7 +80,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <Path Clip="{Binding Clip, ElementName=MainPath}" Data="{Binding Data, ElementName=MainPath}">
+        <Path Clip="{Binding Shape}" Data="{Binding Shape}">
             <Path.Resources>
                 <SolidColorBrush x:Key="MouseOverFillBrush">#10000000</SolidColorBrush>
                 <SolidColorBrush x:Key="PreviewSelectedFillBrush">#2a000000</SolidColorBrush>

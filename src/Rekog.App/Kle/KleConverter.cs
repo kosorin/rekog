@@ -81,14 +81,16 @@ namespace Rekog.App.Kle
                     }
                 }
 
+                var hasRotation = kleKey.RotationAngle != 0 || kleKey.RotationX != 0 || kleKey.RotationY != 0;
+
                 return new KeyModel(keyId)
                 {
                     X = x,
                     Y = y,
 
                     RotationAngle = kleKey.RotationAngle,
-                    RotationOriginX = kleKey.RotationX,
-                    RotationOriginY = kleKey.RotationY,
+                    RotationOriginX = hasRotation ? kleKey.RotationX : null,
+                    RotationOriginY = hasRotation ? kleKey.RotationY : null,
 
                     Width = width,
                     Height = height,

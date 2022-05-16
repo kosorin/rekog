@@ -25,10 +25,14 @@ namespace Rekog.App.ViewModel
         {
             ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.X)),
             ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.Y)),
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationOriginX)),
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationOriginY)),
         }));
 
         private static readonly ChangePropertyUndoBatchBuilder KeyRotationOriginUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel) + "_" + nameof(KeyModel.RotationOrigin), new[]
         {
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.X)),
+            ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.Y)),
             ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationOriginX)),
             ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationOriginY)),
         }));
@@ -104,10 +108,6 @@ namespace Rekog.App.ViewModel
             _boardPropertiesForm.SetModel(Model);
             _boardForm.SetModel(Model);
 
-            _keyForm.RotationAngle.PropertyChanged += OnKeyFormPropertyChanged;
-            _keyForm.RotationOriginX.PropertyChanged += OnKeyFormPropertyChanged;
-            _keyForm.RotationOriginY.PropertyChanged += OnKeyFormPropertyChanged;
-
             _tabs.AddRange(new[]
             {
                 FileTab = new FormTab("File", "\uE130", _boardFileForm) { IsSelected = true, },
@@ -169,7 +169,6 @@ namespace Rekog.App.ViewModel
 
         public ObservableDictionary<KeyId, KeyViewModel> SelectedKeys { get; }
 
-        // TODO: Rework
         public PointValueSource SelectedKeysRotationOrigin { get; } = new PointValueSource(new Point());
 
         public Rect ActualBounds
@@ -231,17 +230,10 @@ namespace Rekog.App.ViewModel
             UndoContext.PushAction(action);
         }
 
-        private void OnKeyFormPropertyChanged(object? sender, PropertyChangedEventArgs args)
-        {
-            if (args.PropertyName == nameof(ModelFormProperty.Value))
-            {
-                UpdateRotationOrigin(false);
-            }
-        }
-
         private void SubscribeModelKeys()
         {
             Model.Keys.DictionaryChanged += OnModelKeysDictionaryChanged;
+            Model.Keys.EntryPropertyChanged += OnModelKeysEntryPropertyChanged;
 
             foreach (var model in Model.Keys.Values)
             {
@@ -252,6 +244,7 @@ namespace Rekog.App.ViewModel
         private void UnsubscribeModelKeys()
         {
             Model.Keys.DictionaryChanged -= OnModelKeysDictionaryChanged;
+            Model.Keys.EntryPropertyChanged -= OnModelKeysEntryPropertyChanged;
 
             foreach (var model in Model.Keys.Values)
             {
@@ -321,16 +314,19 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void UpdateRotationOrigin(bool incrementVersion)
+        private void UpdateRotationOrigin()
         {
-            // TODO: Rework
-            if (_keyForm.RotationOriginX.Value is double x && _keyForm.RotationOriginY.Value is double y &&
-                (x != 0 || y != 0 || _keyForm.RotationAngle.Value is double and not 0d))
+            if (_selectedKeys.Count == 0)
             {
-                if (incrementVersion || !SelectedKeysRotationOrigin.IsSet)
-                {
-                    SelectedKeysRotationOrigin.Version++;
-                }
+                SelectedKeysRotationOrigin.IsSet = false;
+                return;
+            }
+
+            var keyModel = _selectedKeys.Values.First().Model;
+
+            if (keyModel.RotationOriginX is { } x && keyModel.RotationOriginY is { } y
+                && (_selectedKeys.Count == 1 || _selectedKeys.Values.Skip(1).All(key => Equals(key.Model.RotationOriginX, keyModel.RotationOriginX) && Equals(key.Model.RotationOriginY, keyModel.RotationOriginY))))
+            {
                 SelectedKeysRotationOrigin.Value = new Point(x, y);
                 SelectedKeysRotationOrigin.IsSet = true;
             }
@@ -457,6 +453,21 @@ namespace Rekog.App.ViewModel
             _keys.Merge(args.NewEntries.ToDictionary(x => x.Key, x => new KeyViewModel(x.Value)), args.OldEntries.Keys);
         }
 
+        private void OnModelKeysEntryPropertyChanged(ObservableDictionary<KeyId, KeyModel> dictionary, EntryPropertyChangedEventArgs<KeyId, KeyModel> args)
+        {
+            switch (args.PropertyName)
+            {
+                case nameof(KeyModel.RotationAngle):
+                case nameof(KeyModel.RotationOriginX):
+                case nameof(KeyModel.RotationOriginY):
+                    if (_keys.TryGetValue(args.Key, out var key) && key.IsSelected)
+                    {
+                        UpdateRotationOrigin();
+                    }
+                    break;
+            }
+        }
+
         private void OnKeysDictionaryChanged(ObservableDictionary<KeyId, KeyViewModel> dictionary, DictionaryChangedEventArgs<KeyId, KeyViewModel> args)
         {
             _selectedKeys.Merge(args.NewEntries.Where(x => x.Value.IsSelected), args.OldEntries.Keys);
@@ -498,6 +509,8 @@ namespace Rekog.App.ViewModel
 
             UpdateKeyForm();
             UpdateLegendForm();
+
+            UpdateRotationOrigin();
 
             UnselectAllKeysCommand.RaiseCanExecuteChanged();
             DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
@@ -757,6 +770,8 @@ namespace Rekog.App.ViewModel
                 {
                     key.Model.X += offset.X;
                     key.Model.Y += offset.Y;
+                    key.Model.RotationOriginX += offset.X;
+                    key.Model.RotationOriginY += offset.Y;
                 }
             }
         }
@@ -772,8 +787,10 @@ namespace Rekog.App.ViewModel
             {
                 foreach (var key in _selectedKeys.Values)
                 {
-                    key.Model.RotationOriginX += offset.X;
-                    key.Model.RotationOriginY += offset.Y;
+                    key.Model.RotationOriginX ??= key.Model.X;
+                    key.Model.RotationOriginY ??= key.Model.Y;
+                    key.Model.X += offset.X;
+                    key.Model.Y += offset.Y;
                 }
             }
         }

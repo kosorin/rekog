@@ -533,6 +533,7 @@
                                                   Maximum="200"
                                                   Minimum="-200"
                                                   SmallChange="0.05"
+                                                  PlaceholderText="{Binding X.Value, Mode=OneWay}"
                                                   Value="{Binding RotationOriginX.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                                     <ui:NumberBox Grid.Column="2"
                                                   Header="Origin Y"
@@ -540,6 +541,7 @@
                                                   Maximum="200"
                                                   Minimum="-200"
                                                   SmallChange="0.05"
+                                                  PlaceholderText="{Binding Y.Value, Mode=OneWay}"
                                                   Value="{Binding RotationOriginY.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToNanConverter}}" />
                                 </Grid>
                                 <Label Content="Shape" Style="{StaticResource FormContentGroupStyle}" />
