@@ -61,6 +61,7 @@ namespace Rekog.App.ViewModel
         private readonly LayerForm _layerForm;
 
         private Rect _actualBounds;
+        private Rect? _selectedKeysActualBounds;
         private Color _background = DefaultBackground;
 
         public BoardViewModel(BoardModel model)
@@ -175,6 +176,12 @@ namespace Rekog.App.ViewModel
         {
             get => _actualBounds;
             private set => Set(ref _actualBounds, value);
+        }
+
+        public Rect? SelectedKeysActualBounds
+        {
+            get => _selectedKeysActualBounds;
+            private set => Set(ref _selectedKeysActualBounds, value);
         }
 
         public Color Background
@@ -336,20 +343,29 @@ namespace Rekog.App.ViewModel
             }
         }
 
-        private void UpdateCanvas()
+        private void UpdateActualBounds()
         {
-            if (!_keys.Any())
+            ActualBounds = GetActualBounds(_keys.Values) ?? new Rect();
+        }
+
+        private void UpdateSelectedKeysActualBounds()
+        {
+            SelectedKeysActualBounds = GetActualBounds(_selectedKeys.Values);
+        }
+
+        private static Rect? GetActualBounds(ICollection<KeyViewModel> keys)
+        {
+            if (!keys.Any())
             {
-                ActualBounds = new Rect();
-                return;
+                return null;
             }
 
-            var left = _keys.Values.Min(x => x.ActualBounds.Left);
-            var top = _keys.Values.Min(x => x.ActualBounds.Top);
-            var right = _keys.Values.Max(x => x.ActualBounds.Right);
-            var bottom = _keys.Values.Max(x => x.ActualBounds.Bottom);
+            var left = keys.Min(x => x.ActualBounds.Left);
+            var top = keys.Min(x => x.ActualBounds.Top);
+            var right = keys.Max(x => x.ActualBounds.Right);
+            var bottom = keys.Max(x => x.ActualBounds.Bottom);
 
-            ActualBounds = new Rect(new Point(left, top), new Point(right, bottom));
+            return new Rect(new Point(left, top), new Point(right, bottom));
         }
 
         private void UpdateBackground()
@@ -472,7 +488,7 @@ namespace Rekog.App.ViewModel
         {
             _selectedKeys.Merge(args.NewEntries.Where(x => x.Value.IsSelected), args.OldEntries.Keys);
 
-            UpdateCanvas();
+            UpdateActualBounds();
 
             SelectAllKeysCommand.RaiseCanExecuteChanged();
         }
@@ -482,7 +498,7 @@ namespace Rekog.App.ViewModel
             switch (args.PropertyName)
             {
                 case nameof(KeyViewModel.ActualBounds):
-                    UpdateCanvas();
+                    UpdateActualBounds();
                     break;
                 case nameof(KeyViewModel.IsSelected):
                     if (args.Value.IsSelected)
@@ -511,6 +527,7 @@ namespace Rekog.App.ViewModel
             UpdateLegendForm();
 
             UpdateRotationOrigin();
+            UpdateSelectedKeysActualBounds();
 
             UnselectAllKeysCommand.RaiseCanExecuteChanged();
             DeleteSelectedKeysCommand.RaiseCanExecuteChanged();
@@ -520,6 +537,9 @@ namespace Rekog.App.ViewModel
         {
             switch (args.PropertyName)
             {
+                case nameof(KeyViewModel.ActualBounds):
+                    UpdateSelectedKeysActualBounds();
+                    break;
                 case nameof(KeyViewModel.IsSelected):
                     if (!args.Value.IsSelected)
                     {

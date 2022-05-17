@@ -588,7 +588,7 @@ namespace Rekog.App.View
         {
             var matrix = PlateMatrixTransform.Matrix;
             var layoutRootBounds = GetLayoutRootBounds();
-            var plateBounds = GetPlateBounds();
+            var plateBounds = GetPlateBounds(ViewModel.SelectedKeysActualBounds ?? ViewModel.ActualBounds);
 
             matrix.OffsetX += (layoutRootBounds.Width - plateBounds.Width) / 2 - plateBounds.X;
             matrix.OffsetY += (layoutRootBounds.Height - plateBounds.Height) / 2 - plateBounds.Y;
@@ -601,7 +601,7 @@ namespace Rekog.App.View
             var coerced = false;
             var matrix = PlateMatrixTransform.Matrix;
             var layoutRootBounds = GetLayoutRootBounds();
-            var plateBounds = GetPlateBounds();
+            var plateBounds = GetPlateBounds(ViewModel.ActualBounds);
 
             if (layoutRootBounds.Left > plateBounds.Right)
             {
@@ -639,17 +639,16 @@ namespace Rekog.App.View
             return layoutRootBounds;
         }
 
-        private Rect GetPlateBounds()
+        private Rect GetPlateBounds(Rect actualBounds)
         {
             var matrix = PlateMatrixTransform.Matrix;
             var scale = matrix.M11 * App.UnitSize;
 
-            var bounds = ViewModel.ActualBounds;
-            bounds.Scale(scale, scale);
+            actualBounds.Scale(scale, scale);
 
             var platePosition = Plate.TranslatePoint(new Point(0, 0), LayoutRoot);
-            var plateBounds = new Rect(new Point(platePosition.X + bounds.X, platePosition.Y + bounds.Y),
-                new Size(bounds.Width, bounds.Height));
+            var plateBounds = new Rect(new Point(platePosition.X + actualBounds.X, platePosition.Y + actualBounds.Y),
+                new Size(actualBounds.Width, actualBounds.Height));
 
             return plateBounds;
         }
