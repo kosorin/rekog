@@ -16,9 +16,9 @@ namespace Rekog.App.Undo
             _actions.Add(action);
         }
 
-        public bool TryCoalesce(IUndoBatch lastBatch)
+        public UndoCoalesceResult Coalesce(IUndoBatch lastBatch)
         {
-            return false;
+            return UndoCoalesceResult.None;
         }
 
         public IUndoBatch? Build()

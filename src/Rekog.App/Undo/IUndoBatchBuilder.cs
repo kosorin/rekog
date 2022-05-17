@@ -6,7 +6,7 @@ namespace Rekog.App.Undo
 
         void PushAction(IUndoAction action);
 
-        bool TryCoalesce(IUndoBatch lastBatch);
+        UndoCoalesceResult Coalesce(IUndoBatch lastBatch);
 
         IUndoBatch? Build();
     }

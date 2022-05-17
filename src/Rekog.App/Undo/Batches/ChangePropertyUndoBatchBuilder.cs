@@ -33,21 +33,23 @@ namespace Rekog.App.Undo.Batches
             _actions.Add(action);
         }
 
-        public bool TryCoalesce(IUndoBatch lastBatch)
+        public UndoCoalesceResult Coalesce(IUndoBatch lastBatch)
         {
             if (!_isPure)
             {
-                return false;
+                return UndoCoalesceResult.None;
             }
 
             if (lastBatch is not Batch batch || !_groupKey.CanCoalesce(batch.GroupKey))
             {
-                return false;
+                return UndoCoalesceResult.None;
             }
 
             batch.Update(_actions.Cast<ChangePropertyUndoAction>());
 
-            return true;
+            return batch.IsEmpty()
+                ? UndoCoalesceResult.Empty
+                : UndoCoalesceResult.Coalesce;
         }
 
         public IUndoBatch? Build()
@@ -79,13 +81,25 @@ namespace Rekog.App.Undo.Batches
                     var actionKey = (newAction.Instance, newAction.PropertyInfo);
                     if (_actions.TryGetValue(actionKey, out var currentAction))
                     {
-                        currentAction.NewValue = newAction.NewValue;
+                        if (Equals(newAction.NewValue, currentAction.OldValue))
+                        {
+                            _actions.Remove(actionKey);
+                        }
+                        else
+                        {
+                            currentAction.NewValue = newAction.NewValue;
+                        }
                     }
                     else
                     {
                         _actions.Add(actionKey, newAction);
                     }
                 }
+            }
+
+            public bool IsEmpty()
+            {
+                return _actions.Values.All(x => Equals(x.NewValue, x.OldValue));
             }
 
             public void Undo()

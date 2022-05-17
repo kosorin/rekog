@@ -30,7 +30,7 @@ namespace Rekog.App.Undo
             return Batch(_defaultBatchBuilder);
         }
 
-        public void ClearCoalescing()
+        public void SealLastBatch()
         {
             _lastBatch = null;
         }
@@ -66,20 +66,29 @@ namespace Rekog.App.Undo
                 throw new InvalidOperationException();
             }
 
-            if (_lastBatch != null && _batchBuilder.TryCoalesce(_lastBatch))
-            {
-                _batchBuilder = null;
-            }
-            else
-            {
-                var batch = _batchBuilder.Build();
+            var coalesceResult = _lastBatch != null
+                ? _batchBuilder.Coalesce(_lastBatch)
+                : UndoCoalesceResult.None;
 
-                _batchBuilder = null;
-
-                if (batch != null)
-                {
-                    PushBatch(batch);
-                }
+            switch (coalesceResult)
+            {
+                case UndoCoalesceResult.Coalesce:
+                    _batchBuilder = null;
+                    break;
+                case UndoCoalesceResult.Empty:
+                    _batchBuilder = null;
+                    _lastBatch = null;
+                    _undoStack.Pop();
+                    break;
+                case UndoCoalesceResult.None:
+                    var batch = _batchBuilder.Build();
+                    _batchBuilder = null;
+                    if (batch != null)
+                    {
+                        PushBatch(batch);
+                    }
+                    break;
+                default: throw new ArgumentOutOfRangeException();
             }
 
             RedoCommand.RaiseCanExecuteChanged();
@@ -131,7 +140,7 @@ namespace Rekog.App.Undo
 
         private void Undo()
         {
-            if (!CanUndo())
+            if (_isProcessing || _batchBuilder != null || !_undoStack.Any())
             {
                 return;
             }
@@ -141,7 +150,7 @@ namespace Rekog.App.Undo
             {
                 if (_undoStack.TryPop(out var batch))
                 {
-                    ClearCoalescing();
+                    SealLastBatch();
 
                     batch.Undo();
 
@@ -157,7 +166,7 @@ namespace Rekog.App.Undo
 
         private void Redo()
         {
-            if (!CanRedo())
+            if (_isProcessing || _batchBuilder != null || !_redoStack.Any())
             {
                 return;
             }
@@ -167,7 +176,7 @@ namespace Rekog.App.Undo
             {
                 if (_redoStack.TryPop(out var batch))
                 {
-                    ClearCoalescing();
+                    SealLastBatch();
 
                     batch.Redo();
 
@@ -183,12 +192,12 @@ namespace Rekog.App.Undo
 
         private bool CanUndo()
         {
-            return !_isProcessing && _batchBuilder == null && _undoStack.Any();
+            return _undoStack.Any();
         }
 
         private bool CanRedo()
         {
-            return !_isProcessing && _batchBuilder == null && _redoStack.Any();
+            return _redoStack.Any();
         }
 
         private class BatchScope : IDisposable

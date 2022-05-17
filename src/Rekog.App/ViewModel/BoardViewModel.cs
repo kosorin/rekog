@@ -505,7 +505,7 @@ namespace Rekog.App.ViewModel
                 key.IsSelected = true;
             }
 
-            UndoContext.ClearCoalescing();
+            UndoContext.SealLastBatch();
 
             UpdateKeyForm();
             UpdateLegendForm();
@@ -593,7 +593,7 @@ namespace Rekog.App.ViewModel
                 }
             }
 
-            UndoContext.ClearCoalescing();
+            UndoContext.SealLastBatch();
 
             UpdateLayerForm();
             UpdateLegendForm();
