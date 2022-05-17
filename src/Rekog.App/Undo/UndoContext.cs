@@ -37,7 +37,7 @@ namespace Rekog.App.Undo
 
         public IDisposable Batch(IUndoBatchBuilder batchBuilder)
         {
-            return new BatchScope(this, batchBuilder);
+            return new UndoBatchScope(this, batchBuilder);
         }
 
         public void BeginBatch()
@@ -200,11 +200,11 @@ namespace Rekog.App.Undo
             return _redoStack.Any();
         }
 
-        private class BatchScope : IDisposable
+        private class UndoBatchScope : IDisposable
         {
             private readonly UndoContext _context;
 
-            public BatchScope(UndoContext context, IUndoBatchBuilder batchBuilder)
+            public UndoBatchScope(UndoContext context, IUndoBatchBuilder batchBuilder)
             {
                 _context = context;
                 _context.BeginBatch(batchBuilder);

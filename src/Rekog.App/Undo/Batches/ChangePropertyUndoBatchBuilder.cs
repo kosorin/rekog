@@ -40,7 +40,7 @@ namespace Rekog.App.Undo.Batches
                 return UndoCoalesceResult.None;
             }
 
-            if (lastBatch is not Batch batch || !_groupKey.CanCoalesce(batch.GroupKey))
+            if (lastBatch is not ChangePropertyUndoBatch batch || !_groupKey.CanCoalesce(batch.GroupKey))
             {
                 return UndoCoalesceResult.None;
             }
@@ -56,16 +56,16 @@ namespace Rekog.App.Undo.Batches
         {
             return _actions.Count > 0
                 ? _isPure
-                    ? new Batch(_actions.Cast<ChangePropertyUndoAction>(), _groupKey)
+                    ? new ChangePropertyUndoBatch(_actions.Cast<ChangePropertyUndoAction>(), _groupKey)
                     : new UndoBatch(_actions)
                 : null;
         }
 
-        private class Batch : IUndoBatch
+        private class ChangePropertyUndoBatch : IUndoBatch
         {
             private readonly Dictionary<(object instance, PropertyInfo propertyInfo), ChangePropertyUndoAction> _actions = new Dictionary<(object instance, PropertyInfo propertyInfo), ChangePropertyUndoAction>();
 
-            public Batch(IEnumerable<ChangePropertyUndoAction> actions, IChangePropertyGroupKey groupKey)
+            public ChangePropertyUndoBatch(IEnumerable<ChangePropertyUndoAction> actions, IChangePropertyGroupKey groupKey)
             {
                 GroupKey = groupKey;
 
