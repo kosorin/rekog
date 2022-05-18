@@ -83,7 +83,7 @@
                     </DataTemplate>
                     <CollectionViewSource x:Key="RotationOriginCollection" Source="{Binding SelectedKeysRotationOrigin, Converter={StaticResource ObjectToListConverter}}" />
                     <Style x:Key="RotationOriginStyle"
-                           d:DataContext="{d:DesignInstance vm:PointValueSource}"
+                           d:DataContext="{d:DesignInstance vm:RotationOriginViewModel}"
                            TargetType="{x:Type ContentPresenter}">
                         <Setter Property="Canvas.Left" Value="{Binding Value.X, Converter={StaticResource ScaleConverter}}" />
                         <Setter Property="Canvas.Top" Value="{Binding Value.Y, Converter={StaticResource ScaleConverter}}" />
@@ -91,7 +91,7 @@
                         <Setter Property="Visibility" Value="{Binding IsSet, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter={x:Static Visibility.Hidden}}" />
                         <Setter Property="Opacity" Value="1" />
                     </Style>
-                    <DataTemplate x:Key="RotationOriginTemplate" DataType="{x:Type vm:PointValueSource}">
+                    <DataTemplate x:Key="RotationOriginTemplate" DataType="{x:Type vm:RotationOriginViewModel}">
                         <Path
                             Data="M19.1-2.5 16.7-2.5C15.6-9.8 9.8-15.6 2.5-16.7L2.5-19.1C2.5-19.6 2.1-20 1.6-20L-1.6-20C-2.1-20-2.5-19.6-2.5-19.1L-2.5-16.7C-9.8-15.6-15.6-9.8-16.7-2.5L-19.1-2.5C-19.6-2.5-20-2.1-20-1.6L-20 1.6C-20 2.1-19.6 2.5-19.1 2.5L-16.7 2.5C-15.6 9.8-9.8 15.6-2.5 16.7L-2.5 19.1C-2.5 19.6-2.1 20-1.6 20L1.6 20C2.1 20 2.5 19.6 2.5 19.1L2.5 16.7C9.8 15.6 15.6 9.8 16.7 2.5L19.1 2.5C19.6 2.5 20 2.1 20 1.6L20-1.6C20-2.1 19.6-2.5 19.1-2.5ZM2.5 11.6 2.5 8.4C2.5 7.9 2.1 7.5 1.6 7.5L-1.6 7.5C-2.1 7.5-2.5 7.9-2.5 8.4L-2.5 11.6C-7 10.6-10.6 7.1-11.6 2.5L-8.4 2.5C-7.9 2.5-7.5 2.1-7.5 1.6L-7.5-1.6C-7.5-2.1-7.9-2.5-8.4-2.5L-11.6-2.5C-10.6-7-7.1-10.6-2.5-11.6L-2.5-8.4C-2.5-7.9-2.1-7.5-1.6-7.5L1.6-7.5C2.1-7.5 2.5-7.9 2.5-8.4L2.5-11.6C7-10.6 10.6-7.1 11.6-2.5L8.4-2.5C7.9-2.5 7.5-2.1 7.5-1.6L7.5 1.6C7.5 2.1 7.9 2.5 8.4 2.5L11.6 2.5C10.6 7 7.1 10.6 2.5 11.6ZM2.5 0C2.5-1.4 1.4-2.5 0-2.5C-1.4-2.5-2.5-1.4-2.5 0C-2.5 1.4-1.4 2.5 0 2.5C1.4 2.5 2.5 1.4 2.5 0Z"
                             Fill="#000"

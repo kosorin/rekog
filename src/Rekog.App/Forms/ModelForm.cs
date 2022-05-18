@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using Rekog.App.Extensions;
 using Rekog.App.Model;
 using Rekog.App.Reflection;
 using Rekog.App.Undo;
@@ -18,7 +19,7 @@ namespace Rekog.App.Forms
 
         private readonly UndoContext _undoContext;
         private readonly Dictionary<string, ModelFormProperty> _properties = new Dictionary<string, ModelFormProperty>();
-        private TModel[] _models = Array.Empty<TModel>();
+
         private bool _isUpdatingProperty;
 
         protected ModelForm(UndoContext undoContext)
@@ -26,7 +27,9 @@ namespace Rekog.App.Forms
             _undoContext = undoContext;
         }
 
-        public bool IsSet => _models.Length > 0;
+        public bool IsSet => Models.Length > 0;
+
+        public TModel[] Models { get; private set; } = Array.Empty<TModel>();
 
         public void SetModel(TModel model)
         {
@@ -45,21 +48,27 @@ namespace Rekog.App.Forms
 
         private void SetModelsCore(TModel[] models)
         {
-            foreach (var model in _models)
+            foreach (var model in Models)
             {
                 model.PropertyChanged -= OnModelPropertyChanged;
             }
 
-            _models = models;
+            Models = models;
 
-            foreach (var model in _models)
+            foreach (var model in Models)
             {
                 model.PropertyChanged += OnModelPropertyChanged;
             }
 
+            OnModelsChanged();
+        }
+
+        protected virtual void OnModelsChanged()
+        {
             UpdateProperties();
 
             OnPropertyChanged(nameof(IsSet));
+            OnPropertyChanged(nameof(Models));
         }
 
         protected ModelFormProperty GetProperty(string name)
@@ -82,6 +91,19 @@ namespace Rekog.App.Forms
             return AddProperty(name, defaultValue);
         }
 
+        protected virtual void OnModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
+        {
+            if (_properties.TryGetValue(args.PropertyName ?? throw new ArgumentException(null, nameof(args)), out var property))
+            {
+                UpdateProperty(property);
+            }
+        }
+
+        protected virtual void OnPropertyValueChanged(ModelFormProperty property, object? value)
+        {
+            UpdateModels(property, value);
+        }
+
         private ModelFormProperty AddProperty(string name, object? defaultValue)
         {
             var property = new ModelFormProperty(name, defaultValue, OnPropertyValueChanged);
@@ -91,19 +113,6 @@ namespace Rekog.App.Forms
             _properties.Add(name, property);
 
             return property;
-        }
-
-        private void OnModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
-        {
-            if (_properties.TryGetValue(args.PropertyName ?? throw new ArgumentException(null, nameof(args)), out var property))
-            {
-                UpdateProperty(property);
-            }
-        }
-
-        private void OnPropertyValueChanged(ModelFormProperty property, object? value)
-        {
-            UpdateModels(property, value);
         }
 
         private void UpdateProperties()
@@ -120,8 +129,8 @@ namespace Rekog.App.Forms
             try
             {
                 var propertyInfo = ReflectionCache.GetPropertyInfo<TModel>(property.Name);
-
-                property.Value = GetModelsValue(propertyInfo);
+                var value = Models.GetSameOrDefaultValue(propertyInfo.GetValue);
+                property.Value = value;
             }
             finally
             {
@@ -142,38 +151,17 @@ namespace Rekog.App.Forms
             {
                 var usedDefaultValue = value == null;
 
-                SetModelsValue(propertyInfo, value ?? property.DefaultValue);
+                value ??= property.DefaultValue;
+                foreach (var model in Models)
+                {
+                    propertyInfo.SetValue(model, value);
+                }
 
                 // If default value was used, set it back to property
                 if (usedDefaultValue)
                 {
                     property.Value = property.DefaultValue;
                 }
-            }
-        }
-
-        private object? GetModelsValue(PropertyInfo propertyInfo)
-        {
-            if (_models.Length == 0)
-            {
-                return null;
-            }
-
-            var value = propertyInfo.GetValue(_models.First());
-
-            if (_models.Length == 1 || _models.Skip(1).All(model => Equals(propertyInfo.GetValue(model), value)))
-            {
-                return value;
-            }
-
-            return null;
-        }
-
-        private void SetModelsValue(PropertyInfo propertyInfo, object? value)
-        {
-            foreach (var model in _models)
-            {
-                propertyInfo.SetValue(model, value);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Rekog.App.View
             return item switch
             {
                 KeyViewModel => KeyTemplate ?? throw new NullReferenceException(),
-                PointValueSource { Key: nameof(BoardViewModel.SelectedKeysRotationOrigin), } => RotationOriginTemplate ?? throw new NullReferenceException(),
+                RotationOriginViewModel => RotationOriginTemplate ?? throw new NullReferenceException(),
                 _ => throw new ArgumentException(null, nameof(item)),
             };
         }

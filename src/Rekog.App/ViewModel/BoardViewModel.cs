@@ -96,14 +96,15 @@ namespace Rekog.App.ViewModel
             _selectedLayers.DictionaryChanged += OnSelectedLayersDictionaryChanged;
             _selectedLayers.EntryPropertyChanged += OnSelectedLayersEntryPropertyChanged;
 
-            Keys = _keys.Values;
-            SelectedKeys = _selectedKeys;
-
             _boardFileForm = new BoardFileForm(UndoContext);
             _boardPropertiesForm = new BoardPropertiesForm(UndoContext);
             _boardForm = new BoardForm(UndoContext);
             _keyForm = new KeyForm(UndoContext);
             _layerForm = new LayerForm(UndoContext);
+
+            Keys = _keys.Values;
+            SelectedKeys = _selectedKeys;
+            SelectedKeysRotationOrigin = new RotationOriginViewModel(_keyForm);
 
             _boardFileForm.SetModel(Model);
             _boardPropertiesForm.SetModel(Model);
@@ -170,7 +171,7 @@ namespace Rekog.App.ViewModel
 
         public ObservableDictionary<KeyId, KeyViewModel> SelectedKeys { get; }
 
-        public PointValueSource SelectedKeysRotationOrigin { get; } = new PointValueSource(new Point());
+        public RotationOriginViewModel SelectedKeysRotationOrigin { get; }
 
         public Rect ActualBounds
         {
@@ -240,7 +241,6 @@ namespace Rekog.App.ViewModel
         private void SubscribeModelKeys()
         {
             Model.Keys.DictionaryChanged += OnModelKeysDictionaryChanged;
-            Model.Keys.EntryPropertyChanged += OnModelKeysEntryPropertyChanged;
 
             foreach (var model in Model.Keys.Values)
             {
@@ -251,7 +251,6 @@ namespace Rekog.App.ViewModel
         private void UnsubscribeModelKeys()
         {
             Model.Keys.DictionaryChanged -= OnModelKeysDictionaryChanged;
-            Model.Keys.EntryPropertyChanged -= OnModelKeysEntryPropertyChanged;
 
             foreach (var model in Model.Keys.Values)
             {
@@ -318,28 +317,6 @@ namespace Rekog.App.ViewModel
                     var legendId = new LegendId(keyId, layerId);
                     return new KeyValuePair<LegendId, LegendViewModel>(legendId, new LegendViewModel(Model.Legends[legendId], _layers[layerId]));
                 }));
-            }
-        }
-
-        private void UpdateRotationOrigin()
-        {
-            if (_selectedKeys.Count == 0)
-            {
-                SelectedKeysRotationOrigin.IsSet = false;
-                return;
-            }
-
-            var keyModel = _selectedKeys.Values.First().Model;
-
-            if (keyModel.RotationOriginX is { } x && keyModel.RotationOriginY is { } y
-                && (_selectedKeys.Count == 1 || _selectedKeys.Values.Skip(1).All(key => Equals(key.Model.RotationOriginX, keyModel.RotationOriginX) && Equals(key.Model.RotationOriginY, keyModel.RotationOriginY))))
-            {
-                SelectedKeysRotationOrigin.Value = new Point(x, y);
-                SelectedKeysRotationOrigin.IsSet = true;
-            }
-            else
-            {
-                SelectedKeysRotationOrigin.IsSet = false;
             }
         }
 
@@ -469,21 +446,6 @@ namespace Rekog.App.ViewModel
             _keys.Merge(args.NewEntries.ToDictionary(x => x.Key, x => new KeyViewModel(x.Value)), args.OldEntries.Keys);
         }
 
-        private void OnModelKeysEntryPropertyChanged(ObservableDictionary<KeyId, KeyModel> dictionary, EntryPropertyChangedEventArgs<KeyId, KeyModel> args)
-        {
-            switch (args.PropertyName)
-            {
-                case nameof(KeyModel.RotationAngle):
-                case nameof(KeyModel.RotationOriginX):
-                case nameof(KeyModel.RotationOriginY):
-                    if (_keys.TryGetValue(args.Key, out var key) && key.IsSelected)
-                    {
-                        UpdateRotationOrigin();
-                    }
-                    break;
-            }
-        }
-
         private void OnKeysDictionaryChanged(ObservableDictionary<KeyId, KeyViewModel> dictionary, DictionaryChangedEventArgs<KeyId, KeyViewModel> args)
         {
             _selectedKeys.Merge(args.NewEntries.Where(x => x.Value.IsSelected), args.OldEntries.Keys);
@@ -526,7 +488,6 @@ namespace Rekog.App.ViewModel
             UpdateKeyForm();
             UpdateLegendForm();
 
-            UpdateRotationOrigin();
             UpdateSelectedKeysActualBounds();
 
             UnselectAllKeysCommand.RaiseCanExecuteChanged();

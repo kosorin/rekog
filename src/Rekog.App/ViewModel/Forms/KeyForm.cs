@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using Rekog.App.Extensions;
 using Rekog.App.Forms;
 using Rekog.App.Model;
 using Rekog.App.Undo;
@@ -6,6 +8,10 @@ namespace Rekog.App.ViewModel.Forms
 {
     public class KeyForm : ModelForm<KeyModel>
     {
+        private double? _actualRotationOriginX;
+        private double? _actualRotationOriginY;
+        private bool _isUpdatingActualRotationOrigin;
+
         public KeyForm(UndoContext undoContext) : base(undoContext)
         {
         }
@@ -17,6 +23,18 @@ namespace Rekog.App.ViewModel.Forms
         public ModelFormProperty RotationAngle => GetProperty(nameof(KeyModel.RotationAngle));
 
         public ModelFormProperty RotationOriginX => GetProperty(nameof(KeyModel.RotationOriginX));
+
+        public double? ActualRotationOriginX
+        {
+            get => _actualRotationOriginX;
+            private set => Set(ref _actualRotationOriginX, value);
+        }
+
+        public double? ActualRotationOriginY
+        {
+            get => _actualRotationOriginY;
+            private set => Set(ref _actualRotationOriginY, value);
+        }
 
         public ModelFormProperty RotationOriginY => GetProperty(nameof(KeyModel.RotationOriginY));
 
@@ -61,5 +79,75 @@ namespace Rekog.App.ViewModel.Forms
         public ModelFormProperty IsGhosted => GetProperty(nameof(KeyModel.IsGhosted));
 
         public ModelFormProperty IsDecal => GetProperty(nameof(KeyModel.IsDecal));
+
+        protected override void OnModelsChanged()
+        {
+            _isUpdatingActualRotationOrigin = true;
+            try
+            {
+                base.OnModelsChanged();
+
+                UpdateActualRotationOriginX();
+                UpdateActualRotationOriginY();
+            }
+            finally
+            {
+                _isUpdatingActualRotationOrigin = false;
+            }
+        }
+
+        protected override void OnModelPropertyChanged(object? sender, PropertyChangedEventArgs args)
+        {
+            base.OnModelPropertyChanged(sender, args);
+
+            if (_isUpdatingActualRotationOrigin)
+            {
+                return;
+            }
+
+            switch (args.PropertyName)
+            {
+                case nameof(KeyModel.X):
+                case nameof(KeyModel.RotationOriginX):
+                    UpdateActualRotationOriginX();
+                    break;
+                case nameof(KeyModel.Y):
+                case nameof(KeyModel.RotationOriginY):
+                    UpdateActualRotationOriginY();
+                    break;
+            }
+        }
+
+        protected override void OnPropertyValueChanged(ModelFormProperty property, object? value)
+        {
+            base.OnPropertyValueChanged(property, value);
+
+            if (_isUpdatingActualRotationOrigin)
+            {
+                return;
+            }
+
+            switch (property.Name)
+            {
+                case nameof(KeyModel.X):
+                case nameof(KeyModel.RotationOriginX):
+                    UpdateActualRotationOriginX();
+                    break;
+                case nameof(KeyModel.Y):
+                case nameof(KeyModel.RotationOriginY):
+                    UpdateActualRotationOriginY();
+                    break;
+            }
+        }
+
+        private void UpdateActualRotationOriginX()
+        {
+            ActualRotationOriginX = Models.GetSameOrDefaultValue(x => x.RotationOriginX ?? x.X, (double?)null);
+        }
+
+        private void UpdateActualRotationOriginY()
+        {
+            ActualRotationOriginY = Models.GetSameOrDefaultValue(x => x.RotationOriginY ?? x.Y, (double?)null);
+        }
     }
 }

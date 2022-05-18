@@ -7,8 +7,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Rekog.App.Extensions;
 using Rekog.App.Model;
-using Rekog.App.Reflection;
-using Rekog.App.Undo.Batches;
 using Rekog.App.ViewModel;
 
 namespace Rekog.App.View
