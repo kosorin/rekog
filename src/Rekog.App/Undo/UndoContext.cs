@@ -25,14 +25,14 @@ namespace Rekog.App.Undo
 
         public DelegateCommand RedoCommand { get; }
 
-        public IDisposable Batch()
-        {
-            return Batch(_defaultBatchBuilder);
-        }
-
         public void SealLastBatch()
         {
             _lastBatch = null;
+        }
+
+        public IDisposable Batch()
+        {
+            return Batch(_defaultBatchBuilder);
         }
 
         public IDisposable Batch(IUndoBatchBuilder batchBuilder)

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using Rekog.App.ObjectModel;
+﻿using Rekog.App.ObjectModel;
 using Rekog.App.Undo;
 using Rekog.App.Undo.Actions;
 
@@ -8,23 +6,11 @@ namespace Rekog.App.Model
 {
     public abstract class ModelBase : ObservableObject
     {
-        protected override bool Set<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
+        protected override void OnPropertyChanged(string propertyName, object? newValue, object? oldValue)
         {
-            var oldValue = field;
+            base.OnPropertyChanged(propertyName, newValue, oldValue);
 
-            if (!base.Set(ref field, value, propertyName))
-            {
-                return false;
-            }
-
-            OnUndoActionExecuted(new ChangePropertyUndoAction(this, propertyName ?? throw new ArgumentNullException(nameof(propertyName)), value, oldValue));
-
-            return true;
-        }
-
-        protected virtual void OnUndoActionExecuted(IUndoAction undoAction)
-        {
-            UndoActionExecuted?.Invoke(this, undoAction);
+            UndoActionExecuted?.Invoke(this, new ChangePropertyUndoAction(this, propertyName, newValue, oldValue));
         }
 
         public event UndoActionPublishedEventHandler? UndoActionExecuted;
