@@ -45,6 +45,7 @@
             <cx:HexToColorConverter x:Key="HexToColorConverter" WithAlpha="False" />
             <cx:HexToColorConverter x:Key="HexWithAlphaToColorConverter" WithAlpha="True" />
             <cx:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
+            <cx:RectangleConverter x:Key="RectangleConverter" />
             <cx:ValueConverterChain x:Key="NegationBooleanToVisibilityConverter">
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanNegationConverter}" />
                 <cx:ValueConverterChainItem Converter="{StaticResource BooleanToVisibilityConverter}" />

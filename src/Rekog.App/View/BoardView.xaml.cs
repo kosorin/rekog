@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -580,6 +581,15 @@ namespace Rekog.App.View
             PlateMatrixTransform.Matrix = matrix;
 
             CoerceView();
+
+            var bgScale = 1d / NearestPowerOf2((uint)(Math.Ceiling(matrix.M11 + 1) / 2)) / 4d;
+            BgScale.ScaleX = bgScale;
+            BgScale.ScaleY = bgScale;
+
+            static int NearestPowerOf2(uint x)
+            {
+                return 1 << (sizeof(uint) * 8 - BitOperations.LeadingZeroCount(x - 1));
+            }
         }
 
         private void CenterView()

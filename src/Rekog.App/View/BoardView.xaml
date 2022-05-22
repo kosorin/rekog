@@ -53,6 +53,34 @@
     <Canvas x:Name="LayoutRoot"
             ClipToBounds="True"
             SizeChanged="OnLayoutRootSizeChanged">
+        <Canvas.Background>
+            <DrawingBrush ViewportUnits="Absolute" TileMode="Tile">
+                <DrawingBrush.Viewport>
+                    <MultiBinding Converter="{StaticResource RectangleConverter}">
+                        <Binding Source="{mx:Double 0}" />
+                        <Binding Source="{mx:Double 0}" />
+                        <Binding Source="{StaticResource UnitSize}" />
+                        <Binding Source="{StaticResource UnitSize}" />
+                    </MultiBinding>
+                </DrawingBrush.Viewport>
+                <DrawingBrush.Transform>
+                    <TransformGroup>
+                        <ScaleTransform x:Name="BgScale" />
+                        <MatrixTransform Matrix="{Binding Matrix, ElementName=PlateMatrixTransform}" />
+                    </TransformGroup>
+                </DrawingBrush.Transform>
+                <DrawingBrush.Drawing>
+                    <GeometryDrawing>
+                        <GeometryDrawing.Pen>
+                            <Pen Thickness="0.01" Brush="#44000000" StartLineCap="Square" EndLineCap="Square" LineJoin="Round" />
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry Figures="M 0,0 L 1,0 1,1 0,1 z" />
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingBrush.Drawing>
+            </DrawingBrush>
+        </Canvas.Background>
         <Border x:Name="Plate"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
