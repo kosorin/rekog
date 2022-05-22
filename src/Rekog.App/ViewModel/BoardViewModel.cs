@@ -20,7 +20,7 @@ namespace Rekog.App.ViewModel
     public class BoardViewModel : ViewModelBase<BoardModel>
     {
         private static readonly Color DefaultBackground = Colors.White;
-
+        
         private static readonly ChangePropertyUndoBatchBuilder KeyPositionUndoBatchBuilder = new ChangePropertyUndoBatchBuilder(new NamedChangePropertyGroupKey(nameof(KeyModel) + "_" + nameof(KeyModel.Position), new[]
         {
             ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.X)),
@@ -41,6 +41,8 @@ namespace Rekog.App.ViewModel
         {
             ReflectionCache.GetPropertyInfo<KeyModel>(nameof(KeyModel.RotationAngle)),
         }));
+
+        private readonly PropertyObserver _modelObserver = new PropertyObserver();
 
         // Each item is in the collection only once.
         private readonly ObservableList<FormTab> _tabs = new ObservableList<FormTab>();
@@ -87,6 +89,7 @@ namespace Rekog.App.ViewModel
             _tabs.ItemPropertyChanged += OnTabsItemPropertyChanged;
             _keys.DictionaryChanged += OnKeysDictionaryChanged;
             _keys.EntryPropertyChanged += OnKeysEntryPropertyChanged;
+            _modelObserver.Subscribe(_keys, "", null);
             _layers.DictionaryChanged += OnLayersDictionaryChanged;
             _layers.EntryPropertyChanged += OnLayersEntryPropertyChanged;
             _selectedTabs.ListChanged += OnSelectedTabsListChanged;

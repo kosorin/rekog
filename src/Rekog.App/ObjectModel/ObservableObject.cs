@@ -7,6 +7,22 @@ namespace Rekog.App.ObjectModel
 {
     public abstract class ObservableObject : IObservableObject
     {
+        public PropertyObserver? Observer { get; private set; }
+
+        public void AttachObserver(PropertyObserver observer)
+        {
+            if (Observer != null)
+            {
+                throw new InvalidOperationException();
+            }
+            Observer = observer;
+        }
+
+        public void DetachObserver()
+        {
+            Observer = null;
+        }
+
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
         {
             if (propertyName == null)

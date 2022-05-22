@@ -94,6 +94,19 @@ namespace Rekog.App.ObjectModel
             return _indices.ContainsKey(key);
         }
 
+        public void AttachObserver(PropertyObserver observer)
+        {
+            foreach (var value in _values)
+            {
+                observer.Subscribe(value, null, OnEntryPropertyChanged);
+            }
+        }
+
+        private void OnEntryPropertyChanged(PropertyObserver observer, Dictionary<PropertyValueChangeKey, PropertyValueChange> changes)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Add(TKey key, TValue value)
         {
             AddEntry(key, value);
